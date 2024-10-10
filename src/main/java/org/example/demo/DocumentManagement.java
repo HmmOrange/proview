@@ -1,15 +1,11 @@
 package org.example.demo;
 
 import java.sql.*;
-import java.util.Scanner;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.print.Doc;
-
-public class DB {
+public class DocumentManagement {
     public static void addDocument (int id, String name, String author) throws SQLException {
         Connection connection = AppMain.connection;
         Statement statement = connection.createStatement();
