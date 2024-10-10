@@ -8,15 +8,19 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class AppMain extends Application {
+    protected static Stage window;
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.setMinWidth(500);
-        stage.setMinHeight(500);
-        stage.show();
+        window = stage;
+
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginScreen.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+        window.setTitle("Hello!");
+        window.setScene(scene);
+        window.setMinWidth(500);
+        window.setMinHeight(500);
+        window.show();
     }
 
     public static void main(String[] args) {
