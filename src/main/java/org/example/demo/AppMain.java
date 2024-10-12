@@ -20,6 +20,7 @@ public class AppMain extends Application {
 
     protected static Stage window;
 
+
     @Override
     public void start(Stage stage) throws IOException {
         window = stage;
@@ -54,7 +55,7 @@ public class AppMain extends Application {
             throw new RuntimeException(e);
         }
 
-        //test UserManagement
+        /*test UserManagement
         Scanner sc = new Scanner(System.in);
         String username = sc.next();
         String password = sc.next();
@@ -64,7 +65,7 @@ public class AppMain extends Application {
         String pw = sc.next();
         if (UserManagement.isValidLoginCredentials(usn, pw) == null) System.out.println("Wrong username or password");
         else System.out.println("Welcome, " + usn);
-        //
+        */
 
         launch();
     }
