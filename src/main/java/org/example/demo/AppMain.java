@@ -33,7 +33,7 @@ public class AppMain extends Application {
         window.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         // Loading driver
         try {
             System.out.println(":3");
@@ -54,6 +54,17 @@ public class AppMain extends Application {
             throw new RuntimeException(e);
         }
 
+        //test UserManagement
+        Scanner sc = new Scanner(System.in);
+        String username = sc.next();
+        String password = sc.next();
+        User user = new User(username, password, 1);
+        UserManagement.addNormalUser(user);
+        String usn = sc.next();
+        String pw = sc.next();
+        if (UserManagement.isValidLoginCredentials(usn, pw) == null) System.out.println("Wrong username or password");
+        else System.out.println("Welcome, " + usn);
+        //
 
         launch();
     }
