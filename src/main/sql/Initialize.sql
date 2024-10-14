@@ -15,6 +15,16 @@ CREATE TABLE user
     type     INT         NULL
 );
 
+CREATE TABLE issue
+(
+    id          INT PRIMARY KEY AUTO_INCREMENT,
+    duration    INT,
+    username    INT,
+    document_id INT,
+    FOREIGN KEY (document_id) REFERENCES document (id),
+    FOREIGN KEY (username) REFERENCES user (username)
+);
+
 -- Add admin user (type 0)
 INSERT INTO user(username, password, type) VALUES ('admin', 'admin', 0);
 

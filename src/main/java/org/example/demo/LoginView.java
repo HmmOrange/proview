@@ -56,7 +56,10 @@ public class LoginView {
             return;
         }
 
-        // User is admin
+        // Save details of logged in user
+        UserManagement.setCurrentUser(checkingUser);
+
+        // Check if user is admin
         if (checkingUser.getType() == 0) {
             FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("AdminView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 500, 500);
@@ -64,7 +67,7 @@ public class LoginView {
             AppMain.window.setScene(scene);
         }
 
-        // User is normal user
+        // Check if user is normal user
         if (checkingUser.getType() == 1) {
             FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("StudentView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 500, 500);
