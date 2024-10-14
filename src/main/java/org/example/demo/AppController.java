@@ -1,6 +1,5 @@
 package org.example.demo;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,7 +32,7 @@ public class AppController {
         }
         ObservableList<Document> currentDocumentList = null;
         try {
-            currentDocumentList = DB.getDocumentList();
+            currentDocumentList = DocumentManagement.getDocumentList();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -50,13 +49,13 @@ public class AppController {
                 documentAddAuthor.getText()
         );
 
-        DB.addDocument (newDocument.getId(), newDocument.getName(), newDocument.getAuthor());
+        DocumentManagement.addDocument (newDocument.getId(), newDocument.getName(), newDocument.getAuthor());
         String newDocumentItem = documentAddID.getText() + ". " + documentAddName.getText() + " - " + documentAddAuthor.getText();
         documentList.getItems().add(newDocumentItem);
     }
 
     public void onRemoveButtonClick(ActionEvent actionEvent) throws SQLException {
-        DB.removeDocument(Integer.parseInt(documentRemoveID.getText()));
+        DocumentManagement.removeDocument(Integer.parseInt(documentRemoveID.getText()));
         reloadDocumentListView();
     }
 }
