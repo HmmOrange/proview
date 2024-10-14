@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo.StudentView">
+   <children>
+      <ListView fx:id="documentList" prefHeight="200.0" prefWidth="200.0" />
+   </children>
+</HBox>

@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 
 import java.sql.SQLException;
 
-public class AppController {
+public class AdminView {
     public TextField documentAddID;
     public TextField documentAddName;
     public TextField documentAddAuthor;
@@ -18,28 +18,14 @@ public class AppController {
     public Button addButton;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         reloadDocumentListView();
     }
 
-    private void reloadDocumentListView() {
+    private void reloadDocumentListView() throws SQLException {
         System.out.println("reload");
-        try {
-            assert documentList != null;
-            documentList.getItems().clear();
-        } catch (NullPointerException ignored) {
 
-        }
-        ObservableList<Document> currentDocumentList = null;
-        try {
-            currentDocumentList = DocumentManagement.getDocumentList();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        for (Document d : currentDocumentList) {
-            String newDocumentItem = d.getId() + ". " + d.getName() + " - " + d.getAuthor();
-            documentList.getItems().add(newDocumentItem);
-        }
+        documentList.setItems(DocumentManagement.getListView());
     }
 
     public void onAddButtonClick(ActionEvent actionEvent) throws SQLException {

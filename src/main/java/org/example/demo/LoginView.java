@@ -10,14 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-
-public class LoginScreenController {
+public class LoginView {
 
     public TextField loginUsernameField;
     public TextField loginPasswordField;
@@ -26,7 +19,7 @@ public class LoginScreenController {
 
     public void onLoginButtonClick(ActionEvent actionEvent) throws IOException, SQLException {
         if (Objects.equals(loginUsernameField.getText(), "admin") && Objects.equals(loginPasswordField.getText(), "admin")) {
-            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("DocumentManagement.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("AdminView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 500, 500);
             AppMain.window.setTitle("Hello!");
             AppMain.window.setScene(scene);
@@ -42,6 +35,41 @@ public class LoginScreenController {
             } else {
                 System.out.println("Welcome, " + usn);
             }
+        }
+
+        String username = loginUsernameField.getText();
+        String password = loginPasswordField.getText();
+
+        if (Objects.equals(loginUsernameField.getText(), "")) {
+            System.out.println("Please enter username");
+            return;
+        }
+
+        if (Objects.equals(loginPasswordField.getText(), "")) {
+            System.out.println("Please enter password");
+            return;
+        }
+
+        User checkingUser = UserManagement.isValidLoginCredentials(username, password);
+        if (checkingUser == null) {
+            System.out.println("Username or password is incorrect");
+            return;
+        }
+
+        // User is admin
+        if (checkingUser.getType() == 0) {
+            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("AdminView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+            AppMain.window.setTitle("Hello!");
+            AppMain.window.setScene(scene);
+        }
+
+        // User is normal user
+        if (checkingUser.getType() == 1) {
+            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("StudentView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+            AppMain.window.setTitle("Hello!");
+            AppMain.window.setScene(scene);
         }
     }
 

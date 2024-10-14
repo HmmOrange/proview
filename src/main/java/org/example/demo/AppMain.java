@@ -25,7 +25,7 @@ public class AppMain extends Application {
     public void start(Stage stage) throws IOException {
         window = stage;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginScreen.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 500, 500);
         window.setTitle("Hello!");
         window.setScene(scene);

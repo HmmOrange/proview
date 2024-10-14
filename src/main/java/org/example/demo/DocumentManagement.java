@@ -46,4 +46,20 @@ public class DocumentManagement {
         }
         return documents;
     }
+
+    public static ObservableList<String> getListView() throws SQLException {
+        ObservableList<Document> currentDocumentList = null;
+        ObservableList<String> documentStringList = FXCollections.observableArrayList();
+        try {
+            currentDocumentList = DocumentManagement.getDocumentList();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        for (Document d : currentDocumentList) {
+            String newDocumentItem = d.getId() + ". " + d.getName() + " - " + d.getAuthor();
+            documentStringList.add(newDocumentItem);
+        }
+
+        return documentStringList;
+    }
 }
