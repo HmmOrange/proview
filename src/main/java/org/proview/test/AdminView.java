@@ -1,15 +1,16 @@
-package org.example.demo;
+package org.proview.test;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import org.proview.model.Document;
+import org.proview.model.DocumentManagement;
 
 import java.sql.SQLException;
 
-public class AppController {
+public class AdminView {
     public TextField documentAddID;
     public TextField documentAddName;
     public TextField documentAddAuthor;
@@ -18,28 +19,14 @@ public class AppController {
     public Button addButton;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         reloadDocumentListView();
     }
 
-    private void reloadDocumentListView() {
+    private void reloadDocumentListView() throws SQLException {
         System.out.println("reload");
-        try {
-            assert documentList != null;
-            documentList.getItems().clear();
-        } catch (NullPointerException ignored) {
 
-        }
-        ObservableList<Document> currentDocumentList = null;
-        try {
-            currentDocumentList = DocumentManagement.getDocumentList();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        for (Document d : currentDocumentList) {
-            String newDocumentItem = d.getId() + ". " + d.getName() + " - " + d.getAuthor();
-            documentList.getItems().add(newDocumentItem);
-        }
+        documentList.setItems(DocumentManagement.getDocumentListView());
     }
 
     public void onAddButtonClick(ActionEvent actionEvent) throws SQLException {
@@ -49,7 +36,7 @@ public class AppController {
                 documentAddAuthor.getText()
         );
 
-        DocumentManagement.addDocument (newDocument.getId(), newDocument.getName(), newDocument.getAuthor());
+        DocumentManagement.addDocument(newDocument.getId(), newDocument.getName(), newDocument.getAuthor());
         String newDocumentItem = documentAddID.getText() + ". " + documentAddName.getText() + " - " + documentAddAuthor.getText();
         documentList.getItems().add(newDocumentItem);
     }
