@@ -1,10 +1,12 @@
-package org.example.demo;
+package org.proview.test;
 
+import org.proview.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import org.proview.model.UserManagement;
 
 import java.io.IOException;
 import java.sql.SQLException;

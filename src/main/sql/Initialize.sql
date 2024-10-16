@@ -1,3 +1,4 @@
+DROP TABLE issue;
 DROP TABLE document;
 DROP TABLE user;
 
@@ -19,7 +20,7 @@ CREATE TABLE issue
 (
     id          INT PRIMARY KEY AUTO_INCREMENT,
     duration    INT,
-    username    INT,
+    username    VARCHAR(20),
     document_id INT,
     FOREIGN KEY (document_id) REFERENCES document (id),
     FOREIGN KEY (username) REFERENCES user (username)

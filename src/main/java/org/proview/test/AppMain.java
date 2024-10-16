@@ -1,4 +1,4 @@
-package org.example.demo;
+package org.proview.test;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,20 +6,17 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 import java.sql.*;
-import java.util.Scanner;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import io.github.cdimascio.dotenv.DotenvException;
 
 
 public class AppMain extends Application {
     static Dotenv dotenv = Dotenv.load();
-    static Connection connection = null;
+    public static Connection connection = null;
 
     protected static Stage window;
 
@@ -108,7 +105,7 @@ public class AppMain extends Application {
             return;
         }
 
-        // Uncomment this if in needed of creating new fresh tables in DB
+        // Uncomment this if in need of creating new fresh tables in DB
         // runSQLScript(connection);
 
         launch();

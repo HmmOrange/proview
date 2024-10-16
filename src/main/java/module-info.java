@@ -9,6 +9,8 @@ module org.example.demo {
     requires io.github.cdimascio.dotenv.java;
     requires java.desktop;
 
-    opens org.example.demo to javafx.fxml;
-    exports org.example.demo;
+    opens org.proview.test to javafx.fxml;
+    exports org.proview.test;
+    exports org.proview.model;
+    opens org.proview.model to javafx.fxml;
 }

@@ -1,6 +1,7 @@
-package org.example.demo;
+package org.proview.model;
+import org.proview.test.AppMain;
+
 import java.sql.*;
-import java.util.Scanner;
 
 public class UserManagement {
     public static User currentUser = null;
