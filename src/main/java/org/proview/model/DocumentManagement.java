@@ -7,13 +7,14 @@ import javafx.collections.ObservableList;
 import org.proview.test.AppMain;
 
 public class DocumentManagement {
-    public static void addDocument(String name, String author) throws SQLException {
+    public static void addDocument(String name, String author, String coverFilePath) throws SQLException {
         Connection connection = AppMain.connection;
-
-        String sql = "INSERT INTO document(name, author) VALUES (?, ?)";
+        System.out.println(coverFilePath);
+        String sql = "INSERT INTO document(name, author, coverFilePath) VALUES (?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, name);
         preparedStatement.setString(2, author);
+        preparedStatement.setString(3, coverFilePath);
         preparedStatement.executeUpdate();
     }
 
@@ -26,8 +27,7 @@ public class DocumentManagement {
     }
 
     public static Document getDocument(int id) throws SQLException {
-        Connection connection = AppMain.connection;
-        Statement statement = connection.createStatement();
+        Statement statement = AppMain.connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM document WHERE id = " + id);
 
         if (resultSet.next()) {
@@ -37,6 +37,15 @@ public class DocumentManagement {
         }
 
         return null;
+    }
+
+    public static int getDocumentCount() throws SQLException {
+        Statement statement = AppMain.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM document");
+        if (resultSet.next()) {
+            return resultSet.getInt("COUNT(*)");
+        }
+        return 0;
     }
 
     public static ObservableList<Document> getDocumentList() throws SQLException {
