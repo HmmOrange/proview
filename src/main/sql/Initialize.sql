@@ -1,12 +1,13 @@
-DROP TABLE issue;
-DROP TABLE document;
-DROP TABLE user;
+DROP TABLE IF EXISTS issue;
+DROP TABLE IF EXISTS document;
+DROP TABLE IF EXISTS user;
 
 CREATE TABLE document
 (
-    id     INT primary key,
-    name   VARCHAR(100) NULL,
-    author VARCHAR(100) NULL
+    id              INT PRIMARY KEY AUTO_INCREMENT,
+    name            VARCHAR(100) NULL,
+    author          VARCHAR(100) NULL,
+    coverFilePath VARCHAR(100) NULL
 );
 
 CREATE TABLE user

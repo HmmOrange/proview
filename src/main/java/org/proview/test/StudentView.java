@@ -2,6 +2,8 @@ package org.proview.test;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -9,6 +11,7 @@ import org.proview.model.DocumentManagement;
 import org.proview.model.IssueManagement;
 import org.proview.model.UserManagement;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class StudentView {
@@ -17,6 +20,7 @@ public class StudentView {
     public Button borrowButton;
     public TextField documentBorrowID;
     public TextField documentBorrowDuration;
+    public Button logoutButton;
 
     @FXML
     public void initialize() throws SQLException {
@@ -39,5 +43,14 @@ public class StudentView {
 
         IssueManagement.addIssue(username, documentID, duration);
         reloadIssueListView();
+    }
+
+    public void onLogoutButtonClick(ActionEvent actionEvent) throws IOException {
+        UserManagement.setCurrentUser(null);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+        AppMain.window.setTitle("Login!");
+        AppMain.window.setScene(scene);
     }
 }
