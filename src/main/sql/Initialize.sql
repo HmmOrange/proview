@@ -4,7 +4,7 @@ DROP TABLE user;
 
 CREATE TABLE document
 (
-    id     INT primary key,
+    id     INT PRIMARY KEY AUTO_INCREMENT,
     name   VARCHAR(100) NULL,
     author VARCHAR(100) NULL
 );

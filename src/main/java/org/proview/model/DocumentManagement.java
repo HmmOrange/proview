@@ -7,14 +7,13 @@ import javafx.collections.ObservableList;
 import org.proview.test.AppMain;
 
 public class DocumentManagement {
-    public static void addDocument(int id, String name, String author) throws SQLException {
+    public static void addDocument(String name, String author) throws SQLException {
         Connection connection = AppMain.connection;
 
-        String sql = "INSERT INTO document(id, name, author) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO document(name, author) VALUES (?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, id);
-        preparedStatement.setString(2, name);
-        preparedStatement.setString(3, author);
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, author);
         preparedStatement.executeUpdate();
     }
 

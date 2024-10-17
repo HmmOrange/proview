@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class AdminView {
-    public TextField documentAddID;
     public TextField documentAddName;
     public TextField documentAddAuthor;
     public TextField documentRemoveID;
@@ -35,15 +34,8 @@ public class AdminView {
     }
 
     public void onAddButtonClick(ActionEvent actionEvent) throws SQLException {
-        Document newDocument = new Document(
-                Integer.parseInt(documentAddID.getText()),
-                documentAddName.getText(),
-                documentAddAuthor.getText()
-        );
-
-        DocumentManagement.addDocument(newDocument.getId(), newDocument.getName(), newDocument.getAuthor());
-        String newDocumentItem = documentAddID.getText() + ". " + documentAddName.getText() + " - " + documentAddAuthor.getText();
-        documentList.getItems().add(newDocumentItem);
+        DocumentManagement.addDocument(documentAddName.getText(), documentAddAuthor.getText());
+        reloadDocumentListView();
     }
 
     public void onRemoveButtonClick(ActionEvent actionEvent) throws SQLException {

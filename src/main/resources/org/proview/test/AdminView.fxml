@@ -20,7 +20,6 @@
                       <padding>
                           <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
                       </padding>
-                     <TextField fx:id="documentAddID" promptText="ID" />
                      <TextField fx:id="documentAddName" promptText="Book name" />
                      <TextField fx:id="documentAddAuthor" promptText="Author" />
                      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
