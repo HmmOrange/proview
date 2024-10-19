@@ -14,7 +14,7 @@ import org.proview.model.UserManagement;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class StudentView {
+public class CreateIssueView {
     public ListView<String> documentList;
     public ListView<String> documentIssuedList;
     public Button borrowButton;

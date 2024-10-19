@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
 
-public class AdminView {
+public class EditDocumentView {
     public TextField documentAddName;
     public TextField documentAddAuthor;
     public TextField documentRemoveID;
