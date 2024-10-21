@@ -2,13 +2,13 @@ package org.proview.model;
 
 public class Issue {
     private int id;
-    private int documentId;
+    private int bookId;
     private int duration;
     private String username;
 
-    public Issue(int id, int documentId, int duration, String username) {
+    public Issue(int id, int bookId, int duration, String username) {
         this.id = id;
-        this.documentId = documentId;
+        this.bookId = bookId;
         this.duration = duration;
         this.username = username;
     }
@@ -21,12 +21,12 @@ public class Issue {
         this.id = id;
     }
 
-    public int getDocumentId() {
-        return documentId;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setDocumentId(int documentId) {
-        this.documentId = documentId;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     public int getDuration() {
