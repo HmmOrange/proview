@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import org.proview.model.DocumentManagement;
+import org.proview.model.BookManagement;
 import org.proview.model.IssueManagement;
 import org.proview.model.UserManagement;
 
@@ -15,33 +15,33 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class CreateIssueView {
-    public ListView<String> documentList;
-    public ListView<String> documentIssuedList;
+    public ListView<String> bookList;
+    public ListView<String> bookIssuedList;
     public Button borrowButton;
-    public TextField documentBorrowID;
-    public TextField documentBorrowDuration;
+    public TextField bookBorrowID;
+    public TextField bookBorrowDuration;
     public Button logoutButton;
 
     @FXML
     public void initialize() throws SQLException {
-        reloadDocumentListView();
+        reloadBookListView();
         reloadIssueListView();
     }
 
-    private void reloadDocumentListView() throws SQLException {
-        documentList.setItems(DocumentManagement.getDocumentListView());
+    private void reloadBookListView() throws SQLException {
+        bookList.setItems(BookManagement.getBookListView());
     }
 
     private void reloadIssueListView() throws SQLException {
-        documentIssuedList.setItems(IssueManagement.getIssueListViewFrom(UserManagement.getCurrentUser().getUsername()));
+        bookIssuedList.setItems(IssueManagement.getIssueListViewFrom(UserManagement.getCurrentUser().getUsername()));
     }
 
     public void onBorrowButtonClick(ActionEvent actionEvent) throws SQLException {
         String username = UserManagement.getCurrentUser().getUsername();
-        int documentID = Integer.parseInt(documentBorrowID.getText());
-        int duration = Integer.parseInt(documentBorrowDuration.getText());
+        int bookID = Integer.parseInt(bookBorrowID.getText());
+        int duration = Integer.parseInt(bookBorrowDuration.getText());
 
-        IssueManagement.addIssue(username, documentID, duration);
+        IssueManagement.addIssue(username, bookID, duration);
         reloadIssueListView();
     }
 

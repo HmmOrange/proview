@@ -13,7 +13,7 @@
 
 <HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.EditBookView">
    <children>
-      <ListView fx:id="documentList" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="bookList" prefHeight="200.0" prefWidth="200.0" />
       <TabPane>
          <tabs>
             <Tab closable="false" text="Add">
@@ -22,8 +22,8 @@
                       <padding>
                           <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                       </padding>
-                     <TextField fx:id="documentAddName" promptText="Book name" />
-                     <TextField fx:id="documentAddAuthor" promptText="Author" />
+                     <TextField fx:id="bookAddName" promptText="Book name" />
+                     <TextField fx:id="bookAddAuthor" promptText="Author" />
                      <HBox prefHeight="100.0" prefWidth="200.0">
                         <children>
                            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
@@ -45,11 +45,12 @@
                      </HBox>
                      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                         <children>
-                            <Button fx:id="addDocumentButton" onAction="#onAddDocumentButtonClick" text="Add">
+                            <Button fx:id="addBookButton" onAction="#onAddBookButtonClick" text="Add">
                               <HBox.margin>
                                  <Insets right="20.0" />
                               </HBox.margin>
                            </Button>
+                           <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" />
                            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#onLogoutButtonClick" text="Logout">
                               <HBox.margin>
                                  <Insets left="20.0" />
@@ -67,7 +68,7 @@
                         <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
                      </padding>
                      <children>
-                        <TextField fx:id="documentRemoveID" promptText="ID" />
+                        <TextField fx:id="bookRemoveID" promptText="ID" />
                         <Button onAction="#onRemoveButtonClick" text="Remove!">
                            <VBox.margin>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
