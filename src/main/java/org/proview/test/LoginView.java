@@ -21,7 +21,7 @@ public class LoginView {
 
     public void onLoginButtonClick(ActionEvent actionEvent) throws IOException, SQLException {
         if (Objects.equals(loginUsernameField.getText(), "admin") && Objects.equals(loginPasswordField.getText(), "admin")) {
-            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("AdminView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("EditBookView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 500, 500);
             AppMain.window.setTitle("Hello!");
             AppMain.window.setScene(scene);
@@ -63,15 +63,15 @@ public class LoginView {
 
         // Check if user is admin
         if (checkingUser.getType() == 0) {
-            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("AdminView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1000, 700);
             AppMain.window.setTitle("Hello!");
             AppMain.window.setScene(scene);
         }
 
         // Check if user is normal user
         if (checkingUser.getType() == 1) {
-            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("StudentView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("CreateIssueView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 500, 500);
             AppMain.window.setTitle("Hello!");
             AppMain.window.setScene(scene);
