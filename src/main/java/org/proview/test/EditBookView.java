@@ -25,6 +25,9 @@ import java.time.LocalDate;
 public class EditBookView {
     public TextField bookAddName;
     public TextField bookAddAuthor;
+    public TextField bookAddDescription;
+    public TextField bookAddCopies;
+    public TextField bookAddTag;
     public TextField bookRemoveID;
     public ListView<String> bookList;
     public Button addBookButton;
@@ -67,7 +70,11 @@ public class EditBookView {
         // Add book to DB
         BookManagement.addBook(
                 bookAddName.getText(),
-                bookAddAuthor.getText()
+                bookAddAuthor.getText(),
+                bookAddDescription.getText(),
+                0,
+                Integer.parseInt(bookAddCopies.getText()),
+                bookAddTag.getText()
         );
 
         // Store cover images in a folder (in practice this is stored in a CDN)
