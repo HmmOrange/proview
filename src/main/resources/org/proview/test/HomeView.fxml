@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.HomeView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.HomeView">
    <top>
-      <AnchorPane fx:id="topPane" prefHeight="65.0" prefWidth="1000.0" style="-fx-background-color: #FFC1C3;" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="topPane" prefHeight="65.0" prefWidth="1300.0" style="-fx-background-color: #FFC1C3;" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="logoutButton" layoutX="843.0" layoutY="20.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" text="Logout" />
             <Button fx:id="editBookButton" layoutX="763.0" layoutY="20.0" mnemonicParsing="false" onAction="#onEditBookButtonClick" text="Edit Book" />

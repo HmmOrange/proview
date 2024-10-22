@@ -1,5 +1,12 @@
 package org.proview.model;
 
+import org.proview.test.AppMain;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Book {
     private int id;
     private String name;
@@ -34,4 +41,5 @@ public class Book {
     public void setAuthor(String author) {
         this.author = author;
     }
+
 }

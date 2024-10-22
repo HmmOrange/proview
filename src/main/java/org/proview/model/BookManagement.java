@@ -77,4 +77,29 @@ public class BookManagement {
 
         return bookStringList;
     }
+
+    public static ObservableList<BookCell> getBookCellList() throws SQLException {
+        ObservableList<BookCell> bookCellObservableList = FXCollections.observableArrayList();
+
+        Connection connection = AppMain.connection;
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM book");
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String title = resultSet.getString("name");
+            String author = resultSet.getString("author");
+            int issue = resultSet.getInt("issue_count");
+            int copies = resultSet.getInt("copies");
+
+            BookCell curBookCell = new BookCell(
+                    id,
+                    title,
+                    author,
+                    issue,
+                    "./assets/covers/cover" + id + ".png",
+                    copies);
+            bookCellObservableList.add(curBookCell);
+        }
+        return bookCellObservableList;
+    }
 }

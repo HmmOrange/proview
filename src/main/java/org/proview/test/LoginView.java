@@ -20,23 +20,16 @@ public class LoginView {
     public Button registerButton;
 
     public void onLoginButtonClick(ActionEvent actionEvent) throws IOException, SQLException {
-        if (Objects.equals(loginUsernameField.getText(), "admin") && Objects.equals(loginPasswordField.getText(), "admin")) {
-            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("EditBookView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 500, 500);
-            AppMain.window.setTitle("Hello!");
-            AppMain.window.setScene(scene);
+        String usn = loginUsernameField.getText();
+        String pw = loginPasswordField.getText();
+        if (Objects.equals(loginUsernameField.getText(), "")) {
+            System.out.println("Please enter username");
+        } else if (Objects.equals(loginPasswordField.getText(), "")) {
+            System.out.println("Please enter password");
+        } else if (UserManagement.isValidLoginCredentials(usn, pw) == null) {
+            System.out.println("Wrong username or password");
         } else {
-            String usn = loginUsernameField.getText();
-            String pw = loginPasswordField.getText();
-            if (Objects.equals(loginUsernameField.getText(), "")) {
-                System.out.println("Please enter username");
-            } else if (Objects.equals(loginPasswordField.getText(), "")) {
-                System.out.println("Please enter password");
-            } else if (UserManagement.isValidLoginCredentials(usn, pw) == null) {
-                System.out.println("Wrong username or password");
-            } else {
-                System.out.println("Welcome, " + usn);
-            }
+            System.out.println("Welcome, " + usn);
         }
 
         String username = loginUsernameField.getText();

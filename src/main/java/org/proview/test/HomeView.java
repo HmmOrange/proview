@@ -11,19 +11,17 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import org.proview.model.BookCell;
+import org.proview.model.BookManagement;
 import org.proview.model.UserManagement;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class HomeView {
     public ListView<BookCell> topRatedBookListView;
 
-    public void initialize() {
-        ObservableList<BookCell> bookList = FXCollections.observableArrayList(
-                new BookCell("#1. Book #1", "Drama, Slice of Life", 4.6, 60, "./assets/covers/cover1.png", 3),
-                new BookCell("#2. Book #2", "Action, Guns, Comedy", 4.49, 36, "./assets/covers/cover2.png", 5)
-        );
-
+    public void initialize() throws SQLException {
+        ObservableList<BookCell> bookList = BookManagement.getBookCellList();
         topRatedBookListView.setItems(bookList);
         topRatedBookListView.setCellFactory(param -> new ListCell<>() {
             @Override
@@ -41,6 +39,7 @@ public class HomeView {
                         BookCellView cellView = loader.getController();
                         cellView.setData(
                                 item.getTitle(),
+                                item.getAuthor(),
                                 item.getTags(),
                                 item.getRating(),
                                 item.getIssueCount(),
@@ -50,7 +49,7 @@ public class HomeView {
 
                         setGraphic(hbox);
                     } catch (Exception e) {
-                        System.out.println(e.toString());
+                        System.out.println(e);
                         throw new RuntimeException(e);
                     }
                 }

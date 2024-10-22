@@ -14,9 +14,11 @@ public class BookCellView {
     public Label tagLabel;
     public Label infoLabel;
     public Label copiesLabel;
+    public Label authorLabel;
 
-    public void setData(String title, String tags, double rating, int issueCount, String imagePath, int copiesAvailable) throws FileNotFoundException {
+    public void setData(String title, String author, String tags, double rating, int issueCount, String imagePath, int copiesAvailable) throws FileNotFoundException {
         titleLabel.setText(title);
+        authorLabel.setText(author);
         tagLabel.setText("Tags: " + tags);
         infoLabel.setText(rating + " 🌟 " + issueCount + " 👀 ");
         copiesLabel.setText(copiesAvailable + (copiesAvailable == 1 ? " copy" : " copies") + " available");
