@@ -56,9 +56,8 @@ INSERT INTO user(username, password, type) VALUES ('23021501', '23021501', 1);
 INSERT INTO user(username, password, type) VALUES ('23021521', '23021521', 1);
 
 -- Add 2 sample books
-g
+INSERT INTO book(name, author, description, time_added, issue_count, copies)
     VALUES ('Book #1', 'Author #1', 'Very long description #1', CURRENT_TIMESTAMP(), 10, 3);
-
 INSERT INTO book(name, author, description, time_added, issue_count, copies)
     VALUES ('Book #2', 'Author #2', 'Very long description #2', CURRENT_TIMESTAMP(), 3, 5);
 
