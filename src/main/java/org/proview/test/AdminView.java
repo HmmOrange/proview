@@ -87,13 +87,16 @@ public class AdminView {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose document cover");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.gif")
                 );
         coverFile = fileChooser.showOpenDialog(AppMain.window);
         if (coverFile != null) {
             fileAddedLabel.setText(coverFile.getName());
 
             Image image = new Image(coverFile.toURI().toString());
+            if (image.isError()) {
+                System.out.println("Error loading image: " + image.getException().getMessage());
+            }
             coverImageView.setImage(image);
             coverImageView.setFitWidth(100);
             coverImageView.setPreserveRatio(true);
