@@ -57,7 +57,7 @@ public class LoginView {
         // Check if user is admin
         if (checkingUser.getType() == 0) {
             FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1000, 700);
+            Scene scene = new Scene(fxmlLoader.load(), 1300g, 700);
             AppMain.window.setTitle("Hello!");
             AppMain.window.setScene(scene);
         }
