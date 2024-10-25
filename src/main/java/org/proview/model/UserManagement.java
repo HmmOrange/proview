@@ -37,6 +37,7 @@ public class UserManagement {
         preparedStatement.setString(1, user.getUsername());
         preparedStatement.setString(2, user.getPassword());
         preparedStatement.executeUpdate();
+        System.out.println("123");
     }
 
     public static User isValidLoginCredentials(String username, String password) throws SQLException {
@@ -46,6 +47,8 @@ public class UserManagement {
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, password);
         ResultSet resultSet = preparedStatement.executeQuery();
+
+        System.out.println("Hi");
         if (!resultSet.next()) {
             return null;
         } else {
