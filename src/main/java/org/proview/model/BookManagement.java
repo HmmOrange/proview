@@ -1,6 +1,7 @@
 package org.proview.model;
 
 import java.sql.*;
+import java.util.Comparator;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -100,28 +101,73 @@ public class BookManagement {
         return bookStringList;
     }
 
-    public static ObservableList<BookCell> getBookCellList() throws SQLException {
+    public static ObservableList<BookCell> getTopRatedBookCellList() throws SQLException {
         ObservableList<BookCell> bookCellObservableList = FXCollections.observableArrayList();
 
         Connection connection = AppMain.connection;
         Statement statement = connection.createStatement();
+
         ResultSet resultSet = statement.executeQuery("SELECT * FROM book");
+
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
             String title = resultSet.getString("name");
             String author = resultSet.getString("author");
-            int issue = resultSet.getInt("issue_count");
             int copies = resultSet.getInt("copies");
 
             BookCell curBookCell = new BookCell(
                     id,
                     title,
                     author,
-                    issue,
                     "./assets/covers/cover" + id + ".png",
                     copies);
             bookCellObservableList.add(curBookCell);
         }
+
+        // Sort by rating descending
+        bookCellObservableList.sort(Comparator.comparingDouble((BookCell a) -> {
+            try {
+                return a.getRating();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }).reversed());
+
+        return bookCellObservableList;
+    }
+
+
+    public static ObservableList<BookCell> getTrendingBookCellList() throws SQLException {
+        ObservableList<BookCell> bookCellObservableList = FXCollections.observableArrayList();
+
+        Connection connection = AppMain.connection;
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM book");
+
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String title = resultSet.getString("name");
+            String author = resultSet.getString("author");
+            int copies = resultSet.getInt("copies");
+
+            BookCell curBookCell = new BookCell(
+                    id,
+                    title,
+                    author,
+                    "./assets/covers/cover" + id + ".png",
+                    copies);
+            bookCellObservableList.add(curBookCell);
+        }
+
+        // Sort by trend descending
+        bookCellObservableList.sort(Comparator.comparingInt((BookCell a) -> {
+            try {
+                return a.getIssueCount7Days();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }).reversed());
+
         return bookCellObservableList;
     }
 }

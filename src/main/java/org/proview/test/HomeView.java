@@ -19,11 +19,11 @@ import java.sql.SQLException;
 
 public class HomeView {
     public ListView<BookCell> topRatedBookListView;
+    public ListView<BookCell> trendingBookListView;
 
-    public void initialize() throws SQLException {
-        ObservableList<BookCell> bookList = BookManagement.getBookCellList();
-        topRatedBookListView.setItems(bookList);
-        topRatedBookListView.setCellFactory(param -> new ListCell<>() {
+    public void initList(ListView<BookCell> bookListView, ObservableList<BookCell> bookList) {
+        bookListView.setItems(bookList);
+        bookListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(BookCell item, boolean empty) {
                 super.updateItem(item, empty);
@@ -37,8 +37,9 @@ public class HomeView {
 
                         // Get the controller of the cell
                         BookCellView cellView = loader.getController();
+
                         cellView.setData(
-                                item.getTitle(),
+                                "#" + (getIndex() + 1) + ". " + item.getTitle(),
                                 item.getAuthor(),
                                 item.getTags(),
                                 item.getRating(),
@@ -55,6 +56,10 @@ public class HomeView {
                 }
             }
         });
+    }
+    public void initialize() throws SQLException {
+        initList(topRatedBookListView, BookManagement.getTopRatedBookCellList());
+        initList(trendingBookListView, BookManagement.getTrendingBookCellList());
     }
 
 

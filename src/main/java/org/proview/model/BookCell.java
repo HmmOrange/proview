@@ -11,21 +11,26 @@ public class BookCell {
     private int id;
     private String title;
     private String author;
-    private int issueCount;
     private String imagePath;
     private int copiesAvailable;
+    private double rating = -1;
+    private int issueCount = -1;
+    private int issueCount7Days = -1;
 
-    public BookCell(int id, String title, String author, int issueCount, String imagePath, int copiesAvailable) {
+    public BookCell(int id, String title, String author, String imagePath, int copiesAvailable) throws SQLException {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.issueCount = issueCount;
         this.imagePath = imagePath;
         this.copiesAvailable = copiesAvailable;
+
+        this.issueCount = getIssueCount();
+        this.issueCount7Days = getIssueCount7Days();
+        this.rating = getRating();
     }
 
     public String getTitle() {
-        return "#" + id + ". " + title;
+        return title;
     }
 
     public String getAuthor() {
@@ -49,6 +54,9 @@ public class BookCell {
 
 
     public double getRating() throws SQLException {
+        if (rating >= 0)
+            return rating;
+
         Connection connection = AppMain.connection;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM review WHERE book_id = " + id);
@@ -63,8 +71,38 @@ public class BookCell {
         return (double) Math.round(sum / count * 100) / 100;
     }
 
-    public int getIssueCount() {
-        return issueCount;
+    public int getIssueCount() throws SQLException {
+        if (issueCount >= 0)
+            return issueCount;
+
+        Connection connection = AppMain.connection;
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS issue_count FROM issue WHERE book_id = " + id);
+
+        int count = 0;
+        if (resultSet.next()) {
+            count = resultSet.getInt("issue_count");
+        }
+
+        return count;
+    }
+
+    public int getIssueCount7Days() throws SQLException {
+        if (issueCount >= 0)
+            return issueCount;
+
+        Connection connection = AppMain.connection;
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(
+                "SELECT COUNT(*) AS issue_count7 FROM issue WHERE book_id = " + id + "AND TIMESTAMPDIFF(DAY, start_date, CURRENT_TIMESTAMP) <= 7;"
+        );
+
+        int count = 0;
+        if (resultSet.next()) {
+            count = resultSet.getInt("issue_count7");
+        }
+
+        return count;
     }
 
     public String getImagePath() {

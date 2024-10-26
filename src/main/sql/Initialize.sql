@@ -11,7 +11,6 @@ CREATE TABLE book
     author      VARCHAR(100) NULL,
     description VARCHAR(500) NULL,
     time_added  TIMESTAMP    NULL,
-    issue_count INT          NULL,
     copies      INT          NULL
 );
 
@@ -25,6 +24,7 @@ CREATE TABLE user
 CREATE TABLE issue
 (
     id          INT PRIMARY KEY AUTO_INCREMENT,
+    start_date  TIMESTAMP,
     duration    INT,
     username    VARCHAR(20),
     book_id INT,
@@ -56,10 +56,12 @@ INSERT INTO user(username, password, type) VALUES ('23021501', '23021501', 1);
 INSERT INTO user(username, password, type) VALUES ('23021521', '23021521', 1);
 
 -- Add 2 sample books
-INSERT INTO book(name, author, description, time_added, issue_count, copies)
-    VALUES ('Book #1', 'Author #1', 'Very long description #1', CURRENT_TIMESTAMP(), 10, 3);
-INSERT INTO book(name, author, description, time_added, issue_count, copies)
-    VALUES ('Book #2', 'Author #2', 'Very long description #2', CURRENT_TIMESTAMP(), 3, 5);
+INSERT INTO book(name, author, description, time_added, copies)
+    VALUES ('Book #1', 'Author #1', 'Very long description #1', CURRENT_TIMESTAMP(), 3);
+INSERT INTO book(name, author, description, time_added, copies)
+    VALUES ('Book #2', 'Author #2', 'Very long description #2', CURRENT_TIMESTAMP(), 5);
+INSERT INTO book(name, author, description, time_added, copies)
+    VALUES ('Book #3', 'Author #3', 'Very long description #3', CURRENT_TIMESTAMP(), 1);
 
 -- Add sample tags
 INSERT INTO tag(book_id, tag) VALUES (1, 'Drama');
@@ -77,5 +79,16 @@ INSERT INTO review(book_id, rating) VALUES (1, 4.1);
 INSERT INTO review(book_id, rating) VALUES (2, 5);
 INSERT INTO review(book_id, rating) VALUES (2, 4);
 INSERT INTO review(book_id, rating) VALUES (2, 4.2);
+
+INSERT INTO review(book_id, rating) VALUES (3, 5);
+INSERT INTO review(book_id, rating) VALUES (3, 5);
+
+-- Add sample request issues
+INSERT INTO issue(start_date, duration, username, book_id) VALUES (CURRENT_TIMESTAMP, 3, '23021497', 1);
+INSERT INTO issue(start_date, duration, username, book_id) VALUES (CURRENT_TIMESTAMP, 7, '23021501', 1);
+INSERT INTO issue(start_date, duration, username, book_id) VALUES (CURRENT_TIMESTAMP, 1, '23021501', 2);
+INSERT INTO issue(start_date, duration, username, book_id) VALUES (CURRENT_TIMESTAMP, 7, '23021521', 1);
+INSERT INTO issue(start_date, duration, username, book_id) VALUES (CURRENT_TIMESTAMP, 2, '23021521', 2);
+INSERT INTO issue(start_date, duration, username, book_id) VALUES (CURRENT_TIMESTAMP, 10, '23021521', 3);
 
 SELECT * FROM user;
