@@ -21,8 +21,19 @@ public class IssueManagement {
     public static ObservableList<Issue> getIssueListFrom(String username) throws SQLException {
         ObservableList<Issue> issues = FXCollections.observableArrayList();
         Connection connection = AppMain.connection;
-        Statement statement = connection.createStatement();
+        /*Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM issue WHERE username = " + username);
+        while (resultSet.next()) {
+            int issueId = resultSet.getInt("id");
+            int bookId = resultSet.getInt("book_id");
+            int duration = resultSet.getInt("duration");
+            Issue curIssue = new Issue(issueId, bookId, duration, username);
+            issues.add(curIssue);
+        }*/
+        String sql = "SELECT * FROM issue WHERE username = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, username);
+        ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             int issueId = resultSet.getInt("id");
             int bookId = resultSet.getInt("book_id");
