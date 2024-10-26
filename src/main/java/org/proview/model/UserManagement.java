@@ -1,8 +1,19 @@
-package org.example.demo;
+package org.proview.model;
+import org.proview.test.AppMain;
+
 import java.sql.*;
-import java.util.Scanner;
 
 public class UserManagement {
+    public static User currentUser = null;
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(User currentUser) {
+        UserManagement.currentUser = currentUser;
+    }
+
     public static void addNormalUser(User user) throws SQLException {
         Connection connection = AppMain.connection;
         Statement statement = connection.createStatement();
@@ -43,6 +54,4 @@ public class UserManagement {
                     resultSet.getInt("type"));
         }
     }
-
-
 }

@@ -1,4 +1,4 @@
-package org.example.demo;
+package org.proview.model;
 
 public class User {
     private String username;

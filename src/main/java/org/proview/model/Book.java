@@ -1,11 +1,18 @@
-package org.example.demo;
+package org.proview.model;
 
-public class Document {
+import org.proview.test.AppMain;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Book {
     private int id;
     private String name;
     private String author;
 
-    public Document(int id, String name, String author) {
+    public Book(int id, String name, String author) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -34,4 +41,5 @@ public class Document {
     public void setAuthor(String author) {
         this.author = author;
     }
+
 }

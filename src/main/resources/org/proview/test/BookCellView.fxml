@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.BookCellView">
+   <children>
+      <ImageView fx:id="coverImageView" fitHeight="150.0" fitWidth="112.5" pickOnBounds="true" preserveRatio="true" />
+      <VBox prefHeight="250.0" prefWidth="550.0">
+         <children>
+            <Label fx:id="titleLabel" alignment="TOP_LEFT" prefHeight="31.0" prefWidth="355.0" text="#1. Book #1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="authorLabel" alignment="TOP_LEFT" prefHeight="186.0" prefWidth="355.0" text="Author">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="tagLabel" alignment="BOTTOM_LEFT" prefHeight="25.0" prefWidth="344.0" text="Science, Animals, World" wrapText="true">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Label>
+            <HBox>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+               <children>
+                  <Label fx:id="infoLabel" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="38.0" prefWidth="365.0" text="4.5 🌟 102 👀 " wrapText="true">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="copiesLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="38.0" prefWidth="365.0" text="3 copies available" wrapText="true">
+                     <font>
+                        <Font name="System Italic" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </VBox>
+   </children>
+</HBox>

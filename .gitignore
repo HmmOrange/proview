@@ -41,3 +41,6 @@ build/
 
 ### env
 .env
+
+### covers
+./assets/covers
