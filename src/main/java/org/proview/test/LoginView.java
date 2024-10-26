@@ -71,13 +71,10 @@ public class LoginView {
         }
     }
 
-    public void onRegisterButtonClick(ActionEvent actionEvent) throws SQLException {
-        if (Objects.equals(loginUsernameField.getText(), "")) {
-            System.out.println("Please enter username");
-        } else if (Objects.equals(loginPasswordField.getText(), "")) {
-            System.out.println("Please enter password");
-        } else {
-            UserManagement.addNormalUser(new User(loginUsernameField.getText(), loginPasswordField.getText(), 1));
-        }
+    public void onRegisterButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("RegisterView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+        AppMain.window.setTitle("Hello!");
+        AppMain.window.setScene(scene);
     }
 }
