@@ -72,7 +72,6 @@ public class EditBookView {
                 bookAddName.getText(),
                 bookAddAuthor.getText(),
                 bookAddDescription.getText(),
-                0,
                 Integer.parseInt(bookAddCopies.getText()),
                 bookAddTag.getText()
         );
