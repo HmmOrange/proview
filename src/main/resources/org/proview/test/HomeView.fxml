@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -34,29 +35,33 @@
          </children></AnchorPane>
    </left>
    <center>
-      <VBox prefHeight="586.0" prefWidth="231.0" BorderPane.alignment="CENTER">
-         <children>
-            <AnchorPane prefHeight="586.0" prefWidth="539.0">
+      <ScrollPane prefHeight="578.0" prefWidth="1029.0" BorderPane.alignment="CENTER">
+         <content>
+            <VBox prefHeight="586.0" prefWidth="231.0">
                <children>
-                  <Label layoutX="22.0" layoutY="14.0" prefHeight="30.0" prefWidth="499.0" text="Top-rated books">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <ListView fx:id="topRatedBookListView" layoutX="22.0" layoutY="57.0" prefHeight="465.0" prefWidth="500.0" />
-                  <Label layoutX="541.0" layoutY="14.0" prefHeight="30.0" prefWidth="499.0" text="Trending (7 days)">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <ListView fx:id="trendingBookListView" layoutX="540.0" layoutY="57.0" prefHeight="465.0" prefWidth="500.0" />
+                  <AnchorPane prefHeight="586.0" prefWidth="539.0">
+                     <children>
+                        <Label layoutX="22.0" layoutY="14.0" prefHeight="30.0" prefWidth="499.0" text="Top-rated books">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="topRatedBookListView" layoutX="22.0" layoutY="59.0" prefHeight="115.0" prefWidth="500.0" />
+                        <Label layoutX="541.0" layoutY="14.0" prefHeight="30.0" prefWidth="499.0" text="Trending (7 days)">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="trendingBookListView" layoutX="541.0" layoutY="60.0" prefHeight="113.0" prefWidth="500.0" />
+                     </children>
+                  </AnchorPane>
                </children>
-            </AnchorPane>
-         </children>
-      </VBox>
+            </VBox>
+         </content>
+      </ScrollPane>
    </center>
    <right>
-      <AnchorPane prefHeight="578.0" prefWidth="17.0" BorderPane.alignment="CENTER" />
+      <AnchorPane prefHeight="578.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
       <AnchorPane prefHeight="49.0" prefWidth="1000.0" BorderPane.alignment="CENTER" />

@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import org.proview.model.BookCell;
 import org.proview.model.BookManagement;
@@ -24,6 +25,9 @@ public class HomeView {
     public void initList(ListView<BookCell> bookListView, ObservableList<BookCell> bookList) {
         bookListView.setItems(bookList);
         bookListView.setCellFactory(param -> new ListCell<>() {
+            {
+                setStyle("-fx-padding: 0px; -fx-margin: 0px; -fx-background-insets: 0px; -fx-border-insets: 0px;");
+            }
             @Override
             protected void updateItem(BookCell item, boolean empty) {
                 super.updateItem(item, empty);
@@ -58,8 +62,18 @@ public class HomeView {
         });
     }
     public void initialize() throws SQLException {
-        initList(topRatedBookListView, BookManagement.getTopRatedBookCellList());
-        initList(trendingBookListView, BookManagement.getTrendingBookCellList());
+        ObservableList<BookCell> topRatedList = BookManagement.getTopRatedBookCellList();
+        ObservableList<BookCell> trendingList = BookManagement.getTrendingBookCellList();
+
+        initList(topRatedBookListView, topRatedList);
+        initList(trendingBookListView, trendingList);
+
+        // Make the list view non-scrollable (there is probably a better way to do this)
+        topRatedBookListView.setMinHeight(150 * topRatedList.size() + 20);
+        trendingBookListView.setMinHeight(150 * trendingList.size() + 20);
+
+        topRatedBookListView.setMinWidth(500 + 10);
+        trendingBookListView.setMinWidth(500 + 10);
     }
 
 

@@ -8,19 +8,18 @@ import javafx.collections.ObservableList;
 import org.proview.test.AppMain;
 
 public class BookManagement {
-    public static void addBook(String name, String author, String description, int issue_count, int copies, String tag) throws SQLException {
+    public static void addBook(String name, String author, String description, int copies, String tag) throws SQLException {
         Connection connection = AppMain.connection;
 
         String sql = """
-        INSERT INTO book(name, author, description, time_added, issue_count, copies)
-            VALUES (?, ?, ?, CURRENT_TIMESTAMP(), ?, ?);
+        INSERT INTO book(name, author, description, time_added, copies)
+            VALUES (?, ?, ?, CURRENT_TIMESTAMP(), ?);
         """;
         PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setString(1, name);
         preparedStatement.setString(2, author);
         preparedStatement.setString(3, description);
-        preparedStatement.setInt(4, issue_count);
-        preparedStatement.setInt(5, copies);
+        preparedStatement.setInt(4, copies);
         int affectedRows = preparedStatement.executeUpdate();
 
         if (affectedRows > 0) {
