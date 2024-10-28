@@ -1,24 +1,19 @@
 package org.proview.test;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.proview.model.BookCell;
 import org.proview.model.BookManagement;
-import org.proview.model.UserManagement;
-
+import org.proview.model.SearchHandler;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class HomeView {
-    public ListView<BookCell> topRatedBookListView;
-    public ListView<BookCell> trendingBookListView;
-    public TextField bookSearchBar;
+public class SearchResultView {
+    public ListView<BookCell> topResultListView;
 
     public void initList(ListView<BookCell> bookListView, ObservableList<BookCell> bookList) {
         bookListView.setItems(bookList);
@@ -59,18 +54,15 @@ public class HomeView {
             }
         });
     }
+
     public void initialize() throws SQLException {
-        ObservableList<BookCell> topRatedList = BookManagement.getTopRatedBookCellList();
-        ObservableList<BookCell> trendingList = BookManagement.getTrendingBookCellList();
+        ObservableList<BookCell> bookList = BookManagement.getTopRatedBookCellList();
+        ObservableList<BookCell> filteredBookList = SearchHandler.filterBookList(bookList);
 
-        initList(topRatedBookListView, topRatedList);
-        initList(trendingBookListView, trendingList);
+        initList(topResultListView, filteredBookList);
 
-        // Make the list view non-scrollable (there is probably a better way to do this)
-        topRatedBookListView.setMinHeight(150 * topRatedList.size() + 10);
-        trendingBookListView.setMinHeight(150 * trendingList.size() + 10);
+        topResultListView.setMinHeight(150 * filteredBookList.size() + 10);
 
-        topRatedBookListView.setMinWidth(500 + 10);
-        trendingBookListView.setMinWidth(500 + 10);
+        topResultListView.setMinWidth(500 + 10);
     }
 }

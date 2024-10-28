@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.SearchResultView">
+   <top>
+      <fx:include source="NavBar.fxml" />
+   </top>
+   <right>
+      <AnchorPane prefHeight="578.0" prefWidth="93.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <AnchorPane prefHeight="49.0" prefWidth="1000.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <left>
+      <AnchorPane prefHeight="578.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+   </left>
+   <center>
+      <AnchorPane prefHeight="578.0" prefWidth="1026.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="62.0" layoutY="28.0" prefHeight="30.0" prefWidth="499.0" text="Top results">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ListView fx:id="topResultListView" layoutX="61.0" layoutY="81.0" prefHeight="115.0" prefWidth="500.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
