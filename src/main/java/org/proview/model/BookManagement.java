@@ -100,7 +100,7 @@ public class BookManagement {
         return bookStringList;
     }
 
-    public static ObservableList<BookCell> getTopRatedBookCellList() throws SQLException {
+    public static ObservableList<BookCell> getBookCellList() throws SQLException {
         ObservableList<BookCell> bookCellObservableList = FXCollections.observableArrayList();
 
         Connection connection = AppMain.connection;
@@ -122,6 +122,12 @@ public class BookManagement {
                     copies);
             bookCellObservableList.add(curBookCell);
         }
+
+        return bookCellObservableList;
+    }
+
+    public static ObservableList<BookCell> getTopRatedBookCellList() throws SQLException {
+        ObservableList<BookCell> bookCellObservableList = getBookCellList();
 
         // Sort by rating descending
         bookCellObservableList.sort(Comparator.comparingDouble((BookCell a) -> {
@@ -137,26 +143,7 @@ public class BookManagement {
 
 
     public static ObservableList<BookCell> getTrendingBookCellList() throws SQLException {
-        ObservableList<BookCell> bookCellObservableList = FXCollections.observableArrayList();
-
-        Connection connection = AppMain.connection;
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM book");
-
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String title = resultSet.getString("name");
-            String author = resultSet.getString("author");
-            int copies = resultSet.getInt("copies");
-
-            BookCell curBookCell = new BookCell(
-                    id,
-                    title,
-                    author,
-                    "./assets/covers/cover" + id + ".png",
-                    copies);
-            bookCellObservableList.add(curBookCell);
-        }
+        ObservableList<BookCell> bookCellObservableList = getBookCellList();
 
         // Sort by trend descending
         bookCellObservableList.sort(Comparator.comparingInt((BookCell a) -> {
