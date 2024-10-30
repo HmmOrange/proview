@@ -33,13 +33,14 @@ public class SearchHandler {
                 bookSet.add(i);
         }
 
-        // Search by partial token sorting ratio
+        // Search titles & authors with partial token sorting ratio
         Map<BookCell, Integer> ratioList = new HashMap<>();
         for (var i : bookList) {
-            System.out.println(i.getTitle() + " " + FuzzySearch.tokenSetRatio(curQuery, i.getTitle()));
+            System.out.println(i.getTitle() + " " + FuzzySearch.tokenSetRatio(curQuery, i.getTitle() + " " + i.getAuthor()));
             ratioList.put(i, FuzzySearch.tokenSetRatio(curQuery, i.getTitle()));
         }
 
+        // Sort by descending score
         ArrayList<Map.Entry<BookCell, Integer>> sortedList = new ArrayList<>(ratioList.entrySet());
         sortedList.sort(Map.Entry.<BookCell, Integer>comparingByValue().reversed());
 
