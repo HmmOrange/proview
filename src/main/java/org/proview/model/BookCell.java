@@ -29,6 +29,10 @@ public class BookCell {
         this.rating = getRating();
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
