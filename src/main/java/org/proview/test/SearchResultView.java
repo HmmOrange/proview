@@ -36,6 +36,7 @@ public class SearchResultView {
                         BookCellView cellView = loader.getController();
 
                         cellView.setData(
+                                item.getId(),
                                 "#" + (getIndex() + 1) + ". " + item.getTitle(),
                                 item.getAuthor(),
                                 item.getTags(),

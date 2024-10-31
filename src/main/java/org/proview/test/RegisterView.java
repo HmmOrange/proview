@@ -41,5 +41,6 @@ public class RegisterView {
         Scene scene = new Scene(fxmlLoader.load(), 500, 500);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
     }
 }

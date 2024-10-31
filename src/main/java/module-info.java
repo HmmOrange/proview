@@ -9,6 +9,7 @@ module org.example.demo {
     requires io.github.cdimascio.dotenv.java;
     requires java.desktop;
     requires me.xdrop.fuzzywuzzy;
+    requires com.fasterxml.jackson.annotation;
 
     opens org.proview.test to javafx.fxml;
     exports org.proview.test;

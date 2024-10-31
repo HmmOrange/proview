@@ -60,6 +60,7 @@ public class LoginView {
             Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
             AppMain.window.setTitle("Hello!");
             AppMain.window.setScene(scene);
+            AppMain.window.centerOnScreen();
         }
 
         // Check if user is normal user
@@ -68,6 +69,7 @@ public class LoginView {
             Scene scene = new Scene(fxmlLoader.load(), 500, 500);
             AppMain.window.setTitle("Hello!");
             AppMain.window.setScene(scene);
+            AppMain.window.centerOnScreen();
         }
     }
 
@@ -76,5 +78,6 @@ public class LoginView {
         Scene scene = new Scene(fxmlLoader.load(), 500, 500);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
     }
 }

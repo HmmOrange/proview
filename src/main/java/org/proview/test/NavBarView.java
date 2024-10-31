@@ -22,8 +22,9 @@ public class NavBarView {
     public void onEditBookButtonClick(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("EditBookView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 500, 500);
-        AppMain.window.setTitle("Edit book");
+        AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
     }
 
     public void onLogoutButtonClick(ActionEvent actionEvent) throws IOException {
@@ -31,8 +32,9 @@ public class NavBarView {
 
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 500, 500);
-        AppMain.window.setTitle("Login!");
+        AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
     }
 
     public void onSearchButtonClick(ActionEvent actionEvent) throws IOException {
@@ -43,6 +45,7 @@ public class NavBarView {
             FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("SearchResultView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
             AppMain.window.setScene(scene);
+            AppMain.window.centerOnScreen();
         }
     }
 
