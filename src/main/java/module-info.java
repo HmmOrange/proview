@@ -8,6 +8,7 @@ module org.example.demo {
     requires java.sql;
     requires io.github.cdimascio.dotenv.java;
     requires java.desktop;
+    requires me.xdrop.fuzzywuzzy;
 
     opens org.proview.test to javafx.fxml;
     exports org.proview.test;
