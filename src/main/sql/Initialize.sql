@@ -57,11 +57,11 @@ INSERT INTO user(username, password, type) VALUES ('23021521', '23021521', 1);
 
 -- Add 2 sample books
 INSERT INTO book(name, author, description, time_added, copies)
-    VALUES ('Book #1', 'Author #1', 'Very long description #1', CURRENT_TIMESTAMP(), 3);
+    VALUES ('Book Number 1', 'Author #1', 'Very long description #1', CURRENT_TIMESTAMP(), 3);
 INSERT INTO book(name, author, description, time_added, copies)
-    VALUES ('Book #2', 'Author #2', 'Very long description #2', CURRENT_TIMESTAMP(), 5);
+    VALUES ('Book Number 2', 'Author #2', 'Very long description #2', CURRENT_TIMESTAMP(), 5);
 INSERT INTO book(name, author, description, time_added, copies)
-    VALUES ('Book #3', 'Author #3', 'Very long description #3', CURRENT_TIMESTAMP(), 1);
+    VALUES ('Book Number 3', 'Author #3', 'Very long description #3', CURRENT_TIMESTAMP(), 1);
 
 -- Add sample tags
 INSERT INTO tag(book_id, tag) VALUES (1, 'Drama');
