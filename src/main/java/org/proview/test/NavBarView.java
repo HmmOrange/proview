@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import org.proview.model.SearchHandler;
 import org.proview.model.UserManagement;
 
@@ -51,5 +53,19 @@ public class NavBarView {
 
     public void setBookSearchBar(String query) {
         bookSearchBar.setText(query);
+    }
+
+    public void onKeyReleased(KeyEvent keyEvent) throws IOException {
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            String curQuery = bookSearchBar.getText();
+            if (curQuery != null) {
+                SearchHandler.setCurQuery(curQuery);
+
+                FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("SearchResultView.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+                AppMain.window.setScene(scene);
+                AppMain.window.centerOnScreen();
+            }
+        }
     }
 }
