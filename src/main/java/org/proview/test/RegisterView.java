@@ -1,6 +1,8 @@
 package org.proview.test;
 
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import org.proview.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -65,5 +67,43 @@ public class RegisterView {
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();
+    }
+
+    public void onKeyReleased(KeyEvent keyEvent) throws SQLException, IOException {
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            if (Objects.equals(registerUsernameField.getText(), "") ||
+                    Objects.equals(registerPasswordField.getText(), "") || Objects.equals(registerConfirmPasswordField.getText(), "")) {
+                registerResultLabel.setText("Please fill in all blanks");
+            }
+            else {
+                String usn = registerUsernameField.getText();
+                String pass = registerPasswordField.getText();
+                String cfpass = registerConfirmPasswordField.getText();
+
+                /// check if username exists
+                String sql = "SELECT username FROM user WHERE username = ?";
+                Connection connection = AppMain.connection;
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, usn);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                ///
+
+                if (!Objects.equals(pass, cfpass)) registerResultLabel.setText("Password wrong");
+                else if (resultSet.next()) registerResultLabel.setText("Username already exists!");
+                else {
+                    User us = new User(usn, pass, 1);
+                    UserManagement.addNormalUser(us);
+                    registerResultLabel.setText("Register Success");
+
+                    FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
+                    Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+                    LoginView tempLoginView = fxmlLoader.getController();
+                    tempLoginView.loginResultLabel.setText("Register Success. Please log in!");
+                    AppMain.window.setTitle("Hello!");
+                    AppMain.window.setScene(scene);
+                    AppMain.window.centerOnScreen();
+                }
+            }
+        }
     }
 }

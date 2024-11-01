@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.LoginView">
+<VBox alignment="CENTER" onKeyReleased="#onKeyReleased" spacing="20.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.LoginView">
    <children>
       <Label fx:id="loginResultLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="197.0" />
       <TextField fx:id="loginUsernameField" promptText="Username" />
