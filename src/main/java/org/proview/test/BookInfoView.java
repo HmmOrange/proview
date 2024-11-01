@@ -37,6 +37,15 @@ public class BookInfoView {
         authorLabel.setText(resultSet.getString("author"));
         descriptionLabel.setText(resultSet.getString("description"));
 
+        String tagSql = "SELECT tag FROM tag WHERE book_id = ?";
+        PreparedStatement tagPreparedStatement = connection.prepareStatement(tagSql);
+        tagPreparedStatement.setInt(1, id);
+        ResultSet tagResultSet = tagPreparedStatement.executeQuery();
+        tagResultSet.next();
+        StringBuilder tagSB = new StringBuilder(tagResultSet.getString("tag"));
+        while (tagResultSet.next()) tagSB.append(", ").append(tagResultSet.getString("tag"));
+        tagLabel.setText(tagSB.toString());
+
         InputStream stream = new FileInputStream(String.format("./assets/covers/cover%d.png", id));
         Image image = new Image(stream);
         coverImage.setImage(image);

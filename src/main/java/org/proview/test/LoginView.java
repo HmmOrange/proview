@@ -1,5 +1,6 @@
 package org.proview.test;
 
+import javafx.scene.control.Label;
 import org.proview.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -18,18 +19,19 @@ public class LoginView {
     public TextField loginPasswordField;
     public Button loginButton;
     public Button registerButton;
+    public Label loginResultLabel;
 
     public void onLoginButtonClick(ActionEvent actionEvent) throws IOException, SQLException {
         String usn = loginUsernameField.getText();
         String pw = loginPasswordField.getText();
         if (Objects.equals(loginUsernameField.getText(), "")) {
-            System.out.println("Please enter username");
+            loginResultLabel.setText("Please enter username");
         } else if (Objects.equals(loginPasswordField.getText(), "")) {
-            System.out.println("Please enter password");
+            loginResultLabel.setText("Please enter password");
         } else if (UserManagement.isValidLoginCredentials(usn, pw) == null) {
-            System.out.println("Wrong username or password");
+            loginResultLabel.setText("Wrong username or password");
         } else {
-            System.out.println("Welcome, " + usn);
+            loginResultLabel.setText("Welcome, " + usn);
         }
 
         String username = loginUsernameField.getText();
