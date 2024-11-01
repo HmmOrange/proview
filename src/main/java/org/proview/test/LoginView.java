@@ -1,5 +1,8 @@
 package org.proview.test;
 
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import org.proview.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -18,18 +21,19 @@ public class LoginView {
     public TextField loginPasswordField;
     public Button loginButton;
     public Button registerButton;
+    public Label loginResultLabel;
 
     public void onLoginButtonClick(ActionEvent actionEvent) throws IOException, SQLException {
         String usn = loginUsernameField.getText();
         String pw = loginPasswordField.getText();
         if (Objects.equals(loginUsernameField.getText(), "")) {
-            System.out.println("Please enter username");
+            loginResultLabel.setText("Please enter username");
         } else if (Objects.equals(loginPasswordField.getText(), "")) {
-            System.out.println("Please enter password");
+            loginResultLabel.setText("Please enter password");
         } else if (UserManagement.isValidLoginCredentials(usn, pw) == null) {
-            System.out.println("Wrong username or password");
+            loginResultLabel.setText("Wrong username or password");
         } else {
-            System.out.println("Welcome, " + usn);
+            loginResultLabel.setText("Welcome, " + usn);
         }
 
         String username = loginUsernameField.getText();
@@ -60,6 +64,7 @@ public class LoginView {
             Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
             AppMain.window.setTitle("Hello!");
             AppMain.window.setScene(scene);
+            AppMain.window.centerOnScreen();
         }
 
         // Check if user is normal user
@@ -68,6 +73,7 @@ public class LoginView {
             Scene scene = new Scene(fxmlLoader.load(), 500, 500);
             AppMain.window.setTitle("Hello!");
             AppMain.window.setScene(scene);
+            AppMain.window.centerOnScreen();
         }
     }
 
@@ -76,5 +82,62 @@ public class LoginView {
         Scene scene = new Scene(fxmlLoader.load(), 500, 500);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
+    }
+
+    public void onKeyReleased(KeyEvent keyEvent) throws IOException, SQLException {
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            String usn = loginUsernameField.getText();
+            String pw = loginPasswordField.getText();
+            if (Objects.equals(loginUsernameField.getText(), "")) {
+                loginResultLabel.setText("Please enter username");
+            } else if (Objects.equals(loginPasswordField.getText(), "")) {
+                loginResultLabel.setText("Please enter password");
+            } else if (UserManagement.isValidLoginCredentials(usn, pw) == null) {
+                loginResultLabel.setText("Wrong username or password");
+            } else {
+                loginResultLabel.setText("Welcome, " + usn);
+            }
+
+            String username = loginUsernameField.getText();
+            String password = loginPasswordField.getText();
+
+            if (Objects.equals(loginUsernameField.getText(), "")) {
+                System.out.println("Please enter username");
+                return;
+            }
+
+            if (Objects.equals(loginPasswordField.getText(), "")) {
+                System.out.println("Please enter password");
+                return;
+            }
+
+            User checkingUser = UserManagement.isValidLoginCredentials(username, password);
+            if (checkingUser == null) {
+                System.out.println("Username or password is incorrect");
+                return;
+            }
+
+            // Save details of logged in user
+            UserManagement.setCurrentUser(checkingUser);
+
+            // Check if user is admin
+            if (checkingUser.getType() == 0) {
+                FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+                AppMain.window.setTitle("Hello!");
+                AppMain.window.setScene(scene);
+                AppMain.window.centerOnScreen();
+            }
+
+            // Check if user is normal user
+            if (checkingUser.getType() == 1) {
+                FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("CreateIssueView.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+                AppMain.window.setTitle("Hello!");
+                AppMain.window.setScene(scene);
+                AppMain.window.centerOnScreen();
+            }
+        }
     }
 }

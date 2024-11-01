@@ -93,8 +93,9 @@ public class EditBookView {
 
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 500, 500);
-        AppMain.window.setTitle("Login!");
+        AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
     }
 
     public void onAddCoverButtonClick(ActionEvent actionEvent) {
@@ -121,8 +122,9 @@ public class EditBookView {
 
     public void onBackButtonClick(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 700);
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
     }
 }
