@@ -4,12 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
-import javax.print.Doc;
 import java.util.*;
-import java.util.regex.MatchResult;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class SearchHandler {
     private static String curQuery = null;
@@ -22,8 +17,8 @@ public class SearchHandler {
         return curQuery;
     }
 
-    public static ObservableList<BookCell> filterBookList(ObservableList<BookCell> bookList) {
-        Set<BookCell> bookSet = new LinkedHashSet<>();
+    public static ObservableList<BookLib> filterBookList(ObservableList<BookLib> bookList) {
+        Set<BookLib> bookSet = new LinkedHashSet<>();
 
         String curQuery = SearchHandler.getCurQuery().toLowerCase();
 
@@ -34,15 +29,15 @@ public class SearchHandler {
         }
 
         // Search titles & authors with partial token sorting ratio
-        Map<BookCell, Integer> ratioList = new HashMap<>();
+        Map<BookLib, Integer> ratioList = new HashMap<>();
         for (var i : bookList) {
             System.out.println(i.getTitle() + " " + FuzzySearch.tokenSetRatio(curQuery, i.getTitle() + " " + i.getAuthor()));
             ratioList.put(i, FuzzySearch.tokenSetRatio(curQuery, i.getTitle()));
         }
 
         // Sort by descending score
-        ArrayList<Map.Entry<BookCell, Integer>> sortedList = new ArrayList<>(ratioList.entrySet());
-        sortedList.sort(Map.Entry.<BookCell, Integer>comparingByValue().reversed());
+        ArrayList<Map.Entry<BookLib, Integer>> sortedList = new ArrayList<>(ratioList.entrySet());
+        sortedList.sort(Map.Entry.<BookLib, Integer>comparingByValue().reversed());
 
         for (var i : sortedList) {
             bookSet.add(i.getKey());

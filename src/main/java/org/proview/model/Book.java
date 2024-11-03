@@ -1,45 +1,30 @@
 package org.proview.model;
 
-import org.proview.test.AppMain;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-public class Book {
-    private int id;
-    private String name;
+public abstract class Book {
+    private String title;
     private String author;
+    private String description;
 
-    public Book(int id, String name, String author) {
-        this.id = id;
-        this.name = name;
+    public Book(String title, String author) {
+        this.title = title;
         this.author = author;
     }
 
-    public int getId() {
-        return id;
+    public Book(String title, String author, String description) {
+        this.title = title;
+        this.author = author;
+        this.description = description;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public String getTitle() {
+        return title;
     }
 
     public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public String getDescription() {
+        return description;
     }
-
 }
