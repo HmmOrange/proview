@@ -196,6 +196,12 @@ public class BookManagement {
                         .replace("\"", "")
                         : "Unknown";
                 String description = volumeInfo.has("description") ? volumeInfo.get("description").getAsString() : "No description available";
+                String tags = volumeInfo.has("categories")
+                        ? volumeInfo.getAsJsonArray("categories").toString()
+                        .replace("[", "")
+                        .replace("]", "")
+                        .replace("\"", "")
+                        : "Unknown";
 
                 // Cover image URL
                 String coverImageUrl = "";
@@ -204,7 +210,7 @@ public class BookManagement {
                     coverImageUrl = imageLinks.get("thumbnail").getAsString();
                 }
 
-                bookList.add(new BookGoogle(title, authors, description, coverImageUrl));
+                bookList.add(new BookGoogle(title, authors, description, coverImageUrl, tags));
             }
         }
         return bookList;
@@ -274,7 +280,8 @@ public class BookManagement {
                         cellView.setData(
                                 item.getTitle(),
                                 item.getAuthor(),
-                                item.getCoverImageUrl()
+                                item.getCoverImageUrl(),
+                                item.getTags()
                         );
 
                         setGraphic(hbox);

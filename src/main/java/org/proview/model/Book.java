@@ -1,5 +1,7 @@
 package org.proview.model;
 
+import java.sql.SQLException;
+
 public abstract class Book {
     private String title;
     private String author;
@@ -27,4 +29,6 @@ public abstract class Book {
     public String getDescription() {
         return description;
     }
+
+    public abstract String getTags() throws SQLException;
 }

@@ -1,8 +1,6 @@
 package org.proview.api;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.proview.model.BookGoogle;
@@ -36,5 +34,15 @@ public class GoogleBooksAPI {
         return null;
     }
 
+    public static void main(String[] args) throws IOException {
+        String response = getBooksFromAPI("Girl's Last Tour");
+        JsonParser parser = new JsonParser();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        JsonElement el = parser.parse(response);
+        response = gson.toJson(el); // done
+
+        System.out.println(response);
+    }
 
 }

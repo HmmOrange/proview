@@ -36,6 +36,7 @@ public class BookLib extends Book {
         return id;
     }
 
+    @Override
     public String getTags() throws SQLException {
         Connection connection = AppMain.connection;
         Statement statement = connection.createStatement();

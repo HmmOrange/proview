@@ -25,13 +25,14 @@ public class BookCellView {
     public Label authorLabel;
     private int id = -1;
 
-    public void setData(String title, String authors, String imageUrl) throws IOException {
+    public void setData(String title, String authors, String imageUrl, String tags) throws IOException {
         titleLabel.setText(title);
         authorLabel.setText(authors);
-        tagLabel.setText("Tags: ");
+        tagLabel.setText("Tags: " + tags);
         infoLabel.setText(0 + " 🌟 " + 0 + " 👀 ");
         copiesLabel.setText("View in Google Books 🔗");
 
+        // System.out.println(imageUrl);
         InputStream stream = URI.create(imageUrl).toURL().openStream();
         Image image = new Image(stream);
 
