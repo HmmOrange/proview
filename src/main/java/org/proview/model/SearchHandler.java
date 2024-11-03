@@ -17,10 +17,8 @@ public class SearchHandler {
         return curQuery;
     }
 
-    public static ObservableList<BookLib> filterBookList(ObservableList<BookLib> bookList) {
+    public static ObservableList<BookLib> filterBookList(String curQuery, ObservableList<BookLib> bookList) {
         Set<BookLib> bookSet = new LinkedHashSet<>();
-
-        String curQuery = SearchHandler.getCurQuery().toLowerCase();
 
         // Search by whole query first
         for (var i : bookList) {
@@ -40,7 +38,7 @@ public class SearchHandler {
         sortedList.sort(Map.Entry.<BookLib, Integer>comparingByValue().reversed());
 
         for (var i : sortedList) {
-            bookSet.add(i.getKey());
+            if (i.getValue() > 50) bookSet.add(i.getKey());
         }
 
         return FXCollections.observableArrayList(bookSet);

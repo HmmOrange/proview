@@ -13,8 +13,8 @@ public class HomeView {
     public TextField bookSearchBar;
 
     public void initialize() throws SQLException {
-        ObservableList<BookLib> topRatedList = BookManagement.getTopRatedBookCellList();
-        ObservableList<BookLib> trendingList = BookManagement.getTrendingBookCellList();
+        ObservableList<BookLib> topRatedList = BookManagement.getTopRatedBookList();
+        ObservableList<BookLib> trendingList = BookManagement.getTrendingBookList();
 
         BookManagement.initLibBookList(topRatedBookListView, topRatedList);
         BookManagement.initLibBookList(trendingBookListView, trendingList);
