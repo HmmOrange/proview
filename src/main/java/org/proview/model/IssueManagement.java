@@ -55,11 +55,11 @@ public class IssueManagement {
         int index = 0;
         for (Issue i : currentIssueList) {
             index++;
-            Book curBook = BookManagement.getBook(i.getBookId());
+            BookLib curBook = BookManagement.getBook(i.getBookId());
             if (curBook == null) {
                 continue;
             }
-            String newIssueItem = index + ". " + curBook.getName() + " - " + curBook.getAuthor()
+            String newIssueItem = index + ". " + curBook.getTitle() + " - " + curBook.getAuthor()
                                 + " for " + i.getDuration() + (i.getDuration() == 1 ? " day" : " days")
                                 + " (book #" + curBook.getId() + ", issue #" + i.getId() + ")";
             issueStringList.add(newIssueItem);

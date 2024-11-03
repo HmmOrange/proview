@@ -7,20 +7,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class BookCell {
+public class BookLib extends Book {
     private int id;
-    private String title;
-    private String author;
     private String imagePath;
     private int copiesAvailable;
     private double rating = -1;
     private int issueCount = -1;
     private int issueCount7Days = -1;
 
-    public BookCell(int id, String title, String author, String imagePath, int copiesAvailable) throws SQLException {
+
+    public BookLib(int id, String title, String author) {
+        super(title, author);
         this.id = id;
-        this.title = title;
-        this.author = author;
+    }
+
+    public BookLib(int id, String title, String author, String description, String imagePath, int copiesAvailable) throws SQLException {
+        super(title, author, description);
+        this.id = id;
         this.imagePath = imagePath;
         this.copiesAvailable = copiesAvailable;
 
@@ -33,14 +36,7 @@ public class BookCell {
         return id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
+    @Override
     public String getTags() throws SQLException {
         Connection connection = AppMain.connection;
         Statement statement = connection.createStatement();
@@ -92,13 +88,13 @@ public class BookCell {
     }
 
     public int getIssueCount7Days() throws SQLException {
-        if (issueCount >= 0)
-            return issueCount;
+        if (issueCount7Days >= 0)
+            return issueCount7Days;
 
         Connection connection = AppMain.connection;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(
-                "SELECT COUNT(*) AS issue_count7 FROM issue WHERE book_id = " + id + "AND TIMESTAMPDIFF(DAY, start_date, CURRENT_TIMESTAMP) <= 7;"
+                "SELECT COUNT(*) AS issue_count7 FROM issue WHERE book_id = " + id + " AND TIMESTAMPDIFF(DAY, start_date, CURRENT_TIMESTAMP) <= 7;"
         );
 
         int count = 0;

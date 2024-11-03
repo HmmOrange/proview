@@ -1,11 +1,21 @@
 package org.proview.model;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.Comparator;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.HBox;
+import org.proview.api.GoogleBooksAPI;
 import org.proview.test.AppMain;
+import org.proview.test.BookCellView;
 
 public class BookManagement {
     public static void addBook(String name, String author, String description, int copies, String tag) throws SQLException {
@@ -47,14 +57,15 @@ public class BookManagement {
         preparedStatement.executeUpdate();
     }
 
-    public static Book getBook(int id) throws SQLException {
+    @Deprecated
+    public static BookLib getBook(int id) throws SQLException {
         Statement statement = AppMain.connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM book WHERE id = " + id);
 
         if (resultSet.next()) {
             String name = resultSet.getString("name");
             String author = resultSet.getString("author");
-            return new Book(id, name, author);
+            return new BookLib(id, name, author);
         }
 
         return null;
@@ -68,9 +79,10 @@ public class BookManagement {
         }
         return 0;
     }
-
-    public static ObservableList<Book> getBookList() throws SQLException {
-        ObservableList<Book> books = FXCollections.observableArrayList();
+    
+    @Deprecated
+    public static ObservableList<BookLib> getOldBookList() throws SQLException {
+        ObservableList<BookLib> books = FXCollections.observableArrayList();
         Connection connection = AppMain.connection;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM book");
@@ -78,30 +90,31 @@ public class BookManagement {
             int id = resultSet.getInt("id");
             String name = resultSet.getString("name");
             String author = resultSet.getString("author");
-            Book curBook = new Book(id, name, author);
+            BookLib curBook = new BookLib(id, name, author);
             books.add(curBook);
         }
         return books;
     }
 
+    @Deprecated
     public static ObservableList<String> getBookListView() throws SQLException {
-        ObservableList<Book> currentBookList = null;
+        ObservableList<BookLib> currentBookList = null;
         ObservableList<String> bookStringList = FXCollections.observableArrayList();
         try {
-            currentBookList = BookManagement.getBookList();
+            currentBookList = BookManagement.getOldBookList();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        for (Book d : currentBookList) {
-            String newbookItem = d.getId() + ". " + d.getName() + " - " + d.getAuthor();
+        for (var d : currentBookList) {
+            String newbookItem = d.getId() + ". " + d.getTitle() + " - " + d.getAuthor();
             bookStringList.add(newbookItem);
         }
 
         return bookStringList;
     }
 
-    public static ObservableList<BookCell> getBookCellList() throws SQLException {
-        ObservableList<BookCell> bookCellObservableList = FXCollections.observableArrayList();
+    public static ObservableList<BookLib> getBookList() throws SQLException {
+        ObservableList<BookLib> bookCellObservableList = FXCollections.observableArrayList();
 
         Connection connection = AppMain.connection;
         Statement statement = connection.createStatement();
@@ -112,25 +125,27 @@ public class BookManagement {
             int id = resultSet.getInt("id");
             String title = resultSet.getString("name");
             String author = resultSet.getString("author");
+            String description = resultSet.getString("description");
             int copies = resultSet.getInt("copies");
 
-            BookCell curBookCell = new BookCell(
+            BookLib curBook = new BookLib(
                     id,
                     title,
                     author,
+                    description,
                     "./assets/covers/cover" + id + ".png",
                     copies);
-            bookCellObservableList.add(curBookCell);
+            bookCellObservableList.add(curBook);
         }
 
         return bookCellObservableList;
     }
 
-    public static ObservableList<BookCell> getTopRatedBookCellList() throws SQLException {
-        ObservableList<BookCell> bookCellObservableList = getBookCellList();
+    public static ObservableList<BookLib> getTopRatedBookList() throws SQLException {
+        ObservableList<BookLib> bookCellObservableList = getBookList();
 
         // Sort by rating descending
-        bookCellObservableList.sort(Comparator.comparingDouble((BookCell a) -> {
+        bookCellObservableList.sort(Comparator.comparingDouble((BookLib a) -> {
             try {
                 return a.getRating();
             } catch (SQLException e) {
@@ -142,11 +157,11 @@ public class BookManagement {
     }
 
 
-    public static ObservableList<BookCell> getTrendingBookCellList() throws SQLException {
-        ObservableList<BookCell> bookCellObservableList = getBookCellList();
+    public static ObservableList<BookLib> getTrendingBookList() throws SQLException {
+        ObservableList<BookLib> bookCellObservableList = getBookList();
 
         // Sort by trend descending
-        bookCellObservableList.sort(Comparator.comparingInt((BookCell a) -> {
+        bookCellObservableList.sort(Comparator.comparingInt((BookLib a) -> {
             try {
                 return a.getIssueCount7Days();
             } catch (SQLException e) {
@@ -155,5 +170,127 @@ public class BookManagement {
         }).reversed());
 
         return bookCellObservableList;
+    }
+
+    public static ObservableList<BookGoogle> getGoogleBookList(String query) throws SQLException, IOException {
+        String jsonResponse = GoogleBooksAPI.getBooksFromAPI(query);
+        if (jsonResponse == null) {
+            System.out.println("Uh oh~");
+            return null;
+        }
+
+        ObservableList<BookGoogle> bookList = FXCollections.observableArrayList();
+
+        JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
+        JsonArray items = jsonObject.getAsJsonArray("items");
+        if (items != null) {
+            for (var item : items) {
+                JsonObject volumeInfo = item.getAsJsonObject().getAsJsonObject("volumeInfo");
+
+                // Book details
+                String title = volumeInfo.get("title").getAsString();
+                String authors = volumeInfo.has("authors")
+                        ? volumeInfo.getAsJsonArray("authors").toString()
+                        .replace("[", "")
+                        .replace("]", "")
+                        .replace("\"", "")
+                        : "Unknown";
+                String description = volumeInfo.has("description") ? volumeInfo.get("description").getAsString() : "No description available";
+                String tags = volumeInfo.has("categories")
+                        ? volumeInfo.getAsJsonArray("categories").toString()
+                        .replace("[", "")
+                        .replace("]", "")
+                        .replace("\"", "")
+                        : "Unknown";
+
+                // Cover image URL
+                String coverImageUrl = "";
+                if (volumeInfo.has("imageLinks")) {
+                    JsonObject imageLinks = volumeInfo.getAsJsonObject("imageLinks");
+                    coverImageUrl = imageLinks.get("thumbnail").getAsString();
+                }
+
+                bookList.add(new BookGoogle(title, authors, description, coverImageUrl, tags));
+            }
+        }
+        return bookList;
+    }
+
+    public static void initLibBookList(ListView<BookLib> bookListView, ObservableList<BookLib> bookList) {
+        bookListView.setItems(bookList);
+        bookListView.setCellFactory(param -> new ListCell<>() {
+            {
+                setStyle("-fx-padding: 0px; -fx-margin: 0px; -fx-background-insets: 0px; -fx-border-insets: 0px;");
+            }
+            @Override
+            protected void updateItem(BookLib item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("BookCellView.fxml"));
+                        HBox hbox = loader.load();
+
+                        // Get the controller of the cell
+                        BookCellView cellView = loader.getController();
+
+                        cellView.setData(
+                                item.getId(),
+                                "#" + (getIndex() + 1) + ". " + item.getTitle(),
+                                item.getAuthor(),
+                                item.getTags(),
+                                item.getRating(),
+                                item.getIssueCount(),
+                                item.getImagePath(),
+                                item.getCopiesAvailable()
+                        );
+
+                        setGraphic(hbox);
+                    } catch (Exception e) {
+                        System.out.println(e);
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+    }
+
+    public static void initGoogleBookList(ListView<BookGoogle> bookListView, ObservableList<BookGoogle> bookList) {
+        bookListView.setItems(bookList);
+        bookListView.setCellFactory(param -> new ListCell<>() {
+            {
+                setStyle("-fx-padding: 0px; -fx-margin: 0px; -fx-background-insets: 0px; -fx-border-insets: 0px;");
+            }
+            @Override
+            protected void updateItem(BookGoogle item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("BookCellView.fxml"));
+                        HBox hbox = loader.load();
+
+                        // Get the controller of the cell
+                        BookCellView cellView = loader.getController();
+
+                        cellView.setData(
+                                item.getTitle(),
+                                item.getAuthor(),
+                                item.getCoverImageUrl(),
+                                item.getTags()
+                        );
+
+                        setGraphic(hbox);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
 }
