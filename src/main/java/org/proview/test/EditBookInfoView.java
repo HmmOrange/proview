@@ -37,7 +37,7 @@ public class EditBookInfoView {
     private int id;
     private File coverFile;
 
-    public void initialize(int id) throws SQLException, FileNotFoundException {
+    public void initialize(int id) throws SQLException, IOException {
         this.id = id;
         Connection connection = AppMain.connection;
         String sql = "SELECT name, author, description, copies FROM book WHERE id = ?";
@@ -68,6 +68,9 @@ public class EditBookInfoView {
         coverImage.setPreserveRatio(true);
         coverImage.setSmooth(true);
         coverImage.setCache(true);
+        stream.close();
+
+        coverFile = new File(String.format("./assets/covers/cover%d.png", id));
     }
     public void onChangeCoverButtonClick(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -100,6 +103,9 @@ public class EditBookInfoView {
         preparedStatement.setInt(5, id);
         preparedStatement.executeUpdate();
 
+        String dstFilePath = String.format("./assets/covers/cover%d.png", id);
+        // Store cover images in a folder (in practice this is stored in a CDN)
+        Files.copy(coverFile.toPath(), (new File(dstFilePath)).toPath(), StandardCopyOption.REPLACE_EXISTING);
 
         //tag
 

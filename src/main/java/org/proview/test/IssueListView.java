@@ -47,6 +47,7 @@ public class IssueListView {
 
         issueTable.setItems(IssueManagement.getIssueListFrom(UserManagement.getCurrentUser().getUsername()));*/
 
+        issueTable.getColumns().clear();
         TableColumn<ObservableList<String>, String> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(0)));
 
