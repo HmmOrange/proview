@@ -12,7 +12,7 @@
       <TableView fx:id="issueTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" visible="false" />
-          <TableColumn prefWidth="75.0" text="C2" visible="false" />
+          <TableColumn prefWidth="75.0" text="C2" />
         </columns>
       </TableView>
    </center>

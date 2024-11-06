@@ -9,8 +9,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import org.proview.model.BookManagement;
 
+import javax.imageio.ImageIO;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -95,6 +99,7 @@ public class EditBookInfoView {
         preparedStatement.setString(4, copiesField.getText());
         preparedStatement.setInt(5, id);
         preparedStatement.executeUpdate();
+
 
         //tag
 

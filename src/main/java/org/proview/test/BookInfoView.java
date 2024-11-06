@@ -49,7 +49,7 @@ public class BookInfoView {
         }
     }
 
-    public void setData(int id) throws FileNotFoundException, SQLException {
+    public void setData(int id) throws IOException, SQLException {
         ID = id;
         Connection connection = AppMain.connection;
         String sql = "SELECT name, author, description, copies FROM book WHERE id = ?";
@@ -79,6 +79,7 @@ public class BookInfoView {
         coverImage.setPreserveRatio(true);
         coverImage.setSmooth(true);
         coverImage.setCache(true);
+        stream.close();
     }
     public void onBackButtonClick(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
