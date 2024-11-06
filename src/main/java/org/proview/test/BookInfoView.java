@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.proview.model.UserManagement;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,11 +26,28 @@ public class BookInfoView {
     public Label authorLabel;
     public Label tagLabel;
     public Label descriptionLabel;
-    public Button borrowButton;
     public Button editButton;
     public Label copiesLabel;
 
     private int ID;
+
+    public void initialize() {
+        if(UserManagement.getCurrentUser().getType() == 1) {
+            editButton.setText("Borrow");
+            editButton.setOnAction(actionEvent -> {
+                FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("CreateIssueView.fxml"));
+                Scene scene = null;
+                try {
+                    scene = new Scene(fxmlLoader.load(), 500, 500);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                AppMain.window.setTitle("Hello!");
+                AppMain.window.setScene(scene);
+                AppMain.window.centerOnScreen();
+            });
+        }
+    }
 
     public void setData(int id) throws FileNotFoundException, SQLException {
         ID = id;

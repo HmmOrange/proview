@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="770.0" prefWidth="1412.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.IssueListView">
+    <top>
+        <fx:include source="NavBar.fxml" />
+    </top>
+   <center>
+      <TableView fx:id="issueTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" visible="false" />
+          <TableColumn prefWidth="75.0" text="C2" visible="false" />
+        </columns>
+      </TableView>
+   </center>
+</BorderPane>

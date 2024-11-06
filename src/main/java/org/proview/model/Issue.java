@@ -13,6 +13,7 @@ public class Issue {
         this.username = username;
     }
 
+
     public int getId() {
         return id;
     }

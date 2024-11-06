@@ -15,6 +15,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditBookInfoView {
     public TextField titleField;
@@ -81,7 +85,7 @@ public class EditBookInfoView {
         }
     }
 
-    public void onConfirmButtonClick(ActionEvent actionEvent) throws SQLException {
+    public void onConfirmButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
         Connection connection = AppMain.connection;
         String sql = "UPDATE book SET name = ?, author = ?, description = ?, copies = ? WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -91,6 +95,10 @@ public class EditBookInfoView {
         preparedStatement.setString(4, copiesField.getText());
         preparedStatement.setInt(5, id);
         preparedStatement.executeUpdate();
+
+        //tag
+
+        this.onBackButtonClick(actionEvent);
     }
 
     public void onBackButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
