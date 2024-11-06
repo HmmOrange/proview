@@ -1,19 +1,22 @@
 package org.proview.test;
 
+import com.google.gson.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.proview.api.GoogleBooksAPI;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 
 public class BookCellView {
@@ -66,7 +69,7 @@ public class BookCellView {
     }
 
     public void onMouseClick(MouseEvent mouseEvent) throws IOException, SQLException {
-        if (id < 0) { // this seems tricky, maybe there is a better way to handle this
+        if (id >= 0) { // this seems tricky, maybe there is a better way to handle this
             FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("BookInfo.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
             AppMain.window.setTitle("Hello!");
@@ -75,6 +78,38 @@ public class BookCellView {
 
             BookInfoView tempBookInfoView = fxmlLoader.getController();
             tempBookInfoView.setData(this.id);
+        } else {
+            String previewLink = "";
+            String response = GoogleBooksAPI.getBooksFromAPI(titleLabel.getText());
+            JsonParser parser = new JsonParser();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+            JsonElement el = parser.parse(response);
+            response = gson.toJson(el); // done
+
+            response = StringEscapeUtils.unescapeJava(response);
+
+            JsonObject jsonObject = el.getAsJsonObject();
+            JsonArray items = jsonObject.getAsJsonArray("items");
+
+            if (items != null && items.size() > 0) {
+                JsonObject volumeInfo = items.get(0).getAsJsonObject().getAsJsonObject("volumeInfo");
+                previewLink = volumeInfo.get("previewLink").getAsString();
+                System.out.println("Preview Link: " + previewLink);
+            } else {
+                System.out.println("Không tìm thấy previewLink trong phản hồi JSON.");
+            }
+
+            URL url = URI.create(previewLink).toURL();
+            if (Desktop.isDesktopSupported()) {
+                try {
+                    Desktop.getDesktop().browse(new URI(url.toString()));
+                } catch (IOException | URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Desktop không được hỗ trợ.");
+            }
         }
     }
 

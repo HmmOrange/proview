@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.proview.model.BookGoogle;
 import org.proview.model.BookLib;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class GoogleBooksAPI {
 
     public static String getBooksFromAPI(String query) throws IOException {
         URL url = URI.create(BASE_URL + URLEncoder.encode(query, StandardCharsets.UTF_8)).toURL();
+        System.out.println(url.toString());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         int respondCode = connection.getResponseCode();
@@ -35,6 +37,15 @@ public class GoogleBooksAPI {
     }
 
     public static void main(String[] args) throws IOException {
+        /*String response = getBooksFromAPI("Girl's Last Tour");
+        JsonParser parser = new JsonParser();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        JsonElement el = parser.parse(response);
+        response = gson.toJson(el); // done
+
+        System.out.println(response);*/
+
         String response = getBooksFromAPI("Girl's Last Tour");
         JsonParser parser = new JsonParser();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -42,7 +53,19 @@ public class GoogleBooksAPI {
         JsonElement el = parser.parse(response);
         response = gson.toJson(el); // done
 
+        response = StringEscapeUtils.unescapeJava(response);
         System.out.println(response);
+
+        JsonObject jsonObject = el.getAsJsonObject();
+        JsonArray items = jsonObject.getAsJsonArray("items");
+
+        if (items != null && items.size() > 0) {
+            JsonObject volumeInfo = items.get(0).getAsJsonObject().getAsJsonObject("volumeInfo");
+            String previewLink = volumeInfo.get("previewLink").getAsString();
+            System.out.println("Preview Link: " + previewLink);
+        } else {
+            System.out.println("Không tìm thấy previewLink trong phản hồi JSON.");
+        }
     }
 
 }
