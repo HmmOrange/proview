@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.proview.model.BookLib;
 import org.proview.model.IssueManagement;
 import org.proview.model.UserManagement;
 
@@ -31,8 +32,14 @@ public class BookInfoView {
     public Button editButton;
     public Label copiesLabel;
     public TextField durationField;
+    public Label ratingLabel;
+    public Label issueLabel;
 
-    private int ID;
+    private int id;
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void initialize() {
         durationField.setVisible(false);
@@ -42,9 +49,7 @@ public class BookInfoView {
             editButton.setOnAction(actionEvent -> {
                 try {
                     this.onBorrowButtonClick(actionEvent);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
+                } catch (SQLException | IOException e) {
                     throw new RuntimeException(e);
                 }
             });
@@ -54,32 +59,21 @@ public class BookInfoView {
     }
 
     public void setData(int id) throws IOException, SQLException {
-        ID = id;
-        Connection connection = AppMain.connection;
-        String sql = "SELECT name, author, description, copies FROM book WHERE id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-        titleLabel.setText(resultSet.getString("name"));
-        authorLabel.setText(resultSet.getString("author"));
-        descriptionLabel.setText(resultSet.getString("description"));
-        copiesLabel.setText("Number of copies available: " + resultSet.getString("copies"));
+        setId(id);
+        BookLib book = new BookLib(id);
 
-        String tagSql = "SELECT tag FROM tag WHERE book_id = ?";
-        PreparedStatement tagPreparedStatement = connection.prepareStatement(tagSql);
-        tagPreparedStatement.setInt(1, id);
-        ResultSet tagResultSet = tagPreparedStatement.executeQuery();
-        if (tagResultSet.next()) {
-            StringBuilder tagSB = new StringBuilder(tagResultSet.getString("tag"));
-            while (tagResultSet.next()) tagSB.append(", ").append(tagResultSet.getString("tag"));
-            tagLabel.setText(tagSB.toString());
-        }
+        titleLabel.setText(book.getTitle());
+        authorLabel.setText(authorLabel.getText() + " " + book.getAuthor());
+        descriptionLabel.setText(descriptionLabel.getText() + "\n" + book.getDescription());
+        copiesLabel.setText(copiesLabel.getText() + " " + book.getCopiesAvailable());
+        tagLabel.setText(tagLabel.getText() + " " + book.getTags());
+        ratingLabel.setText(ratingLabel.getText() + " " + book.getRating());
+        issueLabel.setText(issueLabel.getText() + " " + book.getIssueCount());
 
-        InputStream stream = new FileInputStream(String.format("./assets/covers/cover%d.png", id));
+        InputStream stream = new FileInputStream(book.getImagePath());
         Image image = new Image(stream);
         coverImage.setImage(image);
-        coverImage.setFitWidth(1000);
+        coverImage.setFitWidth(300);
         coverImage.setPreserveRatio(true);
         coverImage.setSmooth(true);
         coverImage.setCache(true);
@@ -94,7 +88,7 @@ public class BookInfoView {
     }
 
     public void onBorrowButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
-        IssueManagement.addIssue(UserManagement.getCurrentUser().getUsername(), ID, Integer.parseInt(durationField.getText()));
+        IssueManagement.addIssue(UserManagement.getCurrentUser().getUsername(), id, Integer.parseInt(durationField.getText()));
         this.onBackButtonClick(actionEvent);
     }
 
@@ -102,7 +96,7 @@ public class BookInfoView {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("EditBookInfoView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         EditBookInfoView thisEditBookInfoView = fxmlLoader.getController();
-        thisEditBookInfoView.initialize(ID);
+        thisEditBookInfoView.initialize(id);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();

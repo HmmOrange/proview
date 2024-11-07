@@ -64,7 +64,7 @@ public class EditBookInfoView {
         InputStream stream = new FileInputStream(String.format("./assets/covers/cover%d.png", id));
         Image image = new Image(stream);
         coverImage.setImage(image);
-        coverImage.setFitWidth(1000);
+        coverImage.setFitWidth(300);
         coverImage.setPreserveRatio(true);
         coverImage.setSmooth(true);
         coverImage.setCache(true);
@@ -85,7 +85,7 @@ public class EditBookInfoView {
                 System.out.println("Error loading image: " + image.getException().getMessage());
             }
             coverImage.setImage(image);
-            coverImage.setFitWidth(1000);
+            coverImage.setFitWidth(300);
             coverImage.setPreserveRatio(true);
             coverImage.setSmooth(true);
             coverImage.setCache(true);

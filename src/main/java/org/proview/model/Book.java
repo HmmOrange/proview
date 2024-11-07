@@ -18,6 +18,8 @@ public abstract class Book {
         this.description = description;
     }
 
+    public Book() {}
+
     public String getTitle() {
         return title;
     }
@@ -30,5 +32,19 @@ public abstract class Book {
         return description;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public abstract String getTags() throws SQLException;
+
+
 }

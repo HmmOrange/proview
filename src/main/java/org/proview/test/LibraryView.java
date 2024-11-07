@@ -8,7 +8,7 @@ import org.proview.model.BookManagement;
 import java.sql.SQLException;
 
 public class LibraryView {
-    public ListView allBooksListView;
+    public ListView<BookLib> allBooksListView;
 
     public void initialize() throws SQLException {
         ObservableList<BookLib> bookList = BookManagement.getBookList();
