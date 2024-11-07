@@ -59,7 +59,7 @@ public class LoginView {
         UserManagement.setCurrentUser(checkingUser);
 
         // Check if user is admin
-        if (checkingUser.getType() == 0) {
+        /*if (checkingUser.getType() == 0) {
             FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
             AppMain.window.setTitle("Hello!");
@@ -74,7 +74,12 @@ public class LoginView {
             AppMain.window.setTitle("Hello!");
             AppMain.window.setScene(scene);
             AppMain.window.centerOnScreen();
-        }
+        }*/
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+        AppMain.window.setTitle("Hello!");
+        AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
     }
 
     public void onRegisterButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
@@ -87,57 +92,7 @@ public class LoginView {
 
     public void onKeyReleased(KeyEvent keyEvent) throws IOException, SQLException {
         if (keyEvent.getCode() == KeyCode.ENTER) {
-            String usn = loginUsernameField.getText();
-            String pw = loginPasswordField.getText();
-            if (Objects.equals(loginUsernameField.getText(), "")) {
-                loginResultLabel.setText("Please enter username");
-            } else if (Objects.equals(loginPasswordField.getText(), "")) {
-                loginResultLabel.setText("Please enter password");
-            } else if (UserManagement.isValidLoginCredentials(usn, pw) == null) {
-                loginResultLabel.setText("Wrong username or password");
-            } else {
-                loginResultLabel.setText("Welcome, " + usn);
-            }
-
-            String username = loginUsernameField.getText();
-            String password = loginPasswordField.getText();
-
-            if (Objects.equals(loginUsernameField.getText(), "")) {
-                System.out.println("Please enter username");
-                return;
-            }
-
-            if (Objects.equals(loginPasswordField.getText(), "")) {
-                System.out.println("Please enter password");
-                return;
-            }
-
-            User checkingUser = UserManagement.isValidLoginCredentials(username, password);
-            if (checkingUser == null) {
-                System.out.println("Username or password is incorrect");
-                return;
-            }
-
-            // Save details of logged in user
-            UserManagement.setCurrentUser(checkingUser);
-
-            // Check if user is admin
-            if (checkingUser.getType() == 0) {
-                FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-                AppMain.window.setTitle("Hello!");
-                AppMain.window.setScene(scene);
-                AppMain.window.centerOnScreen();
-            }
-
-            // Check if user is normal user
-            if (checkingUser.getType() == 1) {
-                FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("CreateIssueView.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 500, 500);
-                AppMain.window.setTitle("Hello!");
-                AppMain.window.setScene(scene);
-                AppMain.window.centerOnScreen();
-            }
+            this.onLoginButtonClick(new ActionEvent());
         }
     }
 }

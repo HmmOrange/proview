@@ -11,12 +11,14 @@
       <AnchorPane fx:id="topPane" onKeyReleased="#onKeyReleased" prefHeight="4.0" prefWidth="1300.0" style="-fx-background-color: #FFC1C3;">
          <children>
             <Button fx:id="logoutButton" layoutX="1123.0" layoutY="20.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" text="Logout" />
-            <Button fx:id="editBookButton" layoutX="1043.0" layoutY="20.0" mnemonicParsing="false" onAction="#onEditBookButtonClick" text="Edit Book" />
-            <Button layoutX="941.0" layoutY="20.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Borrow Book" />
+            <Button fx:id="editBookButton" layoutX="889.0" layoutY="20.0" mnemonicParsing="false" onAction="#onEditBookButtonClick" text="Edit Book" />
+            <Button fx:id="libraryButton" layoutX="1022.0" layoutY="20.0" mnemonicParsing="false" onAction="#onLibraryButtonClick" prefHeight="25.0" prefWidth="88.0" text="Library" />
             <Button layoutX="1214.0" layoutY="20.0" mnemonicParsing="false" text="Profile" />
             <ImageView fitHeight="61.0" fitWidth="76.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
             <TextField fx:id="bookSearchBar" layoutX="52.0" layoutY="19.0" prefHeight="35.0" prefWidth="555.0" promptText="Testing search bar" />
             <Button fx:id="searchButton" layoutX="632.0" layoutY="19.0" mnemonicParsing="false" onAction="#onSearchButtonClick" prefHeight="35.0" prefWidth="54.0" text="Search" />
+            <Button fx:id="issueButton" layoutX="966.0" layoutY="20.0" mnemonicParsing="false" onAction="#onIssueButtonClick" text="Issues" />
+            <Button fx:id="homeButton" layoutX="693.0" layoutY="24.0" mnemonicParsing="false" onAction="#onHomeButtonClick" text="Home" />
          </children>
       </AnchorPane>
    </children>

@@ -6,13 +6,14 @@ module org.example.demo {
     requires com.dlsc.formsfx;
     requires com.almasb.fxgl.all;
     requires io.github.cdimascio.dotenv.java;
-    requires java.desktop;
     requires me.xdrop.fuzzywuzzy;
     requires com.fasterxml.jackson.annotation;
     requires java.net.http;
     requires mysql.connector.j;
     requires com.google.gson;
     requires java.sql;
+    requires org.apache.commons.lang3;
+    requires java.desktop;
 
     opens org.proview.test to javafx.fxml;
     exports org.proview.test;

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.LibraryView">
+    <top>
+        <fx:include source="NavBar.fxml" />
+    </top>
+    <left>
+        <AnchorPane prefHeight="578.0" prefWidth="204.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="37.0" layoutY="14.0" text="Recent reviews">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+            </children></AnchorPane>
+    </left>
+    <center>
+        <ScrollPane prefHeight="578.0" prefWidth="1029.0" BorderPane.alignment="CENTER">
+            <content>
+                <VBox prefHeight="565.0" prefWidth="1078.0">
+                    <children>
+                        <AnchorPane prefHeight="586.0" prefWidth="545.0">
+                            <children>
+                                <Label layoutX="22.0" layoutY="14.0" prefHeight="30.0" prefWidth="499.0" text="Library">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Label>
+                                <ListView fx:id="allBooksListView" layoutX="22.0" layoutY="59.0" prefHeight="518.0" prefWidth="497.0" />
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+    <right>
+        <AnchorPane prefHeight="578.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+    </right>
+    <bottom>
+        <AnchorPane prefHeight="49.0" prefWidth="1000.0" BorderPane.alignment="CENTER" />
+    </bottom>
+</BorderPane>

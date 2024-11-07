@@ -10,7 +10,7 @@ public class IssueManagement {
     public static void addIssue(String username, int bookId, int duration) throws SQLException {
         Connection connection = AppMain.connection;
 
-        String sql = "INSERT INTO issue(username, book_id, duration) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO issue(username, book_id, duration, start_date) VALUES (?, ?, ?, NOW())";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, username);
         preparedStatement.setInt(2, bookId);
@@ -43,6 +43,33 @@ public class IssueManagement {
         }
         return issues;
     }
+
+    /*public static ObservableList<Issue> getUserIssueListFrom(String username) throws SQLException {
+        ObservableList<Issue> issues = FXCollections.observableArrayList();
+        Connection connection = AppMain.connection;
+        String sql = "SELECT * FROM issue WHERE username = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, username);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            int issueId = resultSet.getInt("id");
+            int bookId = resultSet.getInt("book_id");
+            int duration = resultSet.getInt("duration");
+            String startDate = resultSet.getDate("start_date").toString();
+            String bookName = "";
+
+            String nameSql = "SELECT name FROM book WHERE id = ?";
+            PreparedStatement namePreparedStatement = connection.prepareStatement(nameSql);
+            namePreparedStatement.setInt(1, bookId);
+            ResultSet nameResultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                bookName = nameResultSet.getString("name");
+            }
+            Issue curIssue = new Issue(issueId, bookId, bookName, startDate, duration);
+            issues.add(curIssue);
+        }
+        return issues;
+    }*/
 
     public static ObservableList<String> getIssueListViewFrom(String username) throws SQLException {
         ObservableList<Issue> currentIssueList = null;

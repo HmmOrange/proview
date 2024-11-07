@@ -3,23 +3,23 @@
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="473.0" prefWidth="1154.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.BookInfoView">
-    <top>
-        <fx:include source="NavBar.fxml" />
-    </top>
+<BorderPane prefHeight="770.0" prefWidth="1412.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.BookInfoView">
+   <top>
+      <fx:include source="NavBar.fxml" />
+   </top>
    <center>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1187.0">
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="1187.0">
          <children>
-            <AnchorPane prefHeight="400.0" prefWidth="908.0">
+            <AnchorPane prefHeight="465.0" prefWidth="908.0">
                <children>
-                  <Button fx:id="backButton" alignment="TOP_LEFT" layoutX="301.0" layoutY="349.0" mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" />
-                  <Label fx:id="titleLabel" layoutX="14.0" layoutY="14.0" prefHeight="88.0" prefWidth="258.0" text="Title">
+                  <Label fx:id="titleLabel" layoutX="14.0" layoutY="14.0" prefHeight="88.0" prefWidth="842.0" text="Title">
                      <font>
                         <Font size="35.0" />
                      </font>
@@ -27,19 +27,29 @@
                   <Label fx:id="authorLabel" layoutX="14.0" layoutY="102.0" prefHeight="28.0" prefWidth="172.0" text="Author" />
                   <Label fx:id="tagLabel" layoutX="14.0" layoutY="130.0" prefHeight="35.0" prefWidth="178.0" text="Tag" />
                   <Label fx:id="descriptionLabel" alignment="TOP_LEFT" layoutX="14.0" layoutY="171.0" prefHeight="123.0" prefWidth="405.0" text="Description" wrapText="true" />
+                  <Label fx:id="copiesLabel" layoutX="14.0" layoutY="302.0" prefHeight="22.0" prefWidth="393.0" text="Number of copies available" />
                </children>
             </AnchorPane>
          </children>
       </HBox>
    </center>
    <left>
-      <AnchorPane prefHeight="400.0" prefWidth="225.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="565.0" prefWidth="222.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="coverImage" fitHeight="234.0" fitWidth="200.0" layoutX="13.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="coverImage" fitHeight="368.0" fitWidth="200.0" layoutX="13.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <viewport>
                   <Rectangle2D />
                </viewport></ImageView>
          </children>
       </AnchorPane>
    </left>
+   <bottom>
+      <AnchorPane prefHeight="59.0" prefWidth="1412.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="editButton" layoutX="92.0" layoutY="2.0" mnemonicParsing="false" onAction="#onEditButtonClick" text="Edit" />
+            <Button fx:id="backButton" alignment="TOP_LEFT" layoutX="632.0" layoutY="2.0" mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" />
+            <TextField fx:id="durationField" alignment="CENTER" layoutX="207.0" promptText="Duration" />
+         </children>
+      </AnchorPane>
+   </bottom>
 </BorderPane>
