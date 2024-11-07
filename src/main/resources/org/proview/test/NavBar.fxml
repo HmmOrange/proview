@@ -13,7 +13,7 @@
             <Button fx:id="logoutButton" layoutX="1123.0" layoutY="20.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" text="Logout" />
             <Button fx:id="editBookButton" layoutX="889.0" layoutY="20.0" mnemonicParsing="false" onAction="#onEditBookButtonClick" text="Edit Book" />
             <Button fx:id="libraryButton" layoutX="1022.0" layoutY="20.0" mnemonicParsing="false" onAction="#onLibraryButtonClick" prefHeight="25.0" prefWidth="88.0" text="Library" />
-            <Button layoutX="1214.0" layoutY="20.0" mnemonicParsing="false" text="Profile" />
+            <Button fx:id="profileButton" layoutX="1214.0" layoutY="20.0" mnemonicParsing="false" onAction="#onProfileButtonClick" text="Profile" />
             <ImageView fitHeight="61.0" fitWidth="76.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
             <TextField fx:id="bookSearchBar" layoutX="52.0" layoutY="19.0" prefHeight="35.0" prefWidth="555.0" promptText="Testing search bar" />
             <Button fx:id="searchButton" layoutX="632.0" layoutY="19.0" mnemonicParsing="false" onAction="#onSearchButtonClick" prefHeight="35.0" prefWidth="54.0" text="Search" />
