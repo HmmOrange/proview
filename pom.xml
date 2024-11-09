@@ -36,6 +36,12 @@
             <version>11.2.1</version>
         </dependency>
         <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>21.0.2</version>
+            <classifier>win</classifier> <!-- Ensures Windows binaries are included -->
+        </dependency>
+        <dependency>
             <groupId>com.dlsc.formsfx</groupId>
             <artifactId>formsfx-core</artifactId>
             <version>11.6.0</version>

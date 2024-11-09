@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.*;
 
 import io.github.cdimascio.dotenv.Dotenv;
@@ -59,7 +61,49 @@ public class AppMain extends Application {
 
         return connection;
     }
+
+    public static String getSQLReadableFolder() throws SQLException {
+        String targetFolderPath = "";
+        PreparedStatement preparedStatement = connection.prepareStatement("SHOW VARIABLES LIKE 'secure_file_priv'");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) targetFolderPath = resultSet.getString("Value");
+        targetFolderPath = targetFolderPath.replace('\\','/');
+        return targetFolderPath;
+    }
+
+    public static void copyAvatarsToSQLReadableFolder() throws SQLException, IOException {
+        Path sourceFolderPath = Paths.get("./assets/avatars");
+        Path targetFolderPath = Paths.get(getSQLReadableFolder() + "/proview/avatars");
+        try {
+            // Ensure target folder exists
+            if (!Files.exists(targetFolderPath)) {
+                Files.createDirectories(targetFolderPath);
+            }
+
+            // Walk through the source directory and copy each file to the target
+            Files.walkFileTree(sourceFolderPath, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    Path targetFilePath = targetFolderPath.resolve(sourceFolderPath.relativize(file));
+                    Files.copy(file, targetFilePath, StandardCopyOption.REPLACE_EXISTING);
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                    System.out.println("Failed to visit file: " + file);
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        System.out.println(targetFolderPath);
+    }
+
     public static void runSQLScript(Connection connection) throws IOException, SQLException {
+        copyAvatarsToSQLReadableFolder();
         Statement statement = connection.createStatement();
 
         String filePath = "./src/main/sql/Initialize.sql";

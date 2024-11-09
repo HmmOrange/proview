@@ -11,6 +11,8 @@ public class HomeView {
     public ListView<BookLib> topRatedBookListView;
     public ListView<BookLib> trendingBookListView;
     public TextField bookSearchBar;
+    public Label usernameField;
+    public Label emailField;
 
     public void initialize() throws SQLException {
         ObservableList<BookLib> topRatedList = BookManagement.getTopRatedBookList();

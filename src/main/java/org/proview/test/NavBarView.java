@@ -18,9 +18,10 @@ public class NavBarView {
     public Button logoutButton;
     public Button editBookButton;
     public Button issueButton;
+    public Button profileButton;
 
     public void initialize() {
-        if(UserManagement.getCurrentUser().getType()==1) {
+        if (UserManagement.getCurrentUser().getType() == 1) {
 
             editBookButton.setVisible(false);
             editBookButton.setDisable(true);
@@ -106,4 +107,18 @@ public class NavBarView {
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();
     }
+
+    public void onProfileButtonClick(ActionEvent actionEvent) throws IOException {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("ProfileView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+            AppMain.window.setTitle("Hello!");
+            AppMain.window.setScene(scene);
+            AppMain.window.centerOnScreen();
+        } catch (IOException e) {
+            System.out.println("Error loading ProfileView.fxml: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
+

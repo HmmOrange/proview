@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<HBox prefHeight="600.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.RegisterView">
+<HBox prefHeight="600.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.EditProfileView">
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
          <children>
@@ -18,7 +17,7 @@
                   <Insets bottom="30.0" />
                </VBox.margin>
             </ImageView>
-            <Button fx:id="addAvatarButton" alignment="CENTER" mnemonicParsing="false" onAction="#onAddAvatarButtonClick" text="Add Avatar" />
+            <Button fx:id="changeAvatarButton" alignment="CENTER" mnemonicParsing="false" onAction="#onChangeAvatarButtonClick" text="Change Avatar" />
          </children>
       </VBox>
       <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#onKeyReleased" prefHeight="700.0" prefWidth="647.0">
@@ -51,12 +50,17 @@
                   <Insets bottom="20.0" left="50.0" right="50.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="registerPasswordField" alignment="CENTER" promptText="Password">
+            <TextField fx:id="currentPasswordField" alignment="CENTER" promptText="Current Password">
                <VBox.margin>
                   <Insets bottom="20.0" left="50.0" right="50.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="registerConfirmPasswordField" alignment="CENTER" promptText="Confirm Password">
+            <TextField fx:id="newPasswordField" alignment="CENTER" promptText="New Password">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="50.0" right="50.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="confirmPasswordField" alignment="CENTER" promptText="Confirm Password">
                <VBox.margin>
                   <Insets bottom="20.0" left="50.0" right="50.0" />
                </VBox.margin>

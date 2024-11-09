@@ -24,7 +24,7 @@ public class LoginView {
     public Label loginResultLabel;
 
     public void onLoginButtonClick(ActionEvent actionEvent) throws IOException, SQLException {
-        String usn = loginUsernameField.getText();
+        /*String usn = loginUsernameField.getText();
         String pw = loginPasswordField.getText();
         if (Objects.equals(loginUsernameField.getText(), "")) {
             loginResultLabel.setText("Please enter username");
@@ -34,24 +34,24 @@ public class LoginView {
             loginResultLabel.setText("Wrong username or password");
         } else {
             loginResultLabel.setText("Welcome, " + usn);
-        }
+        }*/
 
         String username = loginUsernameField.getText();
         String password = loginPasswordField.getText();
 
         if (Objects.equals(loginUsernameField.getText(), "")) {
-            System.out.println("Please enter username");
+            loginResultLabel.setText("Please enter username");
             return;
         }
 
         if (Objects.equals(loginPasswordField.getText(), "")) {
-            System.out.println("Please enter password");
+            loginResultLabel.setText("Please enter password");
             return;
         }
 
         User checkingUser = UserManagement.isValidLoginCredentials(username, password);
         if (checkingUser == null) {
-            System.out.println("Username or password is incorrect");
+            loginResultLabel.setText("Username or password is incorrect");
             return;
         }
 
@@ -84,7 +84,7 @@ public class LoginView {
 
     public void onRegisterButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("RegisterView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 900, 700);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();
