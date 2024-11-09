@@ -6,18 +6,14 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.HomeView">
+<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.ProfileView">
    <top>
       <fx:include source="NavBar.fxml" />
    </top>
    <left>
       <VBox alignment="CENTER" prefHeight="627.0" prefWidth="237.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="208.0" fitWidth="214.0" pickOnBounds="true" preserveRatio="true">
-               <VBox.margin>
-                  <Insets bottom="20.0" />
-               </VBox.margin>
-            </ImageView>
+            <ImageView fx:id="avatarImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="usernameField" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="163.0" text="Username" />
             <Label fx:id="emailField" text="Email" />
          </children>
