@@ -1,6 +1,7 @@
 package org.proview.test;
 
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.proview.model.User;
@@ -24,6 +25,11 @@ public class RegisterView {
     public Button confirmButton;
     public Button backButton;
     public Label registerResultLabel;
+    public ImageView avatarField;
+    public Button addAvatarButton;
+    public TextField firstNameField;
+    public TextField lastNameField;
+    public TextField emailField;
 
     public void onConfirmButtonClick(ActionEvent actionEvent) throws IOException, SQLException {
         if (Objects.equals(registerUsernameField.getText(), "") ||
@@ -105,5 +111,9 @@ public class RegisterView {
                 }
             }
         }
+    }
+
+    public void onAddAvatarButtonClick(ActionEvent actionEvent) {
+
     }
 }

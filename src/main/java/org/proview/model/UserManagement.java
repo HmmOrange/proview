@@ -54,7 +54,8 @@ public class UserManagement {
         } else {
             resultSet.isFirst();
             return new User(resultSet.getString("username"), resultSet.getString("password"),
-                    resultSet.getInt("type"));
+                    resultSet.getInt("type"), resultSet.getString("firstName"), resultSet.getString("lastName"),
+                    resultSet.getString("email"));
         }
     }
 }
