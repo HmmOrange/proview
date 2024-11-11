@@ -19,10 +19,8 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class AppMain extends Application {
     static Dotenv dotenv = Dotenv.load();
     public static Connection connection = null;
-
-    protected static Stage window;
-
-
+    public static Stage window;
+    
     @Override
     public void start(Stage stage) throws IOException {
         window = stage;
@@ -150,7 +148,7 @@ public class AppMain extends Application {
         }
 
         // Uncomment this if in need of creating new fresh tables in DB
-        //runSQLScript(connection);
+        runSQLScript(connection);
 
         launch();
     }

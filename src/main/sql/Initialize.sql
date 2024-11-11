@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS issue;
 DROP TABLE IF EXISTS tag;
+DROP TABLE IF EXISTS rating;
 DROP TABLE IF EXISTS review;
 DROP TABLE IF EXISTS book;
 DROP TABLE IF EXISTS user;
@@ -44,11 +45,22 @@ CREATE TABLE tag
     FOREIGN KEY (book_id) REFERENCES book (id)
 );
 
-CREATE TABLE review
+CREATE TABLE rating
 (
     book_id INT,
     rating DOUBLE,
     FOREIGN KEY (book_id) REFERENCES book (id)
+);
+
+CREATE TABLE review
+(
+    book_id    INT,
+    user_id    INT,
+    review     VARCHAR(1000),
+    time_added TIMESTAMP,
+
+    FOREIGN KEY (book_id) REFERENCES book (id),
+    FOREIGN KEY (user_id) REFERENCES user (id)
 );
 
 
@@ -80,17 +92,17 @@ INSERT INTO tag(book_id, tag) VALUES (2, 'Action');
 INSERT INTO tag(book_id, tag) VALUES (2, 'Comedy');
 INSERT INTO tag(book_id, tag) VALUES (2, 'Guns');
 
--- Add sample reviews
-INSERT INTO review(book_id, rating) VALUES (1, 5);
-INSERT INTO review(book_id, rating) VALUES (1, 5);
-INSERT INTO review(book_id, rating) VALUES (1, 4.1);
+-- Add sample ratings
+INSERT INTO rating(book_id, rating) VALUES (1, 5);
+INSERT INTO rating(book_id, rating) VALUES (1, 5);
+INSERT INTO rating(book_id, rating) VALUES (1, 4.1);
 
-INSERT INTO review(book_id, rating) VALUES (2, 5);
-INSERT INTO review(book_id, rating) VALUES (2, 4);
-INSERT INTO review(book_id, rating) VALUES (2, 4.2);
+INSERT INTO rating(book_id, rating) VALUES (2, 5);
+INSERT INTO rating(book_id, rating) VALUES (2, 4);
+INSERT INTO rating(book_id, rating) VALUES (2, 4.2);
 
-INSERT INTO review(book_id, rating) VALUES (3, 5);
-INSERT INTO review(book_id, rating) VALUES (3, 5);
+INSERT INTO rating(book_id, rating) VALUES (3, 5);
+INSERT INTO rating(book_id, rating) VALUES (3, 5);
 
 -- Add sample request issues
 INSERT INTO issue(start_date, duration, username, book_id) VALUES (CURRENT_TIMESTAMP, 3, '23021497', 1);

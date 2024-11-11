@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="473.0" prefWidth="1154.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.EditBookInfoView">
+<BorderPane prefHeight="473.0" prefWidth="1154.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.EditBookInfoView">
     <top>
         <fx:include source="NavBar.fxml" />
     </top>

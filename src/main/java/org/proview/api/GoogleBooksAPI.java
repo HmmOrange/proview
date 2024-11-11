@@ -1,17 +1,12 @@
 package org.proview.api;
 
 import com.google.gson.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import org.proview.model.BookGoogle;
-import org.proview.model.BookLib;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
-import java.net.http.HttpClient;
 import java.nio.charset.StandardCharsets;
 
 public class GoogleBooksAPI {
