@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox prefHeight="50.0" prefWidth="1300.0" style="-fx-background-color: #FFC1C3;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.NavBarView">
+<HBox prefHeight="50.0" prefWidth="1300.0" style="-fx-background-color: #FFC1C3;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.NavBarView">
    <children>
       <AnchorPane fx:id="topPane" onKeyReleased="#onKeyReleased" prefHeight="4.0" prefWidth="1300.0" style="-fx-background-color: #FFC1C3;">
          <children>
