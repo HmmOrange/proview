@@ -133,8 +133,8 @@ public class BookManagement {
                     title,
                     author,
                     description,
-                    "./assets/covers/cover" + id + ".png",
-                    copies);
+                    copies
+            );
             bookCellObservableList.add(curBook);
         }
 
@@ -243,7 +243,6 @@ public class BookManagement {
                                 item.getTags(),
                                 item.getRating(),
                                 item.getIssueCount(),
-                                item.getImagePath(),
                                 item.getCopiesAvailable()
                         );
 
@@ -280,7 +279,6 @@ public class BookManagement {
                         cellView.setData(
                                 item.getTitle(),
                                 item.getAuthor(),
-                                item.getCoverImageUrl(),
                                 item.getTags()
                         );
 
