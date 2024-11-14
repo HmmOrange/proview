@@ -16,36 +16,113 @@ import java.sql.SQLException;
 
 public class IssueListView {
     //public TableView<Issue> issueTable;
-    public TableView<ObservableList<String>> issueTable = new TableView<>();
+    public TableView<ObservableList<String>> borrowingTableView = new TableView<>();
+    public TableView<ObservableList<String>> borrowedTableView = new TableView<>();
 
     public void initialize() throws SQLException {
-        /*issueTable.getColumns().clear();
-        TableColumn<Issue, Integer> idColumn = new TableColumn<> ("id");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        TableColumn<Issue, Integer> bookIdColumn = new TableColumn<> ("Book ID");
-        bookIdColumn.setCellValueFactory(new PropertyValueFactory<>("Book ID"));
-
-        //TableColumn<Issue, String> bookNameColumn = new TableColumn<>("Book Name");
-        //bookNameColumn.setCellValueFactory(new PropertyValueFactory<>("Book Name"));
-
-        //TableColumn<Issue, String> startDateColumn = new TableColumn<>("Start Date");
-        //startDateColumn.setCellValueFactory(new PropertyValueFactory<>("Start Date"));
-
-        TableColumn<Issue, Integer> durationColumn = new TableColumn<>("Duration");
-        durationColumn.setCellValueFactory(new PropertyValueFactory<>("Duration"));
+        borrowingTableView.getColumns().clear();
+        String[] columns1 = {"ID", "Username", "Title", "Author", "Book ID", "Due Date", "Remaining time"};
+        for (int i = 0; i < columns1.length; i++) {
+            TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns1[i]);
+            int finalI = i;
+            column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(finalI)));
+            borrowingTableView.getColumns().add(column);
+        }
 
 
-        issueTable.getColumns().add(idColumn);
-        issueTable.getColumns().add(bookIdColumn);
-        //issueTable.getColumns().add(bookNameColumn);
-        //issueTable.getColumns().add(startDateColumn);
-        issueTable.getColumns().add(durationColumn);
+        borrowedTableView.getColumns().clear();
+        String[] columns2 = {"ID", "Username", "Title", "Author", "Book ID", "Start Date", "End Date"};
+        for (int i = 0; i < columns2.length; i++) {
+            TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns2[i]);
+            int finalI = i;
+            column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(finalI)));
+            borrowedTableView.getColumns().add(column);
+        }
 
-        issueTable.setItems(IssueManagement.getIssueListFrom(UserManagement.getCurrentUser().getUsername()));*/
+        ObservableList<ObservableList<String>> datas1 = FXCollections.observableArrayList();
+        ObservableList<ObservableList<String>> datas2 = FXCollections.observableArrayList();
+        Connection connection = AppMain.connection;
+        if (UserManagement.getCurrentUser() instanceof Admin) {
+            PreparedStatement borrowingPS = connection.prepareStatement(
+                    "WITH book_issue AS " +
+                            "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.username, issue.id AS ID, issue.start_date, issue.duration  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
+                            "SELECT ID, username, BookID, BookName ,Author AS author,  DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, DATEDIFF(DATE_ADD(start_date, INTERVAL duration DAY), NOW()) AS Remaining_time  " +
+                            "FROM book_issue  WHERE DATEDIFF(NOW(), start_date) < duration;"
+            );
+            ResultSet borrowingRS = borrowingPS.executeQuery();
+            while(borrowingRS.next()) {
+                String id = Integer.toString(borrowingRS.getInt("id"));
+                String username = borrowingRS.getString("username");
+                String bookId = Integer.toString(borrowingRS.getInt("bookid"));
+                String title = borrowingRS.getString("bookname");
+                String author = borrowingRS.getString("author");
+                String end_date = borrowingRS.getDate("end_date").toString();
+                String remaining_time = Integer.toString(borrowingRS.getInt("remaining_time"));
+                datas1.add(FXCollections.observableArrayList(id, username, title, author, bookId, end_date, remaining_time));
+            }
+            borrowingTableView.setItems(datas1);
 
-        issueTable.getColumns().clear();
-        TableColumn<ObservableList<String>, String> idColumn = new TableColumn<>("ID");
+            PreparedStatement borrowedPS = connection.prepareStatement("WITH book_issue AS " +
+                    "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.id AS ID, issue.username, issue.start_date, issue.duration  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
+                    "SELECT ID, username, BookID, BookName, Author AS author,  start_date, DATE_ADD(start_date, INTERVAL duration DAY) AS end_date " +
+                    "FROM book_issue WHERE DATEDIFF(NOW(), DATE_ADD(start_date, INTERVAL duration DAY)) > 0");
+            ResultSet borrowedRS = borrowedPS.executeQuery();
+            while (borrowedRS.next()) {
+                String id = Integer.toString(borrowingRS.getInt("id"));
+                String bookId = Integer.toString(borrowingRS.getInt("bookid"));
+                String username = borrowedRS.getString("username");
+                String title = borrowingRS.getString("bookname");
+                String author = borrowingRS.getString("author");
+                String end_date = borrowingRS.getDate("end_date").toString();
+                String start_date = Integer.toString(borrowingRS.getInt("start_date"));
+                datas2.add(FXCollections.observableArrayList(id, username, title, author, bookId, start_date, end_date));
+            }
+            borrowedTableView.setItems(datas2);
+        } else {
+            PreparedStatement borrowingPS = connection.prepareStatement(
+                    "WITH book_issue AS " +
+                            "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.username, issue.id AS ID, issue.start_date, issue.duration  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
+                            "SELECT ID, username, BookID, BookName ,Author AS author,  DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, DATEDIFF(DATE_ADD(start_date, INTERVAL duration DAY), NOW()) AS Remaining_time  " +
+                            "FROM book_issue  WHERE DATEDIFF(NOW(), start_date) < duration AND username = ?"
+            );
+            borrowingPS.setString(1, UserManagement.getCurrentUser().getUsername());
+            ResultSet borrowingRS = borrowingPS.executeQuery();
+            while(borrowingRS.next()) {
+                String id = Integer.toString(borrowingRS.getInt("id"));
+                String username = borrowingRS.getString("username");
+                String bookId = Integer.toString(borrowingRS.getInt("bookid"));
+                String title = borrowingRS.getString("bookname");
+                String author = borrowingRS.getString("author");
+                String end_date = borrowingRS.getDate("end_date").toString();
+                String remaining_time = Integer.toString(borrowingRS.getInt("remaining_time"));
+                datas1.add(FXCollections.observableArrayList(id, username, title, author, bookId, end_date, remaining_time));
+            }
+            borrowingTableView.setItems(datas1);
+
+            PreparedStatement borrowedPS = connection.prepareStatement("WITH book_issue AS " +
+                    "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.id AS ID, issue.username, issue.start_date, issue.duration  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
+                    "SELECT ID, username, BookID, BookName, Author AS author,  start_date, DATE_ADD(start_date, INTERVAL duration DAY) AS end_date " +
+                    "FROM book_issue WHERE DATEDIFF(NOW(), DATE_ADD(start_date, INTERVAL duration DAY)) > 0 AND username = ?");
+            borrowedPS.setString(1, UserManagement.getCurrentUser().getUsername());
+            ResultSet borrowedRS = borrowedPS.executeQuery();
+            while (borrowedRS.next()) {
+                String id = Integer.toString(borrowingRS.getInt("id"));
+                String bookId = Integer.toString(borrowingRS.getInt("bookid"));
+                String username = borrowedRS.getString("username");
+                String title = borrowingRS.getString("bookname");
+                String author = borrowingRS.getString("author");
+                String end_date = borrowingRS.getDate("end_date").toString();
+                String start_date = Integer.toString(borrowingRS.getInt("start_date"));
+                datas2.add(FXCollections.observableArrayList(id, username, title, author, bookId, start_date, end_date));
+            }
+            borrowedTableView.setItems(datas2);
+        }
+
+
+
+
+        /*TableColumn<ObservableList<String>, String> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(0)));
 
         TableColumn<ObservableList<String>, String> titleColumn = new TableColumn<>("Title");
@@ -64,7 +141,7 @@ public class IssueListView {
         usernameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(5)));
 
         // Thêm các cột vào TableView
-        issueTable.getColumns().addAll(idColumn, titleColumn, bookIdColumn, startDateColumn, durationColumn, usernameColumn);
+        borrowingTableView.getColumns().addAll(idColumn, titleColumn, bookIdColumn, startDateColumn, durationColumn, usernameColumn);
 
         // Tạo dữ liệu (Dữ liệu là ObservableList các ObservableList đơn giản)
         ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
@@ -125,6 +202,6 @@ public class IssueListView {
 
             // Đặt dữ liệu vào TableView
             issueTable.setItems(data);
-        }
+        }*/
     }
 }
