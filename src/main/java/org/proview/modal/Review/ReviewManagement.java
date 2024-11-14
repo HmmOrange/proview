@@ -17,7 +17,6 @@ public class ReviewManagement {
         ObservableList<Review> reviewObservableList = FXCollections.observableArrayList();
 
         Connection connection = AppMain.connection;
-        Statement statement = connection.createStatement();
 
         String sql = "SELECT * FROM review WHERE book_id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -39,6 +38,8 @@ public class ReviewManagement {
             reviewObservableList.add(curReview);
         }
         // Sort by time added descending
+        // TODO: remove this and use sql order by.
+        // TODO: move this to SQLUtils.
         reviewObservableList.sort(Comparator.comparingDouble(Review::getTimestampAddedLong).reversed());
 
         return reviewObservableList;

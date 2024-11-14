@@ -28,7 +28,7 @@ public class BookCellView {
     public Label authorLabel;
     private int id = -1;
 
-    public void setData(String title, String authors, String imageUrl, String tags) throws IOException {
+    public void setData(String title, String authors, String tags) throws IOException {
         titleLabel.setText(title);
         authorLabel.setText(authors);
         tagLabel.setText("Tags: " + tags);
@@ -36,6 +36,7 @@ public class BookCellView {
         copiesLabel.setText("View in Google Books 🔗");
 
         // System.out.println(imageUrl);
+        String imageUrl = "./assets/covers/cover" + id + ".png";
         InputStream stream = URI.create(imageUrl).toURL().openStream();
         Image image = new Image(stream);
 
@@ -48,7 +49,7 @@ public class BookCellView {
         stream.close();
     }
 
-    public void setData(int id, String title, String author, String tags, double rating, int issueCount, String imageUrl, int copiesAvailable) throws IOException {
+    public void setData(int id, String title, String author, String tags, double rating, int issueCount, int copiesAvailable) throws IOException {
         this.id = id;
         titleLabel.setText(title);
         authorLabel.setText(author);
@@ -56,6 +57,7 @@ public class BookCellView {
         infoLabel.setText(rating + " 🌟 " + issueCount + " 👀 ");
         copiesLabel.setText(copiesAvailable + (copiesAvailable == 1 ? " copy" : " copies") + " available");
 
+        String imageUrl = "./assets/covers/cover" + id + ".png";
         InputStream stream = new FileInputStream(imageUrl);
         Image image = new Image(stream);
 

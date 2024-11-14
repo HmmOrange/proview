@@ -14,6 +14,7 @@ module org.proview.test {
     requires com.fasterxml.jackson.databind;
     requires java.sql;
     requires java.desktop;
+    requires timeago;
 
     exports org.proview.api;
     opens org.proview.api to javafx.fxml;

@@ -34,10 +34,10 @@ public class BookLib extends Book {
         this.id = id;
     }
 
-    public BookLib(int id, String title, String author, String description, String imagePath, int copiesAvailable) throws SQLException {
+    public BookLib(int id, String title, String author, String description, int copiesAvailable) throws SQLException {
         super(title, author, description);
         this.id = id;
-        this.imagePath = imagePath;
+        this.imagePath = "./assets/covers/cover" + id + ".png";
         this.copiesAvailable = copiesAvailable;
 
         this.issueCount = getIssueCount();

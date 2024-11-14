@@ -88,7 +88,7 @@ public class BookInfoView {
         InputStream stream = new FileInputStream(book.getImagePath());
         Image image = new Image(stream);
         coverImage.setImage(image);
-        coverImage.setFitWidth(300);
+        coverImage.setFitWidth(250);
         coverImage.setPreserveRatio(true);
         coverImage.setSmooth(true);
         coverImage.setCache(true);

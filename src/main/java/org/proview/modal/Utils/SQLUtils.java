@@ -1,14 +1,14 @@
 package org.proview.modal.Utils;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import org.proview.modal.Review.Review;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.User;
 import org.proview.test.AppMain;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class SQLUtils {
     static Connection connection = AppMain.connection;
@@ -66,5 +66,32 @@ public class SQLUtils {
 
             return new NormalUser(id, username, password, firstName, lastName, email);
         }
+    }
+
+    public static ObservableList<Review> getReviewList() throws SQLException {
+        Connection connection = AppMain.connection;
+        String sql = """
+            SELECT * FROM review
+            ORDER BY time_added DESC;
+        """;
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        ObservableList<Review> reviewObservableList = FXCollections.observableArrayList();
+        while (resultSet.next()) {
+            int book_id = resultSet.getInt("book_id");
+            int user_id = resultSet.getInt("user_id");
+            String review = resultSet.getString("review");
+            Timestamp timestampAdded = resultSet.getTimestamp("time_added");
+
+            Review curReview = new Review(
+                    book_id,
+                    user_id,
+                    review,
+                    timestampAdded
+            );
+            reviewObservableList.add(curReview);
+        }
+        return reviewObservableList;
     }
 }

@@ -23,8 +23,7 @@ CREATE TABLE user
     type     INT         NULL,
     firstName VARCHAR(20) NULL,
     lastName VARCHAR(20) NULL,
-    email VARCHAR(20) NULL,
-    avatar MEDIUMBLOB NULL
+    email VARCHAR(20) NULL
 );
 
 CREATE TABLE issue
@@ -65,16 +64,16 @@ CREATE TABLE review
 
 
 -- Add admin user (type 0)
-INSERT INTO user(username, password, type, firstName, lastName, email, avatar)
-VALUES ('admin', 'admin', 0, 'UET', 'VNU', 'abc@vnu.edu.vn', LOAD_FILE('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/proview/avatars/user1.png'));
+INSERT INTO user(username, password, type, firstName, lastName, email)
+VALUES ('admin', 'admin', 0, 'UET', 'VNU', 'abc@vnu.edu.vn');
 
 -- Add 3 sample users (type 1)
-INSERT INTO user(username, password, type, firstName, lastName, email, avatar)
-VALUES ('23021497', '23021497', 1, 'Quang Dung', 'Nguyen', '23021497@vnu.edu.vn', LOAD_FILE('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/proview/avatars/user2.png'));
-INSERT INTO user(username, password, type, firstName, lastName, email, avatar)
-VALUES ('23021501', '23021501', 1, 'Anh Duy', 'Le', '23021501@vnu.edu.vn', LOAD_FILE('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/proview/avatars/user3.png'));
-INSERT INTO user(username, password, type, firstName, lastName, email, avatar)
-VALUES ('23021521', '23021521', 1, 'Tien Dat', 'Nguyen', '23021521@vnu.edu.vn', LOAD_FILE('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/proview/avatars/user4.png'));
+INSERT INTO user(username, password, type, firstName, lastName, email)
+VALUES ('23021497', '23021497', 1, 'Quang Dung', 'Nguyen', '23021497@vnu.edu.vn');
+INSERT INTO user(username, password, type, firstName, lastName, email)
+VALUES ('23021501', '23021501', 1, 'Anh Duy', 'Le', '23021501@vnu.edu.vn');
+INSERT INTO user(username, password, type, firstName, lastName, email)
+VALUES ('23021521', '23021521', 1, 'Tien Dat', 'Nguyen', '23021521@vnu.edu.vn');
 
 -- Add 2 sample books
 INSERT INTO book(name, author, description, time_added, copies)
@@ -103,6 +102,12 @@ INSERT INTO rating(book_id, rating) VALUES (2, 4.2);
 
 INSERT INTO rating(book_id, rating) VALUES (3, 5);
 INSERT INTO rating(book_id, rating) VALUES (3, 5);
+
+-- Add sample reviews
+INSERT INTO review(book_id, user_id, review, time_added) VALUES (1, 2, 'This good', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MINUTE));
+INSERT INTO review(book_id, user_id, review, time_added) VALUES (1, 3, 'This sucks', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 HOUR));
+INSERT INTO review(book_id, user_id, review, time_added) VALUES (2, 1, 'This meh', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 3 HOUR));
+INSERT INTO review(book_id, user_id, review, time_added) VALUES (3, 1, 'This ok', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 2 DAY));
 
 -- Add sample request issues
 INSERT INTO issue(start_date, duration, username, book_id) VALUES (CURRENT_TIMESTAMP, 3, '23021497', 1);
