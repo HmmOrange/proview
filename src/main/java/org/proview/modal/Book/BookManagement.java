@@ -279,6 +279,7 @@ public class BookManagement {
                         cellView.setData(
                                 item.getTitle(),
                                 item.getAuthor(),
+                                item.getCoverImageUrl(),
                                 item.getTags()
                         );
 
