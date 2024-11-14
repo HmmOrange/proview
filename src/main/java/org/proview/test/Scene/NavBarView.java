@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import org.proview.modal.User.NormalUser;
 import org.proview.modal.Utils.SearchUtils;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.UserManagement;
@@ -23,8 +24,7 @@ public class NavBarView {
     public Button profileButton;
 
     public void initialize() {
-        if (UserManagement.getCurrentUser() instanceof Admin) {
-
+        if (UserManagement.getCurrentUser() instanceof NormalUser) {
             editBookButton.setVisible(false);
             editBookButton.setDisable(true);
         }
