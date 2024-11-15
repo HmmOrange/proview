@@ -33,22 +33,22 @@ CREATE TABLE issue
     duration    INT,
     username    VARCHAR(20),
     book_id INT,
-    FOREIGN KEY (book_id) REFERENCES book (id),
-    FOREIGN KEY (username) REFERENCES user (username)
+    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE tag
 (
     book_id INT,
     tag     VARCHAR(100),
-    FOREIGN KEY (book_id) REFERENCES book (id)
+    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE rating
 (
     book_id INT,
     rating DOUBLE,
-    FOREIGN KEY (book_id) REFERENCES book (id)
+    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE review
@@ -58,8 +58,8 @@ CREATE TABLE review
     review     VARCHAR(1000),
     time_added TIMESTAMP,
 
-    FOREIGN KEY (book_id) REFERENCES book (id),
-    FOREIGN KEY (user_id) REFERENCES user (id)
+    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
