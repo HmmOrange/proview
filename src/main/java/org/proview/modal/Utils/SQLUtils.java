@@ -23,7 +23,7 @@ public class SQLUtils {
         preparedStatement.executeUpdate();
     }
 
-    public static User getUserFromId(int id) throws SQLException {
+    public static User getUser(int id) throws SQLException {
         String sql = "SELECT * FROM user WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, id);
@@ -45,7 +45,7 @@ public class SQLUtils {
         }
     }
 
-    public static User getUserFromLoginCred(String username, String password) throws SQLException {
+    public static User getUser(String username, String password) throws SQLException {
         String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, username);
@@ -68,7 +68,7 @@ public class SQLUtils {
         }
     }
 
-    public static BookLib getBookFromId(int id) throws SQLException {
+    public static BookLib getBook(int id) throws SQLException {
         String sql = "SELECT * FROM book WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, id);
@@ -86,7 +86,7 @@ public class SQLUtils {
         return null;
     }
 
-    public static ObservableList<Review> getReviewListFromUserId(int userId) throws SQLException {
+    public static ObservableList<Review> getReviewList(int userId) throws SQLException {
         Connection connection = AppMain.connection;
         String sql = """
             SELECT * FROM review
@@ -126,19 +126,43 @@ public class SQLUtils {
 
         ObservableList<Review> reviewObservableList = FXCollections.observableArrayList();
         while (resultSet.next()) {
-            int book_id = resultSet.getInt("book_id");
-            int user_id = resultSet.getInt("user_id");
+            int bookId = resultSet.getInt("book_id");
+            int userId = resultSet.getInt("user_id");
             String review = resultSet.getString("review");
             Timestamp timestampAdded = resultSet.getTimestamp("time_added");
 
             Review curReview = new Review(
-                    book_id,
-                    user_id,
+                    bookId,
+                    userId,
                     review,
                     timestampAdded
             );
             reviewObservableList.add(curReview);
         }
         return reviewObservableList;
+    }
+
+    public static ObservableList<BookLib> getBorrowingBookList(int userId) throws SQLException {
+        Connection connection = AppMain.connection;
+        String sql = """
+            SELECT * FROM book b
+            JOIN issue i ON b.id = i.book_id
+            WHERE i.user_id = ? AND i.status = 'Borrowing';
+        """;
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        ObservableList<BookLib> bookLibObservableList = FXCollections.observableArrayList();
+        while (resultSet.next()) {
+            int bookId = resultSet.getInt("b.id");
+            String title = resultSet.getString("name");
+            String author = resultSet.getString("author");
+            String description = resultSet.getString("description");
+            int copiesAvailable = resultSet.getInt("copies");
+
+            bookLibObservableList.add(new BookLib(bookId, title, author, description, copiesAvailable));
+        }
+        return bookLibObservableList;
     }
 }

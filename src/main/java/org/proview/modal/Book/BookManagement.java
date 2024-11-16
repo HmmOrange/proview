@@ -15,6 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import org.proview.api.GoogleBooksAPI;
 import org.proview.test.AppMain;
+import org.proview.test.Container.BookCellCompactView;
 import org.proview.test.Container.BookCellView;
 
 public class BookManagement {
@@ -216,7 +217,7 @@ public class BookManagement {
         return bookList;
     }
 
-    public static void initLibBookList(ListView<BookLib> bookListView, ObservableList<BookLib> bookList) {
+    public static void initBookLibList(ListView<BookLib> bookListView, ObservableList<BookLib> bookList) {
         bookListView.setItems(bookList);
         bookListView.setCellFactory(param -> new ListCell<>() {
             {
@@ -256,7 +257,7 @@ public class BookManagement {
         });
     }
 
-    public static void initGoogleBookList(ListView<BookGoogle> bookListView, ObservableList<BookGoogle> bookList) {
+    public static void initBookGoogleList(ListView<BookGoogle> bookListView, ObservableList<BookGoogle> bookList) {
         bookListView.setItems(bookList);
         bookListView.setCellFactory(param -> new ListCell<>() {
             {
@@ -286,6 +287,46 @@ public class BookManagement {
                         setGraphic(hbox);
                     } catch (Exception e) {
                         e.printStackTrace();
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+    }
+
+    public static void initBookLibCompactList(ListView<BookLib> bookListView, ObservableList<BookLib> bookList, Boolean showCopiesAvailable) {
+        bookListView.setItems(bookList);
+        bookListView.setCellFactory(param -> new ListCell<>() {
+            {
+                setStyle("-fx-padding: 0px; -fx-margin: 0px; -fx-background-insets: 0px; -fx-border-insets: 0px;");
+            }
+            @Override
+            protected void updateItem(BookLib item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("BookCellCompactView.fxml"));
+                        HBox hbox = loader.load();
+
+                        // Get the controller of the cell
+                        BookCellCompactView cellView = loader.getController();
+
+                        cellView.setData(
+                                item.getId(),
+                                "#" + (getIndex() + 1) + ". " + item.getTitle(),
+                                item.getAuthor(),
+                                item.getTags(),
+                                item.getRating(),
+                                item.getIssueCount(),
+                                showCopiesAvailable ? item.getCopiesAvailable() : -1
+                        );
+
+                        setGraphic(hbox);
+                    } catch (Exception e) {
+                        System.out.println(e);
                         throw new RuntimeException(e);
                     }
                 }

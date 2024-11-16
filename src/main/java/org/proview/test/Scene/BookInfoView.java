@@ -3,11 +3,8 @@ package org.proview.test.Scene;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.skin.ListViewSkin;
-import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.proview.modal.Book.BookLib;
@@ -77,7 +74,7 @@ public class BookInfoView {
 
     public void setData(int id) throws IOException, SQLException {
         setId(id);
-        BookLib book = Objects.requireNonNull(SQLUtils.getBookFromId(id));
+        BookLib book = Objects.requireNonNull(SQLUtils.getBook(id));
 
         titleLabel.setText(book.getTitle());
         authorLabel.setText(authorLabel.getText() + " " + book.getAuthor());

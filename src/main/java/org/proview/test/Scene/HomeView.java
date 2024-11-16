@@ -36,8 +36,8 @@ public class HomeView {
         ObservableList<BookLib> trendingList = BookManagement.getTrendingBookList();
         ObservableList<Activity> activityList = ActivityManagement.getReviewActivityList();
 
-        BookManagement.initLibBookList(topRatedBookListView, topRatedList);
-        BookManagement.initLibBookList(trendingBookListView, trendingList);
+        BookManagement.initBookLibList(topRatedBookListView, topRatedList);
+        BookManagement.initBookLibList(trendingBookListView, trendingList);
         ActivityManagement.initActivityList(recentReviewListView, activityList);
 
         // Make the list view non-scrollable (there is probably a better way to do this)

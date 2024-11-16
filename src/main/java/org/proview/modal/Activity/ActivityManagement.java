@@ -7,12 +7,10 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import org.proview.modal.Review.Review;
-import org.proview.modal.User.UserManagement;
 import org.proview.modal.Utils.SQLUtils;
 import org.proview.test.AppMain;
 import org.proview.test.Container.ActivityCellView;
 import org.proview.test.Container.PersonalActivityCellView;
-import org.proview.test.Container.ReviewCellView;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -106,9 +104,9 @@ public class ActivityManagement {
         return activityObservableList;
     }
 
-    public static ObservableList<Activity> getAllActivityListFromUserId(int userId) throws SQLException {
+    public static ObservableList<Activity> getAllActivityList(int userId) throws SQLException {
         // Get all Activity.Type.REVIEW
-        ObservableList<Review> reviewObservableList = SQLUtils.getReviewListFromUserId(userId);
+        ObservableList<Review> reviewObservableList = SQLUtils.getReviewList(userId);
         ObservableList<Activity> activityObservableList = FXCollections.observableArrayList();
         for (var i : reviewObservableList) {
             int user_id = i.getUserId();

@@ -29,7 +29,7 @@ public class PersonalActivityCellView {
     public void setData(Activity.Type type, int bookId, String description, Timestamp timestamp) throws IOException, SQLException {
         switch (type) {
             case Activity.Type.REVIEW:
-                activityTypeLabel.setText("Reviewed: " + Objects.requireNonNull(SQLUtils.getBookFromId(bookId)).getTitle());
+                activityTypeLabel.setText("Reviewed: " + Objects.requireNonNull(SQLUtils.getBook(bookId)).getTitle());
         }
 
         descriptionLabel.setText(description);
