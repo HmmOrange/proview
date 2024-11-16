@@ -33,22 +33,24 @@ CREATE TABLE issue
     duration    INT,
     username    VARCHAR(20),
     book_id INT,
-    FOREIGN KEY (book_id) REFERENCES book (id),
-    FOREIGN KEY (username) REFERENCES user (username)
+    status VARCHAR(30),
+    end_date TIMESTAMP NULL,
+    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE tag
 (
     book_id INT,
     tag     VARCHAR(100),
-    FOREIGN KEY (book_id) REFERENCES book (id)
+    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE rating
 (
     book_id INT,
     rating DOUBLE,
-    FOREIGN KEY (book_id) REFERENCES book (id)
+    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE review
@@ -58,8 +60,8 @@ CREATE TABLE review
     review     VARCHAR(1000),
     time_added TIMESTAMP,
 
-    FOREIGN KEY (book_id) REFERENCES book (id),
-    FOREIGN KEY (user_id) REFERENCES user (id)
+    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -110,11 +112,14 @@ INSERT INTO review(book_id, user_id, review, time_added) VALUES (2, 1, 'This meh
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (3, 1, 'This ok', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 2 DAY));
 
 -- Add sample request issues
-INSERT INTO issue(start_date, duration, username, book_id) VALUES (CURRENT_TIMESTAMP, 3, '23021497', 1);
-INSERT INTO issue(start_date, duration, username, book_id) VALUES (CURRENT_TIMESTAMP, 7, '23021501', 1);
-INSERT INTO issue(start_date, duration, username, book_id) VALUES (CURRENT_TIMESTAMP, 1, '23021501', 2);
-INSERT INTO issue(start_date, duration, username, book_id) VALUES (CURRENT_TIMESTAMP, 7, '23021521', 1);
-INSERT INTO issue(start_date, duration, username, book_id) VALUES (CURRENT_TIMESTAMP, 2, '23021521', 2);
-INSERT INTO issue(start_date, duration, username, book_id) VALUES (CURRENT_TIMESTAMP, 10, '23021521', 3);
+INSERT INTO issue(start_date, duration, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 3, '23021497', 1, 'Borrowing');
+INSERT INTO issue(start_date, duration, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 7, '23021501', 1, 'Borrowing');
+INSERT INTO issue(start_date, duration, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 1, '23021501', 2, 'Borrowing');
+INSERT INTO issue(start_date, duration, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 7, '23021521', 1, 'Borrowing');
+INSERT INTO issue(start_date, duration, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 2, '23021521', 2, 'Borrowing');
+INSERT INTO issue(start_date, duration, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 10, '23021521', 3, 'Borrowing');
+INSERT INTO issue(start_date, duration, username, book_id, status, end_date) VALUES (DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 20 DAY), 10, '23021521', 3, 'Returned', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 5 DAY));
+INSERT INTO issue(start_date, duration, username, book_id, status, end_date) VALUES (DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 15 DAY), 1, '23021501', 2, 'Returned', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 10 DAY));
+INSERT INTO issue(start_date, duration, username, book_id, status) VALUES (DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 5 DAY), 3, '23021497', 1, 'Missing');
 
 SELECT * FROM user;

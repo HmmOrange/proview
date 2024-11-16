@@ -5,12 +5,14 @@ public class Issue {
     private int bookId;
     private int duration;
     private String username;
+    private String status;
 
     public Issue(int id, int bookId, int duration, String username) {
         this.id = id;
         this.bookId = bookId;
         this.duration = duration;
         this.username = username;
+        this.status = "Borrowing";
     }
 
 
@@ -44,5 +46,21 @@ public class Issue {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setBorrowingStatus() {
+        this.status = "Borrowing";
+    }
+
+    public void setReturnedStatus() {
+        this.status = "Returned";
+    }
+
+    public void setMissingStatus() {
+        this.status = "Missing";
     }
 }
