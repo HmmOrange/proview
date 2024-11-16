@@ -3,8 +3,12 @@ package org.proview.test.Scene;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.UserManagement;
 import org.proview.test.AppMain;
@@ -22,33 +26,149 @@ public class IssueListView {
     public void initialize() throws SQLException {
 
         borrowingTableView.getColumns().clear();
-        String[] columns1 = {"ID", "Username", "Title", "Author", "Book ID", "Due Date", "Remaining time"};
-        for (int i = 0; i < columns1.length; i++) {
+        String[] columns1 = {"ID", "Username", "Title", "Author", "Book ID", "Due Date", "Remaining time", "Status"};
+        for (int i = 0; i < columns1.length - 1; i++) {
             TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns1[i]);
             int finalI = i;
             column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(finalI)));
             borrowingTableView.getColumns().add(column);
         }
 
+        ///xử lý trạng thái sách
+        if (UserManagement.getCurrentUser() instanceof Admin) {
+            TableColumn<ObservableList<String>, String> statusColumn = new TableColumn<>(columns1[columns1.length - 1]);
+            statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(columns1.length - 1)));
+            statusColumn.setCellFactory(column -> new TableCell<>() {
+                private final ComboBox<String> comboBox = new ComboBox<>();
+                private final Button confirmButton = new Button("Confirm");
+                private final HBox hBox = new HBox(5, comboBox, confirmButton); // HBox chứa ComboBox và Confirm
+
+                {
+                    comboBox.getItems().addAll("Borrowing", "Returned", "Missing");
+                    confirmButton.setVisible(false); // Mặc định ẩn nút Confirm
+
+                    comboBox.setOnAction(e -> {
+                        int rowIndex = getIndex(); // Lấy chỉ số hàng hiện tại
+                        if (rowIndex >= 0) {
+                            ObservableList<String> rowData = getTableView().getItems().get(rowIndex);
+                            String originalStatus = rowData.get(columns1.length - 1); // Giá trị gốc
+                            String newStatus = comboBox.getValue(); // Giá trị mới
+
+                            // Hiển thị nút Confirm nếu giá trị thay đổi
+                            confirmButton.setVisible(!newStatus.equals(originalStatus));
+                        }
+                    });
+
+                    confirmButton.setOnAction(e -> {
+                        int rowIndex = getIndex();
+                        if (rowIndex >= 0) {
+                            ObservableList<String> rowData = getTableView().getItems().get(rowIndex);
+                            String newStatus = comboBox.getValue();
+                            rowData.set(columns1.length - 1, newStatus); // Cập nhật giá trị mới vào dữ liệu gốc
+                            confirmButton.setVisible(false); // Ẩn nút Confirm sau khi xác nhận
+                        }
+                    });
+                }
+
+                @Override
+                protected void updateItem(String status, boolean empty) {
+                    super.updateItem(status, empty);
+                    if (empty || status == null) {
+                        setGraphic(null);
+                    } else {
+                        comboBox.setValue(status); // Hiển thị giá trị hiện tại
+                        confirmButton.setVisible(false); // Đảm bảo nút Confirm ẩn khi cập nhật lại
+                        setGraphic(hBox); // Gắn HBox chứa ComboBox và Confirm
+                    }
+                }
+            });
+
+            // Thêm cột vào TableView
+            borrowingTableView.getColumns().add(statusColumn);
+        } else {
+            TableColumn<ObservableList<String>, String> statusColumn = new TableColumn<>(columns1[columns1.length - 1]);
+            statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(columns1.length - 1)));
+            borrowingTableView.getColumns().add(statusColumn);
+        }
+        ///
+
 
         borrowedTableView.getColumns().clear();
-        String[] columns2 = {"ID", "Username", "Title", "Author", "Book ID", "Start Date", "End Date"};
-        for (int i = 0; i < columns2.length; i++) {
+        String[] columns2 = {"ID", "Username", "Title", "Author", "Book ID", "Start Date", "End Date", "Status"};
+        for (int i = 0; i < columns2.length - 1; i++) {
             TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns2[i]);
             int finalI = i;
             column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(finalI)));
             borrowedTableView.getColumns().add(column);
         }
+        ///xử lý trạng thái sách
+        if (UserManagement.getCurrentUser() instanceof Admin) {
+            TableColumn<ObservableList<String>, String> statusColumn2 = new TableColumn<>(columns2[columns2.length - 1]);
+            statusColumn2.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(columns2.length - 1)));
+            statusColumn2.setCellFactory(column -> new TableCell<>() {
+                private final ComboBox<String> comboBox = new ComboBox<>();
+                private final Button confirmButton = new Button("Confirm");
+                private final HBox hBox = new HBox(5, comboBox, confirmButton); // HBox chứa ComboBox và Confirm
 
+                {
+                    comboBox.getItems().addAll("Borrowing", "Returned", "Missing");
+                    confirmButton.setVisible(false); // Mặc định ẩn nút Confirm
+
+                    comboBox.setOnAction(e -> {
+                        int rowIndex = getIndex(); // Lấy chỉ số hàng hiện tại
+                        if (rowIndex >= 0) {
+                            ObservableList<String> rowData = getTableView().getItems().get(rowIndex);
+                            String originalStatus = rowData.get(columns2.length - 1); // Giá trị gốc
+                            String newStatus = comboBox.getValue(); // Giá trị mới
+
+                            // Hiển thị nút Confirm nếu giá trị thay đổi
+                            confirmButton.setVisible(!newStatus.equals(originalStatus));
+                        }
+                    });
+
+                    confirmButton.setOnAction(e -> {
+                        int rowIndex = getIndex();
+                        if (rowIndex >= 0) {
+                            ObservableList<String> rowData = getTableView().getItems().get(rowIndex);
+                            String newStatus = comboBox.getValue();
+                            rowData.set(columns2.length - 1, newStatus); // Cập nhật giá trị mới vào dữ liệu gốc
+                            confirmButton.setVisible(false); // Ẩn nút Confirm sau khi xác nhận
+                        }
+                    });
+                }
+
+                @Override
+                protected void updateItem(String status, boolean empty) {
+                    super.updateItem(status, empty);
+                    if (empty || status == null) {
+                        setGraphic(null);
+                    } else {
+                        comboBox.setValue(status); // Hiển thị giá trị hiện tại
+                        confirmButton.setVisible(false); // Đảm bảo nút Confirm ẩn khi cập nhật lại
+                        setGraphic(hBox); // Gắn HBox chứa ComboBox và Confirm
+                    }
+                }
+            });
+
+            borrowedTableView.getColumns().add(statusColumn2);
+        } else {
+            TableColumn<ObservableList<String>, String> statusColumn = new TableColumn<>(columns1[columns2.length - 1]);
+            statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(columns2.length - 1)));
+            borrowedTableView.getColumns().add(statusColumn);
+        }
+        ///
+
+
+        ///thêm các data vào bảng
         ObservableList<ObservableList<String>> datas1 = FXCollections.observableArrayList();
         ObservableList<ObservableList<String>> datas2 = FXCollections.observableArrayList();
         Connection connection = AppMain.connection;
         if (UserManagement.getCurrentUser() instanceof Admin) {
             PreparedStatement borrowingPS = connection.prepareStatement(
                     "WITH book_issue AS " +
-                            "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.username, issue.id AS ID, issue.start_date, issue.duration  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
-                            "SELECT ID, username, BookID, BookName ,Author AS author,  DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, DATEDIFF(DATE_ADD(start_date, INTERVAL duration DAY), NOW()) AS Remaining_time  " +
-                            "FROM book_issue  WHERE DATEDIFF(NOW(), start_date) < duration;"
+                            "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.username, issue.id AS ID, issue.start_date, issue.duration, issue.status  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
+                            "SELECT ID, username, BookID, BookName ,Author AS author,  DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, DATEDIFF(DATE_ADD(start_date, INTERVAL duration DAY), NOW()) AS Remaining_time, status  " +
+                            "FROM book_issue  WHERE status = 'Borrowing' OR status = 'Missing';"
             );
             ResultSet borrowingRS = borrowingPS.executeQuery();
             while(borrowingRS.next()) {
@@ -59,32 +179,35 @@ public class IssueListView {
                 String author = borrowingRS.getString("author");
                 String end_date = borrowingRS.getDate("end_date").toString();
                 String remaining_time = Integer.toString(borrowingRS.getInt("remaining_time"));
-                datas1.add(FXCollections.observableArrayList(id, username, title, author, bookId, end_date, remaining_time));
+                String status = borrowingRS.getString("status");
+                System.out.println(status);
+                datas1.add(FXCollections.observableArrayList(id, username, title, author, bookId, end_date, remaining_time, status));
             }
             borrowingTableView.setItems(datas1);
 
             PreparedStatement borrowedPS = connection.prepareStatement("WITH book_issue AS " +
-                    "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.id AS ID, issue.username, issue.start_date, issue.duration  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
-                    "SELECT ID, username, BookID, BookName, Author AS author,  start_date, DATE_ADD(start_date, INTERVAL duration DAY) AS end_date " +
-                    "FROM book_issue WHERE DATEDIFF(NOW(), DATE_ADD(start_date, INTERVAL duration DAY)) > 0");
+                    "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.id AS ID, issue.username, issue.start_date, issue.duration, issue.status  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
+                    "SELECT ID, username, BookID, BookName, Author AS author,  start_date, DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, status " +
+                    "FROM book_issue WHERE status = 'Returned'");
             ResultSet borrowedRS = borrowedPS.executeQuery();
             while (borrowedRS.next()) {
-                String id = Integer.toString(borrowingRS.getInt("id"));
-                String bookId = Integer.toString(borrowingRS.getInt("bookid"));
+                String id = Integer.toString(borrowedRS.getInt("id"));
+                String bookId = Integer.toString(borrowedRS.getInt("bookid"));
                 String username = borrowedRS.getString("username");
-                String title = borrowingRS.getString("bookname");
-                String author = borrowingRS.getString("author");
-                String end_date = borrowingRS.getDate("end_date").toString();
-                String start_date = Integer.toString(borrowingRS.getInt("start_date"));
-                datas2.add(FXCollections.observableArrayList(id, username, title, author, bookId, start_date, end_date));
+                String title = borrowedRS.getString("bookname");
+                String author = borrowedRS.getString("author");
+                String end_date = borrowedRS.getDate("end_date").toString();
+                String start_date = borrowedRS.getDate("start_date").toString();
+                String status = borrowedRS.getString("status");
+                datas2.add(FXCollections.observableArrayList(id, username, title, author, bookId, start_date, end_date, status));
             }
             borrowedTableView.setItems(datas2);
         } else {
             PreparedStatement borrowingPS = connection.prepareStatement(
                     "WITH book_issue AS " +
-                            "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.username, issue.id AS ID, issue.start_date, issue.duration  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
-                            "SELECT ID, username, BookID, BookName ,Author AS author,  DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, DATEDIFF(DATE_ADD(start_date, INTERVAL duration DAY), NOW()) AS Remaining_time  " +
-                            "FROM book_issue  WHERE DATEDIFF(NOW(), start_date) < duration AND username = ?"
+                            "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.username, issue.id AS ID, issue.start_date, issue.duration, issue.status  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
+                            "SELECT ID, username, BookID, BookName ,Author AS author,  DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, DATEDIFF(DATE_ADD(start_date, INTERVAL duration DAY), NOW()) AS Remaining_time, status  " +
+                            "FROM book_issue  WHERE (status = 'Borrowing' OR status = 'Missing') AND username = ?"
             );
             borrowingPS.setString(1, UserManagement.getCurrentUser().getUsername());
             ResultSet borrowingRS = borrowingPS.executeQuery();
@@ -96,112 +219,29 @@ public class IssueListView {
                 String author = borrowingRS.getString("author");
                 String end_date = borrowingRS.getDate("end_date").toString();
                 String remaining_time = Integer.toString(borrowingRS.getInt("remaining_time"));
-                datas1.add(FXCollections.observableArrayList(id, username, title, author, bookId, end_date, remaining_time));
+                String status = borrowingRS.getString("status");
+                datas1.add(FXCollections.observableArrayList(id, username, title, author, bookId, end_date, remaining_time, status));
             }
             borrowingTableView.setItems(datas1);
 
             PreparedStatement borrowedPS = connection.prepareStatement("WITH book_issue AS " +
-                    "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.id AS ID, issue.username, issue.start_date, issue.duration  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
-                    "SELECT ID, username, BookID, BookName, Author AS author,  start_date, DATE_ADD(start_date, INTERVAL duration DAY) AS end_date " +
-                    "FROM book_issue WHERE DATEDIFF(NOW(), DATE_ADD(start_date, INTERVAL duration DAY)) > 0 AND username = ?");
+                    "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.id AS ID, issue.username, issue.start_date, issue.duration, issue.status  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
+                    "SELECT ID, username, BookID, BookName, Author AS author,  start_date, DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, status " +
+                    "FROM book_issue WHERE (status = 'Returned') AND username = ?");
             borrowedPS.setString(1, UserManagement.getCurrentUser().getUsername());
             ResultSet borrowedRS = borrowedPS.executeQuery();
             while (borrowedRS.next()) {
-                String id = Integer.toString(borrowingRS.getInt("id"));
-                String bookId = Integer.toString(borrowingRS.getInt("bookid"));
+                String id = Integer.toString(borrowedRS.getInt("id"));
+                String bookId = Integer.toString(borrowedRS.getInt("bookid"));
                 String username = borrowedRS.getString("username");
-                String title = borrowingRS.getString("bookname");
-                String author = borrowingRS.getString("author");
-                String end_date = borrowingRS.getDate("end_date").toString();
-                String start_date = Integer.toString(borrowingRS.getInt("start_date"));
-                datas2.add(FXCollections.observableArrayList(id, username, title, author, bookId, start_date, end_date));
+                String title = borrowedRS.getString("bookname");
+                String author = borrowedRS.getString("author");
+                String end_date = borrowedRS.getDate("end_date").toString();
+                String start_date = borrowedRS.getDate("start_date").toString();
+                String status = borrowedRS.getString("status");
+                datas2.add(FXCollections.observableArrayList(id, username, title, author, bookId, start_date, end_date, status));
             }
             borrowedTableView.setItems(datas2);
         }
-
-
-
-
-        /*TableColumn<ObservableList<String>, String> idColumn = new TableColumn<>("ID");
-        idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(0)));
-
-        TableColumn<ObservableList<String>, String> titleColumn = new TableColumn<>("Title");
-        titleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(1)));
-
-        TableColumn<ObservableList<String>, String> bookIdColumn = new TableColumn<>("Book ID");
-        bookIdColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(2)));
-
-        TableColumn<ObservableList<String>, String> startDateColumn = new TableColumn<>("Start Date");
-        startDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(3)));
-
-        TableColumn<ObservableList<String>, String> durationColumn = new TableColumn<>("Duration");
-        durationColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(4)));
-
-        TableColumn<ObservableList<String>, String> usernameColumn = new TableColumn<>("Username");
-        usernameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(5)));
-
-        // Thêm các cột vào TableView
-        borrowingTableView.getColumns().addAll(idColumn, titleColumn, bookIdColumn, startDateColumn, durationColumn, usernameColumn);
-
-        // Tạo dữ liệu (Dữ liệu là ObservableList các ObservableList đơn giản)
-        ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
-
-        // Thêm dữ liệu vào TableView
-        Connection connection = AppMain.connection;
-        if (UserManagement.getCurrentUser() instanceof Admin) {
-            String sql = "SELECT * FROM issue WHERE username = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, UserManagement.getCurrentUser().getUsername());
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                int bookId = resultSet.getInt("book_id");
-                String startDate;
-                if (resultSet.getDate("start_date") != null) {
-                    startDate = resultSet.getDate("start_date").toString();
-                } else startDate = "null";
-                String duration = Integer.toString(resultSet.getInt("duration"));
-                String bookName = "";
-                PreparedStatement bookNamePS = connection.prepareStatement("SELECT name FROM book WHERE id = ?");
-                bookNamePS.setInt(1, bookId);
-                ResultSet bookNameRS = bookNamePS.executeQuery();
-                while (bookNameRS.next()) {
-                    bookName = bookNameRS.getString("name");
-                    System.out.println(bookName);
-                }
-                data.add(FXCollections.observableArrayList(Integer.toString(id), bookName, Integer.toString(bookId), startDate, duration, UserManagement.getCurrentUser().getUsername()));
-
-            }
-
-            // Đặt dữ liệu vào TableView
-            issueTable.setItems(data);
-        } else {
-            String sql = "SELECT * FROM issue";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                int bookId = resultSet.getInt("book_id");
-                String startDate;
-                if (resultSet.getDate("start_date") != null) {
-                    startDate = resultSet.getDate("start_date").toString();
-                } else startDate = "null";
-                String duration = Integer.toString(resultSet.getInt("duration"));
-                String bookName = "";
-                PreparedStatement bookNamePS = connection.prepareStatement("SELECT name FROM book WHERE id = ?");
-                bookNamePS.setInt(1, bookId);
-                ResultSet bookNameRS = bookNamePS.executeQuery();
-                while (bookNameRS.next()) {
-                    bookName = bookNameRS.getString("name");
-                    System.out.println(bookName);
-                }
-                String username = resultSet.getString("username");
-                data.add(FXCollections.observableArrayList(Integer.toString(id), bookName, Integer.toString(bookId), startDate, duration, username));
-
-            }
-
-            // Đặt dữ liệu vào TableView
-            issueTable.setItems(data);
-        }*/
     }
 }

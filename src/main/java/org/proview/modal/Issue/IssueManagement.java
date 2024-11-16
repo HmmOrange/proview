@@ -12,7 +12,7 @@ public class IssueManagement {
     public static void addIssue(String username, int bookId, int duration) throws SQLException {
         Connection connection = AppMain.connection;
 
-        String sql = "INSERT INTO issue(username, book_id, duration, start_date) VALUES (?, ?, ?, NOW())";
+        String sql = "INSERT INTO issue(username, book_id, duration, start_date, status) VALUES (?, ?, ?, NOW(), 'Borrowing')";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, username);
         preparedStatement.setInt(2, bookId);
