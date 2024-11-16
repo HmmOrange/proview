@@ -3,11 +3,8 @@ package org.proview.test.Scene;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.skin.ListViewSkin;
-import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.proview.modal.Book.BookLib;
@@ -17,12 +14,14 @@ import org.proview.modal.Review.ReviewManagement;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.User;
 import org.proview.modal.User.UserManagement;
+import org.proview.modal.Utils.SQLUtils;
 import org.proview.test.AppMain;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class BookInfoView {
     public Button backButton;
@@ -75,7 +74,7 @@ public class BookInfoView {
 
     public void setData(int id) throws IOException, SQLException {
         setId(id);
-        BookLib book = new BookLib(id);
+        BookLib book = Objects.requireNonNull(SQLUtils.getBook(id));
 
         titleLabel.setText(book.getTitle());
         authorLabel.setText(authorLabel.getText() + " " + book.getAuthor());

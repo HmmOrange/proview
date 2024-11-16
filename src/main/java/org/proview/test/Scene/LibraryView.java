@@ -13,7 +13,7 @@ public class LibraryView {
     public void initialize() throws SQLException {
         ObservableList<BookLib> bookList = BookManagement.getBookList();
 
-        BookManagement.initLibBookList(allBooksListView, bookList);
+        BookManagement.initBookLibList(allBooksListView, bookList);
 
 
         allBooksListView.setMinWidth(500 + 10);

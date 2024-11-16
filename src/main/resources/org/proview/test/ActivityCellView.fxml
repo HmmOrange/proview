@@ -7,30 +7,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClick" prefHeight="100.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ActivityCellView">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClick" prefHeight="75.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ActivityCellView">
    <children>
-      <ImageView fx:id="coverImageView" fitWidth="62.5" pickOnBounds="true" preserveRatio="true" />
-      <VBox prefHeight="250.0" prefWidth="550.0">
+      <ImageView fx:id="coverImageView" fitHeight="75.0" fitWidth="46.875" pickOnBounds="true" preserveRatio="true" />
+      <VBox prefHeight="75.0" prefWidth="364.0">
          <children>
-            <Label fx:id="titleLabel" alignment="TOP_LEFT" prefHeight="31.0" prefWidth="355.0" text="{user} reviewed:">
-               <font>
-                  <Font size="14.0" />
-               </font>
+            <HBox alignment="CENTER">
                <VBox.margin>
-                  <Insets left="10.0" top="10.0" />
-               </VBox.margin>
-            </Label>
-            <Label fx:id="descriptionLabel" alignment="TOP_LEFT" prefHeight="186.0" prefWidth="355.0" text="abc xyz abc&#10;abc ayyz...&#10;" wrapText="true">
-               <VBox.margin>
-                  <Insets left="10.0" />
-               </VBox.margin>
-            </Label>
-            <HBox>
-               <VBox.margin>
-                  <Insets left="10.0" />
+                  <Insets left="10.0" top="5.0" />
                </VBox.margin>
                <children>
-                  <Label fx:id="timeLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="38.0" prefWidth="365.0" text="3 hours ago" wrapText="true">
+                  <Label fx:id="titleLabel" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="200.0" text="{user}">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="timeLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="17.0" prefWidth="100.0" text="3 hours ago" wrapText="true">
                      <font>
                         <Font name="System Italic" size="12.0" />
                      </font>
@@ -40,9 +32,22 @@
                   </Label>
                </children>
             </HBox>
+            <Label fx:id="activityTypeLabel" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="305.0" text="Reviewed: Book #abc&#10;" wrapText="true">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="descriptionLabel" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="312.0" text="This is good etc...&#10;" wrapText="true">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
          </children>
          <HBox.margin>
-            <Insets left="10.0" />
+            <Insets />
          </HBox.margin>
       </VBox>
    </children>

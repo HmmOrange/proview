@@ -19,20 +19,19 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-// There surely is a way to create inheritance for ActivityCellView and PersonalActivityCellView, right...?
-
-public class ActivityCellView {
-    public Label titleLabel;
+public class PersonalActivityCellView {
     public Label descriptionLabel;
     public Label timeLabel;
     public ImageView coverImageView;
     public Label activityTypeLabel;
     private int id = -1;
 
-    public void setData(Activity.Type type, int userId, int bookId, String description, Timestamp timestamp) throws IOException, SQLException {
-        titleLabel.setText(Objects.requireNonNull(SQLUtils.getUser(userId)).getFullName());
-        if (type == Activity.Type.REVIEW)
-            activityTypeLabel.setText("Reviewed: " + Objects.requireNonNull(SQLUtils.getBook(bookId)).getTitle());
+    public void setData(Activity.Type type, int bookId, String description, Timestamp timestamp) throws IOException, SQLException {
+        switch (type) {
+            case Activity.Type.REVIEW:
+                activityTypeLabel.setText("Reviewed: " + Objects.requireNonNull(SQLUtils.getBook(bookId)).getTitle());
+        }
+
         descriptionLabel.setText(description);
         timeLabel.setText(TimeAgo.using(timestamp.getTime()).replace("about ", ""));
 

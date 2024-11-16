@@ -107,7 +107,6 @@ public class IssueListView {
             statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(columns1.length - 1)));
             borrowingTableView.getColumns().add(statusColumn);
         }
-        ///
 
 
         borrowedTableView.getColumns().clear();

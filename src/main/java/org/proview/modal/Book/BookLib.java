@@ -1,5 +1,6 @@
 package org.proview.modal.Book;
 
+import org.proview.modal.Utils.SQLUtils;
 import org.proview.test.AppMain;
 
 import java.sql.*;
@@ -11,23 +12,6 @@ public class BookLib extends Book {
     private double rating = -1;
     private int issueCount = -1;
     private int issueCount7Days = -1;
-
-    public BookLib(int id) throws SQLException {
-        super();
-
-        String sql = "SELECT * FROM book WHERE id = ?";
-        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
-        preparedStatement.setInt(1, id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            super.setTitle(resultSet.getString("name"));
-            super.setAuthor(resultSet.getString("author"));
-            super.setDescription(resultSet.getString("description"));
-            this.id = id;
-            this.copiesAvailable = resultSet.getInt("copies");
-            this.imagePath = String.format("./assets/covers/cover%d.png", id);
-        }
-    }
 
     public BookLib(int id, String title, String author) {
         super(title, author);

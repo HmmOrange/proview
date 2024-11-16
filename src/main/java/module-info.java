@@ -24,6 +24,8 @@ module org.proview.test {
     opens org.proview.modal.User to javafx.fxml;
     exports org.proview.modal.Utils;
     opens org.proview.modal.Utils to javafx.fxml;
+    exports org.proview.modal.Activity;
+    opens org.proview.modal.Activity to javafx.fxml;
     exports org.proview.modal.Book;
     opens org.proview.modal.Book to javafx.fxml;
     exports org.proview.modal.Review;
