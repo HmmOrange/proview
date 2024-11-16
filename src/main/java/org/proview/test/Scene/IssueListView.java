@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class IssueListView {
@@ -34,6 +35,9 @@ public class IssueListView {
             TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns1[i]);
             int finalI = i;
             column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(finalI)));
+            if (columns1[finalI].equals("ID") || columns1[finalI].equals("Book ID")) {
+                column.setComparator(Comparator.comparingInt(Integer::parseInt));
+            }
             borrowingTableView.getColumns().add(column);
         }
 
@@ -112,6 +116,9 @@ public class IssueListView {
             TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns2[i]);
             int finalI = i;
             column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(finalI)));
+            if (columns2[finalI].equals("ID") || columns2[finalI].equals("Book ID")) {
+                column.setComparator(Comparator.comparingInt(Integer::parseInt));
+            }
             borrowedTableView.getColumns().add(column);
         }
 
