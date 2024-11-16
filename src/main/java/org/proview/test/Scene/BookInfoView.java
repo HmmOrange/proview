@@ -17,12 +17,14 @@ import org.proview.modal.Review.ReviewManagement;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.User;
 import org.proview.modal.User.UserManagement;
+import org.proview.modal.Utils.SQLUtils;
 import org.proview.test.AppMain;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class BookInfoView {
     public Button backButton;
@@ -75,7 +77,7 @@ public class BookInfoView {
 
     public void setData(int id) throws IOException, SQLException {
         setId(id);
-        BookLib book = new BookLib(id);
+        BookLib book = Objects.requireNonNull(SQLUtils.getBookFromId(id));
 
         titleLabel.setText(book.getTitle());
         authorLabel.setText(authorLabel.getText() + " " + book.getAuthor());

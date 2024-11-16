@@ -8,40 +8,40 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.HomeView">
+<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.HomeView">
    <top>
       <fx:include source="NavBar.fxml" />
    </top>
    <left>
-      <AnchorPane prefHeight="578.0" prefWidth="317.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="578.0" prefWidth="381.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="14.0" layoutY="14.0" text="Recent reviews">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <ListView fx:id="recentReviewListView" layoutX="7.0" layoutY="60.0" prefHeight="116.0" prefWidth="300.0" />
+            <ListView fx:id="recentReviewListView" layoutX="10.0" layoutY="57.0" prefHeight="116.0" prefWidth="350.0" />
          </children></AnchorPane>
    </left>
    <center>
-      <ScrollPane prefHeight="578.0" prefWidth="955.0" BorderPane.alignment="CENTER">
+      <ScrollPane prefHeight="578.0" prefWidth="637.0" BorderPane.alignment="CENTER">
          <content>
-            <VBox prefHeight="586.0" prefWidth="959.0">
+            <VBox prefHeight="586.0" prefWidth="859.0">
                <children>
-                  <AnchorPane prefHeight="570.0" prefWidth="965.0">
+                  <AnchorPane prefHeight="586.0" prefWidth="872.0">
                      <children>
-                        <Label layoutX="21.0" layoutY="14.0" prefHeight="30.0" prefWidth="449.0" text="Top-rated books">
+                        <Label layoutX="21.0" layoutY="14.0" prefHeight="30.0" prefWidth="191.0" text="Top-rated books">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="topRatedBookListView" layoutX="21.0" layoutY="59.0" prefHeight="115.0" prefWidth="450.0" />
-                        <Label layoutX="498.0" layoutY="14.0" prefHeight="30.0" prefWidth="443.0" text="Trending (7 days)">
+                        <ListView fx:id="topRatedBookListView" layoutX="21.0" layoutY="59.0" prefHeight="115.0" prefWidth="400.0" />
+                        <Label layoutX="472.0" layoutY="14.0" prefHeight="30.0" prefWidth="196.0" text="Trending (7 days)">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="trendingBookListView" layoutX="499.0" layoutY="60.0" prefHeight="113.0" prefWidth="450.0" />
+                        <ListView fx:id="trendingBookListView" layoutX="472.0" layoutY="60.0" prefHeight="113.0" prefWidth="400.0" />
                      </children>
                   </AnchorPane>
                </children>

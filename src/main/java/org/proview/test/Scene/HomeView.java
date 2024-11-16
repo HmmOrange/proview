@@ -6,19 +6,30 @@ import org.proview.modal.Activity.Activity;
 import org.proview.modal.Activity.ActivityManagement;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Book.BookManagement;
-import org.proview.modal.Review.Review;
-import org.proview.modal.Review.ReviewManagement;
-import org.proview.modal.Utils.SQLUtils;
-
 import java.sql.SQLException;
 
 public class HomeView {
+    private enum Size {
+        BOOK_CELL_HEIGHT(125),
+        ACTIVITY_CELL_HEIGHT(75),
+        BOOK_LISTVIEW_WIDTH(400),
+        RECENT_ACTIVITY_LISTVIEW_WIDTH(350),
+        PADDING(10);
+
+        private final int value;
+
+        Size(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
     public ListView<BookLib> topRatedBookListView;
     public ListView<BookLib> trendingBookListView;
     public ListView<Activity> recentReviewListView;
-    public TextField bookSearchBar;
-    public Label usernameField;
-    public Label emailField;
 
     public void initialize() throws SQLException {
         ObservableList<BookLib> topRatedList = BookManagement.getTopRatedBookList();
@@ -30,12 +41,12 @@ public class HomeView {
         ActivityManagement.initActivityList(recentReviewListView, activityList);
 
         // Make the list view non-scrollable (there is probably a better way to do this)
-        topRatedBookListView.setMinHeight(125 * topRatedList.size() + 10);
-        trendingBookListView.setMinHeight(125 * trendingList.size() + 10);
-        recentReviewListView.setMinHeight(100 * activityList.size() + 10);
+        topRatedBookListView.setPrefHeight(Size.BOOK_CELL_HEIGHT.getValue() * topRatedList.size() + Size.PADDING.getValue());
+        trendingBookListView.setPrefHeight(Size.BOOK_CELL_HEIGHT.getValue() * trendingList.size() + Size.PADDING.getValue());
+        recentReviewListView.setPrefHeight(Size.ACTIVITY_CELL_HEIGHT.getValue() * activityList.size() + Size.PADDING.getValue());
 
-        topRatedBookListView.setMinWidth(450 + 10);
-        trendingBookListView.setMinWidth(450 + 10);
-        recentReviewListView.setMinWidth(300 + 10);
+        topRatedBookListView.setMinWidth(Size.BOOK_LISTVIEW_WIDTH.getValue() + 10);
+        trendingBookListView.setMinWidth(Size.BOOK_LISTVIEW_WIDTH.getValue() + 10);
+        recentReviewListView.setMinWidth(Size.RECENT_ACTIVITY_LISTVIEW_WIDTH.getValue() + 10);
     }
 }

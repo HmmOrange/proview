@@ -2,6 +2,7 @@ package org.proview.modal.Utils;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.proview.modal.Book.BookLib;
 import org.proview.modal.Review.Review;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
@@ -45,7 +46,6 @@ public class SQLUtils {
     }
 
     public static User getUserFromLoginCred(String username, String password) throws SQLException {
-        Connection connection = AppMain.connection;
         String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, username);
@@ -66,6 +66,53 @@ public class SQLUtils {
 
             return new NormalUser(id, username, password, firstName, lastName, email);
         }
+    }
+
+    public static BookLib getBookFromId(int id) throws SQLException {
+        String sql = "SELECT * FROM book WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            String title = resultSet.getString("name");
+            String author = resultSet.getString("author");
+            String description = resultSet.getString("description");
+            int copiesAvailable = resultSet.getInt("copies");
+
+            return new BookLib(id, title, author, description, copiesAvailable);
+        }
+
+        return null;
+    }
+
+    public static ObservableList<Review> getReviewListFromUserId(int userId) throws SQLException {
+        Connection connection = AppMain.connection;
+        String sql = """
+            SELECT * FROM review
+            WHERE user_id = ?
+            ORDER BY time_added DESC;
+        """;
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        ObservableList<Review> reviewObservableList = FXCollections.observableArrayList();
+        while (resultSet.next()) {
+            int bookId = resultSet.getInt("book_id");
+            String review = resultSet.getString("review");
+            Timestamp timestampAdded = resultSet.getTimestamp("time_added");
+
+            Review curReview = new Review(
+                    bookId,
+                    userId,
+                    review,
+                    timestampAdded
+            );
+            reviewObservableList.add(curReview);
+        }
+
+        return reviewObservableList;
     }
 
     public static ObservableList<Review> getReviewList() throws SQLException {
