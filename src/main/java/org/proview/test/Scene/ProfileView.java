@@ -50,6 +50,12 @@ public class ProfileView {
     public ListView<Activity> recentActivityListView;
     public ListView<BookLib> borrowingCompactListView;
 
+    public static ObservableList<BookLib> borrowingBookList;
+
+    public ObservableList<BookLib> getBorrowingBookList() {
+        return borrowingBookList;
+    }
+
     private void loadProfile() throws FileNotFoundException {
         nameField.setText("Name: " + UserManagement.getCurrentUser().getFullName());
         emailField.setText("Mail: " + UserManagement.getCurrentUser().getEmail());
@@ -79,22 +85,15 @@ public class ProfileView {
                         + Size.PADDING.getValue());
     }
 
-    private void loadBorrowingListView() throws SQLException {
-        ObservableList<BookLib> borrowingBookList = SQLUtils.getBorrowingBookList(UserManagement.getCurrentUser().getId());
-        BookManagement.initBookLibCompactList(borrowingCompactListView, borrowingBookList, false);
-        borrowingCompactListView.setPrefHeight(
-                Size.BOOK_CELL_COMPACT_HEIGHT.getValue() * borrowingBookList.size()
-                        + Size.PADDING.getValue()
-        );
-        borrowingCompactListView.setMinWidth(
-                Size.BOOK_LISTVIEW_COMPACT_WIDTH.getValue()
-                        + Size.PADDING.getValue());
+    public static void loadBorrowingList() throws SQLException {
+        borrowingBookList = SQLUtils.getBorrowingBookList(UserManagement.getCurrentUser().getId());
     }
 
     public void initialize() throws SQLException, FileNotFoundException {
         loadProfile();
         loadRecentActivity();
-        loadBorrowingListView();
+        if (borrowingBookList == null)
+            loadBorrowingList();
     }
 
     public void onEditProfileButtonClick(ActionEvent actionEvent) throws IOException {

@@ -32,12 +32,12 @@
                   </Label>
                </children>
             </HBox>
-            <Label fx:id="activityTypeLabel" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="284.0" text="Reviewed: Book #abc&#10;" wrapText="true">
+            <Label fx:id="activityTypeLabel" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="305.0" text="Reviewed: Book #abc&#10;" wrapText="true">
                <VBox.margin>
                   <Insets left="10.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="descriptionLabel" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="286.0" text="This is good etc...&#10;" wrapText="true">
+            <Label fx:id="descriptionLabel" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="312.0" text="This is good etc...&#10;" wrapText="true">
                <VBox.margin>
                   <Insets left="10.0" />
                </VBox.margin>
