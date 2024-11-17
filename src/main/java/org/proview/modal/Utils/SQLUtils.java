@@ -61,6 +61,7 @@ public class SQLUtils {
             String firstName = resultSet.getString("firstName");
             String lastName = resultSet.getString("lastName");
             String email = resultSet.getString("email");
+            System.out.println(id + " " + firstName + " " + lastName + " " + email);
 
             if (username.equalsIgnoreCase("admin"))
                 return new Admin(id, username, password, firstName, lastName, email);
@@ -148,14 +149,15 @@ public class SQLUtils {
         String sql = """
             SELECT * FROM book b
             JOIN issue i ON b.id = i.book_id
-            WHERE i.user_id = ? AND i.status = 'Borrowing';
+            WHERE i.user_id = ? AND (i.status = 'Picked up' OR i.status = 'Not picked up');
         """;
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        System.out.println("user_id: " + userId);
         preparedStatement.setInt(1, userId);
         ResultSet resultSet = preparedStatement.executeQuery();
-
         ObservableList<BookLib> bookLibObservableList = FXCollections.observableArrayList();
         while (resultSet.next()) {
+            System.out.println("result not empty");
             int bookId = resultSet.getInt("b.id");
             String title = resultSet.getString("name");
             String author = resultSet.getString("author");
@@ -163,6 +165,7 @@ public class SQLUtils {
             int copiesAvailable = resultSet.getInt("copies");
 
             bookLibObservableList.add(new BookLib(bookId, title, author, description, copiesAvailable));
+            System.out.println(STR."\{bookId} \{title} \{author} \{description} \{copiesAvailable}");
         }
         return bookLibObservableList;
     }
@@ -184,6 +187,20 @@ public class SQLUtils {
             alterEndDatePS.executeUpdate();
             alterEndDatePS.close();
         }
+    }
+
+    public static int getUserIdFrom(String username) throws SQLException {
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement("SELECT id FROM user WHERE username = ?");
+        preparedStatement.setString(1, username);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if(resultSet.next()) {
+            preparedStatement.close();
+            resultSet.close();
+            return resultSet.getInt("id");
+        }
+        preparedStatement.close();
+        resultSet.close();
+        return -1;
     }
 }
 

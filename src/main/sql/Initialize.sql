@@ -115,14 +115,14 @@ INSERT INTO review(book_id, user_id, review, time_added) VALUES (2, 1, 'This meh
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (3, 1, 'This ok', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 2 DAY));
 
 -- Add sample request issues
-INSERT INTO issue(start_date, duration, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 3, '23021497', 1, 'Picked up');
-INSERT INTO issue(start_date, duration, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 7, '23021501', 1, 'Not picked up');
-INSERT INTO issue(start_date, duration, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 1, '23021501', 2, 'Picked up');
-INSERT INTO issue(start_date, duration, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 7, '23021521', 1, 'Picked up');
-INSERT INTO issue(start_date, duration, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 2, '23021521', 2, 'Not picked up');
-INSERT INTO issue(start_date, duration, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 10, '23021521', 3, 'Picked up');
-INSERT INTO issue(start_date, duration, username, book_id, status, end_date) VALUES (DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 20 DAY), 10, '23021521', 3, 'Returned', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 5 DAY));
-INSERT INTO issue(start_date, duration, username, book_id, status, end_date) VALUES (DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 15 DAY), 1, '23021501', 2, 'Returned', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 10 DAY));
-INSERT INTO issue(start_date, duration, username, book_id, status) VALUES (DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 5 DAY), 3, '23021497', 1, 'Missing');
+INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 3, 2, '23021497', 1, 'Picked up');
+INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 7, 3, '23021501', 1, 'Not picked up');
+INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 1, 3, '23021501', 2, 'Picked up');
+INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 7, 4, '23021521', 1, 'Picked up');
+INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 2, 4, '23021521', 2, 'Not picked up');
+INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 10, 4, '23021521', 3, 'Picked up');
+INSERT INTO issue(start_date, duration, user_id, username, book_id, status, end_date) VALUES (DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 20 DAY), 10, 4, '23021521', 3, 'Returned', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 5 DAY));
+INSERT INTO issue(start_date, duration, user_id, username, book_id, status, end_date) VALUES (DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 15 DAY), 1, 3, '23021501', 2, 'Returned', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 10 DAY));
+INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 5 DAY), 3, 2, '23021497', 1, 'Missing');
 
 SELECT * FROM user;

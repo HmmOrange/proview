@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Book.BookManagement;
+import org.proview.modal.Utils.SQLUtils;
 import org.proview.test.AppMain;
 
 import java.sql.*;
@@ -12,11 +13,12 @@ public class IssueManagement {
     public static void addIssue(String username, int bookId, int duration) throws SQLException {
         Connection connection = AppMain.connection;
 
-        String sql = "INSERT INTO issue(username, book_id, duration, start_date, status) VALUES (?, ?, ?, NOW(), 'Borrowing')";
+        String sql = "INSERT INTO issue(username, book_id, duration, start_date, status, user_id) VALUES (?, ?, ?, NOW(), 'Not picked up', ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, username);
         preparedStatement.setInt(2, bookId);
         preparedStatement.setString(3, String.valueOf(duration));
+        preparedStatement.setInt(4, SQLUtils.getUserIdFrom(username));
         preparedStatement.executeUpdate();
     }
 
