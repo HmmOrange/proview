@@ -140,6 +140,7 @@ public class AppMain extends Application {
 
         System.out.println("Script file executed successfully");
     }
+
     public static void main(String[] args) throws SQLException, IOException {
         Connection connection = connectToDb();
 
@@ -149,7 +150,6 @@ public class AppMain extends Application {
 
         // Uncomment this if in need of creating new fresh tables in DB
         runSQLScript(connection);
-
         launch();
     }
 }

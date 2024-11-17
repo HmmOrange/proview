@@ -1,6 +1,6 @@
 package org.proview.modal.User;
 
-import org.proview.modal.Utils.SQLUtils;
+import org.proview.utils.SQLUtils;
 
 import java.sql.SQLException;
 

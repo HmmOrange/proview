@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS issue;
 DROP TABLE IF EXISTS tag;
 DROP TABLE IF EXISTS rating;
 DROP TABLE IF EXISTS review;
+DROP TABLE IF EXISTS favourite;
 DROP TABLE IF EXISTS book;
 DROP TABLE IF EXISTS user;
 
@@ -67,6 +68,15 @@ CREATE TABLE review
     FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE favourite
+(
+    book_id    INT,
+    user_id    INT,
+    time_added TIMESTAMP,
+
+    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 -- Add admin user (type 0)
 INSERT INTO user(username, password, type, firstName, lastName, email)
@@ -118,7 +128,6 @@ INSERT INTO review(book_id, user_id, review, time_added) VALUES (3, 1, 'This ok'
 INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 3, 2, '23021497', 1, 'Borrowing');
 INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 7, 3, '23021501', 1, 'Borrowing');
 INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 1, 3, '23021501', 2, 'Borrowing');
-INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 2, 3, '23021501', 3, 'Borrowing');
 INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 7, 4, '23021521', 1, 'Borrowing');
 INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 2, 4, '23021521', 2, 'Borrowing');
 INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (CURRENT_TIMESTAMP, 10, 4, '23021521', 3, 'Borrowing');

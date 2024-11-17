@@ -1,0 +1,11 @@
+#star-icon-default .ikonli-font-icon {
+    -fx-icon-size: 32;
+    -fx-icon-code: "far-star";
+    -fx-icon-color: #000000;
+}
+
+#star-icon-clicked .ikonli-font-icon {
+    -fx-icon-size: 32;
+    -fx-icon-code: "fas-star";
+    -fx-icon-color: #ffcc00;
+}

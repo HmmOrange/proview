@@ -1,4 +1,4 @@
-package org.proview.modal.Utils;
+package org.proview.utils;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -164,5 +164,21 @@ public class SQLUtils {
             bookLibObservableList.add(new BookLib(bookId, title, author, description, copiesAvailable));
         }
         return bookLibObservableList;
+    }
+
+    public static void addFavourite(int userId, int bookId) throws SQLException {
+        String sql = "INSERT INTO favourite(user_id, book_id, time_added) VALUES (?, ?, CURRENT_TIMESTAMP());";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, bookId);
+        preparedStatement.executeUpdate();
+    }
+
+    public static void removeFavourite(int userId, int bookId) throws SQLException {
+        String sql = "DELETE FROM favourite WHERE user_id = ? AND book_id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, bookId);
+        preparedStatement.executeUpdate();
     }
 }

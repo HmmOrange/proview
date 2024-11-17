@@ -1,5 +1,4 @@
 module org.proview.test {
-    requires javafx.controls;
     requires javafx.fxml;
 
     requires org.controlsfx.controls;
@@ -15,6 +14,7 @@ module org.proview.test {
     requires java.sql;
     requires java.desktop;
     requires timeago;
+    requires org.kordamp.ikonli.javafx;
 
     exports org.proview.api;
     opens org.proview.api to javafx.fxml;
@@ -22,8 +22,6 @@ module org.proview.test {
     opens org.proview.test to javafx.fxml;
     exports org.proview.modal.User;
     opens org.proview.modal.User to javafx.fxml;
-    exports org.proview.modal.Utils;
-    opens org.proview.modal.Utils to javafx.fxml;
     exports org.proview.modal.Activity;
     opens org.proview.modal.Activity to javafx.fxml;
     exports org.proview.modal.Book;
@@ -36,4 +34,6 @@ module org.proview.test {
     opens org.proview.test.Container to javafx.fxml;
     exports org.proview.test.Scene;
     opens org.proview.test.Scene to javafx.fxml;
+    exports org.proview.utils;
+    opens org.proview.utils to javafx.fxml;
 }
