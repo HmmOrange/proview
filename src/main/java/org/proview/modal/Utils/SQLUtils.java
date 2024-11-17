@@ -9,6 +9,7 @@ import org.proview.modal.User.User;
 import org.proview.test.AppMain;
 
 import java.sql.*;
+import java.util.Objects;
 
 public class SQLUtils {
     static Connection connection = AppMain.connection;
@@ -93,5 +94,24 @@ public class SQLUtils {
             reviewObservableList.add(curReview);
         }
         return reviewObservableList;
+    }
+
+    public static void alterStatusInDatabase(ObservableList<String> rowData, String newStatus) throws SQLException {
+        int issueId = Integer.parseInt(rowData.getFirst());
+        String sql = "UPDATE issue SET status = ? WHERE id = ?";
+        Connection connection = AppMain.connection;
+        PreparedStatement alterStatusPS = connection.prepareStatement(sql);
+        alterStatusPS.setString(1, newStatus);
+        alterStatusPS.setInt(2, issueId);
+        alterStatusPS.executeUpdate();
+        alterStatusPS.close();
+
+        if (Objects.equals(newStatus, "Returned")) {
+            String endDateSql = "UPDATE issue SET end_date = CURRENT_TIMESTAMP WHERE id = ?";
+            PreparedStatement alterEndDatePS = AppMain.connection.prepareStatement(endDateSql);
+            alterEndDatePS.setInt(1, issueId);
+            alterEndDatePS.executeUpdate();
+            alterEndDatePS.close();
+        }
     }
 }

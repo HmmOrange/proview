@@ -12,7 +12,7 @@ public class Issue {
         this.bookId = bookId;
         this.duration = duration;
         this.username = username;
-        this.status = "Borrowing";
+        this.status = "Not picked up";
     }
 
 
@@ -52,8 +52,12 @@ public class Issue {
         return status;
     }
 
-    public void setBorrowingStatus() {
-        this.status = "Borrowing";
+    public void setNotPickedUpStatus() {
+        this.status = "Not picked up";
+    }
+
+    public void setPickedUpStatus() {
+        this.status = "Picked up";
     }
 
     public void setReturnedStatus() {
