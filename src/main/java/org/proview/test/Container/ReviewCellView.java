@@ -10,9 +10,7 @@ import org.proview.modal.Utils.SQLUtils;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -23,7 +21,7 @@ public class ReviewCellView {
     public Label reviewLabel;
 
     public void setData(String avatarUrl, int userId, Timestamp timestamp, String review) throws IOException, SQLException {
-        reviewerLabel.setText(Objects.requireNonNull(SQLUtils.getUserFromId(userId)).getFullName());
+        reviewerLabel.setText(Objects.requireNonNull(SQLUtils.getUser(userId)).getFullName());
 
         String date = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(timestamp);
         reviewDateLabel.setText(date);

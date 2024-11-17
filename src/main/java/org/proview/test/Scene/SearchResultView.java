@@ -23,8 +23,8 @@ public class SearchResultView {
 
         ObservableList<BookLib> filteredBookList = SearchUtils.filterBookList(curQuery, bookLibList);
 
-        BookManagement.initLibBookList(topResultListView, filteredBookList);
-        BookManagement.initGoogleBookList(googleBookListView, bookGoogleList);
+        BookManagement.initBookLibList(topResultListView, filteredBookList);
+        BookManagement.initBookGoogleList(googleBookListView, bookGoogleList);
 
         topResultListView.setMinHeight(150 * filteredBookList.size() + 10);
         topResultListView.setMinWidth(500 + 10);

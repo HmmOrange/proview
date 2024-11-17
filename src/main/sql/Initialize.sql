@@ -26,16 +26,19 @@ CREATE TABLE user
     email VARCHAR(20) NULL
 );
 
+-- TODO: Remove the username field
 CREATE TABLE issue
 (
     id          INT PRIMARY KEY AUTO_INCREMENT,
     start_date  TIMESTAMP,
     duration    INT,
+    user_id     INT,
     username    VARCHAR(20),
     book_id INT,
     status VARCHAR(30),
     end_date TIMESTAMP NULL,
     FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

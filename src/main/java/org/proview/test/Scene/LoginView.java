@@ -53,7 +53,7 @@ public class LoginView {
             return;
         }
 
-        User checkingUser = SQLUtils.getUserFromLoginCred(username, password);
+        User checkingUser = SQLUtils.getUser(username, password);
         if (checkingUser == null) {
             loginResultLabel.setText("Username or password is incorrect");
             return;
