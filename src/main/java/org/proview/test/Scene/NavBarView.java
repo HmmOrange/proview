@@ -44,7 +44,7 @@ public class NavBarView {
 
     public void onLogoutButtonClick(ActionEvent actionEvent) throws IOException {
         UserManagement.setCurrentUser(null);
-
+        ProfileView.resetBookList();
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 500, 500);
         AppMain.window.setTitle("Hello!");

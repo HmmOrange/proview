@@ -51,6 +51,8 @@ public class ProfileView {
     public ListView<BookLib> borrowingCompactListView;
 
     public static ObservableList<BookLib> borrowingBookList;
+    public static ObservableList<BookLib> overdueBookList;
+    public static ObservableList<BookLib> pastIssuesBookList;
 
     public ObservableList<BookLib> getBorrowingBookList() {
         return borrowingBookList;
@@ -89,11 +91,20 @@ public class ProfileView {
         borrowingBookList = SQLUtils.getBorrowingBookList(UserManagement.getCurrentUser().getId());
     }
 
+    public static void loadOverdueBookList() throws SQLException {
+        overdueBookList = SQLUtils.getOverdueBookList(UserManagement.getCurrentUser().getId());
+    }
+
+    public static void loadPastIssuesBookList() throws SQLException {
+        pastIssuesBookList = SQLUtils.getPastIssuesBookList(UserManagement.getCurrentUser().getId());
+    }
+
     public void initialize() throws SQLException, FileNotFoundException {
         loadProfile();
         loadRecentActivity();
-        if (borrowingBookList == null)
-            loadBorrowingList();
+        if (borrowingBookList == null) loadBorrowingList();
+        if (overdueBookList == null) loadOverdueBookList();
+        if (pastIssuesBookList == null) loadPastIssuesBookList();
     }
 
     public void onEditProfileButtonClick(ActionEvent actionEvent) throws IOException {
@@ -104,5 +115,11 @@ public class ProfileView {
             AppMain.window.setScene(scene);
             AppMain.window.centerOnScreen();
         }
+    }
+
+    public static void resetBookList() {
+        borrowingBookList = null;
+        overdueBookList = null;
+        pastIssuesBookList = null;
     }
 }

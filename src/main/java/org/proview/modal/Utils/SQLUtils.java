@@ -149,15 +149,13 @@ public class SQLUtils {
         String sql = """
             SELECT * FROM book b
             JOIN issue i ON b.id = i.book_id
-            WHERE i.user_id = ? AND (i.status = 'Picked up' OR i.status = 'Not picked up');
+            WHERE i.user_id = ? AND NOT (i.status = 'Returned');
         """;
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        System.out.println("user_id: " + userId);
         preparedStatement.setInt(1, userId);
         ResultSet resultSet = preparedStatement.executeQuery();
         ObservableList<BookLib> bookLibObservableList = FXCollections.observableArrayList();
         while (resultSet.next()) {
-            System.out.println("result not empty");
             int bookId = resultSet.getInt("b.id");
             String title = resultSet.getString("name");
             String author = resultSet.getString("author");
@@ -165,7 +163,6 @@ public class SQLUtils {
             int copiesAvailable = resultSet.getInt("copies");
 
             bookLibObservableList.add(new BookLib(bookId, title, author, description, copiesAvailable));
-            System.out.println(STR."\{bookId} \{title} \{author} \{description} \{copiesAvailable}");
         }
         return bookLibObservableList;
     }
@@ -201,6 +198,53 @@ public class SQLUtils {
         preparedStatement.close();
         resultSet.close();
         return -1;
+    }
+
+    public static ObservableList<BookLib> getOverdueBookList(int userId) throws SQLException {
+        Connection connection = AppMain.connection;
+        String sql = """
+            SELECT * FROM book b
+            JOIN issue i ON b.id = i.book_id
+            WHERE i.user_id = ? AND DATEDIFF(NOW(), DATE_ADD(start_date, INTERVAL duration DAY)) > 0 
+            AND NOT (status = 'Returned');
+        """;
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ObservableList<BookLib> bookLibObservableList = FXCollections.observableArrayList();
+        while (resultSet.next()) {
+            int bookId = resultSet.getInt("b.id");
+            String title = resultSet.getString("name");
+            String author = resultSet.getString("author");
+            String description = resultSet.getString("description");
+            int copiesAvailable = resultSet.getInt("copies");
+
+            bookLibObservableList.add(new BookLib(bookId, title, author, description, copiesAvailable));
+        }
+        return bookLibObservableList;
+    }
+
+    public static ObservableList<BookLib> getPastIssuesBookList(int userId) throws SQLException {
+        Connection connection = AppMain.connection;
+        String sql = """
+            SELECT * FROM book b
+            JOIN issue i ON b.id = i.book_id
+            WHERE i.user_id = ? AND status = 'Returned';
+        """;
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ObservableList<BookLib> bookLibObservableList = FXCollections.observableArrayList();
+        while (resultSet.next()) {
+            int bookId = resultSet.getInt("b.id");
+            String title = resultSet.getString("name");
+            String author = resultSet.getString("author");
+            String description = resultSet.getString("description");
+            int copiesAvailable = resultSet.getInt("copies");
+
+            bookLibObservableList.add(new BookLib(bookId, title, author, description, copiesAvailable));
+        }
+        return bookLibObservableList;
     }
 }
 
