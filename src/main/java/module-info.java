@@ -1,5 +1,4 @@
 module org.proview.test {
-    requires javafx.controls;
     requires javafx.fxml;
 
     requires org.controlsfx.controls;
@@ -15,6 +14,7 @@ module org.proview.test {
     requires java.sql;
     requires java.desktop;
     requires timeago;
+    requires org.kordamp.ikonli.javafx;
 
     exports org.proview.api;
     opens org.proview.api to javafx.fxml;

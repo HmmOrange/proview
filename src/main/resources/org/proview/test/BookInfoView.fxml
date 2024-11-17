@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
+<BorderPane fx:id="borderPane" prefHeight="600.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
    <top>
       <fx:include source="NavBar.fxml" />
    </top>
@@ -22,7 +22,7 @@
          <content>
             <AnchorPane prefHeight="702.0" prefWidth="920.0">
                <children>
-                  <Label fx:id="titleLabel" layoutX="14.0" layoutY="14.0" prefHeight="88.0" prefWidth="850.0" text="Title">
+                  <Label fx:id="titleLabel" layoutX="14.0" layoutY="14.0" prefHeight="88.0" prefWidth="738.0" text="Title">
                      <font>
                         <Font size="48.0" />
                      </font>
@@ -67,6 +67,7 @@
                   <TextArea fx:id="reviewTextArea" layoutX="17.0" layoutY="441.0" prefHeight="213.0" prefWidth="850.0" />
                   <Button fx:id="submitReviewButton" layoutX="809.0" layoutY="671.0" mnemonicParsing="false" onAction="#onSubmitReviewButtonClick" text="Submit" />
                   <ListView fx:id="reviewListView" layoutX="13.0" layoutY="735.0" prefHeight="287.0" prefWidth="850.0" />
+                  <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" layoutX="824.0" layoutY="46.0" mnemonicParsing="false" onAction="#onStarButtonClicked" text="Button" />
                </children>
             </AnchorPane>
          </content>
