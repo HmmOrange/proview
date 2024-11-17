@@ -1,4 +1,4 @@
-package org.proview.modal.Utils;
+package org.proview.utils;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

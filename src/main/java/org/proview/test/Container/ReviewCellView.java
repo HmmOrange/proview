@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import org.proview.modal.Utils.SQLUtils;
+import org.proview.utils.SQLUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;

@@ -16,7 +16,7 @@ import org.proview.modal.Review.ReviewManagement;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.User;
 import org.proview.modal.User.UserManagement;
-import org.proview.modal.Utils.SQLUtils;
+import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
 
 import java.io.FileInputStream;
@@ -146,15 +146,13 @@ public class BookInfoView {
         reloadReviewList();
     }
 
-    public void onStarButtonClicked(ActionEvent mouseEvent) {
-        System.out.println("Style classes before: " + starButton.getStyleClass());
-
+    public void onStarButtonClicked(ActionEvent mouseEvent) throws SQLException {
         if (Objects.equals(starButton.getId(), "star-icon-default")) {
             starButton.setId("star-icon-clicked");
+            SQLUtils.addFavourite(UserManagement.getCurrentUser().getId(), this.id);
         } else {
             starButton.setId("star-icon-default");
+            SQLUtils.removeFavourite(UserManagement.getCurrentUser().getId(), this.id);
         }
-
-        System.out.println("Style classes after: " + starButton.getStyleClass());
     }
 }

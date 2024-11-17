@@ -8,8 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.proview.modal.User.NormalUser;
-import org.proview.modal.Utils.SearchUtils;
-import org.proview.modal.User.Admin;
+import org.proview.utils.SearchUtils;
 import org.proview.modal.User.UserManagement;
 import org.proview.test.AppMain;
 
