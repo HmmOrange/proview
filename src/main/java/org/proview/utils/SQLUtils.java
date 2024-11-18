@@ -62,12 +62,13 @@ public class SQLUtils {
             String firstName = resultSet.getString("firstName");
             String lastName = resultSet.getString("lastName");
             String email = resultSet.getString("email");
+            boolean cardView = resultSet.getBoolean("card_view");
             System.out.println(id + " " + firstName + " " + lastName + " " + email);
 
             if (username.equalsIgnoreCase("admin"))
-                return new Admin(id, username, password, firstName, lastName, email);
+                return new Admin(id, username, password, firstName, lastName, email, cardView);
 
-            return new NormalUser(id, username, password, firstName, lastName, email);
+            return new NormalUser(id, username, password, firstName, lastName, email, cardView);
         }
     }
 

@@ -11,10 +11,12 @@ public abstract class User {
     protected String firstName;
     protected String lastName;
     protected String email;
+    protected Boolean cardView;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.cardView = true;
     }
 
     public User(int id, String firstName, String lastName, String email) {
@@ -22,15 +24,17 @@ public abstract class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.cardView = true;
     }
 
-    public User(int id, String username, String password, String firstName, String lastName, String email) {
+    public User(int id, String username, String password, String firstName, String lastName, String email, Boolean cardView) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.cardView = cardView;
     }
 
 
@@ -84,6 +88,14 @@ public abstract class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Boolean getCardView() {
+        return cardView;
+    }
+
+    public void setCardView(Boolean cardView) {
+        this.cardView = cardView;
     }
 
     public void addComment(int book_id, String review) throws SQLException {

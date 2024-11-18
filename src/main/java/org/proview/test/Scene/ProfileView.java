@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import org.proview.modal.Activity.Activity;
 import org.proview.modal.Activity.ActivityManagement;
 import org.proview.modal.Book.BookLib;
@@ -47,16 +48,14 @@ public class ProfileView {
     public ImageView avatarImageView;
     public Button editProfileButton;
     public ListView<Activity> recentActivityListView;
-    public ListView<BookLib> borrowingCompactListView;
+    public VBox innerVbox;
 
     public static ObservableList<BookLib> borrowingBookList;
     public static ObservableList<BookLib> overdueBookList;
     public static ObservableList<BookLib> pastIssuesBookList;
     public static ObservableList<BookLib> favouriteBookList;
 
-    public ObservableList<BookLib> getBorrowingBookList() {
-        return borrowingBookList;
-    }
+    public static Boolean cardView;
 
     private void loadProfile() throws FileNotFoundException {
         nameField.setText("Name: " + UserManagement.getCurrentUser().getFullName());
@@ -103,13 +102,33 @@ public class ProfileView {
         favouriteBookList = SQLUtils.getFavouriteBookList(UserManagement.getCurrentUser().getId());
     }
 
-    public void initialize() throws SQLException, FileNotFoundException {
+    public void loadPreferredView() throws IOException {
+        FXMLLoader loader;
+        if (cardView)
+            loader = new FXMLLoader(AppMain.class.getResource("ProfileBookListCardView.fxml"));
+        else
+            loader = new FXMLLoader(AppMain.class.getResource("ProfileBookListCompactView.fxml"));
+
+        if (innerVbox.getChildren().size() == 2)
+            innerVbox.getChildren().remove(1);
+
+        VBox vbox = loader.load();
+        innerVbox.getChildren().add(vbox);
+        System.out.println("Outside");
+    }
+
+    public void initialize() throws SQLException, IOException {
+        cardView = UserManagement.getCurrentUser().getCardView();
+
         loadProfile();
         loadRecentActivity();
         if (borrowingBookList == null) loadBorrowingList();
         if (overdueBookList == null) loadOverdueBookList();
         if (pastIssuesBookList == null) loadPastIssuesBookList();
         if (favouriteBookList == null) loadFavouriteBookList();
+
+        // Load card/compact listview
+        loadPreferredView();
     }
 
     public void onEditProfileButtonClick(ActionEvent actionEvent) throws IOException {

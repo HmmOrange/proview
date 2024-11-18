@@ -50,10 +50,9 @@
    <center>
       <ScrollPane>
          <content>
-            <VBox>
+            <VBox fx:id="innerVbox">
                <children>
                   <HBox prefHeight="56.0" prefWidth="933.0" />
-                  <fx:include source="ProfileBookListCompactView.fxml" />
                </children>
             </VBox>
          </content>

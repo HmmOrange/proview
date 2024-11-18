@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.net.*;
 import java.sql.SQLException;
 
-public class BookCellView {
+public class BookCellCardView {
     public ImageView coverImageView;
     public Label titleLabel;
     public Label tagLabel;
