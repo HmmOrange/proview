@@ -288,5 +288,23 @@ public class SQLUtils {
         }
         return bookLibObservableList;
     }
+
+    public static boolean isFavouriteBook(int user_id, int book_id) throws SQLException {
+        boolean res = false;
+        String sql = """
+                SELECT * FROM favourite
+                WHERE book_id = ? AND user_id = ?
+                """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, book_id);
+        preparedStatement.setInt(2, user_id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            res = true;
+        }
+        preparedStatement.close();
+        resultSet.close();
+        return res;
+    }
 }
 

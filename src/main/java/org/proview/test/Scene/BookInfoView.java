@@ -115,6 +115,10 @@ public class BookInfoView {
         stream.close();
 
         reloadReviewList();
+
+        if (SQLUtils.isFavouriteBook(UserManagement.getCurrentUser().getId(), id)) {
+            starButton.setId("star-icon-clicked");
+        }
     }
 
     public void onBackButtonClick(ActionEvent actionEvent) throws IOException {
