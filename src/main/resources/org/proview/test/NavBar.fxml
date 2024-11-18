@@ -26,19 +26,6 @@
                      </children>
                   </VBox>
                </graphic></Button>
-            <Button fx:id="editBookButton" layoutX="885.0" layoutY="12.0" mnemonicParsing="false" onAction="#onEditBookButtonClick" prefWidth="60.0">
-               <graphic>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <FontIcon iconLiteral="far-edit">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </FontIcon>
-                        <Label text="Edit" />
-                     </children>
-                  </VBox>
-               </graphic></Button>
             <Button fx:id="libraryButton" layoutX="1024.0" layoutY="12.0" mnemonicParsing="false" onAction="#onLibraryButtonClick" prefWidth="60.0">
                <graphic>
                   <VBox alignment="CENTER">
@@ -55,7 +42,7 @@
             <Button fx:id="profileButton" layoutX="1214.0" layoutY="20.0" mnemonicParsing="false" onAction="#onProfileButtonClick" text="Profile" />
             <ImageView fitHeight="61.0" fitWidth="76.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
             <TextField fx:id="bookSearchBar" layoutX="52.0" layoutY="19.0" prefHeight="35.0" prefWidth="555.0" promptText="Testing search bar" />
-            <Button fx:id="searchButton" layoutX="632.0" layoutY="19.0" mnemonicParsing="false" onAction="#onSearchButtonClick" prefHeight="35.0" prefWidth="60.0" text="Search">
+            <Button fx:id="searchButton" layoutX="630.0" layoutY="12.0" mnemonicParsing="false" onAction="#onSearchButtonClick" prefHeight="35.0" prefWidth="60.0" text="Search">
                <graphic>
                   <VBox alignment="CENTER">
                      <children>
@@ -77,11 +64,11 @@
                               <Font size="24.0" />
                            </font>
                         </FontIcon>
-                        <Label text="Issues" />
+                        <Label fx:id="issuesLabel" text="Issues" />
                      </children>
                   </VBox>
                </graphic></Button>
-            <Button fx:id="homeButton" layoutX="815.0" layoutY="12.0" mnemonicParsing="false" onAction="#onHomeButtonClick" prefWidth="60.0">
+            <Button fx:id="homeButton" layoutX="886.0" layoutY="12.0" mnemonicParsing="false" onAction="#onHomeButtonClick" prefWidth="60.0">
                <graphic>
                   <VBox alignment="CENTER">
                      <children>

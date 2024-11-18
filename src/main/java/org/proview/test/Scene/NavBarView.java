@@ -4,9 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
 import org.proview.utils.SearchUtils;
 import org.proview.modal.User.UserManagement;
@@ -21,11 +23,11 @@ public class NavBarView {
     public Button editBookButton;
     public Button issueButton;
     public Button profileButton;
+    public Label issuesLabel;
 
     public void initialize() {
-        if (UserManagement.getCurrentUser() instanceof NormalUser) {
-            editBookButton.setVisible(false);
-            editBookButton.setDisable(true);
+        if (UserManagement.getCurrentUser() instanceof Admin) {
+            issuesLabel.setText("Manage");
         }
         String curQuery = SearchUtils.getCurQuery();
         if (curQuery != null) {
@@ -33,13 +35,13 @@ public class NavBarView {
         }
     }
 
-    public void onEditBookButtonClick(ActionEvent actionEvent) throws IOException {
+    /*public void onEditBookButtonClick(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("EditBookView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 500, 500);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();
-    }
+    }*/
 
     public void onLogoutButtonClick(ActionEvent actionEvent) throws IOException {
         UserManagement.setCurrentUser(null);
