@@ -1,0 +1,17 @@
+.button:hover .ikonli-font-icon {
+    -fx-icon-size: 24;
+}
+
+.button:focused .ikonli-font-icon {
+    -fx-icon-size: 24;
+}
+
+/* This is not working for some reasons... */
+
+#profile-button .button {
+    -fx-background-color: transparent;
+    -fx-border-color: red;
+    -fx-border-width: 5;
+    -fx-padding: 0;
+    -fx-background-radius: 50%;
+}

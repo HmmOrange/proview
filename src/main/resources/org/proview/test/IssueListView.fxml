@@ -8,7 +8,7 @@
 
 <BorderPane prefHeight="770.0" prefWidth="1412.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.IssueListView">
     <top>
-        <fx:include source="NavBar.fxml" />
+        <fx:include source="NavBarView.fxml" />
     </top>
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">

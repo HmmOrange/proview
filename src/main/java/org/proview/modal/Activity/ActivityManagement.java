@@ -3,6 +3,7 @@ package org.proview.modal.Activity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
@@ -32,7 +33,7 @@ public class ActivityManagement {
                 } else {
                     try {
                         FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("ActivityCellView.fxml"));
-                        HBox hbox = loader.load();
+                        Button button = loader.load();
 
                         // Get the controller of the cell
                         ActivityCellView cellView = loader.getController();
@@ -44,7 +45,7 @@ public class ActivityManagement {
                                 item.getTimestampAdded()
                         );
 
-                        setGraphic(hbox);
+                        setGraphic(button);
                     } catch (Exception e) {
                         e.printStackTrace();
                         throw new RuntimeException(e);
@@ -70,7 +71,7 @@ public class ActivityManagement {
                 } else {
                     try {
                         FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("PersonalActivityCellView.fxml"));
-                        HBox hbox = loader.load();
+                        Button button = loader.load();
 
                         // Get the controller of the cell
                         PersonalActivityCellView cellView = loader.getController();
@@ -81,7 +82,7 @@ public class ActivityManagement {
                                 item.getTimestampAdded()
                         );
 
-                        setGraphic(hbox);
+                        setGraphic(button);
                     } catch (Exception e) {
                         e.printStackTrace();
                         throw new RuntimeException(e);

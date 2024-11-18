@@ -10,27 +10,15 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<HBox prefHeight="50.0" prefWidth="1300.0" style="-fx-background-color: #FFC1C3;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.NavBarView">
+<HBox fx:id="navBarHBox" prefHeight="50.0" prefWidth="1300.0" style="-fx-background-color: #FFC1C3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.NavBarView">
    <children>
       <AnchorPane fx:id="topPane" onKeyReleased="#onKeyReleased" prefHeight="4.0" prefWidth="1300.0" style="-fx-background-color: #FFC1C3;">
          <children>
-            <Button fx:id="logoutButton" layoutX="1096.0" layoutY="12.0" mnemonicParsing="false" onAction="#onLogoutButtonClick">
-               <graphic>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <FontIcon iconLiteral="fas-sign-out-alt">
-                           <font>
-                              <Font size="24.0" />
-                           </font></FontIcon>
-                        <Label text="Sign out" />
-                     </children>
-                  </VBox>
-               </graphic></Button>
             <Button fx:id="editBookButton" layoutX="885.0" layoutY="12.0" mnemonicParsing="false" onAction="#onEditBookButtonClick" prefWidth="60.0">
                <graphic>
                   <VBox alignment="CENTER">
                      <children>
-                        <FontIcon iconLiteral="far-edit">
+                        <FontIcon iconLiteral="far-edit" iconSize="24">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -43,7 +31,7 @@
                <graphic>
                   <VBox alignment="CENTER">
                      <children>
-                        <FontIcon iconLiteral="fas-book">
+                        <FontIcon iconLiteral="fas-book" iconSize="24">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -52,14 +40,14 @@
                      </children>
                   </VBox>
                </graphic></Button>
-            <Button fx:id="profileButton" layoutX="1214.0" layoutY="20.0" mnemonicParsing="false" onAction="#onProfileButtonClick" text="Profile" />
+            <Button fx:id="profileButton" layoutX="1215.0" layoutY="9.0" mnemonicParsing="false" onAction="#onProfileButtonClick" />
             <ImageView fitHeight="61.0" fitWidth="76.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
             <TextField fx:id="bookSearchBar" layoutX="52.0" layoutY="19.0" prefHeight="35.0" prefWidth="555.0" promptText="Testing search bar" />
-            <Button fx:id="searchButton" layoutX="632.0" layoutY="19.0" mnemonicParsing="false" onAction="#onSearchButtonClick" prefHeight="35.0" prefWidth="60.0" text="Search">
+            <Button fx:id="searchButton" layoutX="629.0" layoutY="12.0" mnemonicParsing="false" onAction="#onSearchButtonClick" prefHeight="35.0" prefWidth="60.0" text="Search">
                <graphic>
                   <VBox alignment="CENTER">
                      <children>
-                        <FontIcon iconLiteral="fas-search">
+                        <FontIcon iconLiteral="fas-search" iconSize="24">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -72,7 +60,7 @@
                <graphic>
                   <VBox alignment="CENTER">
                      <children>
-                        <FontIcon iconLiteral="far-list-alt">
+                        <FontIcon iconLiteral="far-list-alt" iconSize="24">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -85,7 +73,7 @@
                <graphic>
                   <VBox alignment="CENTER">
                      <children>
-                        <FontIcon iconLiteral="fas-home">
+                        <FontIcon iconLiteral="fas-home" iconSize="24">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -94,6 +82,20 @@
                      </children>
                   </VBox>
                </graphic></Button>
+            <Button fx:id="logoutButton" layoutX="1090.0" layoutY="12.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" prefWidth="60.0">
+               <graphic>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <FontIcon iconLiteral="fas-sign-out-alt" iconSize="24">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </FontIcon>
+                        <Label text="Log out" />
+                     </children>
+                  </VBox>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
    </children>

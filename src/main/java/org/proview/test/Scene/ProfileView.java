@@ -9,6 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import org.kordamp.ikonli.javafx.FontIcon;
 import org.proview.modal.Activity.Activity;
 import org.proview.modal.Activity.ActivityManagement;
 import org.proview.modal.Book.BookLib;
@@ -20,6 +23,7 @@ import org.proview.test.AppMain;
 
 import java.io.*;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class ProfileView {
     private enum Size {
@@ -47,16 +51,17 @@ public class ProfileView {
     public ImageView avatarImageView;
     public Button editProfileButton;
     public ListView<Activity> recentActivityListView;
-    public ListView<BookLib> borrowingCompactListView;
+    public VBox innerVbox;
+    public Button cardButton;
+    public Button compactButton;
+    public BorderPane profileBorderPane;
 
     public static ObservableList<BookLib> borrowingBookList;
     public static ObservableList<BookLib> overdueBookList;
     public static ObservableList<BookLib> pastIssuesBookList;
     public static ObservableList<BookLib> favouriteBookList;
 
-    public ObservableList<BookLib> getBorrowingBookList() {
-        return borrowingBookList;
-    }
+    public static Boolean cardView;
 
     private void loadProfile() throws FileNotFoundException {
         nameField.setText("Name: " + UserManagement.getCurrentUser().getFullName());
@@ -103,13 +108,71 @@ public class ProfileView {
         favouriteBookList = SQLUtils.getFavouriteBookList(UserManagement.getCurrentUser().getId());
     }
 
-    public void initialize() throws SQLException, FileNotFoundException {
+    public void loadPreferredView() throws IOException {
+        FXMLLoader loader;
+        if (cardView)
+            loader = new FXMLLoader(AppMain.class.getResource("ProfileBookListCardView.fxml"));
+        else
+            loader = new FXMLLoader(AppMain.class.getResource("ProfileBookListCompactView.fxml"));
+
+        if (innerVbox.getChildren().size() == 2)
+            innerVbox.getChildren().remove(1);
+
+        VBox vbox = loader.load();
+        innerVbox.getChildren().add(vbox);
+    }
+
+    public void loadButtons() {
+        // Load CSS
+        String cssPath = Objects.requireNonNull(AppMain.class.getResource("styles/ProfileView.css")).toExternalForm();
+        profileBorderPane.getStylesheets().add(cssPath);
+
+        // Load buttons
+        FontIcon cardFontIcon = new FontIcon();
+        cardFontIcon.getStyleClass().add("ikonli-font-icon");
+
+        cardButton.setGraphic(cardFontIcon);
+        if (cardView)
+            cardButton.setId("card-view-enabled");
+        else
+            cardButton.setId("card-view-disabled");
+        cardButton.applyCss();
+
+        FontIcon compactFontIcon = new FontIcon();
+        cardFontIcon.getStyleClass().add("ikonli-font-icon");
+        compactButton.setGraphic(compactFontIcon);
+        if (cardView)
+            compactButton.setId("compact-view-disabled");
+        else
+            compactButton.setId("compact-view-enabled");
+        compactButton.applyCss();
+
+        // Set disability
+        if (cardView) {
+            cardButton.setDisable(true);
+            compactButton.setDisable(false);
+        }
+        else {
+            cardButton.setDisable(false);
+            compactButton.setDisable(true);
+        }
+    }
+
+    public void initialize() throws SQLException, IOException {
+        cardView = UserManagement.getCurrentUser().getCardView();
+
         loadProfile();
         loadRecentActivity();
         if (borrowingBookList == null) loadBorrowingList();
         if (overdueBookList == null) loadOverdueBookList();
         if (pastIssuesBookList == null) loadPastIssuesBookList();
         if (favouriteBookList == null) loadFavouriteBookList();
+
+        // Load card/compact listview
+        loadPreferredView();
+
+        // Load buttons for the listview
+        loadButtons();
     }
 
     public void onEditProfileButtonClick(ActionEvent actionEvent) throws IOException {
@@ -120,6 +183,20 @@ public class ProfileView {
             AppMain.window.setScene(scene);
             AppMain.window.centerOnScreen();
         }
+    }
+
+    public void onCardButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
+        cardView = !cardView;
+        UserManagement.getCurrentUser().setCardView(cardView);
+        loadPreferredView();
+        loadButtons();
+    }
+
+    public void onCompactButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
+        cardView = !cardView;
+        UserManagement.getCurrentUser().setCardView(cardView);
+        loadPreferredView();
+        loadButtons();
     }
 
     public static void resetBookList() {
