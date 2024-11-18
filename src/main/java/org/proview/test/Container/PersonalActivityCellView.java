@@ -1,12 +1,12 @@
 package org.proview.test.Container;
 
 import com.github.marlonlom.utilities.timeago.TimeAgo;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import org.proview.modal.Activity.Activity;
 import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
@@ -50,7 +50,7 @@ public class PersonalActivityCellView {
         stream.close();
     }
 
-    public void onMouseClick(MouseEvent mouseEvent) throws IOException, SQLException {
+    public void onMouseClick(ActionEvent mouseEvent) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("BookInfoView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");

@@ -1,6 +1,7 @@
 package org.proview.test.Container;
 
 import com.google.gson.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -56,7 +57,7 @@ public class BookCellCompactView {
         stream.close();
     }
 
-    public void onMouseClick(MouseEvent mouseEvent) throws IOException, SQLException {
+    public void onMouseClick(ActionEvent actionEvent) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("BookInfoView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");

@@ -3,6 +3,7 @@ package org.proview.modal.Book;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Comparator;
+import java.util.Objects;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -10,6 +11,7 @@ import com.google.gson.JsonParser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
@@ -233,7 +235,7 @@ public class BookManagement {
                 } else {
                     try {
                         FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
-                        HBox hbox = loader.load();
+                        Button button = loader.load();
 
                         // Get the controller of the cell
                         BookCellCardView cellView = loader.getController();
@@ -248,7 +250,7 @@ public class BookManagement {
                                 item.getCopiesAvailable()
                         );
 
-                        setGraphic(hbox);
+                        setGraphic(button);
                     } catch (Exception e) {
                         System.out.println(e);
                         throw new RuntimeException(e);
@@ -273,7 +275,7 @@ public class BookManagement {
                 } else {
                     try {
                         FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
-                        HBox hbox = loader.load();
+                        Button button = loader.load();
 
                         // Get the controller of the cell
                         BookCellCardView cellView = loader.getController();
@@ -285,7 +287,7 @@ public class BookManagement {
                                 item.getTags()
                         );
 
-                        setGraphic(hbox);
+                        setGraphic(button);
                     } catch (Exception e) {
                         e.printStackTrace();
                         throw new RuntimeException(e);
@@ -296,6 +298,7 @@ public class BookManagement {
     }
 
     public static void initBookLibList(ListView<BookLib> bookListView, ObservableList<BookLib> bookList, Boolean cardView, Boolean showCopiesAvailable) {
+
         bookListView.setItems(bookList);
         bookListView.setCellFactory(param -> new ListCell<>() {
             {
@@ -314,7 +317,8 @@ public class BookManagement {
                         // TODO: Use BookCell parent (do create one if not existed yet) of these 2 instead of if-else
                         if (cardView) {
                             loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
-                            HBox hbox = loader.load();
+                            Button button = loader.load();
+
                             BookCellCardView cellView = loader.getController();
 
                             cellView.setData(
@@ -327,12 +331,13 @@ public class BookManagement {
                                     showCopiesAvailable ? item.getCopiesAvailable() : -1
                             );
 
-                            setGraphic(hbox);
+                            setGraphic(button);
                         }
 
                         else {
                             loader = new FXMLLoader(AppMain.class.getResource("BookCellCompactView.fxml"));
-                            HBox hbox = loader.load();
+                            Button button = loader.load();
+
                             BookCellCompactView cellView = loader.getController();
 
                             cellView.setData(
@@ -345,7 +350,7 @@ public class BookManagement {
                                     showCopiesAvailable ? item.getCopiesAvailable() : -1
                             );
 
-                            setGraphic(hbox);
+                            setGraphic(button);
                         }
                     } catch (Exception e) {
                         System.out.println(e);

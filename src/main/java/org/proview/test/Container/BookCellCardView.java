@@ -1,6 +1,7 @@
 package org.proview.test.Container;
 
 import com.google.gson.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -75,7 +76,7 @@ public class BookCellCardView {
         stream.close();
     }
 
-    public void onMouseClick(MouseEvent mouseEvent) throws IOException, SQLException {
+    public void onMouseClick(ActionEvent actionEvent) throws IOException, SQLException {
         if (id >= 0) { // this seems tricky, maybe there is a better way to handle this
             FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("BookInfoView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
