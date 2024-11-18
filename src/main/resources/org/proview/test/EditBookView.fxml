@@ -14,7 +14,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.EditBookView">
    <top>
-      <fx:include source="NavBar.fxml" />
+      <fx:include source="NavBarView.fxml" />
    </top>
    <left>
       <fx:include source="AdminManagementNavBarView.fxml" />

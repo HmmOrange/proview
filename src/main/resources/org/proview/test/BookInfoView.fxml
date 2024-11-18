@@ -15,7 +15,7 @@
 
 <BorderPane fx:id="borderPane" prefHeight="600.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
    <top>
-      <fx:include source="NavBar.fxml" />
+      <fx:include source="NavBarView.fxml" />
    </top>
    <center>
       <ScrollPane>
@@ -64,7 +64,7 @@
                      </font>
                   </Label>
                   <Line endX="750.0" layoutX="114.0" layoutY="428.0" startX="-100.0" />
-                  <TextArea fx:id="reviewTextArea" layoutX="17.0" layoutY="441.0" prefHeight="213.0" prefWidth="850.0" />
+                  <TextArea fx:id="reviewTextArea" layoutX="17.0" layoutY="441.0" prefHeight="213.0" prefWidth="850.0" wrapText="true" />
                   <Button fx:id="submitReviewButton" layoutX="809.0" layoutY="671.0" mnemonicParsing="false" onAction="#onSubmitReviewButtonClick" text="Submit" />
                   <ListView fx:id="reviewListView" layoutX="13.0" layoutY="735.0" prefHeight="287.0" prefWidth="850.0" />
                   <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" layoutX="824.0" layoutY="46.0" mnemonicParsing="false" onAction="#onStarButtonClicked" text="Button" />

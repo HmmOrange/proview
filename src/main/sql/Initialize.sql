@@ -18,13 +18,14 @@ CREATE TABLE book
 
 CREATE TABLE user
 (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(20) UNIQUE,
-    password VARCHAR(20) NULL,
-    type     INT         NULL,
+    id        INT PRIMARY KEY AUTO_INCREMENT,
+    username  VARCHAR(20) UNIQUE,
+    password  VARCHAR(20) NULL,
+    type      INT         NULL,
     firstName VARCHAR(20) NULL,
-    lastName VARCHAR(20) NULL,
-    email VARCHAR(20) NULL
+    lastName  VARCHAR(20) NULL,
+    email     VARCHAR(20) NULL,
+    card_view TINYINT(1)  NOT NULL DEFAULT 0
 );
 
 -- TODO: Remove the username field
@@ -79,16 +80,16 @@ CREATE TABLE favourite
 );
 
 -- Add admin user (type 0)
-INSERT INTO user(username, password, type, firstName, lastName, email)
-VALUES ('admin', 'admin', 0, 'UET', 'VNU', 'abc@vnu.edu.vn');
+INSERT INTO user(username, password, type, firstName, lastName, email, card_view)
+VALUES ('admin', 'admin', 0, 'UET', 'VNU', 'abc@vnu.edu.vn', 1);
 
 -- Add 3 sample users (type 1)
-INSERT INTO user(username, password, type, firstName, lastName, email)
-VALUES ('23021497', '23021497', 1, 'Quang Dung', 'Nguyen', '23021497@vnu.edu.vn');
-INSERT INTO user(username, password, type, firstName, lastName, email)
-VALUES ('23021501', '23021501', 1, 'Anh Duy', 'Le', '23021501@vnu.edu.vn');
-INSERT INTO user(username, password, type, firstName, lastName, email)
-VALUES ('23021521', '23021521', 1, 'Tien Dat', 'Nguyen', '23021521@vnu.edu.vn');
+INSERT INTO user(username, password, type, firstName, lastName, email, card_view)
+VALUES ('23021497', '23021497', 1, 'Quang Dung', 'Nguyen', '23021497@vnu.edu.vn', 1);
+INSERT INTO user(username, password, type, firstName, lastName, email, card_view)
+VALUES ('23021501', '23021501', 1, 'Anh Duy', 'Le', '23021501@vnu.edu.vn', 0);
+INSERT INTO user(username, password, type, firstName, lastName, email, card_view)
+VALUES ('23021521', '23021521', 1, 'Tien Dat', 'Nguyen', '23021521@vnu.edu.vn', 1);
 
 -- Add 2 sample books
 INSERT INTO book(name, author, description, time_added, copies)

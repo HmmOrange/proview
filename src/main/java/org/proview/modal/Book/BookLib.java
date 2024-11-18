@@ -1,6 +1,7 @@
 package org.proview.modal.Book;
 
 import org.proview.test.AppMain;
+import org.proview.utils.SQLUtils;
 
 import java.sql.*;
 
@@ -105,7 +106,9 @@ public class BookLib extends Book {
         return imagePath;
     }
 
-    public int getCopiesAvailable() {
+    public int getCopiesAvailable() throws SQLException {
+        copiesAvailable = SQLUtils.copiesAvailable(id);
         return copiesAvailable;
+
     }
 }

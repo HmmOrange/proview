@@ -3,6 +3,7 @@ package org.proview.modal.Book;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Comparator;
+import java.util.Objects;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -10,13 +11,15 @@ import com.google.gson.JsonParser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import org.proview.api.GoogleBooksAPI;
 import org.proview.test.AppMain;
 import org.proview.test.Container.BookCellCompactView;
-import org.proview.test.Container.BookCellView;
+import org.proview.test.Container.BookCellCardView;
+import org.proview.test.Scene.ProfileView;
 
 public class BookManagement {
     public static void addBook(String name, String author, String description, int copies, String tag) throws SQLException {
@@ -231,11 +234,11 @@ public class BookManagement {
                     setGraphic(null);
                 } else {
                     try {
-                        FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("BookCellView.fxml"));
-                        HBox hbox = loader.load();
+                        FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
+                        Button button = loader.load();
 
                         // Get the controller of the cell
-                        BookCellView cellView = loader.getController();
+                        BookCellCardView cellView = loader.getController();
 
                         cellView.setData(
                                 item.getId(),
@@ -247,7 +250,7 @@ public class BookManagement {
                                 item.getCopiesAvailable()
                         );
 
-                        setGraphic(hbox);
+                        setGraphic(button);
                     } catch (Exception e) {
                         System.out.println(e);
                         throw new RuntimeException(e);
@@ -271,11 +274,11 @@ public class BookManagement {
                     setGraphic(null);
                 } else {
                     try {
-                        FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("BookCellView.fxml"));
-                        HBox hbox = loader.load();
+                        FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
+                        Button button = loader.load();
 
                         // Get the controller of the cell
-                        BookCellView cellView = loader.getController();
+                        BookCellCardView cellView = loader.getController();
 
                         cellView.setData(
                                 item.getTitle(),
@@ -284,7 +287,7 @@ public class BookManagement {
                                 item.getTags()
                         );
 
-                        setGraphic(hbox);
+                        setGraphic(button);
                     } catch (Exception e) {
                         e.printStackTrace();
                         throw new RuntimeException(e);
@@ -294,7 +297,8 @@ public class BookManagement {
         });
     }
 
-    public static void initBookLibCompactList(ListView<BookLib> bookListView, ObservableList<BookLib> bookList, Boolean showCopiesAvailable) {
+    public static void initBookLibList(ListView<BookLib> bookListView, ObservableList<BookLib> bookList, Boolean cardView, Boolean showCopiesAvailable) {
+
         bookListView.setItems(bookList);
         bookListView.setCellFactory(param -> new ListCell<>() {
             {
@@ -308,23 +312,46 @@ public class BookManagement {
                     setGraphic(null);
                 } else {
                     try {
-                        FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("BookCellCompactView.fxml"));
-                        HBox hbox = loader.load();
+                        FXMLLoader loader;
 
-                        // Get the controller of the cell
-                        BookCellCompactView cellView = loader.getController();
+                        // TODO: Use BookCell parent (do create one if not existed yet) of these 2 instead of if-else
+                        if (cardView) {
+                            loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
+                            Button button = loader.load();
 
-                        cellView.setData(
-                                item.getId(),
-                                "#" + (getIndex() + 1) + ". " + item.getTitle(),
-                                item.getAuthor(),
-                                item.getTags(),
-                                item.getRating(),
-                                item.getIssueCount(),
-                                showCopiesAvailable ? item.getCopiesAvailable() : -1
-                        );
+                            BookCellCardView cellView = loader.getController();
 
-                        setGraphic(hbox);
+                            cellView.setData(
+                                    item.getId(),
+                                    "#" + (getIndex() + 1) + ". " + item.getTitle(),
+                                    item.getAuthor(),
+                                    item.getTags(),
+                                    item.getRating(),
+                                    item.getIssueCount(),
+                                    showCopiesAvailable ? item.getCopiesAvailable() : -1
+                            );
+
+                            setGraphic(button);
+                        }
+
+                        else {
+                            loader = new FXMLLoader(AppMain.class.getResource("BookCellCompactView.fxml"));
+                            Button button = loader.load();
+
+                            BookCellCompactView cellView = loader.getController();
+
+                            cellView.setData(
+                                    item.getId(),
+                                    "#" + (getIndex() + 1) + ". " + item.getTitle(),
+                                    item.getAuthor(),
+                                    item.getTags(),
+                                    item.getRating(),
+                                    item.getIssueCount(),
+                                    showCopiesAvailable ? item.getCopiesAvailable() : -1
+                            );
+
+                            setGraphic(button);
+                        }
                     } catch (Exception e) {
                         System.out.println(e);
                         throw new RuntimeException(e);

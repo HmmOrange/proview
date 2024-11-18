@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ProfileBookListCompactView">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="850.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ProfileBookListView">
    <children>
       <Label prefHeight="30.0" prefWidth="191.0" text="Favourite">
          <font>
@@ -16,7 +16,7 @@
             <Insets bottom="10.0" left="20.0" top="20.0" />
          </VBox.margin>
       </Label>
-      <ListView fx:id="favouriteCompactListView" prefHeight="100.0" prefWidth="800.0">
+      <ListView fx:id="favouriteListView" prefHeight="100.0" prefWidth="800.0">
          <padding>
             <Insets bottom="10.0" />
          </padding>
@@ -24,7 +24,7 @@
             <Insets left="20.0" right="30.0" />
          </VBox.margin>
       </ListView>
-      <Label prefHeight="30.0" prefWidth="191.0" text="Borrowing">
+      <Label prefWidth="191.0" text="Borrowing">
          <font>
             <Font size="20.0" />
          </font>
@@ -32,7 +32,7 @@
             <Insets bottom="10.0" left="20.0" top="20.0" />
          </VBox.margin>
       </Label>
-      <ListView fx:id="borrowingCompactListView" prefHeight="100.0" prefWidth="800.0">
+      <ListView fx:id="borrowingListView" prefHeight="100.0" prefWidth="800.0">
          <VBox.margin>
             <Insets left="20.0" right="30.0" />
          </VBox.margin>
@@ -40,7 +40,7 @@
             <Insets bottom="10.0" />
          </padding>
       </ListView>
-      <Label prefHeight="30.0" prefWidth="191.0" text="Overdue">
+      <Label prefWidth="191.0" text="Overdue">
          <font>
             <Font size="20.0" />
          </font>
@@ -48,7 +48,7 @@
             <Insets bottom="10.0" left="20.0" />
          </VBox.margin>
       </Label>
-      <ListView fx:id="overdueCompactListView" prefHeight="100.0" prefWidth="800.0">
+      <ListView fx:id="overdueListView" prefHeight="100.0" prefWidth="800.0">
          <VBox.margin>
             <Insets left="20.0" right="30.0" />
          </VBox.margin>
@@ -56,7 +56,7 @@
             <Insets bottom="10.0" />
          </padding>
       </ListView>
-      <Label prefHeight="30.0" prefWidth="191.0" text="Past issues">
+      <Label prefWidth="191.0" text="Past issues">
          <font>
             <Font size="20.0" />
          </font>
@@ -64,7 +64,7 @@
             <Insets bottom="10.0" left="20.0" />
          </VBox.margin>
       </Label>
-      <ListView fx:id="pastIssuesCompactListView" prefHeight="100.0" prefWidth="800.0">
+      <ListView fx:id="pastIssuesListView" prefHeight="100.0" prefWidth="800.0">
          <VBox.margin>
             <Insets left="20.0" right="30.0" />
          </VBox.margin>

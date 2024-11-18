@@ -97,7 +97,7 @@ public class RegisterView {
                 Files.copy(avatarFile.toPath(), (new File(dstFilePath)).toPath(), StandardCopyOption.REPLACE_EXISTING);
                 ///
 
-                User user = new NormalUser(latest_id + 1, usn, pass, firstName, lastName, email);
+                User user = new NormalUser(latest_id + 1, usn, pass, firstName, lastName, email, false);
                 UserManagement.addNormalUser(user);
                 registerResultLabel.setText("Register Success");
 

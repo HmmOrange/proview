@@ -10,7 +10,7 @@
 
 <BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.LibraryView">
     <top>
-        <fx:include source="NavBar.fxml" />
+        <fx:include source="NavBarView.fxml" />
     </top>
     <left>
         <AnchorPane prefHeight="578.0" prefWidth="204.0" BorderPane.alignment="CENTER">

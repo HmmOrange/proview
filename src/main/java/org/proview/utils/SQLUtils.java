@@ -62,12 +62,13 @@ public class SQLUtils {
             String firstName = resultSet.getString("firstName");
             String lastName = resultSet.getString("lastName");
             String email = resultSet.getString("email");
+            boolean cardView = resultSet.getBoolean("card_view");
             System.out.println(id + " " + firstName + " " + lastName + " " + email);
 
             if (username.equalsIgnoreCase("admin"))
-                return new Admin(id, username, password, firstName, lastName, email);
+                return new Admin(id, username, password, firstName, lastName, email, cardView);
 
-            return new NormalUser(id, username, password, firstName, lastName, email);
+            return new NormalUser(id, username, password, firstName, lastName, email, cardView);
         }
     }
 
@@ -384,6 +385,14 @@ public class SQLUtils {
         preparedStatement.close();
         resultSet.close();
         return res;
+    }
+
+    public static void setUserPreferredView(int userId, boolean cardView) throws SQLException {
+        String sql = "UPDATE user SET card_view = ? WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setBoolean(1, cardView);
+        preparedStatement.setInt(2, userId);
+        preparedStatement.executeUpdate();
     }
 }
 

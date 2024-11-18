@@ -1,6 +1,7 @@
 package org.proview.test.Container;
 
 import com.google.gson.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -19,7 +20,7 @@ import java.io.InputStream;
 import java.net.*;
 import java.sql.SQLException;
 
-public class BookCellView {
+public class BookCellCardView {
     public ImageView coverImageView;
     public Label titleLabel;
     public Label tagLabel;
@@ -54,7 +55,13 @@ public class BookCellView {
         authorLabel.setText(author);
         tagLabel.setText("Tags: " + tags);
         infoLabel.setText(rating + " 🌟 " + issueCount + " 👀 ");
-        copiesLabel.setText(copiesAvailable + (copiesAvailable == 1 ? " copy" : " copies") + " available");
+
+        if (copiesAvailable > 0)
+            copiesLabel.setText(copiesAvailable + (copiesAvailable == 1 ? " copy" : " copies") + " available");
+        else {
+            copiesLabel.setDisable(true);
+            copiesLabel.setVisible(false);
+        }
 
         String imageUrl = "./assets/covers/cover" + id + ".png";
         InputStream stream = new FileInputStream(imageUrl);
@@ -69,7 +76,7 @@ public class BookCellView {
         stream.close();
     }
 
-    public void onMouseClick(MouseEvent mouseEvent) throws IOException, SQLException {
+    public void onMouseClick(ActionEvent actionEvent) throws IOException, SQLException {
         if (id >= 0) { // this seems tricky, maybe there is a better way to handle this
             FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("BookInfoView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
