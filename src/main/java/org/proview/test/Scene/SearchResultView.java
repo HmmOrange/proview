@@ -5,7 +5,7 @@ import javafx.scene.control.ListView;
 import org.proview.modal.Book.BookGoogle;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Book.BookManagement;
-import org.proview.modal.Utils.SearchUtils;
+import org.proview.utils.SearchUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;

@@ -1,6 +1,5 @@
 package org.proview.modal.Book;
 
-import org.proview.modal.Utils.SQLUtils;
 import org.proview.test.AppMain;
 
 import java.sql.*;

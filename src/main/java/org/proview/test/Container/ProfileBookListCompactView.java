@@ -1,29 +1,12 @@
 package org.proview.test.Container;
 
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import org.proview.modal.Activity.Activity;
-import org.proview.modal.Activity.ActivityManagement;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Book.BookManagement;
-import org.proview.modal.User.Admin;
-import org.proview.modal.User.NormalUser;
-import org.proview.modal.User.UserManagement;
-import org.proview.modal.Utils.SQLUtils;
-import org.proview.test.AppMain;
 import org.proview.test.Scene.ProfileView;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 
 public class ProfileBookListCompactView {

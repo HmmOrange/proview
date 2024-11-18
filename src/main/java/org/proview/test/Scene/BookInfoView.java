@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import org.kordamp.ikonli.javafx.FontIcon;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Issue.IssueManagement;
 import org.proview.modal.Review.Review;
@@ -14,7 +16,7 @@ import org.proview.modal.Review.ReviewManagement;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.User;
 import org.proview.modal.User.UserManagement;
-import org.proview.modal.Utils.SQLUtils;
+import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
 
 import java.io.FileInputStream;
@@ -23,6 +25,11 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Objects;
 
+/**
+ * The BookInfoView class represents a view for displaying detailed information about a book,
+ * including its title, author, description, cover image, available copies, tags, rating, and reviews.
+ * It also provides functionality to edit book information, borrow a book, and add reviews.
+ */
 public class BookInfoView {
     public Button backButton;
     public ImageView coverImage;
@@ -37,6 +44,8 @@ public class BookInfoView {
     public Label issueLabel;
     public TextArea reviewTextArea;
     public ListView<Review> reviewListView;
+    public Button starButton;
+    public BorderPane borderPane;
 
     private int id;
 
@@ -69,6 +78,18 @@ public class BookInfoView {
             durationField.setVisible(true);
             durationField.setDisable(false);
         }
+
+        // Load CSS
+        String cssPath = Objects.requireNonNull(AppMain.class.getResource("styles/BookInfoView.css")).toExternalForm();
+        System.out.println(cssPath);
+        borderPane.getStylesheets().add(cssPath);
+
+        // Set star button
+        FontIcon fontIcon = new FontIcon();
+        fontIcon.getStyleClass().add("ikonli-font-icon");
+        starButton.setGraphic(fontIcon);
+        starButton.setId("star-icon-default");
+        starButton.applyCss();
     }
 
 
@@ -123,5 +144,15 @@ public class BookInfoView {
         User currentUser = UserManagement.getCurrentUser();
         currentUser.addComment(id, reviewTextArea.getText());
         reloadReviewList();
+    }
+
+    public void onStarButtonClicked(ActionEvent mouseEvent) throws SQLException {
+        if (Objects.equals(starButton.getId(), "star-icon-default")) {
+            starButton.setId("star-icon-clicked");
+            SQLUtils.addFavourite(UserManagement.getCurrentUser().getId(), this.id);
+        } else {
+            starButton.setId("star-icon-default");
+            SQLUtils.removeFavourite(UserManagement.getCurrentUser().getId(), this.id);
+        }
     }
 }

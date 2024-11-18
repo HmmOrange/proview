@@ -7,7 +7,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import org.proview.modal.Review.Review;
-import org.proview.modal.Utils.SQLUtils;
+import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
 import org.proview.test.Container.ActivityCellView;
 import org.proview.test.Container.PersonalActivityCellView;

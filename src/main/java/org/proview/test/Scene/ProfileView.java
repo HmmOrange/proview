@@ -12,11 +12,10 @@ import javafx.scene.image.ImageView;
 import org.proview.modal.Activity.Activity;
 import org.proview.modal.Activity.ActivityManagement;
 import org.proview.modal.Book.BookLib;
-import org.proview.modal.Book.BookManagement;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.UserManagement;
-import org.proview.modal.Utils.SQLUtils;
+import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
 
 import java.io.*;
