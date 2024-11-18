@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Book.BookManagement;
-import org.proview.modal.Utils.SQLUtils;
+import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
 
 import java.sql.*;

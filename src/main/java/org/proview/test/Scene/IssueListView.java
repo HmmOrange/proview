@@ -13,7 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.UserManagement;
-import org.proview.modal.Utils.SQLUtils;
+import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
 
 import java.io.IOException;

@@ -52,6 +52,7 @@ public class ProfileView {
     public static ObservableList<BookLib> borrowingBookList;
     public static ObservableList<BookLib> overdueBookList;
     public static ObservableList<BookLib> pastIssuesBookList;
+    public static ObservableList<BookLib> favouriteBookList;
 
     public ObservableList<BookLib> getBorrowingBookList() {
         return borrowingBookList;
@@ -98,12 +99,17 @@ public class ProfileView {
         pastIssuesBookList = SQLUtils.getPastIssuesBookList(UserManagement.getCurrentUser().getId());
     }
 
+    public static void loadFavouriteBookList() throws SQLException {
+        favouriteBookList = SQLUtils.getFavouriteBookList(UserManagement.getCurrentUser().getId());
+    }
+
     public void initialize() throws SQLException, FileNotFoundException {
         loadProfile();
         loadRecentActivity();
         if (borrowingBookList == null) loadBorrowingList();
         if (overdueBookList == null) loadOverdueBookList();
         if (pastIssuesBookList == null) loadPastIssuesBookList();
+        if (favouriteBookList == null) loadFavouriteBookList();
     }
 
     public void onEditProfileButtonClick(ActionEvent actionEvent) throws IOException {
@@ -120,5 +126,6 @@ public class ProfileView {
         borrowingBookList = null;
         overdueBookList = null;
         pastIssuesBookList = null;
+        favouriteBookList = null;
     }
 }

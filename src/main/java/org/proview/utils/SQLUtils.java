@@ -8,6 +8,7 @@ import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.User;
 import org.proview.test.AppMain;
+import org.proview.test.Scene.ProfileView;
 
 import java.sql.*;
 import java.util.Objects;
@@ -253,6 +254,7 @@ public class SQLUtils {
         preparedStatement.setInt(1, userId);
         preparedStatement.setInt(2, bookId);
         preparedStatement.executeUpdate();
+        ProfileView.loadFavouriteBookList();
     }
 
     public static void removeFavourite(int userId, int bookId) throws SQLException {
@@ -261,6 +263,30 @@ public class SQLUtils {
         preparedStatement.setInt(1, userId);
         preparedStatement.setInt(2, bookId);
         preparedStatement.executeUpdate();
+        ProfileView.loadFavouriteBookList();
+    }
+
+    public static ObservableList<BookLib> getFavouriteBookList(int userId) throws SQLException {
+        Connection connection = AppMain.connection;
+        String sql = """
+            SELECT * FROM book b
+            JOIN favourite f ON b.id = f.book_id
+            WHERE user_id = ?;
+        """;
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ObservableList<BookLib> bookLibObservableList = FXCollections.observableArrayList();
+        while (resultSet.next()) {
+            int bookId = resultSet.getInt("b.id");
+            String title = resultSet.getString("name");
+            String author = resultSet.getString("author");
+            String description = resultSet.getString("description");
+            int copiesAvailable = resultSet.getInt("copies");
+
+            bookLibObservableList.add(new BookLib(bookId, title, author, description, copiesAvailable));
+        }
+        return bookLibObservableList;
     }
 }
 

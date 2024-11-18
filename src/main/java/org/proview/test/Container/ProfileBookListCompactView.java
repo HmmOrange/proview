@@ -34,6 +34,7 @@ public class ProfileBookListCompactView {
     public ListView<BookLib> borrowingCompactListView;
     public ListView<BookLib> overdueCompactListView;
     public ListView<BookLib> pastIssuesCompactListView;
+    public ListView<BookLib> favouriteCompactListView;
 
     private void loadBorrowingListView() throws SQLException {
         ObservableList<BookLib> borrowingBookList = ProfileView.borrowingBookList;
@@ -90,10 +91,29 @@ public class ProfileBookListCompactView {
         }
     }
 
+    private void loadFavouriteListView() throws SQLException {
+        ObservableList<BookLib> favouriteBookList = ProfileView.favouriteBookList;
+        if (favouriteBookList == null) {
+            ProfileView.loadFavouriteBookList();
+            favouriteBookList = ProfileView.favouriteBookList;
+        }
+        if (favouriteBookList != null) {
+            BookManagement.initBookLibCompactList(favouriteCompactListView, favouriteBookList, false);
+            pastIssuesCompactListView.setPrefHeight(
+                    Size.BOOK_CELL_COMPACT_HEIGHT.getValue() * favouriteBookList.size()
+                            + Size.PADDING.getValue()
+            );
+            pastIssuesCompactListView.setMinWidth(
+                    Size.BOOK_LISTVIEW_COMPACT_WIDTH.getValue()
+                            + Size.PADDING.getValue());
+        }
+    }
+
     public void initialize() throws SQLException, FileNotFoundException {
         loadBorrowingListView();
         loadOverdueListView();
         loadPastIssuesListView();
+        loadFavouriteListView();
         System.out.println("Inside");
     }
 }
