@@ -13,9 +13,9 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.ProfileView">
+<BorderPane fx:id="profileBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.ProfileView">
    <top>
-      <fx:include source="NavBar.fxml" />
+      <fx:include source="NavBarView.fxml" />
    </top>
    <left>
       <AnchorPane prefHeight="627.0" prefWidth="367.0" BorderPane.alignment="CENTER">
@@ -52,7 +52,15 @@
          <content>
             <VBox fx:id="innerVbox">
                <children>
-                  <HBox prefHeight="56.0" prefWidth="933.0" />
+                  <HBox alignment="CENTER_RIGHT" prefHeight="56.0" prefWidth="933.0">
+                     <children>
+                        <Button fx:id="cardButton" mnemonicParsing="false" onAction="#onCardButtonClicked" />
+                        <Button fx:id="compactButton" mnemonicParsing="false" onAction="#onCompactButtonClicked">
+                           <HBox.margin>
+                              <Insets right="100.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children></HBox>
                </children>
             </VBox>
          </content>

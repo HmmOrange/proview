@@ -54,7 +54,13 @@ public class BookCellCardView {
         authorLabel.setText(author);
         tagLabel.setText("Tags: " + tags);
         infoLabel.setText(rating + " 🌟 " + issueCount + " 👀 ");
-        copiesLabel.setText(copiesAvailable + (copiesAvailable == 1 ? " copy" : " copies") + " available");
+
+        if (copiesAvailable > 0)
+            copiesLabel.setText(copiesAvailable + (copiesAvailable == 1 ? " copy" : " copies") + " available");
+        else {
+            copiesLabel.setDisable(true);
+            copiesLabel.setVisible(false);
+        }
 
         String imageUrl = "./assets/covers/cover" + id + ".png";
         InputStream stream = new FileInputStream(imageUrl);

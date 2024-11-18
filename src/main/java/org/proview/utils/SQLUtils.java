@@ -357,5 +357,13 @@ public class SQLUtils {
         System.out.println("book id " + book_id + " unavailable is " + res);
         return res;
     }
+
+    public static void setUserPreferredView(int userId, boolean cardView) throws SQLException {
+        String sql = "UPDATE user SET card_view = ? WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setBoolean(1, cardView);
+        preparedStatement.setInt(2, userId);
+        preparedStatement.executeUpdate();
+    }
 }
 

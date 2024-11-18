@@ -1,0 +1,31 @@
+#card-view-enabled .ikonli-font-icon {
+    -fx-icon-color: red;
+    -fx-icon-size: 24;
+    -fx-icon-code: "fas-th-large";
+}
+
+#compact-view-enabled .ikonli-font-icon {
+    -fx-icon-color: red;
+    -fx-icon-size: 24;
+    -fx-icon-code: "fas-th-list";
+}
+
+#card-view-disabled .ikonli-font-icon {
+    -fx-icon-color: gray;
+    -fx-icon-size: 24;
+    -fx-icon-code: "fas-th-large";
+}
+
+#compact-view-disabled .ikonli-font-icon {
+    -fx-icon-color: gray;
+    -fx-icon-size: 24;
+    -fx-icon-code: "fas-th-list";
+}
+
+.button {
+    -fx-background-radius: 0;
+}
+
+.button:disabled {
+    -fx-opacity: 1;
+}

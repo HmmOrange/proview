@@ -4,22 +4,9 @@ import org.proview.test.AppMain;
 import java.sql.*;
 
 public class UserManagement {
-    public enum View {
-        GRID,
-        COMPACT
-    }
     Connection connection = AppMain.connection;
 
     public static User currentUser = null;
-    public static View currentView = View.COMPACT;
-
-    public static View getCurrentView() {
-        return currentView;
-    }
-
-    public static void setCurrentView(View currentView) {
-        UserManagement.currentView = currentView;
-    }
 
     public static User getCurrentUser() {
         return currentUser;

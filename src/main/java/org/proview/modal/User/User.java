@@ -94,8 +94,9 @@ public abstract class User {
         return cardView;
     }
 
-    public void setCardView(Boolean cardView) {
+    public void setCardView(Boolean cardView) throws SQLException {
         this.cardView = cardView;
+        SQLUtils.setUserPreferredView(id, cardView);
     }
 
     public void addComment(int book_id, String review) throws SQLException {
