@@ -8,8 +8,10 @@ import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.User;
 import org.proview.test.AppMain;
+import org.proview.test.Scene.ProfileView;
 
 import java.sql.*;
+import java.util.Objects;
 
 public class SQLUtils {
     static Connection connection = AppMain.connection;
@@ -60,6 +62,7 @@ public class SQLUtils {
             String firstName = resultSet.getString("firstName");
             String lastName = resultSet.getString("lastName");
             String email = resultSet.getString("email");
+            System.out.println(id + " " + firstName + " " + lastName + " " + email);
 
             if (username.equalsIgnoreCase("admin"))
                 return new Admin(id, username, password, firstName, lastName, email);
@@ -147,12 +150,90 @@ public class SQLUtils {
         String sql = """
             SELECT * FROM book b
             JOIN issue i ON b.id = i.book_id
-            WHERE i.user_id = ? AND i.status = 'Borrowing';
+            WHERE i.user_id = ? AND NOT (i.status = 'Returned');
         """;
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, userId);
         ResultSet resultSet = preparedStatement.executeQuery();
+        ObservableList<BookLib> bookLibObservableList = FXCollections.observableArrayList();
+        while (resultSet.next()) {
+            int bookId = resultSet.getInt("b.id");
+            String title = resultSet.getString("name");
+            String author = resultSet.getString("author");
+            String description = resultSet.getString("description");
+            int copiesAvailable = resultSet.getInt("copies");
 
+            bookLibObservableList.add(new BookLib(bookId, title, author, description, copiesAvailable));
+        }
+        return bookLibObservableList;
+    }
+
+    public static void alterStatusInDatabase(ObservableList<String> rowData, String newStatus) throws SQLException {
+        int issueId = Integer.parseInt(rowData.getFirst());
+        String sql = "UPDATE issue SET status = ? WHERE id = ?";
+        Connection connection = AppMain.connection;
+        PreparedStatement alterStatusPS = connection.prepareStatement(sql);
+        alterStatusPS.setString(1, newStatus);
+        alterStatusPS.setInt(2, issueId);
+        alterStatusPS.executeUpdate();
+        alterStatusPS.close();
+
+        if (Objects.equals(newStatus, "Returned")) {
+            String endDateSql = "UPDATE issue SET end_date = CURRENT_TIMESTAMP WHERE id = ?";
+            PreparedStatement alterEndDatePS = AppMain.connection.prepareStatement(endDateSql);
+            alterEndDatePS.setInt(1, issueId);
+            alterEndDatePS.executeUpdate();
+            alterEndDatePS.close();
+        }
+    }
+
+    public static int getUserIdFrom(String username) throws SQLException {
+        int res = -1;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement("SELECT id FROM user WHERE username = ?");
+        preparedStatement.setString(1, username);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if(resultSet.next()) {
+            res = resultSet.getInt("id");
+        }
+        preparedStatement.close();
+        resultSet.close();
+        return res;
+    }
+
+    public static ObservableList<BookLib> getOverdueBookList(int userId) throws SQLException {
+        Connection connection = AppMain.connection;
+        String sql = """
+            SELECT * FROM book b
+            JOIN issue i ON b.id = i.book_id
+            WHERE i.user_id = ? AND DATEDIFF(NOW(), DATE_ADD(start_date, INTERVAL duration DAY)) > 0 
+            AND NOT (status = 'Returned');
+        """;
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ObservableList<BookLib> bookLibObservableList = FXCollections.observableArrayList();
+        while (resultSet.next()) {
+            int bookId = resultSet.getInt("b.id");
+            String title = resultSet.getString("name");
+            String author = resultSet.getString("author");
+            String description = resultSet.getString("description");
+            int copiesAvailable = resultSet.getInt("copies");
+
+            bookLibObservableList.add(new BookLib(bookId, title, author, description, copiesAvailable));
+        }
+        return bookLibObservableList;
+    }
+
+    public static ObservableList<BookLib> getPastIssuesBookList(int userId) throws SQLException {
+        Connection connection = AppMain.connection;
+        String sql = """
+            SELECT * FROM book b
+            JOIN issue i ON b.id = i.book_id
+            WHERE i.user_id = ? AND status = 'Returned';
+        """;
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        ResultSet resultSet = preparedStatement.executeQuery();
         ObservableList<BookLib> bookLibObservableList = FXCollections.observableArrayList();
         while (resultSet.next()) {
             int bookId = resultSet.getInt("b.id");
@@ -172,6 +253,7 @@ public class SQLUtils {
         preparedStatement.setInt(1, userId);
         preparedStatement.setInt(2, bookId);
         preparedStatement.executeUpdate();
+        ProfileView.loadFavouriteBookList();
     }
 
     public static void removeFavourite(int userId, int bookId) throws SQLException {
@@ -180,5 +262,99 @@ public class SQLUtils {
         preparedStatement.setInt(1, userId);
         preparedStatement.setInt(2, bookId);
         preparedStatement.executeUpdate();
+        ProfileView.loadFavouriteBookList();
+    }
+
+    public static ObservableList<BookLib> getFavouriteBookList(int userId) throws SQLException {
+        Connection connection = AppMain.connection;
+        String sql = """
+            SELECT * FROM book b
+            JOIN favourite f ON b.id = f.book_id
+            WHERE user_id = ?;
+        """;
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ObservableList<BookLib> bookLibObservableList = FXCollections.observableArrayList();
+        while (resultSet.next()) {
+            int bookId = resultSet.getInt("b.id");
+            String title = resultSet.getString("name");
+            String author = resultSet.getString("author");
+            String description = resultSet.getString("description");
+            int copiesAvailable = resultSet.getInt("copies");
+
+            bookLibObservableList.add(new BookLib(bookId, title, author, description, copiesAvailable));
+        }
+        return bookLibObservableList;
+    }
+
+    public static boolean isFavouriteBook(int user_id, int book_id) throws SQLException {
+        boolean res = false;
+        String sql = """
+                SELECT * FROM favourite
+                WHERE book_id = ? AND user_id = ?
+                """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, book_id);
+        preparedStatement.setInt(2, user_id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            res = true;
+        }
+        preparedStatement.close();
+        resultSet.close();
+        return res;
+    }
+
+    public static boolean ifUserBorrowingBook(int user_id, int book_id) throws SQLException {
+        boolean res = false;
+        String sql = """
+                SELECT * FROM issue
+                WHERE user_id = ? AND book_id = ? AND end_date IS NULL;
+                """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, user_id);
+        preparedStatement.setInt(2, book_id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            res = true;
+        }
+        preparedStatement.close();
+        resultSet.close();
+        System.out.println("You are borrowing this book " + res);
+        return res;
+    }
+
+    public static boolean ifBookUnavailable(int book_id) throws SQLException {
+        boolean res = false;
+        String sql = """
+                WITH borrowednum AS (
+                    SELECT book_id, COUNT(*) AS numofqueries
+                    FROM issue
+                    WHERE end_date IS NULL
+                    GROUP BY book_id
+                )
+                SELECT
+                    book.*,
+                    COALESCE(borrowednum.numofqueries, 0) AS numofqueries,
+                    COALESCE(borrowednum.book_id, book.id) AS book_id
+                FROM book
+                LEFT JOIN borrowednum
+                    ON book.id = borrowednum.book_id
+                WHERE book.id = ?;
+                """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, book_id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            int copies = resultSet.getInt("copies");
+            int numOfQueries = resultSet.getInt("numofqueries");
+            if (copies - numOfQueries <= 0) res = true;
+        }
+        preparedStatement.close();
+        resultSet.close();
+        System.out.println("book id " + book_id + " unavailable is " + res);
+        return res;
     }
 }
+

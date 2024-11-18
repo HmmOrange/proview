@@ -46,6 +46,7 @@ public class BookInfoView {
     public ListView<Review> reviewListView;
     public Button starButton;
     public BorderPane borderPane;
+    public Label borrowingProblemLabel;
 
     private int id;
 
@@ -66,6 +67,8 @@ public class BookInfoView {
     public void initialize() throws SQLException {
         durationField.setVisible(false);
         durationField.setDisable(true);
+        borrowingProblemLabel.setVisible(false);
+        borrowingProblemLabel.setDisable(true);
         if (UserManagement.getCurrentUser() instanceof NormalUser) {
             editButton.setText("Borrow");
             editButton.setOnAction(actionEvent -> {
@@ -115,6 +118,29 @@ public class BookInfoView {
         stream.close();
 
         reloadReviewList();
+
+        if (SQLUtils.isFavouriteBook(UserManagement.getCurrentUser().getId(), id)) {
+            starButton.setId("star-icon-clicked");
+        }
+        if (UserManagement.getCurrentUser() instanceof NormalUser
+                && SQLUtils.ifUserBorrowingBook(UserManagement.getCurrentUser().getId(), id)) {
+            borrowingProblemLabel.setDisable(false);
+            borrowingProblemLabel.setVisible(true);
+            borrowingProblemLabel.setText("You are borrowing this book");
+            editButton.setVisible(false);
+            editButton.setDisable(true);
+            durationField.setVisible(false);
+            durationField.setDisable(true);
+        } else if (UserManagement.getCurrentUser() instanceof NormalUser
+                && SQLUtils.ifBookUnavailable(id)) {
+            borrowingProblemLabel.setDisable(false);
+            borrowingProblemLabel.setVisible(true);
+            borrowingProblemLabel.setText("Book is currently unavailable");
+            editButton.setVisible(false);
+            editButton.setDisable(true);
+            durationField.setVisible(false);
+            durationField.setDisable(true);
+        }
     }
 
     public void onBackButtonClick(ActionEvent actionEvent) throws IOException {

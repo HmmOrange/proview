@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
 public class ProfileBookListCompactView {
+
     private enum Size {
         BOOK_CELL_HEIGHT(125),
         BOOK_CELL_COMPACT_HEIGHT(75),
@@ -31,6 +32,9 @@ public class ProfileBookListCompactView {
     }
 
     public ListView<BookLib> borrowingCompactListView;
+    public ListView<BookLib> overdueCompactListView;
+    public ListView<BookLib> pastIssuesCompactListView;
+    public ListView<BookLib> favouriteCompactListView;
 
     private void loadBorrowingListView() throws SQLException {
         ObservableList<BookLib> borrowingBookList = ProfileView.borrowingBookList;
@@ -39,20 +43,77 @@ public class ProfileBookListCompactView {
             borrowingBookList = ProfileView.borrowingBookList;
         }
 
-        System.out.println(borrowingBookList.size());
+        if (borrowingBookList != null) {
+            BookManagement.initBookLibCompactList(borrowingCompactListView, borrowingBookList, false);
+            borrowingCompactListView.setPrefHeight(
+                    Size.BOOK_CELL_COMPACT_HEIGHT.getValue() * borrowingBookList.size()
+                            + Size.PADDING.getValue()
+            );
+            borrowingCompactListView.setMinWidth(
+                    Size.BOOK_LISTVIEW_COMPACT_WIDTH.getValue()
+                            + Size.PADDING.getValue());
+        }
+    }
 
-        BookManagement.initBookLibCompactList(borrowingCompactListView, borrowingBookList, false);
-        borrowingCompactListView.setPrefHeight(
-                Size.BOOK_CELL_COMPACT_HEIGHT.getValue() * borrowingBookList.size()
-                        + Size.PADDING.getValue()
-        );
-        borrowingCompactListView.setMinWidth(
-                Size.BOOK_LISTVIEW_COMPACT_WIDTH.getValue()
-                        + Size.PADDING.getValue());
+    private void loadOverdueListView() throws SQLException {
+        ObservableList<BookLib> overdueBookList = ProfileView.overdueBookList;
+        if (overdueBookList == null) {
+            ProfileView.loadOverdueBookList();
+            overdueBookList = ProfileView.overdueBookList;
+        }
+        if (overdueBookList != null) {
+            BookManagement.initBookLibCompactList(overdueCompactListView, overdueBookList, false);
+            overdueCompactListView.setPrefHeight(
+                    Size.BOOK_CELL_COMPACT_HEIGHT.getValue() * overdueBookList.size()
+                            + Size.PADDING.getValue()
+            );
+            overdueCompactListView.setMinWidth(
+                    Size.BOOK_LISTVIEW_COMPACT_WIDTH.getValue()
+                            + Size.PADDING.getValue());
+        }
+    }
+
+    private void loadPastIssuesListView() throws SQLException {
+        ObservableList<BookLib> pastIssuesBookList = ProfileView.pastIssuesBookList;
+        if (pastIssuesBookList == null) {
+            ProfileView.loadPastIssuesBookList();
+            pastIssuesBookList = ProfileView.pastIssuesBookList;
+        }
+        if (pastIssuesBookList != null) {
+            BookManagement.initBookLibCompactList(pastIssuesCompactListView, pastIssuesBookList, false);
+            pastIssuesCompactListView.setPrefHeight(
+                    Size.BOOK_CELL_COMPACT_HEIGHT.getValue() * pastIssuesBookList.size()
+                            + Size.PADDING.getValue()
+            );
+            pastIssuesCompactListView.setMinWidth(
+                    Size.BOOK_LISTVIEW_COMPACT_WIDTH.getValue()
+                            + Size.PADDING.getValue());
+        }
+    }
+
+    private void loadFavouriteListView() throws SQLException {
+        ObservableList<BookLib> favouriteBookList = ProfileView.favouriteBookList;
+        if (favouriteBookList == null) {
+            ProfileView.loadFavouriteBookList();
+            favouriteBookList = ProfileView.favouriteBookList;
+        }
+        if (favouriteBookList != null) {
+            BookManagement.initBookLibCompactList(favouriteCompactListView, favouriteBookList, false);
+            pastIssuesCompactListView.setPrefHeight(
+                    Size.BOOK_CELL_COMPACT_HEIGHT.getValue() * favouriteBookList.size()
+                            + Size.PADDING.getValue()
+            );
+            pastIssuesCompactListView.setMinWidth(
+                    Size.BOOK_LISTVIEW_COMPACT_WIDTH.getValue()
+                            + Size.PADDING.getValue());
+        }
     }
 
     public void initialize() throws SQLException, FileNotFoundException {
         loadBorrowingListView();
+        loadOverdueListView();
+        loadPastIssuesListView();
+        loadFavouriteListView();
         System.out.println("Inside");
     }
 }

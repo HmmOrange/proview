@@ -13,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.UserManagement;
+import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class IssueListView {
             TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns1[i]);
             int finalI = i;
             column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(finalI)));
-            if (columns1[finalI].equals("ID") || columns1[finalI].equals("Book ID")) {
+            if (columns1[finalI].equals("ID") || columns1[finalI].equals("Book ID") || columns1[finalI].equals("Remaining time")) {
                 column.setComparator(Comparator.comparingInt(Integer::parseInt));
             }
             borrowingTableView.getColumns().add(column);
@@ -51,7 +52,7 @@ public class IssueListView {
                 private final HBox hBox = new HBox(5, comboBox, confirmButton); // HBox chứa ComboBox và Confirm
 
                 {
-                    comboBox.getItems().addAll("Borrowing", "Returned", "Missing");
+                    comboBox.getItems().addAll("Picked up", "Not picked up", "Returned", "Missing");
                     confirmButton.setVisible(false); // Mặc định ẩn nút Confirm
 
                     comboBox.setOnAction(e -> {
@@ -74,7 +75,7 @@ public class IssueListView {
                             rowData.set(columns1.length - 1, newStatus); // Cập nhật giá trị mới vào dữ liệu gốc
                             confirmButton.setVisible(false); // Ẩn nút Confirm sau khi xác nhận
                             try {
-                                alterStatusInDatabase(rowData, newStatus);
+                                SQLUtils.alterStatusInDatabase(rowData, newStatus);
                             } catch (SQLException ex) {
                                 throw new RuntimeException(ex);
                             }
@@ -131,7 +132,7 @@ public class IssueListView {
                     "WITH book_issue AS " +
                             "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.username, issue.id AS ID, issue.start_date, issue.duration, issue.status  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
                             "SELECT ID, username, BookID, BookName ,Author AS author,  DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, DATEDIFF(DATE_ADD(start_date, INTERVAL duration DAY), NOW()) AS Remaining_time, status  " +
-                            "FROM book_issue  WHERE status = 'Borrowing' OR status = 'Missing';"
+                            "FROM book_issue  WHERE NOT (status = 'Returned');"
             );
             ResultSet borrowingRS = borrowingPS.executeQuery();
             while(borrowingRS.next()) {
@@ -172,7 +173,7 @@ public class IssueListView {
                     "WITH book_issue AS " +
                             "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.username, issue.id AS ID, issue.start_date, issue.duration, issue.status  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
                             "SELECT ID, username, BookID, BookName ,Author AS author,  DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, DATEDIFF(DATE_ADD(start_date, INTERVAL duration DAY), NOW()) AS Remaining_time, status  " +
-                            "FROM book_issue  WHERE (status = 'Borrowing' OR status = 'Missing') AND username = ?"
+                            "FROM book_issue  WHERE NOT (status = 'Returned') AND username = ?"
             );
             borrowingPS.setString(1, UserManagement.getCurrentUser().getUsername());
             ResultSet borrowingRS = borrowingPS.executeQuery();
@@ -219,24 +220,5 @@ public class IssueListView {
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();
-    }
-
-    public static void alterStatusInDatabase(ObservableList<String> rowData, String newStatus) throws SQLException {
-        int issueId = Integer.parseInt(rowData.getFirst());
-        String sql = "UPDATE issue SET status = ? WHERE id = ?";
-        Connection connection = AppMain.connection;
-        PreparedStatement alterStatusPS = connection.prepareStatement(sql);
-        alterStatusPS.setString(1, newStatus);
-        alterStatusPS.setInt(2, issueId);
-        alterStatusPS.executeUpdate();
-        alterStatusPS.close();
-
-        if (Objects.equals(newStatus, "Returned")) {
-            String endDateSql = "UPDATE issue SET end_date = CURRENT_TIMESTAMP WHERE id = ?";
-            PreparedStatement alterEndDatePS = AppMain.connection.prepareStatement(endDateSql);
-            alterEndDatePS.setInt(1, issueId);
-            alterEndDatePS.executeUpdate();
-            alterEndDatePS.close();
-        }
     }
 }
