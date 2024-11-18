@@ -188,17 +188,16 @@ public class SQLUtils {
     }
 
     public static int getUserIdFrom(String username) throws SQLException {
+        int res = -1;
         PreparedStatement preparedStatement = AppMain.connection.prepareStatement("SELECT id FROM user WHERE username = ?");
         preparedStatement.setString(1, username);
         ResultSet resultSet = preparedStatement.executeQuery();
         if(resultSet.next()) {
-            preparedStatement.close();
-            resultSet.close();
-            return resultSet.getInt("id");
+            res = resultSet.getInt("id");
         }
         preparedStatement.close();
         resultSet.close();
-        return -1;
+        return res;
     }
 
     public static ObservableList<BookLib> getOverdueBookList(int userId) throws SQLException {
@@ -304,6 +303,57 @@ public class SQLUtils {
         }
         preparedStatement.close();
         resultSet.close();
+        return res;
+    }
+
+    public static boolean ifUserBorrowingBook(int user_id, int book_id) throws SQLException {
+        boolean res = false;
+        String sql = """
+                SELECT * FROM issue
+                WHERE user_id = ? AND book_id = ? AND end_date IS NULL;
+                """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, user_id);
+        preparedStatement.setInt(2, book_id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            res = true;
+        }
+        preparedStatement.close();
+        resultSet.close();
+        System.out.println("You are borrowing this book " + res);
+        return res;
+    }
+
+    public static boolean ifBookUnavailable(int book_id) throws SQLException {
+        boolean res = false;
+        String sql = """
+                WITH borrowednum AS (
+                    SELECT book_id, COUNT(*) AS numofqueries
+                    FROM issue
+                    WHERE end_date IS NULL
+                    GROUP BY book_id
+                )
+                SELECT
+                    book.*,
+                    COALESCE(borrowednum.numofqueries, 0) AS numofqueries,
+                    COALESCE(borrowednum.book_id, book.id) AS book_id
+                FROM book
+                LEFT JOIN borrowednum
+                    ON book.id = borrowednum.book_id
+                WHERE book.id = ?;
+                """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, book_id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            int copies = resultSet.getInt("copies");
+            int numOfQueries = resultSet.getInt("numofqueries");
+            if (copies - numOfQueries <= 0) res = true;
+        }
+        preparedStatement.close();
+        resultSet.close();
+        System.out.println("book id " + book_id + " unavailable is " + res);
         return res;
     }
 }
