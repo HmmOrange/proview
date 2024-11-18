@@ -81,7 +81,7 @@ public class SQLUtils {
             String title = resultSet.getString("name");
             String author = resultSet.getString("author");
             String description = resultSet.getString("description");
-            int copiesAvailable = resultSet.getInt("copies");
+            int copiesAvailable = copiesAvailable(id);
 
             return new BookLib(id, title, author, description, copiesAvailable);
         }
@@ -321,7 +321,6 @@ public class SQLUtils {
         }
         preparedStatement.close();
         resultSet.close();
-        System.out.println("You are borrowing this book " + res);
         return res;
     }
 
@@ -353,7 +352,37 @@ public class SQLUtils {
         }
         preparedStatement.close();
         resultSet.close();
-        System.out.println("book id " + book_id + " unavailable is " + res);
+        return res;
+    }
+
+    public static int copiesAvailable(int book_id) throws SQLException {
+        int res = 0;
+        String sql = """
+                WITH borrowednum AS (
+                    SELECT book_id, COUNT(*) AS numofqueries
+                    FROM issue
+                    WHERE end_date IS NULL
+                    GROUP BY book_id
+                )
+                SELECT
+                    book.*,
+                    COALESCE(borrowednum.numofqueries, 0) AS numofqueries,
+                    COALESCE(borrowednum.book_id, book.id) AS book_id
+                FROM book
+                LEFT JOIN borrowednum
+                    ON book.id = borrowednum.book_id
+                WHERE book.id = ?;
+                """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, book_id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            int copies = resultSet.getInt("copies");
+            int numOfQueries = resultSet.getInt("numofqueries");
+            res = copies - numOfQueries;
+        }
+        preparedStatement.close();
+        resultSet.close();
         return res;
     }
 }
