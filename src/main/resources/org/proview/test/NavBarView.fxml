@@ -14,19 +14,6 @@
    <children>
       <AnchorPane fx:id="topPane" onKeyReleased="#onKeyReleased" prefHeight="4.0" prefWidth="1300.0" style="-fx-background-color: #FFC1C3;">
          <children>
-            <Button fx:id="logoutButton" layoutX="1096.0" layoutY="12.0" mnemonicParsing="false" onAction="#onLogoutButtonClick">
-               <graphic>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <FontIcon iconLiteral="fas-sign-out-alt" iconSize="24">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </FontIcon>
-                        <Label text="Sign out" />
-                     </children>
-                  </VBox>
-               </graphic></Button>
             <Button fx:id="editBookButton" layoutX="885.0" layoutY="12.0" mnemonicParsing="false" onAction="#onEditBookButtonClick" prefWidth="60.0">
                <graphic>
                   <VBox alignment="CENTER">
@@ -95,6 +82,20 @@
                      </children>
                   </VBox>
                </graphic></Button>
+            <Button fx:id="logoutButton" layoutX="1090.0" layoutY="12.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" prefWidth="60.0">
+               <graphic>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <FontIcon iconLiteral="fas-sign-out-alt" iconSize="24">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </FontIcon>
+                        <Label text="Log out" />
+                     </children>
+                  </VBox>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
    </children>

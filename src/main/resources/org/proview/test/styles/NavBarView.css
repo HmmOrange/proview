@@ -1,3 +1,7 @@
 .button:hover .ikonli-font-icon {
     -fx-icon-size: 24;
 }
+
+.button:focused .ikonli-font-icon {
+    -fx-icon-size: 24;
+}
