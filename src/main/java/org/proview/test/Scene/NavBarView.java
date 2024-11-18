@@ -37,7 +37,6 @@ public class NavBarView {
 
         // Load CSS
         String cssPath = Objects.requireNonNull(AppMain.class.getResource("styles/NavBarView.css")).toExternalForm();
-        System.out.println(cssPath);
         navBarHBox.getStylesheets().add(cssPath);
     }
 

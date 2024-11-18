@@ -21,7 +21,8 @@
                         <FontIcon iconLiteral="fas-sign-out-alt" iconSize="24">
                            <font>
                               <Font size="24.0" />
-                           </font></FontIcon>
+                           </font>
+                        </FontIcon>
                         <Label text="Sign out" />
                      </children>
                   </VBox>

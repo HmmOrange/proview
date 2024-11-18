@@ -120,13 +120,11 @@ public class ProfileView {
 
         VBox vbox = loader.load();
         innerVbox.getChildren().add(vbox);
-        System.out.println("Outside");
     }
 
     public void loadButtons() {
         // Load CSS
         String cssPath = Objects.requireNonNull(AppMain.class.getResource("styles/ProfileView.css")).toExternalForm();
-        System.out.println(cssPath);
         profileBorderPane.getStylesheets().add(cssPath);
 
         // Load buttons

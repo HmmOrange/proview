@@ -113,11 +113,9 @@ public class ProfileBookListView {
             bookCellHeight = Size.BOOK_CELL_COMPACT_HEIGHT.getValue();
             bookListViewWidth = Size.BOOK_LISTVIEW_COMPACT_WIDTH.getValue();
         }
-        System.out.println(bookListViewWidth);
         loadBorrowingListView();
         loadOverdueListView();
         loadPastIssuesListView();
         loadFavouriteListView();
-        System.out.println("Inside");
     }
 }
