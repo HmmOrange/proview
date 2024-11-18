@@ -7,12 +7,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import org.proview.modal.User.NormalUser;
 import org.proview.utils.SearchUtils;
 import org.proview.modal.User.UserManagement;
 import org.proview.test.AppMain;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class NavBarView {
     public TextField bookSearchBar;
@@ -21,6 +23,7 @@ public class NavBarView {
     public Button editBookButton;
     public Button issueButton;
     public Button profileButton;
+    public HBox navBarHBox;
 
     public void initialize() {
         if (UserManagement.getCurrentUser() instanceof NormalUser) {
@@ -31,6 +34,11 @@ public class NavBarView {
         if (curQuery != null) {
             bookSearchBar.setText(curQuery);
         }
+
+        // Load CSS
+        String cssPath = Objects.requireNonNull(AppMain.class.getResource("styles/NavBarView.css")).toExternalForm();
+        System.out.println(cssPath);
+        navBarHBox.getStylesheets().add(cssPath);
     }
 
     public void onEditBookButtonClick(ActionEvent actionEvent) throws IOException {

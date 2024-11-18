@@ -29,3 +29,7 @@
 .button:disabled {
     -fx-opacity: 1;
 }
+
+.button:hover .ikonli-font-icon {
+    -fx-icon-size: 24;
+}

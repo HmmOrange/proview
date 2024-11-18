@@ -33,9 +33,9 @@
             </Label>
             <Button fx:id="editProfileButton" layoutX="270.0" layoutY="176.0" mnemonicParsing="false" onAction="#onEditProfileButtonClick">
                <graphic>
-                  <FontIcon iconLiteral="far-edit">
+                  <FontIcon iconLiteral="far-edit" iconSize="24">
                      <font>
-                        <Font size="36.0" />
+                        <Font size="24.0" />
                      </font>
                   </FontIcon>
                </graphic>
