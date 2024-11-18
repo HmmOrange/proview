@@ -40,7 +40,7 @@
                      </children>
                   </VBox>
                </graphic></Button>
-            <Button fx:id="profileButton" layoutX="1214.0" layoutY="20.0" mnemonicParsing="false" onAction="#onProfileButtonClick" text="Profile" />
+            <Button fx:id="profileButton" layoutX="1215.0" layoutY="9.0" mnemonicParsing="false" onAction="#onProfileButtonClick" />
             <ImageView fitHeight="61.0" fitWidth="76.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
             <TextField fx:id="bookSearchBar" layoutX="52.0" layoutY="19.0" prefHeight="35.0" prefWidth="555.0" promptText="Testing search bar" />
             <Button fx:id="searchButton" layoutX="629.0" layoutY="12.0" mnemonicParsing="false" onAction="#onSearchButtonClick" prefHeight="35.0" prefWidth="60.0" text="Search">

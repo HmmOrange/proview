@@ -99,6 +99,10 @@ public abstract class User {
         SQLUtils.setUserPreferredView(id, cardView);
     }
 
+    public String getAvatarUrl() {
+        return "./assets/avatars/user" + id + ".png";
+    }
+
     public void addComment(int book_id, String review) throws SQLException {
         SQLUtils.addComment(book_id, id, review);
     }
