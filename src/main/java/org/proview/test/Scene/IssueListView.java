@@ -8,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.proview.modal.Issue.Issue;
@@ -16,6 +18,7 @@ import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.UserManagement;
 import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
+import org.proview.utils.SearchUtils;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -32,6 +35,10 @@ public class IssueListView {
     public Label totalIssuesLabel;
     public Label currentIssuesLabel;
     public Label overdueLabel;
+    public ComboBox<String> pastColumnComboBox = new ComboBox<>();
+    public TextField pastSearchTextField;
+    public ComboBox<String> currentColumnComboBox = new ComboBox<>();
+    public TextField currentSearchTextField;
 
     public void initialize() throws SQLException {
         totalIssuesLabel.setText(Integer.toString(SQLUtils.getTotalIssuesCount()));
@@ -41,6 +48,8 @@ public class IssueListView {
         if (UserManagement.getCurrentUser() instanceof NormalUser) {
             root.setLeft(null);
         }
+
+        this.initComboBox();
 
         borrowingTableView.getColumns().clear();
         String[] columns1 = {"ID", "Username", "Title", "Author", "Book ID", "Due Date", "Remaining time", "Status"};
@@ -234,13 +243,86 @@ public class IssueListView {
         AppMain.window.centerOnScreen();
     }
 
-    private FilteredList<ObservableList<String>> filteredBorrowingData;
-    private FilteredList<ObservableList<String>> filteredBorrowedData;
-
-    private void getDataWithFilter(ObservableList<ObservableList<String>> datas1, ObservableList<ObservableList<String>> datas2 ) {
-        
+    public void initComboBox() {
+        currentColumnComboBox.getItems().addAll("ID", "Username", "Title", "Author", "Book ID", "Due Date", "Remaining time", "Status");
+        if (SearchUtils.getCurrentColumnComboBoxChoice() != null) {
+            currentColumnComboBox.setValue(SearchUtils.getCurrentColumnComboBoxChoice());
+        }
+        pastColumnComboBox.getItems().addAll("ID", "Username", "Title", "Author", "Book ID", "Start Date", "End Date", "Status");
+        if (SearchUtils.getPastColumnComboBoxChoice() != null) {
+            pastColumnComboBox.setValue(SearchUtils.getPastColumnComboBoxChoice());
+        }
+        if (SearchUtils.getCurrentSearchText() != null) {
+            currentSearchTextField.setText(SearchUtils.getCurrentSearchText());
+        }
+        if (SearchUtils.getPastSearchText() != null) {
+            pastSearchTextField.setText(SearchUtils.getPastSearchText());
+        }
     }
-    public void onFilterTextFieldChanged(InputMethodEvent inputMethodEvent) {
 
+
+    public void onCurrentSearchKeyReleased(KeyEvent keyEvent) throws SQLException {
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            if (!currentSearchTextField.getText().isEmpty()) {
+                String[] columnsAppearedNames = {"ID", "Username", "Title", "Author", "Book ID", "Due Date", "Remaining time", "Status"};
+                String[] columnsRealNames = {"ID", "username", "bookname", "author", "bookid", "end_date", "remaining_time", "status"};
+                String columnSearch = currentColumnComboBox.getValue();
+                for (int i = 0; i < columnsAppearedNames.length; i++) {
+                    if (columnSearch.equals(columnsAppearedNames[i])) {
+                        columnSearch = columnsRealNames[i];
+                        break;
+                    }
+                }
+                String dataSearch = currentSearchTextField.getText();
+                String sql = "";
+                if (UserManagement.getCurrentUser() instanceof Admin) {
+                    sql = """
+                            WITH book_issue AS
+                                (SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.username, issue.id AS ID, issue.start_date, issue.duration, issue.status  
+                                FROM book  INNER JOIN issue ON book.id = issue.book_id )
+                            SELECT ID, username, BookID, BookName ,Author AS author,  DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, 
+                            DATEDIFF(DATE_ADD(start_date, INTERVAL duration DAY), NOW()) AS Remaining_time, status FROM book_issue
+                            WHERE %s = ?;
+                            """.formatted(columnSearch);
+                    PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+                    if (columnSearch.equals("ID")) {
+                        preparedStatement.setInt(1, Integer.parseInt(dataSearch));
+                    } else if (columnSearch.equals("username")) {
+                        preparedStatement.setString(1, dataSearch);
+                    }
+
+
+
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    ObservableList<ObservableList<String>> datas = FXCollections.observableArrayList();
+                    while (resultSet.next()) {
+                        String id = Integer.toString(resultSet.getInt("id"));
+                        String username = resultSet.getString("username");
+                        String bookId = Integer.toString(resultSet.getInt("bookid"));
+                        String title = resultSet.getString("bookname");
+                        String author = resultSet.getString("author");
+                        String end_date = resultSet.getDate("end_date").toString();
+                        String remaining_time = Integer.toString(resultSet.getInt("remaining_time"));
+                        String status = resultSet.getString("status");
+                        System.out.println(id + " " + username + " " + remaining_time);
+                        datas.add(FXCollections.observableArrayList(id, username, title, author, bookId, end_date, remaining_time, status));
+                    }
+                    if (datas.isEmpty()) System.out.println("empty");
+                    borrowingTableView.setItems(datas);
+                } else {
+                    sql = """
+                            WITH book_issue AS 
+                                (SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.username, issue.id AS ID, issue.start_date, issue.duration, issue.status  
+                                FROM book  INNER JOIN issue ON book.id = issue.book_id )
+                            SELECT ID, username, BookID, BookName ,Author AS author,  DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, 
+                            DATEDIFF(DATE_ADD(start_date, INTERVAL duration DAY), NOW()) AS Remaining_time, status
+                            "FROM book_issue  WHERE NOT (status = 'Returned') AND username = ?"
+                            """;
+                }
+            }
+        }
+    }
+
+    public void onPastSearchKeyReleased(KeyEvent keyEvent) {
     }
 }

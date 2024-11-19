@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -66,14 +67,19 @@
                   </VBox>
                </children>
             </HBox>
-            <TextField onInputMethodTextChanged="#onFilterTextFieldChanged" promptText="Search" />
-            <TabPane prefHeight="550.0" prefWidth="1305.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane prefHeight="577.0" prefWidth="1305.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="Current Issues">
                      <content>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <VBox prefHeight="591.0" prefWidth="1305.0">
                            <children>
-                              <TableView fx:id="borrowingTableView" prefHeight="520.0" prefWidth="1305.0" tableMenuButtonVisible="true">
+                              <HBox prefHeight="51.0" prefWidth="1305.0" spacing="20.0">
+                                 <children>
+                                    <ComboBox fx:id="currentColumnComboBox" prefWidth="150.0" promptText="Column" />
+                                    <TextField fx:id="currentSearchTextField" onKeyReleased="#onCurrentSearchKeyReleased" prefHeight="25.0" prefWidth="1138.0" promptText="Search" />
+                                 </children>
+                              </HBox>
+                              <TableView fx:id="borrowingTableView" prefHeight="547.0" prefWidth="1305.0" tableMenuButtonVisible="true">
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
@@ -86,7 +92,13 @@
                      <content>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <TableView fx:id="borrowedTableView" prefHeight="520.0" prefWidth="1305.0" tableMenuButtonVisible="true">
+                              <HBox prefHeight="51.0" prefWidth="1305.0" spacing="20.0">
+                                 <children>
+                                    <ComboBox fx:id="pastColumnComboBox" prefHeight="25.0" prefWidth="148.0" promptText="Column" />
+                                    <TextField fx:id="pastSearchTextField" onKeyReleased="#onPastSearchKeyReleased" prefHeight="25.0" prefWidth="1135.0" promptText="Search" />
+                                 </children>
+                              </HBox>
+                              <TableView fx:id="borrowedTableView" prefHeight="547.0" prefWidth="1305.0" tableMenuButtonVisible="true">
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>

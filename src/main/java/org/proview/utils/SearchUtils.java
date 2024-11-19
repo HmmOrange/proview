@@ -44,4 +44,42 @@ public class SearchUtils {
 
         return FXCollections.observableArrayList(bookSet);
     }
+
+    private static String currentColumnComboBoxChoice = null;
+    private static String currentSearchText = null;
+    private static String pastColumnComboBoxChoice = null;
+    private static String pastSearchText = null;
+
+    public static String getPastSearchText() {
+        return pastSearchText;
+    }
+
+    public static void setPastSearchText(String pastSearchText) {
+        SearchUtils.pastSearchText = pastSearchText;
+    }
+
+    public static String getPastColumnComboBoxChoice() {
+        return pastColumnComboBoxChoice;
+    }
+
+    public static void setPastColumnComboBoxChoice(String pastColumnComboBoxChoice) {
+        SearchUtils.pastColumnComboBoxChoice = pastColumnComboBoxChoice;
+    }
+
+    public static String getCurrentSearchText() {
+        return currentSearchText;
+    }
+
+    public static void setCurrentSearchText(String currentSearchText) {
+        SearchUtils.currentSearchText = currentSearchText;
+    }
+
+    public static String getCurrentColumnComboBoxChoice() {
+        return currentColumnComboBoxChoice;
+    }
+
+    public static void setCurrentColumnComboBoxChoice(String currentColumnComboBoxChoice) {
+        SearchUtils.currentColumnComboBoxChoice = currentColumnComboBoxChoice;
+    }
+
 }
