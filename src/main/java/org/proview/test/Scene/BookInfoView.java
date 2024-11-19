@@ -5,9 +5,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Issue.IssueManagement;
@@ -47,21 +52,31 @@ public class BookInfoView {
     public Button starButton;
     public BorderPane borderPane;
     public Label borrowingProblemLabel;
+    public HBox starRatingBar;
+    public FontIcon[] starIconList;
+    private boolean isClickingStar = false;
+    private int starMouseEntered = 0;
+    private int bookId;
+    private int curRating = 3;
 
-    private int id;
-
-    public void setId(int id) {
-        this.id = id;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     private void reloadReviewList() throws SQLException {
         // Review list
-        ObservableList<Review> reviewList = ReviewManagement.getReviewListWithBookId(id);
+        ObservableList<Review> reviewList = ReviewManagement.getReviewListWithBookId(bookId);
         ReviewManagement.initReviewList(reviewListView, reviewList);
 
         // Make the list view non-scrollable (there is probably a better way to do this)
         reviewListView.setMinHeight(250 * reviewList.size() + 10);
         reviewListView.setMinWidth(850 + 10);
+    }
+
+    private void reloadRatingLabel() throws SQLException {
+        BookLib book = SQLUtils.getBook(bookId);
+        assert book != null;
+        ratingLabel.setText(ratingLabel.getText().split(" ", 2)[0] + " " + book.getRating());
     }
 
     public void initialize() throws SQLException {
@@ -97,7 +112,7 @@ public class BookInfoView {
 
 
     public void setData(int id) throws IOException, SQLException {
-        setId(id);
+        setBookId(id);
         BookLib book = Objects.requireNonNull(SQLUtils.getBook(id));
 
         titleLabel.setText(book.getTitle());
@@ -105,7 +120,7 @@ public class BookInfoView {
         descriptionLabel.setText(descriptionLabel.getText() + "\n" + book.getDescription());
         copiesLabel.setText(copiesLabel.getText() + " " + book.getCopiesAvailable());
         tagLabel.setText(tagLabel.getText() + " " + book.getTags());
-        ratingLabel.setText(ratingLabel.getText() + " " + book.getRating());
+        reloadRatingLabel();
         issueLabel.setText(issueLabel.getText() + " " + book.getIssueCount());
 
         InputStream stream = new FileInputStream(book.getImagePath());
@@ -141,6 +156,66 @@ public class BookInfoView {
             durationField.setVisible(false);
             durationField.setDisable(true);
         }
+
+        // Load star rating bar
+        curRating = SQLUtils.getRating(UserManagement.getCurrentUser().getId(), bookId);
+        starIconList = new FontIcon[5];
+        for (int i = 0; i < 5; i++) {
+            starIconList[i] = new FontIcon();
+            if (i < curRating) {
+                starIconList[i].getStyleClass().setAll("ikonli-font-icon-rated");
+            }
+            else {
+                starIconList[i].getStyleClass().setAll("ikonli-font-icon-default");
+            }
+
+            int index = i;
+            starIconList[i].setOnMouseEntered(event -> {
+                if (index + 1 != starMouseEntered) {
+                    starMouseEntered = 0;
+                    for (int j = 0; j <= index; j++) {
+                        starIconList[j].getStyleClass().setAll("ikonli-font-icon-hover");
+                    }
+                    for (int j = index + 1; j < 5; j++) {
+                        starIconList[j].getStyleClass().setAll("ikonli-font-icon-default");
+                    }
+                }
+            });
+
+            starIconList[i].setOnMouseClicked(event -> {
+                starMouseEntered = index + 1;
+                curRating = index + 1;
+                try {
+                    SQLUtils.setRating(UserManagement.getCurrentUser().getId(), bookId, curRating);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                for (int j = 0; j < curRating; j++) {
+                    starIconList[j].getStyleClass().setAll("ikonli-font-icon-rated");
+                }
+                for (int j = curRating; j < 5; j++) {
+                    starIconList[j].getStyleClass().setAll("ikonli-font-icon-default");
+                }
+                try {
+                    reloadRatingLabel();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            starRatingBar.getChildren().add(starIconList[i]);
+        }
+        starRatingBar.setId("star-rating");
+        starRatingBar.setOnMouseExited(event -> {
+            starMouseEntered = 0;
+            for (int j = 0; j < curRating; j++) {
+                starIconList[j].getStyleClass().setAll("ikonli-font-icon-rated");
+            }
+            for (int j = curRating; j < 5; j++) {
+                starIconList[j].getStyleClass().setAll("ikonli-font-icon-default");
+            }
+        });
+        starRatingBar.applyCss();
     }
 
     public void onBackButtonClick(ActionEvent actionEvent) throws IOException {
@@ -152,7 +227,7 @@ public class BookInfoView {
     }
 
     public void onBorrowButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
-        IssueManagement.addIssue(UserManagement.getCurrentUser().getUsername(), id, Integer.parseInt(durationField.getText()));
+        IssueManagement.addIssue(UserManagement.getCurrentUser().getUsername(), bookId, Integer.parseInt(durationField.getText()));
         this.onBackButtonClick(actionEvent);
     }
 
@@ -160,7 +235,7 @@ public class BookInfoView {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("EditBookInfoView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         EditBookInfoView thisEditBookInfoView = fxmlLoader.getController();
-        thisEditBookInfoView.initialize(id);
+        thisEditBookInfoView.initialize(bookId);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();
@@ -168,17 +243,17 @@ public class BookInfoView {
 
     public void onSubmitReviewButtonClick(ActionEvent actionEvent) throws SQLException {
         User currentUser = UserManagement.getCurrentUser();
-        currentUser.addComment(id, reviewTextArea.getText());
+        currentUser.addComment(bookId, reviewTextArea.getText());
         reloadReviewList();
     }
 
     public void onStarButtonClicked(ActionEvent mouseEvent) throws SQLException {
         if (Objects.equals(starButton.getId(), "star-icon-default")) {
             starButton.setId("star-icon-clicked");
-            SQLUtils.addFavourite(UserManagement.getCurrentUser().getId(), this.id);
+            SQLUtils.addFavourite(UserManagement.getCurrentUser().getId(), this.bookId);
         } else {
             starButton.setId("star-icon-default");
-            SQLUtils.removeFavourite(UserManagement.getCurrentUser().getId(), this.id);
+            SQLUtils.removeFavourite(UserManagement.getCurrentUser().getId(), this.bookId);
         }
     }
 }

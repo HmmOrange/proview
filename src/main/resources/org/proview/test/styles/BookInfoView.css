@@ -9,3 +9,25 @@
     -fx-icon-code: "fas-star";
     -fx-icon-color: #ffcc00;
 }
+
+#star-rating .ikonli-font-icon-default {
+    -fx-icon-size: 24;
+    -fx-icon-code: "fas-star";
+    -fx-icon-color: gray;
+}
+
+#star-rating .ikonli-font-icon-rated {
+    -fx-icon-size: 24;
+    -fx-icon-code: "fas-star";
+    -fx-icon-color: gold;
+}
+
+#star-rating .ikonli-font-icon-hover {
+    -fx-icon-size: 24;
+    -fx-icon-code: "fas-star";
+    -fx-icon-color: cyan;
+}
+
+#star-rating .hbox {
+    -fx-padding: 5px;
+}

@@ -365,5 +365,35 @@ public class SQLUtils {
         preparedStatement.setInt(2, userId);
         preparedStatement.executeUpdate();
     }
+
+    public static int getRating(int userId, int bookId) throws SQLException {
+        String sql = """
+                SELECT * FROM rating
+                WHERE user_id = ? AND book_id = ?;
+                """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, bookId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt("rating");
+        }
+        return 0;
+    }
+
+    public static void setRating(int userId, int bookId, int curRating) throws SQLException {
+        String sql = """
+        INSERT INTO rating (user_id, book_id, rating, time_added)
+        VALUES (?, ?, ?, CURRENT_TIMESTAMP)
+        ON DUPLICATE KEY UPDATE
+            rating = VALUES(rating),
+            time_added = CURRENT_TIMESTAMP;
+        """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, bookId);
+        preparedStatement.setInt(3, curRating);
+        preparedStatement.executeUpdate();
+    }
 }
 

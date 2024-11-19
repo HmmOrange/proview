@@ -53,9 +53,14 @@ CREATE TABLE tag
 
 CREATE TABLE rating
 (
-    book_id INT,
-    rating DOUBLE,
-    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE
+    user_id    INT,
+    book_id    INT,
+    rating     INT,
+    time_added TIMESTAMP,
+
+    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    UNIQUE KEY unique_user_book (user_id, book_id)
 );
 
 CREATE TABLE review
@@ -108,16 +113,11 @@ INSERT INTO tag(book_id, tag) VALUES (2, 'Comedy');
 INSERT INTO tag(book_id, tag) VALUES (2, 'Guns');
 
 -- Add sample ratings
-INSERT INTO rating(book_id, rating) VALUES (1, 5);
-INSERT INTO rating(book_id, rating) VALUES (1, 5);
-INSERT INTO rating(book_id, rating) VALUES (1, 4.1);
+INSERT INTO rating(user_id, book_id, rating, time_added)
+VALUES (1, 1, 4, CURRENT_TIMESTAMP);
 
-INSERT INTO rating(book_id, rating) VALUES (2, 5);
-INSERT INTO rating(book_id, rating) VALUES (2, 4);
-INSERT INTO rating(book_id, rating) VALUES (2, 4.2);
-
-INSERT INTO rating(book_id, rating) VALUES (3, 5);
-INSERT INTO rating(book_id, rating) VALUES (3, 5);
+INSERT INTO rating(user_id, book_id, rating, time_added)
+VALUES (2, 1, 1, CURRENT_TIMESTAMP);
 
 -- Add sample reviews
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (1, 2, 'This good', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MINUTE));
