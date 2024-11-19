@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,6 +13,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
+import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
 import org.proview.utils.SearchUtils;
 import org.proview.modal.User.UserManagement;
@@ -27,12 +29,12 @@ public class NavBarView {
     public TextField bookSearchBar;
     public Button libraryButton;
     public Button logoutButton;
-    public Button editBookButton;
     public Button issueButton;
     public Button profileButton;
     public HBox navBarHBox;
+    public Label issueButtonLabel;
 
-        public void loadProfileButton() throws FileNotFoundException {
+    public void loadProfileButton() throws FileNotFoundException {
             // Load CSS
             String cssPath = Objects.requireNonNull(AppMain.class.getResource("styles/NavBarView.css")).toExternalForm();
             navBarHBox.getStylesheets().add(cssPath);
@@ -55,9 +57,8 @@ public class NavBarView {
             profileButton.setId("profile-button");
         }
     public void initialize() throws FileNotFoundException {
-        if (UserManagement.getCurrentUser() instanceof NormalUser) {
-            editBookButton.setVisible(false);
-            editBookButton.setDisable(true);
+        if (UserManagement.getCurrentUser() instanceof Admin) {
+            issueButtonLabel.setText("Manage");
         }
         String curQuery = SearchUtils.getCurQuery();
         if (curQuery != null) {

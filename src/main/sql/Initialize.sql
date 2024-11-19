@@ -25,6 +25,7 @@ CREATE TABLE user
     firstName VARCHAR(20) NULL,
     lastName  VARCHAR(20) NULL,
     email     VARCHAR(20) NULL,
+    registration_date TIMESTAMP,
     card_view TINYINT(1)  NOT NULL DEFAULT 0
 );
 
@@ -85,20 +86,20 @@ CREATE TABLE favourite
 );
 
 -- Add admin user (type 0)
-INSERT INTO user(username, password, type, firstName, lastName, email, card_view)
-VALUES ('admin', 'admin', 0, 'UET', 'VNU', 'abc@vnu.edu.vn', 1);
+INSERT INTO user(username, password, type, firstName, lastName, email, registration_date, card_view)
+VALUES ('admin', 'admin', 0, 'UET', 'VNU', 'abc@vnu.edu.vn', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1000 DAY), 1);
 
 -- Add 3 sample users (type 1)
-INSERT INTO user(username, password, type, firstName, lastName, email, card_view)
-VALUES ('23021497', '23021497', 1, 'Quang Dung', 'Nguyen', '23021497@vnu.edu.vn', 1);
-INSERT INTO user(username, password, type, firstName, lastName, email, card_view)
-VALUES ('23021501', '23021501', 1, 'Anh Duy', 'Le', '23021501@vnu.edu.vn', 0);
-INSERT INTO user(username, password, type, firstName, lastName, email, card_view)
-VALUES ('23021521', '23021521', 1, 'Tien Dat', 'Nguyen', '23021521@vnu.edu.vn', 1);
+INSERT INTO user(username, password, type, firstName, lastName, email, registration_date, card_view)
+VALUES ('23021497', '23021497', 1, 'Quang Dung', 'Nguyen', '23021497@vnu.edu.vn', CURRENT_TIMESTAMP, 1);
+INSERT INTO user(username, password, type, firstName, lastName, email, registration_date, card_view)
+VALUES ('23021501', '23021501', 1, 'Anh Duy', 'Le', '23021501@vnu.edu.vn', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 5 DAY), 0);
+INSERT INTO user(username, password, type, firstName, lastName, email, registration_date, card_view)
+VALUES ('23021521', '23021521', 1, 'Tien Dat', 'Nguyen', '23021521@vnu.edu.vn', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 10 DAY), 1);
 
 -- Add 2 sample books
 INSERT INTO book(name, author, description, time_added, copies)
-    VALUES ('Book Number 1', 'Author #1', 'Very long description #1', CURRENT_TIMESTAMP(), 3);
+    VALUES ('Book Number 1', 'Author #1', 'Very long description #1', CURRENT_TIMESTAMP(), 10);
 INSERT INTO book(name, author, description, time_added, copies)
     VALUES ('Book Number 2', 'Author #2', 'Very long description #2', CURRENT_TIMESTAMP(), 5);
 INSERT INTO book(name, author, description, time_added, copies)

@@ -10,23 +10,10 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<HBox fx:id="navBarHBox" prefHeight="50.0" prefWidth="1300.0" style="-fx-background-color: #FFC1C3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.NavBarView">
+<HBox fx:id="navBarHBox" prefHeight="50.0" prefWidth="1300.0" style="-fx-background-color: #FFC1C3;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.NavBarView">
    <children>
       <AnchorPane fx:id="topPane" onKeyReleased="#onKeyReleased" prefHeight="4.0" prefWidth="1300.0" style="-fx-background-color: #FFC1C3;">
          <children>
-            <Button fx:id="editBookButton" layoutX="885.0" layoutY="12.0" mnemonicParsing="false" onAction="#onEditBookButtonClick" prefWidth="60.0">
-               <graphic>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <FontIcon iconLiteral="far-edit" iconSize="24">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </FontIcon>
-                        <Label text="Edit" />
-                     </children>
-                  </VBox>
-               </graphic></Button>
             <Button fx:id="libraryButton" layoutX="1024.0" layoutY="12.0" mnemonicParsing="false" onAction="#onLibraryButtonClick" prefWidth="60.0">
                <graphic>
                   <VBox alignment="CENTER">
@@ -65,11 +52,11 @@
                               <Font size="24.0" />
                            </font>
                         </FontIcon>
-                        <Label text="Issues" />
+                        <Label fx:id="issueButtonLabel" text="Issues" />
                      </children>
                   </VBox>
                </graphic></Button>
-            <Button fx:id="homeButton" layoutX="815.0" layoutY="12.0" mnemonicParsing="false" onAction="#onHomeButtonClick" prefWidth="60.0">
+            <Button fx:id="homeButton" layoutX="887.0" layoutY="12.0" mnemonicParsing="false" onAction="#onHomeButtonClick" prefWidth="60.0">
                <graphic>
                   <VBox alignment="CENTER">
                      <children>
