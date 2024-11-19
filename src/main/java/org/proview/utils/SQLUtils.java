@@ -425,5 +425,116 @@ public class SQLUtils {
         preparedStatement.setInt(3, curRating);
         preparedStatement.executeUpdate();
     }
+
+    public static ObservableList<ObservableList<String>> getBooksData() throws SQLException {
+        ObservableList<ObservableList<String>> respond = FXCollections.observableArrayList();
+        String sql = """
+                WITH avg_rating AS (
+                    SELECT book_id, ROUND(AVG(rating), 1) AS average_rating 
+                    FROM rating
+                    GROUP BY book_id
+                ),
+                book_rating AS (
+                    SELECT book.*, COALESCE(avg_rating.average_rating, 0) AS average_rating FROM book
+                    LEFT JOIN avg_rating ON book.id = avg_rating.book_id
+                ),
+                total_issue AS (
+                    SELECT book_id, COUNT(*) AS total
+                    FROM issue
+                    GROUP BY book_id
+                ), 
+                bri AS (
+                    SELECT book_rating.*, COALESCE(total_issue.total, 0) AS total_issues FROM book_rating
+                    LEFT JOIN total_issue ON book_rating.id = total_issue.book_id
+                ),
+                reviews AS (
+                    SELECT book_id, COUNT(*) AS totalreviews FROM review
+                    GROUP BY book_id
+                ),
+                brir AS (
+                    SELECT bri.*, COALESCE(totalreviews, 0) AS totalreviews FROM bri
+                    LEFT JOIN reviews ON bri.id = reviews.book_id
+                ),
+                tags AS (
+                    SELECT
+                        book_id,
+                        GROUP_CONCAT(tag ORDER BY tag SEPARATOR ', ') AS concatenated_tags
+                    FROM
+                        tag
+                    GROUP BY
+                        book_id
+                ),
+                brirt AS (
+                    SELECT brir.*, concatenated_tags FROM brir
+                    LEFT JOIN tags ON brir.id = tags.book_id
+                )
+                SELECT * FROM brirt
+                """;
+        ResultSet resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
+        while (resultSet.next()) {
+            String id = Integer.toString(resultSet.getInt("id"));
+            String name = resultSet.getString("name");
+            String author = resultSet.getString("author");
+            String description = resultSet.getString("description");
+            String copies = Integer.toString(resultSet.getInt("copies"));
+            String avgRating = Double.toString(resultSet.getDouble("average_rating"));
+            String issues = Integer.toString(resultSet.getInt("total_issues"));
+            String reviews = Integer.toString(resultSet.getInt("totalreviews"));
+            String tags = resultSet.getString("concatenated_tags");
+            respond.add(FXCollections.observableArrayList(id, name, author, tags, description, copies, issues, reviews, avgRating));
+        }
+        return respond;
+    }
+
+    public static ObservableList<ObservableList<String>> getUsersData () throws SQLException {
+        ObservableList<ObservableList<String>> respond = FXCollections.observableArrayList();
+        String sql = """
+                WITH allissues AS (
+                    SELECT user_id, COUNT(*) AS allissuesnum 
+                    FROM issue
+                    GROUP BY user_id
+                ),
+                presentissues AS (
+                    SELECT user_id, COUNT(*) AS presentissuesnum
+                    FROM issue
+                    WHERE end_date IS NULL
+                    GROUP BY user_id
+                ),
+                reviews AS (
+                    SELECT user_id, COUNT(*) AS reviewsnum
+                    FROM review
+                    GROUP BY user_id
+                ),
+                user_all AS (
+                    SELECT user.*, COALESCE(allissuesnum, 0) AS allissuesnum FROM user
+                    LEFT JOIN allissues ON user.id = allissues.user_id
+                ),
+                user_all_present AS (
+                    SELECT user_all.*, COALESCE(presentissuesnum, 0) AS presentissuesnum FROM user_all
+                    LEFT JOIN presentissues ON user_all.id = presentissues.user_id
+                ),
+                user_all_present_reviews AS (
+                    SELECT user_all_present.*, COALESCE(reviewsnum, 0) AS reviewsnum FROM user_all_present
+                    LEFT JOIN reviews ON user_all_present.id = reviews.user_id
+                )
+                SELECT id, username, CONCAT(firstname, ' ', lastname) AS fullname, email, registration_date, presentissuesnum, allissuesnum, 
+                reviewsnum 
+                FROM user_all_present_reviews
+                """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            String id = Integer.toString(resultSet.getInt("id"));
+            String username = resultSet.getString("username");
+            String fullname = resultSet.getString("fullname");
+            String email = resultSet.getString("email");
+            String present = Integer.toString(resultSet.getInt("presentissuesnum"));
+            String allissuesnum = Integer.toString(resultSet.getInt("allissuesnum"));
+            String reviewsnum = Integer.toString(resultSet.getInt("reviewsnum"));
+            String regisDate = resultSet.getDate("registration_date").toString();
+            respond.add(FXCollections.observableArrayList(id, username, fullname, email, regisDate, present, allissuesnum, reviewsnum));
+        }
+        return respond;
+    }
 }
 
