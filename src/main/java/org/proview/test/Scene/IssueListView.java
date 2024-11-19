@@ -3,6 +3,7 @@ package org.proview.test.Scene;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -10,8 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import org.proview.modal.Issue.Issue;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.UserManagement;
@@ -227,5 +230,15 @@ public class IssueListView {
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();
+    }
+
+    private FilteredList<ObservableList<String>> filteredBorrowingData;
+    private FilteredList<ObservableList<String>> filteredBorrowedData;
+
+    private void getDataWithFilter(ObservableList<ObservableList<String>> datas1, ObservableList<ObservableList<String>> datas2 ) {
+        
+    }
+    public void onFilterTextFieldChanged(InputMethodEvent inputMethodEvent) {
+
     }
 }

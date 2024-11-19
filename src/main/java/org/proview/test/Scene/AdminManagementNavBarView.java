@@ -23,4 +23,20 @@ public class AdminManagementNavBarView {
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();
     }
+
+    public void onUsersButtonClick(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("UserManagForAdminView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+        AppMain.window.setTitle("Hello!");
+        AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
+    }
+
+    public void onBooksButtonClick(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LibraryView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+        AppMain.window.setTitle("Hello!");
+        AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
+    }
 }
