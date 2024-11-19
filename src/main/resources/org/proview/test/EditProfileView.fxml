@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.PasswordField?>
 <HBox prefHeight="600.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.EditProfileView">
    <children>
       <VBox alignment="CENTER" prefHeight="700.0" prefWidth="513.0">
@@ -50,21 +51,21 @@
                   <Insets bottom="20.0" left="50.0" right="50.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="currentPasswordField" alignment="CENTER" promptText="Current Password">
+            <PasswordField fx:id="currentPasswordField" alignment="CENTER" promptText="Current Password">
                <VBox.margin>
                   <Insets bottom="20.0" left="50.0" right="50.0" />
                </VBox.margin>
-            </TextField>
-            <TextField fx:id="newPasswordField" alignment="CENTER" promptText="New Password">
+            </PasswordField>
+            <PasswordField fx:id="newPasswordField" alignment="CENTER" promptText="New Password">
                <VBox.margin>
                   <Insets bottom="20.0" left="50.0" right="50.0" />
                </VBox.margin>
-            </TextField>
-            <TextField fx:id="confirmPasswordField" alignment="CENTER" promptText="Confirm Password">
+            </PasswordField>
+            <PasswordField fx:id="confirmPasswordField" alignment="CENTER" promptText="Confirm Password">
                <VBox.margin>
                   <Insets bottom="20.0" left="50.0" right="50.0" />
                </VBox.margin>
-            </TextField>
+            </PasswordField>
             <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirmButtonClick" text="Confirm" textAlignment="CENTER">
                <VBox.margin>
                   <Insets bottom="20.0" />

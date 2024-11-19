@@ -8,9 +8,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox prefHeight="600.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.RegisterView">
+<?import javafx.scene.control.PasswordField?>
+<HBox prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.RegisterView">
    <children>
-      <VBox alignment="CENTER" prefHeight="700.0" prefWidth="370.0">
+      <VBox alignment="CENTER" prefHeight="700.0" prefWidth="361.0">
          <children>
             <ImageView fx:id="avatarField" fitHeight="150.0" fitWidth="274.0" pickOnBounds="true" preserveRatio="true">
                <VBox.margin>
@@ -50,16 +51,16 @@
                   <Insets bottom="20.0" left="50.0" right="50.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="registerPasswordField" alignment="CENTER" promptText="Password">
+            <PasswordField fx:id="registerPasswordField" accessibleRole="PASSWORD_FIELD" alignment="CENTER" promptText="Password">
                <VBox.margin>
                   <Insets bottom="20.0" left="50.0" right="50.0" />
                </VBox.margin>
-            </TextField>
-            <TextField fx:id="registerConfirmPasswordField" alignment="CENTER" promptText="Confirm Password">
+            </PasswordField>
+            <PasswordField fx:id="registerConfirmPasswordField" accessibleRole="PASSWORD_FIELD" alignment="CENTER" promptText="Confirm Password">
                <VBox.margin>
                   <Insets bottom="20.0" left="50.0" right="50.0" />
                </VBox.margin>
-            </TextField>
+            </PasswordField>
             <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirmButtonClick" text="Confirm" textAlignment="CENTER">
                <VBox.margin>
                   <Insets bottom="20.0" />

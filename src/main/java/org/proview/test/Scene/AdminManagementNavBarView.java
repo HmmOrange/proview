@@ -25,7 +25,7 @@ public class AdminManagementNavBarView {
     }
 
     public void onUsersButtonClick(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("UserManagForAdminView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("UserManagementForAdminView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);

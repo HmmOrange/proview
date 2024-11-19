@@ -102,7 +102,7 @@ public class RegisterView {
                 registerResultLabel.setText("Register Success");
 
                 FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+                Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
                 LoginView tempLoginView = fxmlLoader.getController();
                 tempLoginView.loginResultLabel.setText("Register Success. Please log in!");
                 AppMain.window.setTitle("Hello!");
@@ -114,7 +114,7 @@ public class RegisterView {
 
     public void onBackButtonClick(ActionEvent actionEvent) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();

@@ -88,7 +88,7 @@ public class LoginView {
 
     public void onRegisterButtonClick(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("RegisterView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 900, 700);
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();
