@@ -12,6 +12,8 @@ import org.proview.test.AppMain;
 import org.proview.test.Scene.ProfileView;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class SQLUtils {
@@ -613,5 +615,27 @@ public class SQLUtils {
         resultSet.close();
         return respond;
     }
+
+    public static List<Integer> getUsersCount() throws SQLException {
+        List<Integer> respond = new ArrayList<>();
+        String sql = """
+                SELECT
+                    total.total AS total,
+                    today.today AS today,
+                    thisweek.thisweek AS thisweek
+                FROM
+                    (SELECT COUNT(*) AS total FROM user) AS total,
+                    (SELECT COUNT(*) AS today FROM user WHERE DATEDIFF(CURRENT_TIMESTAMP, registration_date) < 1) AS today,
+                    (SELECT COUNT(*) AS thisweek FROM user WHERE DATEDIFF(CURRENT_TIMESTAMP, registration_date) < 7) AS thisweek;
+                """;
+        ResultSet resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
+        if (resultSet.next()) {
+            respond.add(resultSet.getInt("total"));
+            respond.add(resultSet.getInt("today"));
+            respond.add(resultSet.getInt("thisweek"));
+        }
+        return respond;
+    }
+
 }
 

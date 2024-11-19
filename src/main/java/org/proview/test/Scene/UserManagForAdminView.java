@@ -2,6 +2,7 @@ package org.proview.test.Scene;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import org.proview.utils.SQLUtils;
@@ -11,6 +12,9 @@ import java.util.Comparator;
 
 public class UserManagForAdminView {
     public TableView<ObservableList<String>> usersTableView = new TableView<>();
+    public Label totalUsersLabel;
+    public Label todayRegisLabel;
+    public Label thisWeekRegisLabel;
 
     public void initialize() throws SQLException {
         String[] columns = {"ID", "Username", "Full name", "Email", "Registration Date", "Current queries", "Total queries", "Reviews"};
@@ -24,5 +28,9 @@ public class UserManagForAdminView {
             usersTableView.getColumns().add(column);
         }
         usersTableView.setItems(SQLUtils.getUsersData());
+
+        totalUsersLabel.setText(Integer.toString(SQLUtils.getUsersCount().getFirst()));
+        todayRegisLabel.setText(Integer.toString(SQLUtils.getUsersCount().get(1)));
+        thisWeekRegisLabel.setText(Integer.toString(SQLUtils.getUsersCount().get(2)));
     }
 }
