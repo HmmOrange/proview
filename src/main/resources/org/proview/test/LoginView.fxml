@@ -8,7 +8,7 @@
 
 <VBox alignment="CENTER" onKeyReleased="#onKeyReleased" spacing="20.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.LoginView">
    <children>
-      <Label fx:id="loginResultLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="1080.0" prefWidth="1920.0" />
+      <Label fx:id="loginResultLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="197.0" />
       <TextField fx:id="loginUsernameField" promptText="Username" />
       <TextField fx:id="loginPasswordField" promptText="Password" />
       <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onLoginButtonClick" text="Login" textAlignment="CENTER" />
@@ -17,4 +17,4 @@
    <padding>
       <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
    </padding>
-</VBox>
+</VBox>g
