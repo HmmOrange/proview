@@ -70,7 +70,7 @@ public class NavBarView {
 
     public void onEditBookButtonClick(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("EditBookView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();
@@ -80,7 +80,7 @@ public class NavBarView {
         UserManagement.setCurrentUser(null);
         ProfileView.resetBookList();
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();

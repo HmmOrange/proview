@@ -44,18 +44,18 @@ public class LoginView {
         String password = loginPasswordField.getText();
 
         if (Objects.equals(loginUsernameField.getText(), "")) {
-            loginResultLabel.setText("Please enter username");
+            loginResultLabel.setText("Please enter username!");
             return;
         }
 
         if (Objects.equals(loginPasswordField.getText(), "")) {
-            loginResultLabel.setText("Please enter password");
+            loginResultLabel.setText("Please enter password!");
             return;
         }
 
         User checkingUser = SQLUtils.getUser(username, password);
         if (checkingUser == null) {
-            loginResultLabel.setText("Username or password is incorrect");
+            loginResultLabel.setText("Username/Password is incorrect");
             return;
         }
 
@@ -88,7 +88,7 @@ public class LoginView {
 
     public void onRegisterButtonClick(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("RegisterView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 900, 700);
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();
