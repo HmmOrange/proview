@@ -322,6 +322,7 @@ public class SQLUtils {
         }
         preparedStatement.close();
         resultSet.close();
+        System.out.println("You are borrowing this book " + res);
         return res;
     }
 
@@ -395,55 +396,34 @@ public class SQLUtils {
         preparedStatement.executeUpdate();
     }
 
-    public static ObservableList<ObservableList<String>> getUsersData () throws SQLException {
-        ObservableList<ObservableList<String>> respond = FXCollections.observableArrayList();
+    public static int getRating(int userId, int bookId) throws SQLException {
         String sql = """
-                WITH allissues AS (
-                    SELECT user_id, COUNT(*) AS allissuesnum 
-                    FROM issue
-                    GROUP BY user_id
-                ),
-                presentissues AS (
-                    SELECT user_id, COUNT(*) AS presentissuesnum
-                    FROM issue
-                    WHERE end_date IS NULL
-                    GROUP BY user_id
-                ),
-                reviews AS (
-                    SELECT user_id, COUNT(*) AS reviewsnum
-                    FROM review
-                    GROUP BY user_id
-                ),
-                user_all AS (
-                    SELECT user.*, COALESCE(allissuesnum, 0) AS allissuesnum FROM user
-                    LEFT JOIN allissues ON user.id = allissues.user_id
-                ),
-                user_all_present AS (
-                    SELECT user_all.*, COALESCE(presentissuesnum, 0) AS presentissuesnum FROM user_all
-                    LEFT JOIN presentissues ON user_all.id = presentissues.user_id
-                ),
-                user_all_present_reviews AS (
-                    SELECT user_all_present.*, COALESCE(reviewsnum, 0) AS reviewsnum FROM user_all_present
-                    LEFT JOIN reviews ON user_all_present.id = reviews.user_id
-                )
-                SELECT id, username, CONCAT(firstname, ' ', lastname) AS fullname, email, registration_date, presentissuesnum, allissuesnum, 
-                reviewsnum 
-                FROM user_all_present_reviews
+                SELECT * FROM rating
+                WHERE user_id = ? AND book_id = ?;
                 """;
         PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, bookId);
         ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            String id = Integer.toString(resultSet.getInt("id"));
-            String username = resultSet.getString("username");
-            String fullname = resultSet.getString("fullname");
-            String email = resultSet.getString("email");
-            String present = Integer.toString(resultSet.getInt("presentissuesnum"));
-            String allissuesnum = Integer.toString(resultSet.getInt("allissuesnum"));
-            String reviewsnum = Integer.toString(resultSet.getInt("reviewsnum"));
-            String regisDate = resultSet.getDate("registration_date").toString();
-            respond.add(FXCollections.observableArrayList(id, username, fullname, email, regisDate, present, allissuesnum, reviewsnum));
+        if (resultSet.next()) {
+            return resultSet.getInt("rating");
         }
-        return respond;
+        return 0;
+    }
+
+    public static void setRating(int userId, int bookId, int curRating) throws SQLException {
+        String sql = """
+        INSERT INTO rating (user_id, book_id, rating, time_added)
+        VALUES (?, ?, ?, CURRENT_TIMESTAMP)
+        ON DUPLICATE KEY UPDATE
+            rating = VALUES(rating),
+            time_added = CURRENT_TIMESTAMP;
+        """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, bookId);
+        preparedStatement.setInt(3, curRating);
+        preparedStatement.executeUpdate();
     }
 
     public static ObservableList<ObservableList<String>> getBooksData() throws SQLException {
@@ -502,6 +482,57 @@ public class SQLUtils {
             String reviews = Integer.toString(resultSet.getInt("totalreviews"));
             String tags = resultSet.getString("concatenated_tags");
             respond.add(FXCollections.observableArrayList(id, name, author, tags, description, copies, issues, reviews, avgRating));
+        }
+        return respond;
+    }
+
+    public static ObservableList<ObservableList<String>> getUsersData () throws SQLException {
+        ObservableList<ObservableList<String>> respond = FXCollections.observableArrayList();
+        String sql = """
+                WITH allissues AS (
+                    SELECT user_id, COUNT(*) AS allissuesnum 
+                    FROM issue
+                    GROUP BY user_id
+                ),
+                presentissues AS (
+                    SELECT user_id, COUNT(*) AS presentissuesnum
+                    FROM issue
+                    WHERE end_date IS NULL
+                    GROUP BY user_id
+                ),
+                reviews AS (
+                    SELECT user_id, COUNT(*) AS reviewsnum
+                    FROM review
+                    GROUP BY user_id
+                ),
+                user_all AS (
+                    SELECT user.*, COALESCE(allissuesnum, 0) AS allissuesnum FROM user
+                    LEFT JOIN allissues ON user.id = allissues.user_id
+                ),
+                user_all_present AS (
+                    SELECT user_all.*, COALESCE(presentissuesnum, 0) AS presentissuesnum FROM user_all
+                    LEFT JOIN presentissues ON user_all.id = presentissues.user_id
+                ),
+                user_all_present_reviews AS (
+                    SELECT user_all_present.*, COALESCE(reviewsnum, 0) AS reviewsnum FROM user_all_present
+                    LEFT JOIN reviews ON user_all_present.id = reviews.user_id
+                )
+                SELECT id, username, CONCAT(firstname, ' ', lastname) AS fullname, email, registration_date, presentissuesnum, allissuesnum, 
+                reviewsnum 
+                FROM user_all_present_reviews
+                """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            String id = Integer.toString(resultSet.getInt("id"));
+            String username = resultSet.getString("username");
+            String fullname = resultSet.getString("fullname");
+            String email = resultSet.getString("email");
+            String present = Integer.toString(resultSet.getInt("presentissuesnum"));
+            String allissuesnum = Integer.toString(resultSet.getInt("allissuesnum"));
+            String reviewsnum = Integer.toString(resultSet.getInt("reviewsnum"));
+            String regisDate = resultSet.getDate("registration_date").toString();
+            respond.add(FXCollections.observableArrayList(id, username, fullname, email, regisDate, present, allissuesnum, reviewsnum));
         }
         return respond;
     }
