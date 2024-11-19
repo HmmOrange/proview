@@ -2,15 +2,19 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" onKeyReleased="#onKeyReleased" spacing="20.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.LoginView">
+<VBox alignment="CENTER" onKeyReleased="#onKeyReleased" prefHeight="700.0" prefWidth="1300.0" spacing="10.0" stylesheets="@styles/LoginView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.LoginView">
    <children>
-      <Label fx:id="loginResultLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="197.0" />
-      <TextField fx:id="loginUsernameField" promptText="Username" />
-      <TextField fx:id="loginPasswordField" promptText="Password" />
+      <TextField fx:id="loginUsernameField" prefHeight="25.0" prefWidth="300.0" promptText="Username">
+         <VBox.margin>
+            <Insets left="400.0" right="400.0" />
+         </VBox.margin></TextField>
+      <TextField fx:id="loginPasswordField" promptText="Password">
+         <VBox.margin>
+            <Insets left="400.0" right="400.0" />
+         </VBox.margin></TextField>
       <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onLoginButtonClick" text="Login" textAlignment="CENTER" />
       <Button fx:id="registerButton" mnemonicParsing="false" onAction="#onRegisterButtonClick" text="Register" textAlignment="CENTER" />
    </children>
