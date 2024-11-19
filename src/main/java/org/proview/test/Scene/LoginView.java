@@ -44,18 +44,18 @@ public class LoginView {
         String password = loginPasswordField.getText();
 
         if (Objects.equals(loginUsernameField.getText(), "")) {
-            loginResultLabel.setText("Please enter username");
+            loginResultLabel.setText("Please enter username!");
             return;
         }
 
         if (Objects.equals(loginPasswordField.getText(), "")) {
-            loginResultLabel.setText("Please enter password");
+            loginResultLabel.setText("Please enter password!");
             return;
         }
 
         User checkingUser = SQLUtils.getUser(username, password);
         if (checkingUser == null) {
-            loginResultLabel.setText("Username or password is incorrect");
+            loginResultLabel.setText("Username/Password is incorrect");
             return;
         }
 

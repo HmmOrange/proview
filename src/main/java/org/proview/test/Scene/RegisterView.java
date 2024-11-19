@@ -61,7 +61,7 @@ public class RegisterView {
             Objects.equals(registerPasswordField.getText(), "") || Objects.equals(registerConfirmPasswordField.getText(), "") ||
             Objects.equals(firstNameField.getText(), "") || Objects.equals(lastNameField.getText(), "")
                 || Objects.equals(emailField.getText(), "")) {
-            registerResultLabel.setText("Please fill in all blanks");
+            registerResultLabel.setText("Please fill in all blanks!");
         }
         else {
             String usn = registerUsernameField.getText();
@@ -79,7 +79,7 @@ public class RegisterView {
             ResultSet resultSet = preparedStatement.executeQuery();
             ///
 
-            if (!Objects.equals(pass, cfpass)) registerResultLabel.setText("Password wrong");
+            if (!Objects.equals(pass, cfpass)) registerResultLabel.setText("Password is wrong");
             else if (resultSet.next()) registerResultLabel.setText("Username already exists!");
             else {
                 ///get the latest id

@@ -2,24 +2,38 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.PasswordField?>
-<VBox alignment="CENTER" onKeyReleased="#onKeyReleased" prefHeight="700.0" prefWidth="1300.0" spacing="10.0" stylesheets="@styles/LoginView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.LoginView">
-   <children>
-      <TextField fx:id="loginUsernameField" prefHeight="25.0" prefWidth="300.0" promptText="Username">
-         <VBox.margin>
-            <Insets left="400.0" right="400.0" />
-         </VBox.margin></TextField>
-      <PasswordField fx:id="loginPasswordField" promptText="Password">
-         <VBox.margin>
-            <Insets left="400.0" right="400.0" />
-         </VBox.margin></PasswordField>
-      <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onLoginButtonClick" text="Login" textAlignment="CENTER" />
-      <Button fx:id="registerButton" mnemonicParsing="false" onAction="#onRegisterButtonClick" text="Register" textAlignment="CENTER" />
-   </children>
-   <padding>
-      <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
-   </padding>
-</VBox>
+<AnchorPane prefHeight="700.0" prefWidth="1300.0" stylesheets="@styles/LoginView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.LoginView">
+   <VBox alignment="CENTER" layoutX="435.0" layoutY="223.0" onKeyReleased="#onKeyReleased" prefHeight="345.0" prefWidth="419.0" spacing="15.0" styleClass="login-form">
+      <children>
+         <!-- Label hiển thị thông báo -->
+         <Label fx:id="loginResultLabel" styleClass="header" text="Sign in to your account!" />
+         <Label styleClass="sub-header" text="Welcome back 😊!" />
+   
+            <!-- TextField và PasswordField -->
+         <TextField fx:id="loginUsernameField" promptText="Username" styleClass="input" />
+         <PasswordField fx:id="loginPasswordField" promptText="Password" styleClass="input" />
+   
+            <!-- Button Sign In -->
+         <Button fx:id="loginButton" onAction="#onLoginButtonClick" prefHeight="0.0" prefWidth="379.0" styleClass="button" text="Login" />
+
+            <!-- Button Sign Up -->
+         <Button fx:id="registerButton" onAction="#onRegisterButtonClick" prefHeight="25.0" prefWidth="379.0" styleClass="button" text="Sign up" />
+      </children>
+      <VBox.margin>
+         <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
+      </VBox.margin>
+   </VBox>
+   <ImageView fitHeight="143.0" fitWidth="186.0" layoutX="574.0" layoutY="40.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@icons/LogoUET.png" />
+      </image>
+   </ImageView>
+</AnchorPane>
