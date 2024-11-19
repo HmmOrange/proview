@@ -6,11 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -33,8 +29,14 @@ public class IssueListView {
     public TableView<ObservableList<String>> borrowingTableView = new TableView<>();
     public TableView<ObservableList<String>> borrowedTableView = new TableView<>();
     public BorderPane root;
+    public Label totalIssuesLabel;
+    public Label currentIssuesLabel;
+    public Label overdueLabel;
 
     public void initialize() throws SQLException {
+        totalIssuesLabel.setText(Integer.toString(SQLUtils.getTotalIssuesCount()));
+        currentIssuesLabel.setText(Integer.toString(SQLUtils.getCurrentIssuesCount()));
+        overdueLabel.setText(Integer.toString(SQLUtils.getOverdueIssuesCount()));
 
         if (UserManagement.getCurrentUser() instanceof NormalUser) {
             root.setLeft(null);

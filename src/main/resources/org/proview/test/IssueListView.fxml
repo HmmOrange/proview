@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="root" prefHeight="770.0" prefWidth="1412.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.IssueListView">
     <top>
@@ -15,30 +18,80 @@
         <fx:include source="AdminManagementNavBarView.fxml" />
     </left>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <TextField onInputMethodTextChanged="#onFilterTextFieldChanged" promptText="Search" />
-            <Label text="Borrowing Books" />
-            <TableView fx:id="borrowingTableView" prefHeight="463.0" prefWidth="1412.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-            <Label text="Returned Books" />
-            <TableView fx:id="borrowedTableView" prefHeight="499.0" prefWidth="1412.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-         </children>
-      </VBox>
+      <ScrollPane maxWidth="-Infinity">
+         <content>
+            <VBox prefHeight="985.0" prefWidth="1296.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="126.0" spacing="20.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="173.0" prefWidth="239.0">
+                           <children>
+                              <Label fx:id="totalIssuesLabel" text="100">
+                                 <font>
+                                    <Font size="62.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Total Issues">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="173.0" prefWidth="239.0">
+                           <children>
+                              <Label fx:id="currentIssuesLabel" text="100">
+                                 <font>
+                                    <Font size="62.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Current Issues">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="173.0" prefWidth="239.0">
+                           <children>
+                              <Label fx:id="overdueLabel" text="100">
+                                 <font>
+                                    <Font size="62.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Overdue">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <TextField onInputMethodTextChanged="#onFilterTextFieldChanged" promptText="Search" />
+                  <Label text="Borrowing Books" />
+                  <TableView fx:id="borrowingTableView">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+                  <Label text="Returned Books" />
+                  <TableView fx:id="borrowedTableView">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
    </center>
 </BorderPane>

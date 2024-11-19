@@ -7,6 +7,7 @@ import org.proview.modal.Review.Review;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.User;
+import org.proview.modal.User.UserManagement;
 import org.proview.test.AppMain;
 import org.proview.test.Scene.ProfileView;
 
@@ -534,6 +535,82 @@ public class SQLUtils {
             String regisDate = resultSet.getDate("registration_date").toString();
             respond.add(FXCollections.observableArrayList(id, username, fullname, email, regisDate, present, allissuesnum, reviewsnum));
         }
+        return respond;
+    }
+
+    public static int getTotalIssuesCount() throws SQLException {
+        int respond = 0;
+        ResultSet resultSet;
+        if (UserManagement.getCurrentUser() instanceof Admin) {
+            String sql = """
+                    SELECT COUNT(*) AS total FROM issue
+                    """;
+            resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
+        } else {
+            String sql = """
+                    SELECT COUNT(*) AS total FROM issue
+                    WHERE user_id = ?
+                    """;
+            PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+            preparedStatement.setInt(1, UserManagement.getCurrentUser().getId());
+            resultSet = preparedStatement.executeQuery();
+        }
+        if (resultSet.next()) {
+            respond = resultSet.getInt("total");
+        }
+        resultSet.close();
+        return respond;
+    }
+
+    public static int getCurrentIssuesCount() throws SQLException {
+        int respond = 0;
+        ResultSet resultSet;
+        if (UserManagement.getCurrentUser() instanceof Admin) {
+            String sql = """
+                    SELECT COUNT(*) AS total FROM issue
+                    WHERE end_date IS NULL
+                    """;
+            resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
+        } else {
+            String sql = """
+                    SELECT COUNT(*) AS total FROM issue
+                    WHERE user_id = ? AND end_date IS NULL
+                    """;
+            PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+            preparedStatement.setInt(1, UserManagement.getCurrentUser().getId());
+            resultSet = preparedStatement.executeQuery();
+        }
+        if (resultSet.next()) {
+            respond = resultSet.getInt("total");
+        }
+        resultSet.close();
+        return respond;
+    }
+
+    public static int getOverdueIssuesCount() throws SQLException {
+        int respond = 0;
+        ResultSet resultSet;
+        if (UserManagement.getCurrentUser() instanceof Admin) {
+            String sql = """
+                    SELECT COUNT(*) AS total FROM issue
+                    WHERE DATEDIFF(NOW(), DATE_ADD(start_date, INTERVAL duration DAY)) > 0
+                    AND end_date IS NULL
+                    """;
+            resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
+        } else {
+            String sql = """
+                    SELECT COUNT(*) AS total FROM issue
+                    WHERE user_id = ? AND DATEDIFF(NOW(), DATE_ADD(start_date, INTERVAL duration DAY)) > 0
+                    AND end_date IS NULL
+                    """;
+            PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+            preparedStatement.setInt(1, UserManagement.getCurrentUser().getId());
+            resultSet = preparedStatement.executeQuery();
+        }
+        if (resultSet.next()) {
+            respond = resultSet.getInt("total");
+        }
+        resultSet.close();
         return respond;
     }
 }
