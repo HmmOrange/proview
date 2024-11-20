@@ -60,7 +60,7 @@ public class BookCellCompactView {
         coverImageView.setFitWidth(image.getWidth() * scale);
         coverImageView.setFitHeight(image.getHeight() * scale);
         coverImageView.setPreserveRatio(true);
-        javafx.scene.shape.Rectangle clip = new Rectangle(targetWidth, targetHeight);
+        Rectangle clip = new Rectangle(targetWidth, targetHeight);
         coverImageView.setClip(clip);
         coverImageView.setSmooth(true);
         coverImageView.setCache(true);

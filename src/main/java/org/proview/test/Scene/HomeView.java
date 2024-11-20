@@ -30,7 +30,7 @@ public class HomeView {
 
     public VBox trendingBookListVBox;
     public VBox topRatedBookListVBox;
-    public ListView<Activity> recentReviewListView;
+    public VBox recentReviewListVBox;
 
     public void initialize() throws SQLException {
         ObservableList<BookLib> topRatedList = BookManagement.getTopRatedBookList();
@@ -39,10 +39,6 @@ public class HomeView {
 
         BookManagement.initBookLibList(topRatedBookListVBox, topRatedList, true, true, true);
         BookManagement.initBookLibList(trendingBookListVBox, trendingList, true, true, true);
-        ActivityManagement.initActivityList(recentReviewListView, activityList);
-
-        recentReviewListView.setPrefHeight(Size.ACTIVITY_CELL_HEIGHT.getValue() * activityList.size() + Size.PADDING.getValue());
-
-        recentReviewListView.setMinWidth(Size.RECENT_ACTIVITY_LISTVIEW_WIDTH.getValue() + 10);
+        ActivityManagement.initActivityList(recentReviewListVBox, activityList);
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import org.proview.modal.Activity.Activity;
 import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
@@ -42,8 +43,18 @@ public class PersonalActivityCellView {
         Image image = new Image(stream);
 
         coverImageView.setImage(image);
-        coverImageView.setFitWidth(62.5);
+        double targetWidth = 46.875;
+        double targetHeight = 75;
+        double scaleX = targetWidth / image.getWidth();
+        double scaleY = targetHeight / image.getHeight();
+        double scale = Math.max(scaleX, scaleY);
+
+        coverImageView.setImage(image);
+        coverImageView.setFitWidth(image.getWidth() * scale);
+        coverImageView.setFitHeight(image.getHeight() * scale);
         coverImageView.setPreserveRatio(true);
+        Rectangle clip = new Rectangle(targetWidth, targetHeight);
+        coverImageView.setClip(clip);
         coverImageView.setSmooth(true);
         coverImageView.setCache(true);
 
