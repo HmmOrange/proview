@@ -23,18 +23,17 @@ public class GameView {
     public Button ans3Button;
     public Button ans4Button;
     public Label resultLabel;
+    public Label lifeRemainsLabel;
+    public Button nextButton;
 
     private boolean[] ifLabelHasCorrectAns = new boolean[4];
 
     public void initialize() throws SQLException {
+        nextButton.setDisable(true);
+        nextButton.setVisible(false);
+        lifeRemainsLabel.setText(lifeRemainsLabel.getText() + GameActivity.getLifeRemains());
         int qId = GameActivity.getCurrentQuestionID();
-        if (qId != GameActivity.getQuestionsChosen().getFirst()) {
-            if (GameActivity.getLastResult()) {
-                resultLabel.setText("That's right");
-            } else {
-                resultLabel.setText("That's wrong");
-            }
-        }
+
         String sql = """
                 SELECT type, difficulty, question, correct_answer, incr_ans1, incr_ans2, incr_ans3
                 FROM questions
@@ -100,22 +99,19 @@ public class GameView {
 
     public void onAnswerButtonClick(int ansId) throws IOException {
         GameActivity.setNumberOfQuestionsAnswered(GameActivity.getNumberOfQuestionsAnswered() + 1);
-        if(GameActivity.getNumberOfQuestionsAnswered() < GameActivity.getNumOfQuestion()) {
-            if (ifLabelHasCorrectAns[ansId]) {
-                GameActivity.setLastResult(true);
-                GameActivity.setScore(GameActivity.getScore() + 1);
-            } else {
-                GameActivity.setLastResult(false);
-            }
-            GameActivity.setCurrentQuestionID(GameActivity.getQuestionsChosen().get(GameActivity.getNumberOfQuestionsAnswered()));
-            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("GameView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-            AppMain.window.setTitle("Hello!");
-            AppMain.window.setScene(scene);
-            AppMain.window.centerOnScreen();
+
+        if (ifLabelHasCorrectAns[ansId]) {
+            resultLabel.setText("That's right");
+            GameActivity.setScore(GameActivity.getScore() + 1);
         } else {
-            System.out.println(GameActivity.getScore() + "/" + GameActivity.getNumOfQuestion());
+            resultLabel.setText("That's wrong");
+            GameActivity.setLifeRemains(GameActivity.getLifeRemains() - 1);
+            System.out.println("life: " + GameActivity.getLifeRemains());
+            if (GameActivity.getLifeRemains() == 0) resultLabel.setText("End game. Your score: " + GameActivity.getScore());
         }
+        GameActivity.setCurrentQuestionID(GameActivity.getQuestionsChosen().get(GameActivity.getNumberOfQuestionsAnswered()));
+        nextButton.setVisible(true);
+        nextButton.setDisable(false);
     }
 
     public void onAns1ButtonClicked(ActionEvent actionEvent) throws IOException, InterruptedException {
@@ -132,5 +128,21 @@ public class GameView {
 
     public void onAns4ButtonClicked(ActionEvent actionEvent) throws IOException {
         onAnswerButtonClick(3);
+    }
+
+    public void onNextButtonClicked(ActionEvent actionEvent) throws IOException {
+        if(GameActivity.getNumberOfQuestionsAnswered() < GameActivity.getNumOfQuestion() && GameActivity.getLifeRemains() > 0) {
+            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("GameView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+            AppMain.window.setTitle("Hello!");
+            AppMain.window.setScene(scene);
+            AppMain.window.centerOnScreen();
+        } else {
+            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+            AppMain.window.setTitle("Hello!");
+            AppMain.window.setScene(scene);
+            AppMain.window.centerOnScreen();
+        }
     }
 }

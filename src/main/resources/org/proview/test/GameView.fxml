@@ -19,6 +19,7 @@
                   <Font size="28.0" />
                </font>
             </Label>
+            <Label fx:id="lifeRemainsLabel" text="Life remains: " />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" text="Question" wrapText="true">
@@ -47,4 +48,7 @@
          </children>
       </VBox>
    </center>
+   <bottom>
+      <Button fx:id="nextButton" mnemonicParsing="false" onAction="#onNextButtonClicked" text="Next" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>
