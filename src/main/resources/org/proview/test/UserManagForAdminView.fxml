@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -67,7 +69,13 @@
                   </VBox>
                </children>
             </HBox>
-            <TableView fx:id="usersTableView" prefHeight="624.0" prefWidth="1126.0" tableMenuButtonVisible="true">
+            <HBox prefHeight="25.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <ComboBox fx:id="columnComboBox" prefWidth="150.0" promptText="Column" />
+                  <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="1100.0" promptText="Search" />
+               </children>
+            </HBox>
+            <TableView fx:id="usersTableView" prefHeight="472.0" prefWidth="1126.0" tableMenuButtonVisible="true">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>

@@ -1,18 +1,13 @@
 package org.proview.test.Scene;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import org.proview.modal.Issue.Issue;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.UserManagement;
@@ -21,12 +16,8 @@ import org.proview.test.AppMain;
 import org.proview.utils.SearchUtils;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Comparator;
-import java.util.Objects;
 
 public class IssueListView {
     public TableView<ObservableList<String>> borrowingTableView = new TableView<>();
@@ -145,7 +136,7 @@ public class IssueListView {
 
 
         ///thêm các data vào bảng
-        ObservableList<ObservableList<String>> datas1 = FXCollections.observableArrayList();
+        /*ObservableList<ObservableList<String>> datas1 = FXCollections.observableArrayList();
         ObservableList<ObservableList<String>> datas2 = FXCollections.observableArrayList();
         Connection connection = AppMain.connection;
         if (UserManagement.getCurrentUser() instanceof Admin) {
@@ -232,7 +223,45 @@ public class IssueListView {
             }
             borrowedTableView.setItems(datas2);
             borrowedPS.close();
-        }
+        }*/
+
+        ///Search in currentIssuesTable
+        ObservableList<ObservableList<String>> currentList = SQLUtils.getCurrentIssuesList();
+        borrowingTableView.setItems(currentList);
+        FilteredList<ObservableList<String>> currentFilteredData = new FilteredList<>(currentList, p -> true);
+        currentSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            String selectedColumn = currentColumnComboBox.getValue();
+            if (selectedColumn != null) {
+                int columnIndex = currentColumnComboBox.getItems().indexOf(selectedColumn);
+                currentFilteredData.setPredicate(row -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true; // Show all rows if search text is empty
+                    }
+                    String cellValue = row.get(columnIndex); // Get value in the selected column
+                    return cellValue != null && cellValue.toLowerCase().contains(newValue.toLowerCase());
+                });
+            }
+        });
+        borrowingTableView.setItems(currentFilteredData);
+
+        ///Search in pastIssuesTable
+        ObservableList<ObservableList<String>> pastList = SQLUtils.getPastIssuesList();
+        borrowedTableView.setItems(pastList);
+        FilteredList<ObservableList<String>> pastFilteredData = new FilteredList<>(pastList, p -> true);
+        pastSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            String selectedColumn = pastColumnComboBox.getValue();
+            if (selectedColumn != null) {
+                int columnIndex = pastColumnComboBox.getItems().indexOf(selectedColumn);
+                pastFilteredData.setPredicate(row -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true; // Show all rows if search text is empty
+                    }
+                    String cellValue = row.get(columnIndex); // Get value in the selected column
+                    return cellValue != null && cellValue.toLowerCase().contains(newValue.toLowerCase());
+                });
+            }
+        });
+        borrowedTableView.setItems(pastFilteredData);
     }
 
     public static void resetTableAfterChangeStatus() throws IOException {
@@ -244,85 +273,12 @@ public class IssueListView {
     }
 
     public void initComboBox() {
-        currentColumnComboBox.getItems().addAll("ID", "Username", "Title", "Author", "Book ID", "Due Date", "Remaining time", "Status");
-        if (SearchUtils.getCurrentColumnComboBoxChoice() != null) {
-            currentColumnComboBox.setValue(SearchUtils.getCurrentColumnComboBoxChoice());
-        }
-        pastColumnComboBox.getItems().addAll("ID", "Username", "Title", "Author", "Book ID", "Start Date", "End Date", "Status");
-        if (SearchUtils.getPastColumnComboBoxChoice() != null) {
-            pastColumnComboBox.setValue(SearchUtils.getPastColumnComboBoxChoice());
-        }
-        if (SearchUtils.getCurrentSearchText() != null) {
-            currentSearchTextField.setText(SearchUtils.getCurrentSearchText());
-        }
-        if (SearchUtils.getPastSearchText() != null) {
-            pastSearchTextField.setText(SearchUtils.getPastSearchText());
-        }
+        currentColumnComboBox.getItems().addAll("ID", "Username", "Title",
+                "Author", "Book ID", "Due Date", "Remaining time", "Status");
+
+        pastColumnComboBox.getItems().addAll("ID", "Username", "Title",
+                "Author", "Book ID", "Start Date", "End Date", "Status");
     }
 
 
-    public void onCurrentSearchKeyReleased(KeyEvent keyEvent) throws SQLException {
-        if (keyEvent.getCode() == KeyCode.ENTER) {
-            if (!currentSearchTextField.getText().isEmpty()) {
-                String[] columnsAppearedNames = {"ID", "Username", "Title", "Author", "Book ID", "Due Date", "Remaining time", "Status"};
-                String[] columnsRealNames = {"ID", "username", "bookname", "author", "bookid", "end_date", "remaining_time", "status"};
-                String columnSearch = currentColumnComboBox.getValue();
-                for (int i = 0; i < columnsAppearedNames.length; i++) {
-                    if (columnSearch.equals(columnsAppearedNames[i])) {
-                        columnSearch = columnsRealNames[i];
-                        break;
-                    }
-                }
-                String dataSearch = currentSearchTextField.getText();
-                String sql = "";
-                if (UserManagement.getCurrentUser() instanceof Admin) {
-                    sql = """
-                            WITH book_issue AS
-                                (SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.username, issue.id AS ID, issue.start_date, issue.duration, issue.status  
-                                FROM book  INNER JOIN issue ON book.id = issue.book_id )
-                            SELECT ID, username, BookID, BookName ,Author AS author,  DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, 
-                            DATEDIFF(DATE_ADD(start_date, INTERVAL duration DAY), NOW()) AS Remaining_time, status FROM book_issue
-                            WHERE %s = ?;
-                            """.formatted(columnSearch);
-                    PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
-                    if (columnSearch.equals("ID")) {
-                        preparedStatement.setInt(1, Integer.parseInt(dataSearch));
-                    } else if (columnSearch.equals("username")) {
-                        preparedStatement.setString(1, dataSearch);
-                    }
-
-
-
-                    ResultSet resultSet = preparedStatement.executeQuery();
-                    ObservableList<ObservableList<String>> datas = FXCollections.observableArrayList();
-                    while (resultSet.next()) {
-                        String id = Integer.toString(resultSet.getInt("id"));
-                        String username = resultSet.getString("username");
-                        String bookId = Integer.toString(resultSet.getInt("bookid"));
-                        String title = resultSet.getString("bookname");
-                        String author = resultSet.getString("author");
-                        String end_date = resultSet.getDate("end_date").toString();
-                        String remaining_time = Integer.toString(resultSet.getInt("remaining_time"));
-                        String status = resultSet.getString("status");
-                        System.out.println(id + " " + username + " " + remaining_time);
-                        datas.add(FXCollections.observableArrayList(id, username, title, author, bookId, end_date, remaining_time, status));
-                    }
-                    if (datas.isEmpty()) System.out.println("empty");
-                    borrowingTableView.setItems(datas);
-                } else {
-                    sql = """
-                            WITH book_issue AS 
-                                (SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.username, issue.id AS ID, issue.start_date, issue.duration, issue.status  
-                                FROM book  INNER JOIN issue ON book.id = issue.book_id )
-                            SELECT ID, username, BookID, BookName ,Author AS author,  DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, 
-                            DATEDIFF(DATE_ADD(start_date, INTERVAL duration DAY), NOW()) AS Remaining_time, status
-                            "FROM book_issue  WHERE NOT (status = 'Returned') AND username = ?"
-                            """;
-                }
-            }
-        }
-    }
-
-    public void onPastSearchKeyReleased(KeyEvent keyEvent) {
-    }
 }

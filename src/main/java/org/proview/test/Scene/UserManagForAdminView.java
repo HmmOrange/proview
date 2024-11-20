@@ -2,9 +2,8 @@ package org.proview.test.Scene;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.collections.transformation.FilteredList;
+import javafx.scene.control.*;
 import org.proview.utils.SQLUtils;
 
 import java.sql.SQLException;
@@ -15,8 +14,14 @@ public class UserManagForAdminView {
     public Label totalUsersLabel;
     public Label todayRegisLabel;
     public Label thisWeekRegisLabel;
+    public ComboBox<String> columnComboBox;
+    public TextField searchTextField;
 
     public void initialize() throws SQLException {
+        totalUsersLabel.setText(Integer.toString(SQLUtils.getUsersCount().getFirst()));
+        todayRegisLabel.setText(Integer.toString(SQLUtils.getUsersCount().get(1)));
+        thisWeekRegisLabel.setText(Integer.toString(SQLUtils.getUsersCount().get(2)));
+
         String[] columns = {"ID", "Username", "Full name", "Email", "Registration Date", "Current queries", "Total queries", "Reviews"};
         for (int i = 0; i < columns.length; i++) {
             TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns[i]);
@@ -27,10 +32,24 @@ public class UserManagForAdminView {
             }
             usersTableView.getColumns().add(column);
         }
-        usersTableView.setItems(SQLUtils.getUsersData());
+        ObservableList<ObservableList<String>> data = SQLUtils.getUsersData();
+        usersTableView.setItems(data);
 
-        totalUsersLabel.setText(Integer.toString(SQLUtils.getUsersCount().getFirst()));
-        todayRegisLabel.setText(Integer.toString(SQLUtils.getUsersCount().get(1)));
-        thisWeekRegisLabel.setText(Integer.toString(SQLUtils.getUsersCount().get(2)));
+        columnComboBox.getItems().addAll(columns);
+        FilteredList<ObservableList<String>> filteredData = new FilteredList<>(data, p -> true);
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            String selectedColumn = columnComboBox.getValue();
+            if (selectedColumn != null) {
+                int columnIndex = columnComboBox.getItems().indexOf(selectedColumn);
+                filteredData.setPredicate(row -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true; // Show all rows if search text is empty
+                    }
+                    String cellValue = row.get(columnIndex); // Get value in the selected column
+                    return cellValue != null && cellValue.toLowerCase().contains(newValue.toLowerCase());
+                });
+            }
+        });
+        usersTableView.setItems(filteredData);
     }
 }

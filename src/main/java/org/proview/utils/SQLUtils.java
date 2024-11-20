@@ -489,7 +489,7 @@ public class SQLUtils {
         return respond;
     }
 
-    public static ObservableList<ObservableList<String>> getUsersData () throws SQLException {
+    public static ObservableList<ObservableList<String>> getUsersData() throws SQLException {
         ObservableList<ObservableList<String>> respond = FXCollections.observableArrayList();
         String sql = """
                 WITH allissues AS (
@@ -534,7 +534,7 @@ public class SQLUtils {
             String present = Integer.toString(resultSet.getInt("presentissuesnum"));
             String allissuesnum = Integer.toString(resultSet.getInt("allissuesnum"));
             String reviewsnum = Integer.toString(resultSet.getInt("reviewsnum"));
-            String regisDate = resultSet.getDate("registration_date").toString();
+            String regisDate = resultSet.getTimestamp("registration_date").toString();
             respond.add(FXCollections.observableArrayList(id, username, fullname, email, regisDate, present, allissuesnum, reviewsnum));
         }
         return respond;
@@ -637,5 +637,110 @@ public class SQLUtils {
         return respond;
     }
 
+    public static ObservableList<ObservableList<String>> getCurrentIssuesList() throws SQLException {
+        ObservableList<ObservableList<String>> respond = FXCollections.observableArrayList();
+
+        if (UserManagement.getCurrentUser() instanceof Admin) {
+            PreparedStatement borrowingPS = connection.prepareStatement(
+                    "WITH book_issue AS " +
+                            "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.username, issue.id AS ID, issue.start_date, issue.duration, issue.status  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
+                            "SELECT ID, username, BookID, BookName ,Author AS author,  DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, DATEDIFF(DATE_ADD(start_date, INTERVAL duration DAY), NOW()) AS Remaining_time, status  " +
+                            "FROM book_issue  WHERE NOT (status = 'Returned');"
+            );
+            ResultSet borrowingRS = borrowingPS.executeQuery();
+            while(borrowingRS.next()) {
+                String id = Integer.toString(borrowingRS.getInt("id"));
+                String username = borrowingRS.getString("username");
+                String bookId = Integer.toString(borrowingRS.getInt("bookid"));
+                String title = borrowingRS.getString("bookname");
+                String author = borrowingRS.getString("author");
+                String end_date = borrowingRS.getTimestamp("end_date").toString();
+                String remaining_time = Integer.toString(borrowingRS.getInt("remaining_time"));
+                String status = borrowingRS.getString("status");
+                respond.add(FXCollections.observableArrayList(id, username, title, author, bookId, end_date, remaining_time, status));
+            }
+        } else {
+            PreparedStatement borrowingPS = connection.prepareStatement(
+                    "WITH book_issue AS " +
+                            "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.username, issue.id AS ID, issue.start_date, issue.duration, issue.status  FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
+                            "SELECT ID, username, BookID, BookName ,Author AS author,  DATE_ADD(start_date, INTERVAL duration DAY) AS end_date, DATEDIFF(DATE_ADD(start_date, INTERVAL duration DAY), NOW()) AS Remaining_time, status  " +
+                            "FROM book_issue  WHERE NOT (status = 'Returned') AND username = ?"
+            );
+            borrowingPS.setString(1, UserManagement.getCurrentUser().getUsername());
+            ResultSet borrowingRS = borrowingPS.executeQuery();
+            while(borrowingRS.next()) {
+                String id = Integer.toString(borrowingRS.getInt("id"));
+                String username = borrowingRS.getString("username");
+                String bookId = Integer.toString(borrowingRS.getInt("bookid"));
+                String title = borrowingRS.getString("bookname");
+                String author = borrowingRS.getString("author");
+                String end_date = borrowingRS.getTimestamp("end_date").toString();
+                String remaining_time = Integer.toString(borrowingRS.getInt("remaining_time"));
+                String status = borrowingRS.getString("status");
+                respond.add(FXCollections.observableArrayList(id, username, title, author, bookId, end_date, remaining_time, status));
+            }
+        }
+        return respond;
+    }
+
+    public static ObservableList<ObservableList<String>> getPastIssuesList() throws SQLException {
+        ObservableList<ObservableList<String>> datas2 = FXCollections.observableArrayList();
+        if (UserManagement.getCurrentUser() instanceof Admin) {
+            PreparedStatement borrowedPS = connection.prepareStatement("WITH book_issue AS " +
+                    "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.id AS ID, issue.username, issue.start_date, issue.duration, issue.status, issue.end_date  " +
+                    "FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
+                    "SELECT ID, username, BookID, BookName, Author AS author,  start_date, end_date, status " +
+                    "FROM book_issue WHERE status = 'Returned'");
+            ResultSet borrowedRS = borrowedPS.executeQuery();
+            while (borrowedRS.next()) {
+                String id = Integer.toString(borrowedRS.getInt("id"));
+                String bookId = Integer.toString(borrowedRS.getInt("bookid"));
+                String username = borrowedRS.getString("username");
+                String title = borrowedRS.getString("bookname");
+                String author = borrowedRS.getString("author");
+                String end_date = borrowedRS.getTimestamp("end_date").toString();
+                String start_date = borrowedRS.getTimestamp("start_date").toString();
+                String status = borrowedRS.getString("status");
+                datas2.add(FXCollections.observableArrayList(id, username, title, author, bookId, start_date, end_date, status));
+            }
+        } else {
+            PreparedStatement borrowedPS = connection.prepareStatement("WITH book_issue AS " +
+                    "(SELECT book.id AS BookID, book.name AS BookName, book.author AS Author, issue.id AS ID, issue.username, issue.start_date, issue.duration, issue.status, issue.end_date  " +
+                    "FROM book  INNER JOIN issue ON book.id = issue.book_id )  " +
+                    "SELECT ID, username, BookID, BookName, Author AS author,  start_date, end_date, status " +
+                    "FROM book_issue WHERE (status = 'Returned') AND username = ?");
+            borrowedPS.setString(1, UserManagement.getCurrentUser().getUsername());
+            ResultSet borrowedRS = borrowedPS.executeQuery();
+            while (borrowedRS.next()) {
+                String id = Integer.toString(borrowedRS.getInt("id"));
+                String bookId = Integer.toString(borrowedRS.getInt("bookid"));
+                String username = borrowedRS.getString("username");
+                String title = borrowedRS.getString("bookname");
+                String author = borrowedRS.getString("author");
+                String end_date = borrowedRS.getTimestamp("end_date").toString();
+                String start_date = borrowedRS.getTime("start_date").toString();
+                String status = borrowedRS.getString("status");
+                datas2.add(FXCollections.observableArrayList(id, username, title, author, bookId, start_date, end_date, status));
+            }
+        }
+        return datas2;
+    }
+
+    public static List<Double> getBooksCount() throws SQLException {
+        List<Double> respond = new ArrayList<>();
+        String sql = """
+                SELECT total.total, avgrating.avgrating
+                FROM (
+                    (SELECT COUNT(*) AS total FROM book) AS total,
+                    (SELECT ROUND(AVG(rating),1) AS avgrating FROM rating) AS avgrating
+                ); 
+                """;
+        ResultSet resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
+        if (resultSet.next()) {
+            respond.add(resultSet.getDouble("total"));
+            respond.add(resultSet.getDouble("avgrating"));
+        }
+        return respond;
+    }
 }
 
