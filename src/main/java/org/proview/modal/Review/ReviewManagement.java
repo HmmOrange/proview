@@ -6,9 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.proview.test.AppMain;
 import org.proview.test.Container.ReviewCellView;
+import org.proview.utils.SQLUtils;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.Comparator;
 
@@ -24,15 +27,17 @@ public class ReviewManagement {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
-            int book_id = resultSet.getInt("book_id");
-            int user_id = resultSet.getInt("user_id");
+            int bookId = resultSet.getInt("book_id");
+            int userId = resultSet.getInt("user_id");
             String review = resultSet.getString("review");
             Timestamp timestampAdded = resultSet.getTimestamp("time_added");
 
+            int rating = SQLUtils.getRating(userId, bookId);
             Review curReview = new Review(
-                book_id,
-                user_id,
+                bookId,
+                userId,
                 review,
+                rating,
                 timestampAdded
             );
             reviewObservableList.add(curReview);
@@ -45,42 +50,22 @@ public class ReviewManagement {
         return reviewObservableList;
     }
 
-    public static void initReviewList(ListView<Review> reviewListView, ObservableList<Review> reviewList) {
-        reviewListView.setItems(reviewList);
-        reviewListView.setCellFactory(param -> new ListCell<>() {
-            {
-                setStyle("-fx-padding: 0px; -fx-margin: 0px; -fx-background-insets: 0px; -fx-border-insets: 0px;");
-            }
+    public static void initReviewList(VBox reviewListVBox, ObservableList<Review> reviewList) throws IOException, SQLException {
+        reviewListVBox.getChildren().clear();
+        for (var item: reviewList) {
+           FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("ReviewCellView.fxml"));
+           VBox cell = loader.load();
+           ReviewCellView controller = loader.getController();
 
-            @Override
-            protected void updateItem(Review item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty || item == null) {
-                    setGraphic(null);
-                } else {
-                    try {
-                        FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("ReviewCellView.fxml"));
-                        HBox hbox = loader.load();
-
-                        // Get the controller of the cell
-                        ReviewCellView cellView = loader.getController();
-
-                        String avatarUrl = "./assets/avatars/user" + item.getUserId() + ".png";
-                        cellView.setData(
-                                avatarUrl,
-                                item.getUserId(),
-                                item.getTimestampAdded(),
-                                item.getReview()
-                        );
-
-                        setGraphic(hbox);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
+           String avatarUrl = "./assets/avatars/user" + item.getUserId() + ".png";
+           controller.setData(
+                   avatarUrl,
+                   item.getUserId(),
+                   item.getTimestampAdded(),
+                   item.getReview(),
+                   item.getRating()
+           );
+           reviewListVBox.getChildren().add(cell);
+       }
     }
 }
