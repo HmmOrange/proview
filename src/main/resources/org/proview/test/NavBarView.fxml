@@ -83,6 +83,7 @@
                   </VBox>
                </graphic>
             </Button>
+            <Button layoutX="818.0" layoutY="22.0" mnemonicParsing="false" onAction="#onGameButtonClicked" text="Game" />
          </children>
       </AnchorPane>
    </children>
