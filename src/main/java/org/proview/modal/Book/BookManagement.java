@@ -299,7 +299,7 @@ public class BookManagement {
         });
     }
 
-    public static void initBookLibList(VBox bookListVBox, ObservableList<BookLib> bookList, Boolean cardView, Boolean showCopiesAvailable) {
+    public static void initBookLibList(VBox bookListVBox, ObservableList<BookLib> bookList, Boolean cardView, Boolean showCopiesAvailable, Boolean showRanking) {
         bookListVBox.getChildren().clear();
         int index = 0;
         for (var item: bookList) {
@@ -316,7 +316,7 @@ public class BookManagement {
 
                     cellView.setData(
                             item.getId(),
-                            "#" + (index + 1) + ". " + item.getTitle(),
+                            showRanking ? "#" + index + ". " + item.getTitle() : item.getTitle(),
                             item.getAuthor(),
                             item.getTags(),
                             item.getRating(),
@@ -335,7 +335,7 @@ public class BookManagement {
 
                     cellView.setData(
                             item.getId(),
-                            "#" + (index + 1) + ". " + item.getTitle(),
+                            showRanking ? "#" + index + ". " + item.getTitle() : item.getTitle(),
                             item.getAuthor(),
                             item.getTags(),
                             item.getRating(),

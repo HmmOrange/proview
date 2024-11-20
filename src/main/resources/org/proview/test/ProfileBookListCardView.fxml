@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="900.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ProfileBookListView">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ProfileBookListView">
    <children>
       <HBox prefWidth="200.0">
          <children>
@@ -20,7 +20,10 @@
                         <Insets bottom="10.0" left="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox fx:id="borrowingListVBox" prefHeight="200.0" prefWidth="100.0" />
+                  <VBox fx:id="borrowingListVBox" prefHeight="200.0" prefWidth="100.0">
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin></VBox>
                </children>
             </VBox>
             <VBox prefHeight="100.0" prefWidth="450.0">
@@ -50,7 +53,10 @@
                         <Insets bottom="10.0" left="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox fx:id="overdueListVBox" prefHeight="200.0" prefWidth="100.0" />
+                  <VBox fx:id="overdueListVBox" prefHeight="200.0" prefWidth="100.0">
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin></VBox>
                </children>
             </VBox>
             <VBox prefHeight="100.0" prefWidth="450.0">

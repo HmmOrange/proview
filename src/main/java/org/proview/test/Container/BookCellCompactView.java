@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.proview.api.GoogleBooksAPI;
 import org.proview.test.AppMain;
@@ -49,8 +50,18 @@ public class BookCellCompactView {
         Image image = new Image(stream);
 
         coverImageView.setImage(image);
-        coverImageView.setFitWidth(112.5);
+        double targetWidth = 46.875;
+        double targetHeight = 75;
+        double scaleX = targetWidth / image.getWidth();
+        double scaleY = targetHeight / image.getHeight();
+        double scale = Math.max(scaleX, scaleY);
+
+        coverImageView.setImage(image);
+        coverImageView.setFitWidth(image.getWidth() * scale);
+        coverImageView.setFitHeight(image.getHeight() * scale);
         coverImageView.setPreserveRatio(true);
+        javafx.scene.shape.Rectangle clip = new Rectangle(targetWidth, targetHeight);
+        coverImageView.setClip(clip);
         coverImageView.setSmooth(true);
         coverImageView.setCache(true);
 

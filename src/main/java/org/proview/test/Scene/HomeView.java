@@ -37,8 +37,8 @@ public class HomeView {
         ObservableList<BookLib> trendingList = BookManagement.getTrendingBookList();
         ObservableList<Activity> activityList = ActivityManagement.getReviewActivityList();
 
-        BookManagement.initBookLibList(topRatedBookListVBox, topRatedList, true, true);
-        BookManagement.initBookLibList(trendingBookListVBox, trendingList, true, true);
+        BookManagement.initBookLibList(topRatedBookListVBox, topRatedList, true, true, true);
+        BookManagement.initBookLibList(trendingBookListVBox, trendingList, true, true, true);
         ActivityManagement.initActivityList(recentReviewListView, activityList);
 
         recentReviewListView.setPrefHeight(Size.ACTIVITY_CELL_HEIGHT.getValue() * activityList.size() + Size.PADDING.getValue());

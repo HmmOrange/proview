@@ -4,6 +4,7 @@ import com.google.gson.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -56,7 +57,7 @@ public class BookCellCardView {
         tagLabel.setText("Tags: " + tags);
         infoLabel.setText(rating + " 🌟 " + issueCount + " 👀 ");
 
-        if (copiesAvailable > 0)
+        if (copiesAvailable >= 0)
             copiesLabel.setText(copiesAvailable + (copiesAvailable == 1 ? " copy" : " copies") + " available");
         else {
             copiesLabel.setDisable(true);
@@ -68,8 +69,19 @@ public class BookCellCardView {
         Image image = new Image(stream);
 
         coverImageView.setImage(image);
-        coverImageView.setFitWidth(100);
+
+        double targetWidth = 100;
+        double targetHeight = 125;
+        double scaleX = targetWidth / image.getWidth();
+        double scaleY = targetHeight / image.getHeight();
+        double scale = Math.max(scaleX, scaleY);
+
+        coverImageView.setImage(image);
+        coverImageView.setFitWidth(image.getWidth() * scale);
+        coverImageView.setFitHeight(image.getHeight() * scale);
         coverImageView.setPreserveRatio(true);
+        Rectangle clip = new Rectangle(targetWidth, targetHeight);
+        coverImageView.setClip(clip);
         coverImageView.setSmooth(true);
         coverImageView.setCache(true);
 
