@@ -12,7 +12,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
-import org.proview.api.GamesAPI;
 import org.proview.modal.Game.GameActivity;
 import org.proview.modal.User.Admin;
 import org.proview.utils.SearchUtils;
@@ -161,6 +160,10 @@ public class NavBarView {
     public void onGameButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
         GameActivity.setNumOfQuestion(5);
         GameActivity.setNewQuestionsList();
+        System.out.println(GameActivity.getQuestionsChosen().getFirst());
+        GameActivity.setCurrentQuestionID(GameActivity.getQuestionsChosen().getFirst());
+        GameActivity.setNumberOfQuestionsAnswered(0);
+        GameActivity.setScore(0);
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("GameView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");
