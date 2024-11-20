@@ -26,7 +26,7 @@
          <PasswordField fx:id="registerPasswordField" alignment="CENTER" promptText="Password" styleClass="input" />
          <PasswordField fx:id="registerConfirmPasswordField" alignment="CENTER" promptText="Confirm Password" styleClass="input" />
          <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="45.0" prefWidth="398.0" text="Confirm" />
-         <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="35.0" prefWidth="116.0" text="Back" />
+         <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="35.0" prefWidth="403.0" text="Back" />
       </children>
       <VBox.margin>
          <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />

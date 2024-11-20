@@ -1,0 +1,33 @@
+/* EditProfileView.css */
+
+/* General styling for the register form */
+.register-form {
+    -fx-padding: 15px;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+}
+
+/* Styling for the input fields */
+.input {
+    -fx-font-size: 14px;
+    -fx-padding: 5px;
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #ced4da;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+}
+
+/* Styling for the buttons */
+.button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #457B9D;
+    -fx-background-radius: 10px;
+    -fx-padding: 7px 20px;
+}
+
+.button:hover {
+    -fx-background-color: #1D3557;
+}
