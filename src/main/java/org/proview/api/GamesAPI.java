@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.net.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -58,14 +59,14 @@ public class GamesAPI {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        for (int times = 0; times < 4; times++) {
+        for (int times = 0; times < 10; times++) {
             System.out.println("Requesting data, attempt: " + (times + 1));
             String response = getQandAFromAPI();
             if (response == null) {
                 System.out.println("API response is null at attempt: " + (times + 1));
                 break;
             }
-            Thread.sleep(3000);
+            Thread.sleep(5000);
             JsonParser parser = new JsonParser();
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -87,9 +88,20 @@ public class GamesAPI {
 
                     String[] questionDetails = new String[7];
                     JsonObject questionNo = items.get(i).getAsJsonObject();
+                    String question = questionNo.get("question").getAsString();
+                    question = StringEscapeUtils.unescapeJava(question);
+                    question = StringEscapeUtils.unescapeHtml4(question);
+                    String checkDupSql = """
+                            SELECT * FROM questions WHERE question = ?
+                            """;
+                    PreparedStatement checkDupPS = AppMain.connection.prepareStatement(checkDupSql);
+                    checkDupPS.setString(1, question);
+                    ResultSet checkDupResultSet = checkDupPS.executeQuery();
+                    if (checkDupResultSet.next()) {
+                        continue;
+                    }
                     String type = questionNo.get("type").getAsString();
                     String difficulty = questionNo.get("difficulty").getAsString();
-                    String question = questionNo.get("question").getAsString();
                     String correctAnswer = questionNo.get("correct_answer").getAsString();
                     JsonArray incorrectAnswersArray = questionNo.getAsJsonArray("incorrect_answers");
                     List<String> incorrectAnswers = gson.fromJson(incorrectAnswersArray,

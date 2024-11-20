@@ -12,7 +12,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
-import org.proview.api.GamesAPI;
 import org.proview.modal.Game.GameActivity;
 import org.proview.modal.User.Admin;
 import org.proview.utils.SearchUtils;
@@ -23,6 +22,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -159,8 +160,21 @@ public class NavBarView {
     }
 
     public void onGameButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
-        GameActivity.setNumOfQuestion(5);
+        String sql = """
+                SELECT COUNT(*) AS count FROM questions;
+                """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            GameActivity.setNumOfQuestion(resultSet.getInt("count"));
+        }
+        System.out.println(GameActivity.getNumOfQuestion());
         GameActivity.setNewQuestionsList();
+        System.out.println(GameActivity.getQuestionsChosen().getFirst());
+        GameActivity.setCurrentQuestionID(GameActivity.getQuestionsChosen().getFirst());
+        GameActivity.setNumberOfQuestionsAnswered(0);
+        GameActivity.setScore(0);
+        GameActivity.setLifeRemains(3);
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("GameView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");
