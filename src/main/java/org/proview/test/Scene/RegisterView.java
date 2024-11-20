@@ -61,7 +61,7 @@ public class RegisterView {
             Objects.equals(registerPasswordField.getText(), "") || Objects.equals(registerConfirmPasswordField.getText(), "") ||
             Objects.equals(firstNameField.getText(), "") || Objects.equals(lastNameField.getText(), "")
                 || Objects.equals(emailField.getText(), "")) {
-            registerResultLabel.setText("Please fill in all blanks");
+            registerResultLabel.setText("Please fill in all blanks!");
         }
         else {
             String usn = registerUsernameField.getText();
@@ -79,7 +79,7 @@ public class RegisterView {
             ResultSet resultSet = preparedStatement.executeQuery();
             ///
 
-            if (!Objects.equals(pass, cfpass)) registerResultLabel.setText("Password wrong");
+            if (!Objects.equals(pass, cfpass)) registerResultLabel.setText("Password is wrong");
             else if (resultSet.next()) registerResultLabel.setText("Username already exists!");
             else {
                 ///get the latest id
@@ -102,7 +102,7 @@ public class RegisterView {
                 registerResultLabel.setText("Register Success");
 
                 FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+                Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
                 LoginView tempLoginView = fxmlLoader.getController();
                 tempLoginView.loginResultLabel.setText("Register Success. Please log in!");
                 AppMain.window.setTitle("Hello!");
@@ -114,7 +114,7 @@ public class RegisterView {
 
     public void onBackButtonClick(ActionEvent actionEvent) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();

@@ -26,11 +26,11 @@ public class AppMain extends Application {
         window = stage;
 
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         window.setTitle("Hello!");
         window.setScene(scene);
-        window.setMinWidth(500);
-        window.setMinHeight(500);
+        window.setMinWidth(1300);
+        window.setMinHeight(700);
         window.show();
     }
 

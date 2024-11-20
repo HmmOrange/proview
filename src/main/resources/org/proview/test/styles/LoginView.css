@@ -1,0 +1,53 @@
+/* style.css */
+
+/* Định dạng tổng quát */
+.login-form {
+    -fx-padding: 20px;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+}
+
+/* Header lớn */
+.header {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Sub-header nhỏ */
+.sub-header {
+    -fx-font-size: 16px;
+    -fx-text-fill: #666666;
+}
+
+/* Input TextField & PasswordField */
+.input {
+    -fx-font-size: 14px;
+    -fx-padding: 6px;
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #ced4da;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+}
+
+/* Button Sign In */
+.button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #007bff;
+    -fx-background-radius: 10px;
+    -fx-padding: 7px 20px;
+}
+
+.button:hover {
+    -fx-background-color: #0056b3;
+}
+
+/* Link nhỏ */
+.small-link {
+    -fx-font-size: 12px;
+    -fx-text-fill: #007bff;
+    -fx-underline: true;
+}
