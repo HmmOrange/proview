@@ -14,6 +14,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.*;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import org.proview.api.GamesAPI;
 
 
 public class AppMain extends Application {
@@ -141,7 +142,7 @@ public class AppMain extends Application {
         System.out.println("Script file executed successfully");
     }
 
-    public static void main(String[] args) throws SQLException, IOException {
+    public static void main(String[] args) throws SQLException, IOException, InterruptedException {
         Connection connection = connectToDb();
 
         if (connection == null) {
@@ -150,6 +151,7 @@ public class AppMain extends Application {
 
         // Uncomment this if in need of creating new fresh tables in DB
         runSQLScript(connection);
+        //GamesAPI.insertQandAToDb();
         launch();
     }
 }
