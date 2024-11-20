@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="root" prefHeight="770.0" prefWidth="1412.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.IssueListView">
     <top>
@@ -15,29 +19,96 @@
         <fx:include source="AdminManagementNavBarView.fxml" />
     </left>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="985.0" prefWidth="1303.0">
          <children>
-            <TextField onInputMethodTextChanged="#onFilterTextFieldChanged" promptText="Search" />
-            <Label text="Borrowing Books" />
-            <TableView fx:id="borrowingTableView" prefHeight="463.0" prefWidth="1412.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-            <Label text="Returned Books" />
-            <TableView fx:id="borrowedTableView" prefHeight="499.0" prefWidth="1412.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
+            <HBox alignment="CENTER" prefHeight="126.0" spacing="20.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="173.0" prefWidth="239.0">
+                     <children>
+                        <Label fx:id="totalIssuesLabel" text="100">
+                           <font>
+                              <Font size="62.0" />
+                           </font>
+                        </Label>
+                        <Label text="Total Issues">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="173.0" prefWidth="239.0">
+                     <children>
+                        <Label fx:id="currentIssuesLabel" text="100">
+                           <font>
+                              <Font size="62.0" />
+                           </font>
+                        </Label>
+                        <Label text="Current Issues">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="173.0" prefWidth="239.0">
+                     <children>
+                        <Label fx:id="overdueLabel" text="100">
+                           <font>
+                              <Font size="62.0" />
+                           </font>
+                        </Label>
+                        <Label text="Overdue">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <TabPane prefHeight="577.0" prefWidth="1305.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Current Issues">
+                     <content>
+                        <VBox prefHeight="591.0" prefWidth="1305.0">
+                           <children>
+                              <HBox prefHeight="51.0" prefWidth="1305.0" spacing="20.0">
+                                 <children>
+                                    <ComboBox fx:id="currentColumnComboBox" prefWidth="150.0" promptText="Column" />
+                                    <TextField fx:id="currentSearchTextField" prefHeight="25.0" prefWidth="1138.0" promptText="Search" />
+                                 </children>
+                              </HBox>
+                              <TableView fx:id="borrowingTableView" prefHeight="547.0" prefWidth="1305.0" tableMenuButtonVisible="true">
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </content>
+                </Tab>
+                <Tab text="Past Issues">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <HBox prefHeight="51.0" prefWidth="1305.0" spacing="20.0">
+                                 <children>
+                                    <ComboBox fx:id="pastColumnComboBox" prefHeight="25.0" prefWidth="148.0" promptText="Column" />
+                                    <TextField fx:id="pastSearchTextField" prefHeight="25.0" prefWidth="1135.0" promptText="Search" />
+                                 </children>
+                              </HBox>
+                              <TableView fx:id="borrowedTableView" prefHeight="547.0" prefWidth="1305.0" tableMenuButtonVisible="true">
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </content>
+                </Tab>
+              </tabs>
+            </TabPane>
          </children>
       </VBox>
    </center>

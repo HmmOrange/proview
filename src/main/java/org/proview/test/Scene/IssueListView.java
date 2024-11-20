@@ -1,44 +1,46 @@
 package org.proview.test.Scene;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.input.InputMethodEvent;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import org.proview.modal.Issue.Issue;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.UserManagement;
 import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
+import org.proview.utils.SearchUtils;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Comparator;
-import java.util.Objects;
 
 public class IssueListView {
     public TableView<ObservableList<String>> borrowingTableView = new TableView<>();
     public TableView<ObservableList<String>> borrowedTableView = new TableView<>();
     public BorderPane root;
+    public Label totalIssuesLabel;
+    public Label currentIssuesLabel;
+    public Label overdueLabel;
+    public ComboBox<String> pastColumnComboBox = new ComboBox<>();
+    public TextField pastSearchTextField;
+    public ComboBox<String> currentColumnComboBox = new ComboBox<>();
+    public TextField currentSearchTextField;
 
     public void initialize() throws SQLException {
+        totalIssuesLabel.setText(Integer.toString(SQLUtils.getTotalIssuesCount()));
+        currentIssuesLabel.setText(Integer.toString(SQLUtils.getCurrentIssuesCount()));
+        overdueLabel.setText(Integer.toString(SQLUtils.getOverdueIssuesCount()));
 
         if (UserManagement.getCurrentUser() instanceof NormalUser) {
             root.setLeft(null);
         }
+
+        this.initComboBox();
 
         borrowingTableView.getColumns().clear();
         String[] columns1 = {"ID", "Username", "Title", "Author", "Book ID", "Due Date", "Remaining time", "Status"};
@@ -134,7 +136,7 @@ public class IssueListView {
 
 
         ///thêm các data vào bảng
-        ObservableList<ObservableList<String>> datas1 = FXCollections.observableArrayList();
+        /*ObservableList<ObservableList<String>> datas1 = FXCollections.observableArrayList();
         ObservableList<ObservableList<String>> datas2 = FXCollections.observableArrayList();
         Connection connection = AppMain.connection;
         if (UserManagement.getCurrentUser() instanceof Admin) {
@@ -221,7 +223,45 @@ public class IssueListView {
             }
             borrowedTableView.setItems(datas2);
             borrowedPS.close();
-        }
+        }*/
+
+        ///Search in currentIssuesTable
+        ObservableList<ObservableList<String>> currentList = SQLUtils.getCurrentIssuesList();
+        borrowingTableView.setItems(currentList);
+        FilteredList<ObservableList<String>> currentFilteredData = new FilteredList<>(currentList, p -> true);
+        currentSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            String selectedColumn = currentColumnComboBox.getValue();
+            if (selectedColumn != null) {
+                int columnIndex = currentColumnComboBox.getItems().indexOf(selectedColumn);
+                currentFilteredData.setPredicate(row -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true; // Show all rows if search text is empty
+                    }
+                    String cellValue = row.get(columnIndex); // Get value in the selected column
+                    return cellValue != null && cellValue.toLowerCase().contains(newValue.toLowerCase());
+                });
+            }
+        });
+        borrowingTableView.setItems(currentFilteredData);
+
+        ///Search in pastIssuesTable
+        ObservableList<ObservableList<String>> pastList = SQLUtils.getPastIssuesList();
+        borrowedTableView.setItems(pastList);
+        FilteredList<ObservableList<String>> pastFilteredData = new FilteredList<>(pastList, p -> true);
+        pastSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            String selectedColumn = pastColumnComboBox.getValue();
+            if (selectedColumn != null) {
+                int columnIndex = pastColumnComboBox.getItems().indexOf(selectedColumn);
+                pastFilteredData.setPredicate(row -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true; // Show all rows if search text is empty
+                    }
+                    String cellValue = row.get(columnIndex); // Get value in the selected column
+                    return cellValue != null && cellValue.toLowerCase().contains(newValue.toLowerCase());
+                });
+            }
+        });
+        borrowedTableView.setItems(pastFilteredData);
     }
 
     public static void resetTableAfterChangeStatus() throws IOException {
@@ -232,13 +272,13 @@ public class IssueListView {
         AppMain.window.centerOnScreen();
     }
 
-    private FilteredList<ObservableList<String>> filteredBorrowingData;
-    private FilteredList<ObservableList<String>> filteredBorrowedData;
+    public void initComboBox() {
+        currentColumnComboBox.getItems().addAll("ID", "Username", "Title",
+                "Author", "Book ID", "Due Date", "Remaining time", "Status");
 
-    private void getDataWithFilter(ObservableList<ObservableList<String>> datas1, ObservableList<ObservableList<String>> datas2 ) {
-        
+        pastColumnComboBox.getItems().addAll("ID", "Username", "Title",
+                "Author", "Book ID", "Start Date", "End Date", "Status");
     }
-    public void onFilterTextFieldChanged(InputMethodEvent inputMethodEvent) {
 
-    }
+
 }

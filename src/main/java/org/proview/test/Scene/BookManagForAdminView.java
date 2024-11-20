@@ -9,31 +9,30 @@ import org.proview.utils.SQLUtils;
 import java.sql.SQLException;
 import java.util.Comparator;
 
-public class UserManagForAdminView {
-    public TableView<ObservableList<String>> usersTableView = new TableView<>();
-    public Label totalUsersLabel;
-    public Label todayRegisLabel;
-    public Label thisWeekRegisLabel;
+public class BookManagForAdminView {
+    public TableView<ObservableList<String>> booksTableView = new TableView<>();
+    public Label totalBooksLabel;
+    public Label avgRatingLabel;
     public ComboBox<String> columnComboBox;
     public TextField searchTextField;
 
     public void initialize() throws SQLException {
-        totalUsersLabel.setText(Integer.toString(SQLUtils.getUsersCount().getFirst()));
-        todayRegisLabel.setText(Integer.toString(SQLUtils.getUsersCount().get(1)));
-        thisWeekRegisLabel.setText(Integer.toString(SQLUtils.getUsersCount().get(2)));
+        totalBooksLabel.setText(Integer.toString((int) (SQLUtils.getBooksCount().getFirst() - 0)));
+        avgRatingLabel.setText(Double.toString(SQLUtils.getBooksCount().get(1)));
 
-        String[] columns = {"ID", "Username", "Full name", "Email", "Registration Date", "Current queries", "Total queries", "Reviews"};
+        String[] columns = {"ID", "Title", "Author", "Tag", "Description", "Copies", "Total queries", "Reviews", "Average Rating"};
         for (int i = 0; i < columns.length; i++) {
             TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns[i]);
             int finalI = i;
             column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(finalI)));
-            if (finalI == 0 || finalI == 7 || finalI == 5 || finalI == 6) {
+            if (finalI == 0 || finalI == 5 || finalI == 6 || finalI == 7) {
                 column.setComparator(Comparator.comparingInt(Integer::parseInt));
             }
-            usersTableView.getColumns().add(column);
+            if (finalI == 8) column.setComparator(Comparator.comparingDouble(Double::parseDouble));
+            booksTableView.getColumns().add(column);
         }
-        ObservableList<ObservableList<String>> data = SQLUtils.getUsersData();
-        usersTableView.setItems(data);
+        ObservableList<ObservableList<String>> data = SQLUtils.getBooksData();
+        booksTableView.setItems(data);
 
         columnComboBox.getItems().addAll(columns);
         FilteredList<ObservableList<String>> filteredData = new FilteredList<>(data, p -> true);
@@ -50,6 +49,7 @@ public class UserManagForAdminView {
                 });
             }
         });
-        usersTableView.setItems(filteredData);
+        booksTableView.setItems(filteredData);
+
     }
 }

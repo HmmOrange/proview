@@ -1,32 +1,18 @@
 package org.proview.test.Scene;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Book.BookManagement;
-import org.proview.utils.SQLUtils;
 
 import java.sql.SQLException;
-import java.util.Comparator;
 
 public class LibraryView {
-    public TableView<ObservableList<String>> booksTableView = new TableView<>();
+    public ListView<BookLib> allBooksListView;
 
     public void initialize() throws SQLException {
-        String[] columns = {"ID", "Title", "Author", "Tag", "Description", "Copies", "Total queries", "Reviews", "Average Rating"};
-        for (int i = 0; i < columns.length; i++) {
-            TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns[i]);
-            int finalI = i;
-            column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(finalI)));
-            if (finalI == 0 || finalI == 5 || finalI == 6 || finalI == 7) {
-                column.setComparator(Comparator.comparingInt(Integer::parseInt));
-            }
-            if (finalI == 8) column.setComparator(Comparator.comparingDouble(Double::parseDouble));
-            booksTableView.getColumns().add(column);
-        }
-        booksTableView.setItems(SQLUtils.getBooksData());
+        ObservableList<BookLib> bookList = BookManagement.getBookList();
+        BookManagement.initBookLibList(allBooksListView, bookList);
+        allBooksListView.setMinWidth(500 + 10);
     }
 }
