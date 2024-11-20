@@ -2,6 +2,7 @@ package org.proview.test.Scene;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import org.proview.modal.Activity.Activity;
 import org.proview.modal.Activity.ActivityManagement;
 import org.proview.modal.Book.BookLib;
@@ -27,8 +28,8 @@ public class HomeView {
         }
     }
 
-    public ListView<BookLib> topRatedBookListView;
-    public ListView<BookLib> trendingBookListView;
+    public VBox trendingBookListVBox;
+    public VBox topRatedBookListVBox;
     public ListView<Activity> recentReviewListView;
 
     public void initialize() throws SQLException {
@@ -36,17 +37,12 @@ public class HomeView {
         ObservableList<BookLib> trendingList = BookManagement.getTrendingBookList();
         ObservableList<Activity> activityList = ActivityManagement.getReviewActivityList();
 
-        BookManagement.initBookLibList(topRatedBookListView, topRatedList);
-        BookManagement.initBookLibList(trendingBookListView, trendingList);
+        BookManagement.initBookLibList(topRatedBookListVBox, topRatedList, true, true);
+        BookManagement.initBookLibList(trendingBookListVBox, trendingList, true, true);
         ActivityManagement.initActivityList(recentReviewListView, activityList);
 
-        // Make the list view non-scrollable (there is probably a better way to do this)
-        topRatedBookListView.setPrefHeight(Size.BOOK_CELL_HEIGHT.getValue() * topRatedList.size() + Size.PADDING.getValue());
-        trendingBookListView.setPrefHeight(Size.BOOK_CELL_HEIGHT.getValue() * trendingList.size() + Size.PADDING.getValue());
         recentReviewListView.setPrefHeight(Size.ACTIVITY_CELL_HEIGHT.getValue() * activityList.size() + Size.PADDING.getValue());
 
-        topRatedBookListView.setMinWidth(Size.BOOK_LISTVIEW_WIDTH.getValue() + 10);
-        trendingBookListView.setMinWidth(Size.BOOK_LISTVIEW_WIDTH.getValue() + 10);
         recentReviewListView.setMinWidth(Size.RECENT_ACTIVITY_LISTVIEW_WIDTH.getValue() + 10);
     }
 }

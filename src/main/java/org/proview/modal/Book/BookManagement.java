@@ -15,10 +15,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.proview.api.GoogleBooksAPI;
 import org.proview.test.AppMain;
 import org.proview.test.Container.BookCellCompactView;
 import org.proview.test.Container.BookCellCardView;
+import org.proview.test.Container.ReviewCellView;
 import org.proview.test.Scene.ProfileView;
 
 public class BookManagement {
@@ -297,67 +299,56 @@ public class BookManagement {
         });
     }
 
-    public static void initBookLibList(ListView<BookLib> bookListView, ObservableList<BookLib> bookList, Boolean cardView, Boolean showCopiesAvailable) {
+    public static void initBookLibList(VBox bookListVBox, ObservableList<BookLib> bookList, Boolean cardView, Boolean showCopiesAvailable) {
+        bookListVBox.getChildren().clear();
+        int index = 0;
+        for (var item: bookList) {
+            index++;
+            try {
+                FXMLLoader loader;
 
-        bookListView.setItems(bookList);
-        bookListView.setCellFactory(param -> new ListCell<>() {
-            {
-                setStyle("-fx-padding: 0px; -fx-margin: 0px; -fx-background-insets: 0px; -fx-border-insets: 0px;");
-            }
-            @Override
-            protected void updateItem(BookLib item, boolean empty) {
-                super.updateItem(item, empty);
+                // TODO: Use BookCell parent (do create one if not existed yet) of these 2 instead of if-else
+                if (cardView) {
+                    loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
+                    Button button = loader.load();
 
-                if (empty || item == null) {
-                    setGraphic(null);
-                } else {
-                    try {
-                        FXMLLoader loader;
+                    BookCellCardView cellView = loader.getController();
 
-                        // TODO: Use BookCell parent (do create one if not existed yet) of these 2 instead of if-else
-                        if (cardView) {
-                            loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
-                            Button button = loader.load();
+                    cellView.setData(
+                            item.getId(),
+                            "#" + (index + 1) + ". " + item.getTitle(),
+                            item.getAuthor(),
+                            item.getTags(),
+                            item.getRating(),
+                            item.getIssueCount(),
+                            showCopiesAvailable ? item.getCopiesAvailable() : -1
+                    );
 
-                            BookCellCardView cellView = loader.getController();
-
-                            cellView.setData(
-                                    item.getId(),
-                                    "#" + (getIndex() + 1) + ". " + item.getTitle(),
-                                    item.getAuthor(),
-                                    item.getTags(),
-                                    item.getRating(),
-                                    item.getIssueCount(),
-                                    showCopiesAvailable ? item.getCopiesAvailable() : -1
-                            );
-
-                            setGraphic(button);
-                        }
-
-                        else {
-                            loader = new FXMLLoader(AppMain.class.getResource("BookCellCompactView.fxml"));
-                            Button button = loader.load();
-
-                            BookCellCompactView cellView = loader.getController();
-
-                            cellView.setData(
-                                    item.getId(),
-                                    "#" + (getIndex() + 1) + ". " + item.getTitle(),
-                                    item.getAuthor(),
-                                    item.getTags(),
-                                    item.getRating(),
-                                    item.getIssueCount(),
-                                    showCopiesAvailable ? item.getCopiesAvailable() : -1
-                            );
-
-                            setGraphic(button);
-                        }
-                    } catch (Exception e) {
-                        System.out.println(e);
-                        throw new RuntimeException(e);
-                    }
+                    bookListVBox.getChildren().add(button);
                 }
+
+                else {
+                    loader = new FXMLLoader(AppMain.class.getResource("BookCellCompactView.fxml"));
+                    Button button = loader.load();
+
+                    BookCellCompactView cellView = loader.getController();
+
+                    cellView.setData(
+                            item.getId(),
+                            "#" + (index + 1) + ". " + item.getTitle(),
+                            item.getAuthor(),
+                            item.getTags(),
+                            item.getRating(),
+                            item.getIssueCount(),
+                            showCopiesAvailable ? item.getCopiesAvailable() : -1
+                    );
+
+                    bookListVBox.getChildren().add(button);
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+                throw new RuntimeException(e);
             }
-        });
+        }
     }
 }

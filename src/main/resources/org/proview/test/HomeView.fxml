@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.HomeView">
+<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.HomeView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
@@ -35,13 +35,13 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="topRatedBookListView" layoutX="21.0" layoutY="59.0" prefHeight="115.0" prefWidth="400.0" />
                         <Label layoutX="472.0" layoutY="14.0" prefHeight="30.0" prefWidth="196.0" text="Trending (7 days)">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="trendingBookListView" layoutX="472.0" layoutY="60.0" prefHeight="113.0" prefWidth="400.0" />
+                        <VBox fx:id="topRatedBookListVBox" layoutX="21.0" layoutY="61.0" prefHeight="200.0" prefWidth="401.0" />
+                        <VBox fx:id="trendingBookListVBox" layoutX="472.0" layoutY="61.0" prefHeight="200.0" prefWidth="401.0" />
                      </children>
                   </AnchorPane>
                </children>

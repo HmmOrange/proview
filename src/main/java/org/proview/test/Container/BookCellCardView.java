@@ -68,7 +68,7 @@ public class BookCellCardView {
         Image image = new Image(stream);
 
         coverImageView.setImage(image);
-        coverImageView.setFitWidth(112.5);
+        coverImageView.setFitWidth(100);
         coverImageView.setPreserveRatio(true);
         coverImageView.setSmooth(true);
         coverImageView.setCache(true);

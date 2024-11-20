@@ -51,7 +51,7 @@ public class ReviewManagement {
     }
 
     public static void initReviewList(VBox reviewListVBox, ObservableList<Review> reviewList) throws IOException, SQLException {
-       reviewListVBox.getChildren().clear();
+        reviewListVBox.getChildren().clear();
         for (var item: reviewList) {
            FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("ReviewCellView.fxml"));
            VBox cell = loader.load();
