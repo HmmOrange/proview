@@ -10,9 +10,9 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<HBox fx:id="navBarHBox" prefHeight="50.0" prefWidth="1300.0" style="-fx-background-color: #FFC1C3;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.NavBarView">
+<HBox fx:id="navBarHBox" prefHeight="50.0" prefWidth="1300.0" stylesheets="@styles/NavBarView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.NavBarView">
    <children>
-      <AnchorPane fx:id="topPane" onKeyReleased="#onKeyReleased" prefHeight="4.0" prefWidth="1300.0" style="-fx-background-color: #FFC1C3;">
+      <AnchorPane fx:id="topPane" onKeyReleased="#onKeyReleased" prefHeight="50.0" prefWidth="1300.0" styleClass="nav-bar">
          <children>
             <Button fx:id="libraryButton" layoutX="1024.0" layoutY="12.0" mnemonicParsing="false" onAction="#onLibraryButtonClick" prefWidth="60.0">
                <graphic>

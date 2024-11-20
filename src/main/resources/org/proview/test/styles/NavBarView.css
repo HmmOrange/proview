@@ -1,3 +1,9 @@
+/* NavBarView.css */
+
+.nav-bar {
+    -fx-background-color: #457B9D;
+}
+
 .button:hover .ikonli-font-icon {
     -fx-icon-size: 24;
 }
