@@ -114,6 +114,7 @@ public class SQLUtils {
                     bookId,
                     userId,
                     review,
+                    getRating(userId, bookId),
                     timestampAdded
             );
             reviewObservableList.add(curReview);
@@ -142,6 +143,7 @@ public class SQLUtils {
                     bookId,
                     userId,
                     review,
+                    getRating(userId, bookId),
                     timestampAdded
             );
             reviewObservableList.add(curReview);
