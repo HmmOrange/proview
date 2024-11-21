@@ -26,5 +26,6 @@
             <Insets />
          </VBox.margin>
       </Button>
+      <Button mnemonicParsing="false" onAction="#onTagsButtonClick" text="Tags" />
    </children>
 </VBox>
