@@ -3,6 +3,7 @@ package org.proview.test.Scene;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,7 +14,6 @@ import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.UserManagement;
 import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
-import org.proview.utils.SearchUtils;
 
 import java.io.IOException;
 import java.sql.*;
@@ -112,7 +112,6 @@ public class IssueListView {
                     }
                 }
             });
-
             // Thêm cột vào TableView
             borrowingTableView.getColumns().add(statusColumn);
         } else {
@@ -242,7 +241,9 @@ public class IssueListView {
                 });
             }
         });
-        borrowingTableView.setItems(currentFilteredData);
+        SortedList<ObservableList<String>> borrowingSortedData = new SortedList<>(currentFilteredData);
+        borrowingSortedData.comparatorProperty().bind(borrowingTableView.comparatorProperty());
+        borrowingTableView.setItems(borrowingSortedData);
 
         ///Search in pastIssuesTable
         ObservableList<ObservableList<String>> pastList = SQLUtils.getPastIssuesList();
@@ -261,7 +262,9 @@ public class IssueListView {
                 });
             }
         });
-        borrowedTableView.setItems(pastFilteredData);
+        SortedList<ObservableList<String>> borrowedSortedData = new SortedList<>(pastFilteredData);
+        borrowedSortedData.comparatorProperty().bind(borrowedTableView.comparatorProperty());
+        borrowedTableView.setItems(borrowedSortedData);
     }
 
     public static void resetTableAfterChangeStatus() throws IOException {

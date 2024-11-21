@@ -46,7 +46,7 @@ public class EditBookInfoView {
             copiesField.setText(resultSet.getString("copies"));
         }
 
-        String tagSql = "SELECT tag FROM tag WHERE book_id = ?";
+        String tagSql = "SELECT tag FROM book_tag WHERE book_id = ?";
         PreparedStatement tagPreparedStatement = connection.prepareStatement(tagSql);
         tagPreparedStatement.setInt(1, id);
         ResultSet tagResultSet = tagPreparedStatement.executeQuery();
