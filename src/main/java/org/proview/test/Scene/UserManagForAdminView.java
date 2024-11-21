@@ -3,6 +3,7 @@ package org.proview.test.Scene;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
 import org.proview.utils.SQLUtils;
 
@@ -50,6 +51,8 @@ public class UserManagForAdminView {
                 });
             }
         });
-        usersTableView.setItems(filteredData);
+        SortedList<ObservableList<String>> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(usersTableView.comparatorProperty());
+        usersTableView.setItems(sortedData);
     }
 }

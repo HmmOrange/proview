@@ -42,8 +42,8 @@ public class EditProfileView {
 
     public void initialize() throws FileNotFoundException {
         avatarFile = new File("./assets/avatars/user" + UserManagement.getCurrentUser().getId() + ".png");
-        if (avatarFile != null) {
-            Image image = new Image(avatarFile.toURI().toString());
+        try (InputStream inputStream = new FileInputStream(avatarFile)) {
+            Image image = new Image(inputStream);
             if (image.isError()) {
                 System.out.println("Error loading image: " + image.getException().getMessage());
             }
@@ -52,6 +52,8 @@ public class EditProfileView {
             avatarImageView.setPreserveRatio(true);
             avatarImageView.setSmooth(true);
             avatarImageView.setCache(true);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         firstNameField.setText(UserManagement.getCurrentUser().getFirstName());
         lastNameField.setText(UserManagement.getCurrentUser().getLastName());
@@ -111,19 +113,14 @@ public class EditProfileView {
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.gif")
         );
         avatarFile = fileChooser.showOpenDialog(AppMain.window);
-        if (avatarFile != null) {
-            Image image = new Image(avatarFile.toURI().toString());
-            if (image.isError()) {
-                System.out.println("Error loading image: " + image.getException().getMessage());
-            }
+        try (InputStream inputStream = new FileInputStream(avatarFile)) {
+            Image image = new Image(inputStream);
             avatarImageView.setImage(image);
-            avatarImageView.setFitWidth(100);
-            avatarImageView.setPreserveRatio(true);
-            avatarImageView.setSmooth(true);
-            avatarImageView.setCache(true);
-        } else {
-            editProfileResultLabel.setText("Image has not been loaded.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            editProfileResultLabel.setText("Failed to load image.");
         }
+
     }
 
     public void onKeyReleased(KeyEvent keyEvent) throws SQLException, IOException {

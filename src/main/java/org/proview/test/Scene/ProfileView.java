@@ -43,7 +43,7 @@ public class ProfileView {
 
     public static Boolean cardView;
 
-    private void loadProfile() throws FileNotFoundException {
+    private void loadProfile() throws IOException {
         nameField.setText("Name: " + UserManagement.getCurrentUser().getFullName());
         emailField.setText("Mail: " + UserManagement.getCurrentUser().getEmail());
 
@@ -54,6 +54,7 @@ public class ProfileView {
         avatarImageView.setPreserveRatio(true);
         avatarImageView.setSmooth(true);
         avatarImageView.setCache(true);
+        stream.close();
 
         if (UserManagement.getCurrentUser() instanceof Admin) {
             editProfileButton.setDisable(true);

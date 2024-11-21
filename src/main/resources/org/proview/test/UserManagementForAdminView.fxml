@@ -75,7 +75,7 @@
                   <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="1100.0" promptText="Search" />
                </children>
             </HBox>
-            <TableView fx:id="usersTableView" prefHeight="472.0" prefWidth="1126.0" tableMenuButtonVisible="true">
+            <TableView fx:id="usersTableView" prefHeight="472.0" prefWidth="1126.0">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>

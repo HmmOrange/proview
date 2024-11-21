@@ -36,7 +36,7 @@ public class NavBarView {
     public HBox navBarHBox;
     public Label issueButtonLabel;
 
-    public void loadProfileButton() throws FileNotFoundException {
+    public void loadProfileButton() throws IOException {
             // Load CSS
             String cssPath = Objects.requireNonNull(AppMain.class.getResource("styles/NavBarView.css")).toExternalForm();
             navBarHBox.getStylesheets().add(cssPath);
@@ -44,6 +44,7 @@ public class NavBarView {
             InputStream stream = new FileInputStream(UserManagement.getCurrentUser().getAvatarUrl());
             Image image = new Image(stream);
             ImageView avatarImage = new ImageView(image);
+            stream.close();
 
             double radius = 25;
             avatarImage.setFitWidth(2 * radius);
@@ -58,7 +59,7 @@ public class NavBarView {
             profileButton.setMaxSize(2 * radius, 2 * radius);
             profileButton.setId("profile-button");
         }
-    public void initialize() throws FileNotFoundException {
+    public void initialize() throws IOException {
         if (UserManagement.getCurrentUser() instanceof Admin) {
             issueButton.setText("Manage");
         }
