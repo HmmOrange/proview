@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="691.0" prefWidth="1233.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.TagManageView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="691.0" prefWidth="1233.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.TagManageView">
     <top>
         <fx:include source="NavBarView.fxml" />
     </top>
@@ -21,12 +21,12 @@
     <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="187.0" prefWidth="976.0">
+            <HBox prefHeight="619.0" prefWidth="1006.0">
                <VBox.margin>
                   <Insets left="20.0" right="100.0" top="20.0" />
                </VBox.margin>
                <children>
-                  <TableView fx:id="tagTable" prefHeight="187.0" prefWidth="643.0" tableMenuButtonVisible="true">
+                  <TableView fx:id="tagTable" prefHeight="451.0" prefWidth="572.0" tableMenuButtonVisible="true">
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
@@ -34,23 +34,34 @@
                         <Insets right="100.0" />
                      </HBox.margin>
                   </TableView>
-                  <TabPane prefHeight="187.0" prefWidth="220.0" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane prefHeight="339.0" prefWidth="220.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                       <Tab text="Add">
                         <content>
-                              <VBox alignment="CENTER">
+                              <VBox alignment="CENTER" prefHeight="247.0" prefWidth="220.0">
                                  <children>
-                                    <TextField fx:id="tagEditNameLabel" promptText="Name">
+                                    <Label fx:id="errorAddNameLabel" text="Error name label" />
+                                    <TextField fx:id="tagAddNameLabel" promptText="Name">
                                        <VBox.margin>
                                           <Insets left="10.0" right="10.0" top="10.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <TextField fx:id="tagEditBgColorHex" promptText="Background Color Hex">
+                                    <Label fx:id="errorAddBgLabel" text="Error bg label">
+                                       <padding>
+                                          <Insets top="10.0" />
+                                       </padding>
+                                    </Label>
+                                    <TextField fx:id="tagAddBgColorHex" promptText="Background Color Hex">
                                        <VBox.margin>
                                           <Insets left="10.0" right="10.0" top="10.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <TextField fx:id="tagEditTextColorHex" promptText="Text Color Hex">
+                                    <Label fx:id="errorAddTextLabel" text="Error text label">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="tagAddTextColorHex" promptText="Text Color Hex">
                                        <VBox.margin>
                                           <Insets left="10.0" right="10.0" top="10.0" />
                                        </VBox.margin>
@@ -60,8 +71,8 @@
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                        <children>
-                                          <Label fx:id="tagPreviewLabel" text="Label" />
-                                          <Button fx:id="confirmButton" mnemonicParsing="false" text="Add tag">
+                                          <Label fx:id="tagAddPreviewLabel" text="Label" />
+                                          <Button fx:id="confirmAddButton" mnemonicParsing="false" text="Add tag">
                                              <HBox.margin>
                                                 <Insets />
                                              </HBox.margin>
@@ -79,6 +90,7 @@
                            <content>
                               <VBox alignment="CENTER">
                                  <children>
+                                    <Label text="Label" />
                                     <TextField fx:id="tagEditNameLabel1" promptText="Name">
                                        <VBox.margin>
                                           <Insets left="10.0" right="10.0" top="10.0" />
@@ -99,7 +111,7 @@
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                        <children>
-                                          <Label text="Label" />
+                                          <Label fx:id="tagEditPreviewLabel" text="Label" />
                                           <Button fx:id="confirmButton" mnemonicParsing="false" text="Edit tag" />
                                        </children>
                                     </HBox>
