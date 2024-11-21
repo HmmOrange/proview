@@ -1,5 +1,6 @@
 package org.proview.test.Container;
 
+import com.github.marlonlom.utilities.timeago.TimeAgo;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
@@ -27,8 +28,7 @@ public class ReviewCellView {
     public void setData(String avatarUrl, int userId, Timestamp timestamp, String review, int rating) throws IOException, SQLException {
         reviewerLabel.setText(Objects.requireNonNull(SQLUtils.getUser(userId)).getFullName());
 
-        String date = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(timestamp);
-        reviewDateLabel.setText(date);
+        reviewDateLabel.setText(TimeAgo.using(timestamp.getTime()).replace("about ", ""));
 
         reviewLabel.setText(review);
 

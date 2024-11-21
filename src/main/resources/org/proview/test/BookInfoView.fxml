@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" stylesheets="@styles/BookInfoView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
+<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" stylesheets="@styles/BookInfoView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
@@ -98,11 +98,17 @@
                                     <Insets left="10.0" right="10.0" top="10.0" />
                                  </VBox.margin>
                               </TextArea>
-                              <Button fx:id="submitReviewButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSubmitReviewButtonClick" text="Submit">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" right="10.0" top="10.0" />
-                                 </VBox.margin>
-                              </Button>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="820.0" spacing="10.0">
+                                 <children>
+                                    <Button fx:id="removePrevReviewButton" mnemonicParsing="false" onAction="#onRemovePrevReviewButtonClicked" text="Remove Previous Review" />
+                                    <Button fx:id="loadPrevReviewButton" mnemonicParsing="false" onAction="#onLoadPrevReviewButtonClicked" text="Load Previous Review" />
+                                    <Button fx:id="submitReviewButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSubmitReviewButtonClick" text="Submit/Repost Review">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
                            </children>
                            <VBox.margin>
                               <Insets top="10.0" />
@@ -110,7 +116,7 @@
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="reviewListVBox" layoutX="17.0" layoutY="786.0" prefHeight="200.0" prefWidth="800.0" spacing="10.0" />
+                  <VBox fx:id="reviewListVBox" layoutX="17.0" layoutY="786.0" spacing="10.0" />
                   <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" layoutX="824.0" layoutY="46.0" mnemonicParsing="false" onAction="#onStarButtonClicked" text="Button" />
                </children>
             </AnchorPane>

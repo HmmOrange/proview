@@ -96,6 +96,14 @@ public class AdminManagementNavBarView {
         AppMain.window.centerOnScreen();
     }
 
+    public void onTagsButtonClick(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("TagManageView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+        AppMain.window.setTitle("Hello!");
+        AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
+    }
+
     public void onExportButtonClicked(ActionEvent actionEvent) throws SQLException, IOException {
         if (root.getChildren().stream().noneMatch(node -> node instanceof ComboBox)) {
             String[] tables = {"book", "book_tag", "favourite", "game_history", "issue", "questions", "rating", "review", "tag", "user"};
