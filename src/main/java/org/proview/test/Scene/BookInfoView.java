@@ -1,5 +1,6 @@
 package org.proview.test.Scene;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Issue.IssueManagement;
@@ -54,7 +56,9 @@ public class BookInfoView {
     public Label borrowingProblemLabel;
     public HBox starRatingBar;
     public FontIcon[] starIconList;
-    private boolean isClickingStar = false;
+    public HBox ratingHBox;
+    public VBox reviewHBox;
+    public VBox reviewListVBox;
     private int starMouseEntered = 0;
     private int bookId;
     private int curRating = 3;
@@ -63,14 +67,10 @@ public class BookInfoView {
         this.bookId = bookId;
     }
 
-    private void reloadReviewList() throws SQLException {
+    private void reloadReviewList() throws SQLException, IOException {
         // Review list
         ObservableList<Review> reviewList = ReviewManagement.getReviewListWithBookId(bookId);
-        ReviewManagement.initReviewList(reviewListView, reviewList);
-
-        // Make the list view non-scrollable (there is probably a better way to do this)
-        reviewListView.setMinHeight(250 * reviewList.size() + 10);
-        reviewListView.setMinWidth(850 + 10);
+        ReviewManagement.initReviewList(reviewListVBox, reviewList);
     }
 
     private void reloadRatingLabel() throws SQLException {
@@ -109,7 +109,6 @@ public class BookInfoView {
         starButton.setId("star-icon-default");
         starButton.applyCss();
     }
-
 
     public void setData(int id) throws IOException, SQLException {
         setBookId(id);
@@ -198,7 +197,8 @@ public class BookInfoView {
                 }
                 try {
                     reloadRatingLabel();
-                } catch (SQLException e) {
+                    reloadReviewList();
+                } catch (SQLException | IOException e) {
                     throw new RuntimeException(e);
                 }
             });
@@ -241,7 +241,7 @@ public class BookInfoView {
         AppMain.window.centerOnScreen();
     }
 
-    public void onSubmitReviewButtonClick(ActionEvent actionEvent) throws SQLException {
+    public void onSubmitReviewButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
         User currentUser = UserManagement.getCurrentUser();
         currentUser.addComment(bookId, reviewTextArea.getText());
         reloadReviewList();

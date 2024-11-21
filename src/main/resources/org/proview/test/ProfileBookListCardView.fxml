@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -21,14 +20,10 @@
                         <Insets bottom="10.0" left="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <ListView fx:id="borrowingListView" prefHeight="100.0" prefWidth="400.0">
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
+                  <VBox fx:id="borrowingListVBox" prefHeight="200.0" prefWidth="100.0">
                      <VBox.margin>
                         <Insets left="20.0" />
-                     </VBox.margin>
-                  </ListView>
+                     </VBox.margin></VBox>
                </children>
             </VBox>
             <VBox prefHeight="100.0" prefWidth="450.0">
@@ -41,14 +36,7 @@
                         <Insets bottom="10.0" left="10.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <ListView fx:id="favouriteListView" prefHeight="100.0" prefWidth="400.0">
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets left="10.0" right="20.0" />
-                     </VBox.margin>
-                  </ListView>
+                  <VBox fx:id="favouriteListVBox" prefHeight="200.0" prefWidth="100.0" />
                </children>
             </VBox>
          </children>
@@ -65,14 +53,10 @@
                         <Insets bottom="10.0" left="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <ListView fx:id="overdueListView" prefHeight="100.0" prefWidth="400.0">
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
+                  <VBox fx:id="overdueListVBox" prefHeight="200.0" prefWidth="100.0">
                      <VBox.margin>
                         <Insets left="20.0" />
-                     </VBox.margin>
-                  </ListView>
+                     </VBox.margin></VBox>
                </children>
             </VBox>
             <VBox prefHeight="100.0" prefWidth="450.0">
@@ -85,14 +69,7 @@
                         <Insets bottom="10.0" left="10.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <ListView fx:id="pastIssuesListView" prefHeight="100.0" prefWidth="400.0">
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets left="10.0" right="20.0" />
-                     </VBox.margin>
-                  </ListView>
+                  <VBox fx:id="pastIssuesListVBox" prefHeight="200.0" prefWidth="100.0" />
                </children>
             </VBox>
          </children>

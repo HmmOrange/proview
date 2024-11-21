@@ -5,13 +5,15 @@ import java.sql.Timestamp;
 public class Review {
     private int bookId;
     private int userId;
+    private int rating;
     private String review;
     private Timestamp timestampAdded;
 
-    public Review(int bookId, int userId, String review, Timestamp timestampAdded) {
+    public Review(int bookId, int userId, String review, int rating, Timestamp timestampAdded) {
         this.bookId = bookId;
         this.userId = userId;
         this.review = review;
+        this.rating = rating;
         this.timestampAdded = timestampAdded;
     }
 
@@ -33,5 +35,9 @@ public class Review {
 
     public long getTimestampAddedLong() {
         return timestampAdded.getTime();
+    }
+
+    public int getRating() {
+        return rating;
     }
 }

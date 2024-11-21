@@ -2,6 +2,7 @@ package org.proview.test.Container;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Book.BookManagement;
 import org.proview.test.Scene.ProfileView;
@@ -10,34 +11,10 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
 public class ProfileBookListView {
-
-    private enum Size {
-        BOOK_CELL_CARD_HEIGHT(125),
-        BOOK_CELL_COMPACT_HEIGHT(75),
-        BOOK_LISTVIEW_CARD_WIDTH(400),
-        BOOK_LISTVIEW_COMPACT_WIDTH(800),
-        ACTIVITY_CELL_HEIGHT(75),
-        RECENT_ACTIVITY_LISTVIEW_WIDTH(350),
-        PADDING(10);
-
-        private final int value;
-
-        Size(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-    }
-
-    public ListView<BookLib> borrowingListView;
-    public ListView<BookLib> overdueListView;
-    public ListView<BookLib> pastIssuesListView;
-    public ListView<BookLib> favouriteListView;
-
-    private int bookCellHeight;
-    private int bookListViewWidth;
+    public VBox borrowingListVBox;
+    public VBox overdueListVBox;
+    public VBox pastIssuesListVBox;
+    public VBox favouriteListVBox;
 
     private void loadBorrowingListView() throws SQLException {
         ObservableList<BookLib> borrowingBookList = ProfileView.borrowingBookList;
@@ -46,13 +23,7 @@ public class ProfileBookListView {
             borrowingBookList = ProfileView.borrowingBookList;
         }
 
-        BookManagement.initBookLibList(borrowingListView, borrowingBookList, ProfileView.cardView,false);
-        borrowingListView.setPrefHeight(
-                bookCellHeight * borrowingBookList.size() + Size.PADDING.getValue()
-        );
-        borrowingListView.setPrefWidth(
-                bookListViewWidth + Size.PADDING.getValue()
-        );
+        BookManagement.initBookLibList(borrowingListVBox, borrowingBookList, ProfileView.cardView, false, false);
     }
 
     private void loadOverdueListView() throws SQLException {
@@ -62,13 +33,7 @@ public class ProfileBookListView {
             overdueBookList = ProfileView.overdueBookList;
         }
 
-        BookManagement.initBookLibList(overdueListView, overdueBookList, ProfileView.cardView, false);
-        overdueListView.setPrefHeight(
-                bookCellHeight * overdueBookList.size() + Size.PADDING.getValue()
-        );
-        overdueListView.setPrefWidth(
-                bookListViewWidth + Size.PADDING.getValue()
-        );
+        BookManagement.initBookLibList(overdueListVBox, overdueBookList, ProfileView.cardView, false, false);
     }
 
     private void loadPastIssuesListView() throws SQLException {
@@ -78,14 +43,7 @@ public class ProfileBookListView {
             pastIssuesBookList = ProfileView.pastIssuesBookList;
         }
 
-        BookManagement.initBookLibList(pastIssuesListView, pastIssuesBookList, ProfileView.cardView, false);
-        pastIssuesListView.setPrefHeight(
-                bookCellHeight * pastIssuesBookList.size() + Size.PADDING.getValue()
-        );
-        pastIssuesListView.setPrefWidth(
-                bookListViewWidth + Size.PADDING.getValue()
-        );
-
+        BookManagement.initBookLibList(pastIssuesListVBox, pastIssuesBookList, ProfileView.cardView, false, false);
     }
 
     private void loadFavouriteListView() throws SQLException {
@@ -95,24 +53,10 @@ public class ProfileBookListView {
             favouriteBookList = ProfileView.favouriteBookList;
         }
 
-        BookManagement.initBookLibList(favouriteListView, favouriteBookList, ProfileView.cardView, false);
-        pastIssuesListView.setPrefHeight(
-                bookCellHeight * favouriteBookList.size() + Size.PADDING.getValue()
-        );
-        pastIssuesListView.setPrefWidth(
-                bookListViewWidth + Size.PADDING.getValue()
-        );
+        BookManagement.initBookLibList(favouriteListVBox, favouriteBookList, ProfileView.cardView, false, false);
     }
 
     public void initialize() throws SQLException, FileNotFoundException {
-        if (ProfileView.cardView) {
-            bookCellHeight = Size.BOOK_CELL_CARD_HEIGHT.getValue();
-            bookListViewWidth = Size.BOOK_LISTVIEW_CARD_WIDTH.getValue();
-        }
-        else {
-            bookCellHeight = Size.BOOK_CELL_COMPACT_HEIGHT.getValue();
-            bookListViewWidth = Size.BOOK_LISTVIEW_COMPACT_WIDTH.getValue();
-        }
         loadBorrowingListView();
         loadOverdueListView();
         loadPastIssuesListView();
