@@ -2,22 +2,54 @@
 
 .nav-bar {
     -fx-background-color: #457B9D;
+    -fx-padding: 0px;
+    -fx-background-radius: 0px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
 }
 
-.button:hover .ikonli-font-icon {
-    -fx-icon-size: 24;
+.nav-button {
+    -fx-background-color: #f8f9fa;
+    -fx-text-fill: #000000;
+    -fx-font-weight: 800; /* Semi-bold */
+    -fx-padding: 7px 10px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
 }
 
-.button:focused .ikonli-font-icon {
-    -fx-icon-size: 24;
+.nav-button:hover {
+    -fx-background-color: #1D3557;
+    -fx-text-fill: #ffffff;
 }
 
-/* This is not working for some reasons... */
+.search-input {
+    -fx-background-color: #f8f9fa;
+    -fx-text-fill: #212529;
+    -fx-padding: 7px 10px;
+    -fx-background-radius: 10px;
+    -fx-border-color: #ced4da;
+    -fx-border-radius: 10px;
+}
 
-#profile-button .button {
+.search-button {
     -fx-background-color: transparent;
-    -fx-border-color: red;
-    -fx-border-width: 5;
-    -fx-padding: 0;
-    -fx-background-radius: 50%;
+    -fx-cursor: hand;
+}
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.logout-button {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-padding: 7px 10px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.logout-button:hover {
+    -fx-background-color: #1D3557;
+    -fx-text-fill: #ffffff;
 }
