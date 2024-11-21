@@ -34,14 +34,21 @@ public class AdminManagementNavBarView {
         try (FileWriter writer = new FileWriter(file)) {
             int numberOfColumns = resultSet.getMetaData().getColumnCount();
             for (int i = 1; i <= numberOfColumns; i++) {
-                writer.append(resultSet.getMetaData().getColumnName(i));
+                String columnName = resultSet.getMetaData().getColumnName(i);
+                columnName = columnName.replace(",", ";");
+                writer.append(columnName);
                 if (i < numberOfColumns) writer.append(",");
             }
             writer.append("\n");
 
             while (resultSet.next()) {
                 for (int i = 1; i <= numberOfColumns; i++) {
-                    writer.append(resultSet.getString(i));
+                    String data = resultSet.getString(i);
+                    if (data == null) {
+                        data = "";
+                    }
+                    data = data.replace(",", ";");
+                    writer.append(data);
                     if (i < numberOfColumns) {
                         writer.append(",");
                     }
