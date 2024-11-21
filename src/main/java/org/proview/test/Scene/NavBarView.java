@@ -60,7 +60,7 @@ public class NavBarView {
         }
     public void initialize() throws FileNotFoundException {
         if (UserManagement.getCurrentUser() instanceof Admin) {
-            issueButtonLabel.setText("Manage");
+            issueButton.setText("Manage");
         }
         String curQuery = SearchUtils.getCurQuery();
         if (curQuery != null) {

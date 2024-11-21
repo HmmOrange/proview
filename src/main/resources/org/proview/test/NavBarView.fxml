@@ -1,89 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <HBox fx:id="navBarHBox" prefHeight="50.0" prefWidth="1300.0" stylesheets="@styles/NavBarView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.NavBarView">
    <children>
-      <AnchorPane fx:id="topPane" onKeyReleased="#onKeyReleased" prefHeight="50.0" prefWidth="1300.0" styleClass="nav-bar">
+      <AnchorPane fx:id="topPane" prefHeight="20.0" prefWidth="1300.0" styleClass="nav-bar">
          <children>
-            <Button fx:id="libraryButton" layoutX="1024.0" layoutY="12.0" mnemonicParsing="false" onAction="#onLibraryButtonClick" prefWidth="60.0">
-               <graphic>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <FontIcon iconLiteral="fas-book" iconSize="24">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </FontIcon>
-                        <Label text="Library" />
-                     </children>
-                  </VBox>
-               </graphic></Button>
-            <Button fx:id="profileButton" layoutX="1215.0" layoutY="9.0" mnemonicParsing="false" onAction="#onProfileButtonClick" />
-            <ImageView fitHeight="61.0" fitWidth="76.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
-            <TextField fx:id="bookSearchBar" layoutX="52.0" layoutY="19.0" prefHeight="35.0" prefWidth="555.0" promptText="Testing search bar" />
-            <Button fx:id="searchButton" layoutX="629.0" layoutY="12.0" mnemonicParsing="false" onAction="#onSearchButtonClick" prefHeight="35.0" prefWidth="60.0" text="Search">
-               <graphic>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <FontIcon iconLiteral="fas-search" iconSize="24">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </FontIcon>
-                        <Label text="Search" />
-                     </children>
-                  </VBox>
-               </graphic></Button>
-            <Button fx:id="issueButton" layoutX="955.0" layoutY="12.0" mnemonicParsing="false" onAction="#onIssueButtonClick" prefWidth="60.0">
-               <graphic>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <FontIcon iconLiteral="far-list-alt" iconSize="24">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </FontIcon>
-                        <Label fx:id="issueButtonLabel" text="Issues" />
-                     </children>
-                  </VBox>
-               </graphic></Button>
-            <Button fx:id="homeButton" layoutX="887.0" layoutY="12.0" mnemonicParsing="false" onAction="#onHomeButtonClick" prefWidth="60.0">
-               <graphic>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <FontIcon iconLiteral="fas-home" iconSize="24">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </FontIcon>
-                        <Label text="Home" />
-                     </children>
-                  </VBox>
-               </graphic></Button>
-            <Button fx:id="logoutButton" layoutX="1090.0" layoutY="12.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" prefWidth="60.0">
-               <graphic>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <FontIcon iconLiteral="fas-sign-out-alt" iconSize="24">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </FontIcon>
-                        <Label text="Log out" />
-                     </children>
-                  </VBox>
-               </graphic>
-            </Button>
-            <Button layoutX="818.0" layoutY="22.0" mnemonicParsing="false" onAction="#onGameButtonClicked" text="Game" />
+           <HBox layoutX="6.0" layoutY="10.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="33.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/LogoUET.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ImageView>
+                  <Button fx:id="homeButton" onAction="#onHomeButtonClick" styleClass="nav-button" text="Home">
+                     <graphic>
+                        <FontIcon iconLiteral="fas-home" iconSize="14" />
+                     </graphic></Button>
+                  <Separator orientation="VERTICAL" prefHeight="30.0" prefWidth="0.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="-5.0" right="-5.0" />
+                     </padding></Separator>
+                  <Button fx:id="libraryButton" onAction="#onLibraryButtonClick" styleClass="nav-button" text="Library">
+                     <graphic>
+                        <FontIcon iconLiteral="fas-book" iconSize="14" />
+                     </graphic></Button>
+                  <Button fx:id="issueButton" onAction="#onIssueButtonClick" styleClass="nav-button" text="Issues">
+                     <graphic>
+                        <FontIcon iconLiteral="far-list-alt" iconSize="14" />
+                     </graphic></Button>
+                  <Button onAction="#onGameButtonClicked" styleClass="nav-button" text="Games">
+                     <graphic>
+                        <FontIcon iconLiteral="fas-gamepad" iconSize="14" />
+                     </graphic></Button>
+                  <Button styleClass="nav-button" text="Dashboard">
+                     <graphic>
+                        <FontIcon iconLiteral="far-chart-bar" iconSize="14" />
+                     </graphic></Button>
+               </children>
+            </HBox>
+            <HBox layoutX="532.0" layoutY="10.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="bookSearchBar" onAction="#onSearchButtonClick" prefHeight="33.0" prefWidth="595.0" promptText="Search..." styleClass="search-input" />
+                  <Button fx:id="searchButton" onAction="#onSearchButtonClick" prefHeight="15.0" prefWidth="16.0" styleClass="search-button" />
+                  <Button fx:id="profileButton" onAction="#onProfileButtonClick" styleClass="icon-button" />
+                  <Button fx:id="logoutButton" onAction="#onLogoutButtonClick" styleClass="logout-button" text="Log out" />
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
    </children>
