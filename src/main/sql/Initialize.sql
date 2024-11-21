@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS issue;
+DROP TABLE IF EXISTS book_tag;
 DROP TABLE IF EXISTS tag;
 DROP TABLE IF EXISTS rating;
 DROP TABLE IF EXISTS review;
@@ -32,14 +33,14 @@ CREATE TABLE user
 -- TODO: Remove the username field
 CREATE TABLE issue
 (
-    id          INT PRIMARY KEY AUTO_INCREMENT,
-    start_date  TIMESTAMP,
-    duration    INT,
-    user_id     INT,
-    username    VARCHAR(20),
-    book_id INT,
-    status VARCHAR(30),
-    end_date TIMESTAMP NULL,
+    id         INT PRIMARY KEY AUTO_INCREMENT,
+    start_date TIMESTAMP,
+    duration   INT,
+    user_id    INT,
+    username   VARCHAR(20),
+    book_id    INT,
+    status     VARCHAR(30),
+    end_date   TIMESTAMP NULL,
     FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE ON UPDATE CASCADE
@@ -47,9 +48,17 @@ CREATE TABLE issue
 
 CREATE TABLE tag
 (
+    name           VARCHAR(100) PRIMARY KEY,
+    bg_color_hex   VARCHAR(10),
+    text_color_hex VARCHAR(10)
+);
+
+CREATE TABLE book_tag
+(
     book_id INT,
     tag     VARCHAR(100),
-    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (tag) REFERENCES tag (name) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE rating
@@ -106,12 +115,29 @@ INSERT INTO book(name, author, description, time_added, copies)
     VALUES ('Book Number 3', 'Author #3', 'Very long description #3', CURRENT_TIMESTAMP(), 1);
 
 -- Add sample tags
-INSERT INTO tag(book_id, tag) VALUES (1, 'Drama');
-INSERT INTO tag(book_id, tag) VALUES (1, 'Slice of Life');
+INSERT INTO tag (name, bg_color_hex, text_color_hex) VALUES
+('Fiction', '#FFB3BA', '#5A5A5A'),
+('Non-fiction', '#BAE1FF', '#4A4A4A'),
+('Science', '#BFFCC6', '#3A3A3A'),
+('History', '#FFDFBA', '#5A5A5A'),
+('Fantasy', '#D5BAFF', '#4A4A4A'),
+('Biography', '#FFFFBA', '#3A3A3A'),
+('Mystery', '#BAFFC9', '#4A4A4A'),
+('Romance', '#FFC2BA', '#5A5A5A'),
+('Horror', '#C1C1C1', '#2A2A2A'),
+('Adventure', '#FFFAC8', '#3A3A3A');
 
-INSERT INTO tag(book_id, tag) VALUES (2, 'Action');
-INSERT INTO tag(book_id, tag) VALUES (2, 'Comedy');
-INSERT INTO tag(book_id, tag) VALUES (2, 'Guns');
+-- Add sample book tags
+INSERT INTO book_tag(book_id, tag) VALUES
+(1, 'Fiction'),
+(1, 'Science'),
+(1, 'Mystery'),
+(2, 'Non-fiction'),
+(2, 'Biography'),
+(2, 'Science'),
+(3, 'Fiction'),
+(3, 'Adventure'),
+(3, 'Horror');
 
 -- Add sample ratings
 INSERT INTO rating(user_id, book_id, rating, time_added)

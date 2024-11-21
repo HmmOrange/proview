@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Review.Review;
+import org.proview.modal.Tag.TagStyle;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.User;
@@ -12,9 +13,7 @@ import org.proview.test.AppMain;
 import org.proview.test.Scene.ProfileView;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class SQLUtils {
     static Connection connection = AppMain.connection;
@@ -465,7 +464,7 @@ public class SQLUtils {
                         book_id,
                         GROUP_CONCAT(tag ORDER BY tag SEPARATOR ', ') AS concatenated_tags
                     FROM
-                        tag
+                        book_tag
                     GROUP BY
                         book_id
                 ),
@@ -731,18 +730,34 @@ public class SQLUtils {
     public static List<Double> getBooksCount() throws SQLException {
         List<Double> respond = new ArrayList<>();
         String sql = """
-                SELECT total.total, avgrating.avgrating
-                FROM (
-                    (SELECT COUNT(*) AS total FROM book) AS total,
-                    (SELECT ROUND(AVG(rating),1) AS avgrating FROM rating) AS avgrating
-                ); 
-                """;
+            SELECT total.total, avgrating.avgrating
+            FROM (
+                (SELECT COUNT(*) AS total FROM book) AS total,
+                (SELECT ROUND(AVG(rating),1) AS avgrating FROM rating) AS avgrating
+            );
+        """;
         ResultSet resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
         if (resultSet.next()) {
             respond.add(resultSet.getDouble("total"));
             respond.add(resultSet.getDouble("avgrating"));
         }
         return respond;
+    }
+
+    public static Map<String, TagStyle> getTagMap() throws SQLException {
+        String sql = """
+            SELECT * FROM tag;
+        """;
+        ResultSet resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
+        Map<String, TagStyle> tagMap = new HashMap<>();
+        while (resultSet.next()) {
+            String name = resultSet.getString("name");
+            String bgColorHex = resultSet.getString("bg_color_hex");
+            String textColorHex = resultSet.getString("text_color_hex");
+
+            tagMap.put(name, new TagStyle(bgColorHex, textColorHex));
+        }
+        return tagMap;
     }
 }
 

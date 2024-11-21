@@ -76,7 +76,8 @@ public class BookInfoView {
     private void reloadRatingLabel() throws SQLException {
         BookLib book = SQLUtils.getBook(bookId);
         assert book != null;
-        ratingLabel.setText(ratingLabel.getText().split(" ", 2)[0] + " " + book.getRating());
+        // If the label is already filled, only get the first default word (which is in fxml)
+        ratingLabel.setText(ratingLabel.getText().split(" ", 2)[0] + " " + String.format("%.2f", book.getRating()));
     }
 
     public void initialize() throws SQLException {
