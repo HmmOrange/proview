@@ -160,21 +160,7 @@ public class NavBarView {
     }
 
     public void onGameButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
-        String sql = """
-                SELECT COUNT(*) AS count FROM questions;
-                """;
-        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            GameActivity.setNumOfQuestion(resultSet.getInt("count"));
-        }
-        System.out.println(GameActivity.getNumOfQuestion());
-        GameActivity.setNewQuestionsList();
-        System.out.println(GameActivity.getQuestionsChosen().getFirst());
-        GameActivity.setCurrentQuestionID(GameActivity.getQuestionsChosen().getFirst());
-        GameActivity.setNumberOfQuestionsAnswered(0);
-        GameActivity.setScore(0);
-        GameActivity.setLifeRemains(3);
+        GameActivity.restartGame();
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("GameView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -22,16 +23,24 @@ public class GameView {
     public Button ans2Button;
     public Button ans3Button;
     public Button ans4Button;
-    public Label resultLabel;
+    public Label pointLabel;
     public Label lifeRemainsLabel;
     public Button nextButton;
+    public Label difficultyLabel;
+    public Label highScoreLabel;
 
     private boolean[] ifLabelHasCorrectAns = new boolean[4];
+    private List<Button> ansButtons = new ArrayList<>();
+    private String difficulty = "easy";
+    private int highScore = 0;
 
     public void initialize() throws SQLException {
         nextButton.setDisable(true);
         nextButton.setVisible(false);
+        pointLabel.setText("Score: " + GameActivity.getScore());
         lifeRemainsLabel.setText(lifeRemainsLabel.getText() + GameActivity.getLifeRemains());
+        highScore = GameActivity.getHighScore();
+        highScoreLabel.setText(highScoreLabel.getText() + highScore);
         int qId = GameActivity.getCurrentQuestionID();
 
         String sql = """
@@ -43,9 +52,9 @@ public class GameView {
         preparedStatement.setInt(1, qId);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
-            System.out.println("run");
             String type = resultSet.getString("type");
             if (type.equals("multiple")) {
+                difficulty = resultSet.getString("difficulty");
                 String question = resultSet.getString("question");
                 String correct_answer = resultSet.getString("correct_answer");
                 String incr_ans1 = resultSet.getString("incr_ans1");
@@ -62,7 +71,6 @@ public class GameView {
                     } else {
                         ifLabelHasCorrectAns[i] = false;
                     }
-                    System.out.println(i + " is " + ifLabelHasCorrectAns[i]);
                 }
                 questionLabel.setText(question);
                 ans1Button.setText(answers[answerOrderNo.get(0)]);
@@ -88,49 +96,64 @@ public class GameView {
                     } else {
                         ifLabelHasCorrectAns[i] = false;
                     }
-                    System.out.println(i + " is " + ifLabelHasCorrectAns[i]);
                 }
                 questionLabel.setText(question);
                 ans1Button.setText(answers[answerOrderNo.get(0)]);
                 ans2Button.setText(answers[answerOrderNo.get(1)]);
             }
         }
+        ansButtons = List.of(ans1Button, ans2Button, ans3Button, ans4Button);
+        difficultyLabel.setText(difficultyLabel.getText() + difficulty);
     }
 
-    public void onAnswerButtonClick(int ansId) throws IOException {
+    private void onAnswerButtonClick(int ansId) {
         GameActivity.setNumberOfQuestionsAnswered(GameActivity.getNumberOfQuestionsAnswered() + 1);
 
         if (ifLabelHasCorrectAns[ansId]) {
-            resultLabel.setText("That's right");
-            GameActivity.setScore(GameActivity.getScore() + 1);
+            GameActivity.setScore(GameActivity.getScore() + GameActivity.getScoreAdded(difficulty));
+            ansButtons.get(ansId).setStyle("-fx-background-color: green; -fx-text-fill: white;");
         } else {
-            resultLabel.setText("That's wrong");
             GameActivity.setLifeRemains(GameActivity.getLifeRemains() - 1);
-            System.out.println("life: " + GameActivity.getLifeRemains());
-            if (GameActivity.getLifeRemains() == 0) resultLabel.setText("End game. Your score: " + GameActivity.getScore());
+            lifeRemainsLabel.setText("Life remains: " + GameActivity.getLifeRemains());
+            ansButtons.get(ansId).setStyle("-fx-background-color: red; -fx-text-fill: white;");
+        }
+        pointLabel.setText("Score: " + GameActivity.getScore());
+        if (GameActivity.getLifeRemains() == 0) {
+            if (GameActivity.getScore() > highScore) {
+                pointLabel.setText("End game. New High Score: " + GameActivity.getScore());
+            } else {
+                pointLabel.setText("End game. Final " + pointLabel.getText());
+            }
         }
         GameActivity.setCurrentQuestionID(GameActivity.getQuestionsChosen().get(GameActivity.getNumberOfQuestionsAnswered()));
         nextButton.setVisible(true);
         nextButton.setDisable(false);
+        disableAnswerButtons();
     }
 
-    public void onAns1ButtonClicked(ActionEvent actionEvent) throws IOException, InterruptedException {
+    private void disableAnswerButtons() {
+        for (Button b : ansButtons) {
+            b.setDisable(true);
+        }
+    }
+
+    public void onAns1ButtonClicked(ActionEvent actionEvent) {
         onAnswerButtonClick(0);
     }
 
-    public void onAns2ButtonClicked(ActionEvent actionEvent) throws IOException {
+    public void onAns2ButtonClicked(ActionEvent actionEvent) {
         onAnswerButtonClick(1);
     }
 
-    public void onAns3ButtonClicked(ActionEvent actionEvent) throws IOException {
+    public void onAns3ButtonClicked(ActionEvent actionEvent) {
         onAnswerButtonClick(2);
     }
 
-    public void onAns4ButtonClicked(ActionEvent actionEvent) throws IOException {
+    public void onAns4ButtonClicked(ActionEvent actionEvent) {
         onAnswerButtonClick(3);
     }
 
-    public void onNextButtonClicked(ActionEvent actionEvent) throws IOException {
+    public void onNextButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
         if(GameActivity.getNumberOfQuestionsAnswered() < GameActivity.getNumOfQuestion() && GameActivity.getLifeRemains() > 0) {
             FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("GameView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
@@ -138,6 +161,7 @@ public class GameView {
             AppMain.window.setScene(scene);
             AppMain.window.centerOnScreen();
         } else {
+            GameActivity.endGame();
             FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
             AppMain.window.setTitle("Hello!");
@@ -145,4 +169,16 @@ public class GameView {
             AppMain.window.centerOnScreen();
         }
     }
+
+    public void onRestartButtonClicked(ActionEvent actionEvent) throws SQLException, IOException {
+        GameActivity.endGame();
+        GameActivity.restartGame();
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("GameView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+        AppMain.window.setTitle("Hello!");
+        AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
+    }
+
+
 }
