@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<Button mnemonicParsing="false" styleClass="book-cell-button" stylesheets="@styles/ListView.css" onAction="#onMouseClick" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCompactView">
+<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="book-cell-button" stylesheets="@styles/ListView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCompactView">
    <graphic>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="800.0">
          <children>
@@ -41,14 +40,7 @@
                <children>
                   <HBox prefHeight="44.0" prefWidth="425.0">
                      <children>
-                        <Label fx:id="tagLabel" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="330.0" text="Science, Animals, World" wrapText="true">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets top="10.0" />
-                           </HBox.margin>
-                        </Label>
+                        <HBox fx:id="tagHBox" alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="328.0" spacing="10.0" />
                         <Label fx:id="infoLabel" alignment="CENTER_RIGHT" contentDisplay="TOP" prefHeight="25.0" prefWidth="166.0" text="4.5 🌟 102 👀 " wrapText="true">
                            <font>
                               <Font size="18.0" />

@@ -15,6 +15,7 @@ module org.proview.test {
     requires java.desktop;
     requires timeago;
     requires org.kordamp.ikonli.javafx;
+    requires annotations;
 
     exports org.proview.api;
     opens org.proview.api to javafx.fxml;
@@ -30,6 +31,8 @@ module org.proview.test {
     opens org.proview.modal.Review to javafx.fxml;
     exports org.proview.modal.Issue;
     opens org.proview.modal.Issue to javafx.fxml;
+    exports org.proview.modal.Tag;
+    opens org.proview.modal.Tag to javafx.fxml;
     exports org.proview.test.Container;
     opens org.proview.test.Container to javafx.fxml;
     exports org.proview.test.Scene;

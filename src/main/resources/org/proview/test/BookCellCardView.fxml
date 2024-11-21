@@ -23,7 +23,7 @@
                         <Insets left="10.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="authorLabel" alignment="TOP_LEFT" prefHeight="186.0" prefWidth="355.0" text="Author">
+                  <Label fx:id="authorLabel" alignment="TOP_LEFT" prefHeight="59.0" prefWidth="280.0" text="Author">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -31,14 +31,11 @@
                         <Insets left="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="tagLabel" alignment="BOTTOM_LEFT" prefHeight="25.0" prefWidth="344.0" text="Science, Animals, World" wrapText="true">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
+                  <HBox fx:id="tagHBox" prefHeight="49.0" prefWidth="290.0" spacing="5.0">
                      <VBox.margin>
                         <Insets left="10.0" />
                      </VBox.margin>
-                  </Label>
+                  </HBox>
                   <HBox>
                      <VBox.margin>
                         <Insets left="10.0" />

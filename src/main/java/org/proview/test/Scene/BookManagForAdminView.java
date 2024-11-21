@@ -20,7 +20,7 @@ public class BookManagForAdminView {
         totalBooksLabel.setText(Integer.toString((int) (SQLUtils.getBooksCount().getFirst() - 0)));
         avgRatingLabel.setText(Double.toString(SQLUtils.getBooksCount().get(1)));
 
-        String[] columns = {"ID", "Title", "Author", "Tag", "Description", "Copies", "Total queries", "Reviews", "Average Rating"};
+        String[] columns = {"ID", "Title", "Author", "TagView", "Description", "Copies", "Total queries", "Reviews", "Average Rating"};
         for (int i = 0; i < columns.length; i++) {
             TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns[i]);
             int finalI = i;
