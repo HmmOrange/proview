@@ -31,16 +31,18 @@ public class BookCellCompactView {
     public ImageView coverImageView;
     public Label titleLabel;
     public HBox tagHBox;
-    public Label infoLabel;
     public Label copiesLabel;
     public Label authorLabel;
+    public Label issuesLabel;
+    public Label ratingLabel;
     private int id = -1;
 
     public void setData(int id, String title, String author, String tags, double rating, int issueCount, int copiesAvailable) throws IOException, SQLException {
         this.id = id;
         titleLabel.setText(title);
         authorLabel.setText(author);
-        infoLabel.setText(rating + " 🌟 " + issueCount + " 👀 ");
+        ratingLabel.setText(String.format("%.2f", rating));
+        issuesLabel.setText(String.valueOf(issueCount));
         if (copiesAvailable > 0)
             copiesLabel.setText(copiesAvailable + (copiesAvailable == 1 ? " copy" : " copies") + " available");
         else {

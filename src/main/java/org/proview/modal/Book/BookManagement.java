@@ -220,7 +220,7 @@ public class BookManagement {
             }
         }
         return bookList;
-    }it
+    }
 
     public static void initBookGoogleList(VBox bookListVBox, ObservableList<BookGoogle> bookList) {
         bookListVBox.getChildren().clear();

@@ -31,7 +31,8 @@ public class BookCellCardView {
     public ImageView coverImageView;
     public Label titleLabel;
     public HBox tagHBox;
-    public Label infoLabel;
+    public Label ratingLabel;
+    public Label issuesLabel;
     public Label copiesLabel;
     public Label authorLabel;
     private int id = -1;
@@ -39,7 +40,6 @@ public class BookCellCardView {
     public void setData(String title, String authors, String imageUrl, String tags) throws IOException, SQLException {
         titleLabel.setText(title);
         authorLabel.setText(authors);
-        infoLabel.setText(0 + " 🌟 " + 0 + " 👀 ");
         copiesLabel.setText("View in Google Books 🔗");
 
         // System.out.println(imageUrl);
@@ -94,7 +94,8 @@ public class BookCellCardView {
         this.id = id;
         titleLabel.setText(title);
         authorLabel.setText(author);
-        infoLabel.setText(rating + " 🌟 " + issueCount + " 👀 ");
+        ratingLabel.setText(String.format("%.2f", rating));
+        issuesLabel.setText(String.valueOf(issueCount));
 
         if (copiesAvailable >= 0)
             copiesLabel.setText(copiesAvailable + (copiesAvailable == 1 ? " copy" : " copies") + " available");

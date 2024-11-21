@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="book-cell-button" stylesheets="@styles/ListView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCardView">
    <graphic>
@@ -41,12 +42,27 @@
                         <Insets left="10.0" />
                      </VBox.margin>
                      <children>
-                        <Label fx:id="infoLabel" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="38.0" prefWidth="365.0" text="4.5 🌟 102 👀 " wrapText="true">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="copiesLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="20.0" prefWidth="467.0" text="3 copies available" wrapText="true">
+                        <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="95.0" spacing="3.0">
+                           <children>
+                              <Label fx:id="ratingLabel" alignment="CENTER_RIGHT" contentDisplay="TOP" prefHeight="0.0" text="4.50" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14" text="" wrappingWidth="15.75">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </FontIcon>
+                              <Label fx:id="issuesLabel" text="4">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <FontIcon iconColor="#457b9d" iconLiteral="fas-book-reader" iconSize="14" />
+                           </children>
+                        </HBox>
+                        <Label fx:id="copiesLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="20.0" prefWidth="193.0" text="3 copies available" wrapText="true">
                            <font>
                               <Font name="System Italic" size="14.0" />
                            </font>
