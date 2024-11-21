@@ -16,9 +16,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class GamesAPI {
-    public static final String API_URL = "https://opentdb.com/api.php?amount=50&category=10";
+    private static final String API_URL = "https://opentdb.com/api.php?amount=50&category=10";
 
-    public static String getQandAFromAPI() throws IOException {
+    private static String getQandAFromAPI() throws IOException {
         URL url = URI.create(API_URL).toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
@@ -64,7 +64,7 @@ public class GamesAPI {
             String response = getQandAFromAPI();
             if (response == null) {
                 System.out.println("API response is null at attempt: " + (times + 1));
-                break;
+                continue;
             }
             Thread.sleep(5000);
             JsonParser parser = new JsonParser();
@@ -128,7 +128,30 @@ public class GamesAPI {
                 System.out.println("Không tìm thấy q&a trong phản hồi JSON.");
             }
         }
+        addGameHistoryTableToDb();
 
+    }
 
+    private static void addGameHistoryTableToDb() {
+        String dropTableSQL = "DROP TABLE IF EXISTS game_history";
+        String createTableSQL = """
+            CREATE TABLE game_history (
+                id INT PRIMARY KEY AUTO_INCREMENT,
+                user_id INT NOT NULL,
+                score INT NOT NULL,
+                question_answered INT NOT NULL,
+                start_time TIMESTAMP NOT NULL,
+                end_time TIMESTAMP NOT NULL
+            )
+            """;
+        Connection connection = AppMain.connection;
+        try (
+                PreparedStatement dropStmt = connection.prepareStatement(dropTableSQL);
+                PreparedStatement createStmt = connection.prepareStatement(createTableSQL)) {
+            dropStmt.execute();
+            createStmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

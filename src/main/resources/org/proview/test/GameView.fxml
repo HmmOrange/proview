@@ -7,19 +7,37 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.GameView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.GameView">
     <top>
         <fx:include source="NavBarView.fxml" />
     </top>
     <center>
-      <VBox alignment="CENTER" prefHeight="424.0" prefWidth="732.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="340.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="resultLabel">
+            <HBox alignment="CENTER" prefHeight="41.0" prefWidth="772.0" spacing="20.0">
+               <children>
+                  <Label fx:id="highScoreLabel" text="High Score: ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="difficultyLabel" text="Difficulty: ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#onRestartButtonClicked" text="Restart" />
+               </children>
+            </HBox>
+            <Label fx:id="pointLabel" text="Score: ">
                <font>
                   <Font size="28.0" />
                </font>
             </Label>
-            <Label fx:id="lifeRemainsLabel" text="Life remains: " />
+            <Label fx:id="lifeRemainsLabel" text="Life remains: ">
+               <font>
+                  <Font size="15.0" />
+               </font></Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" text="Question" wrapText="true">
@@ -45,10 +63,8 @@
                   </HBox>
                </children>
             </VBox>
+            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#onNextButtonClicked" text="Next" />
          </children>
       </VBox>
    </center>
-   <bottom>
-      <Button fx:id="nextButton" mnemonicParsing="false" onAction="#onNextButtonClicked" text="Next" BorderPane.alignment="CENTER" />
-   </bottom>
 </BorderPane>
