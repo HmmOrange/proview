@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Review.Review;
+import org.proview.modal.Tag.Tag;
 import org.proview.modal.Tag.TagStyle;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
@@ -803,6 +804,22 @@ public class SQLUtils {
             return resultSet.getString("review");
         }
         return null;
+    }
+
+    public static ObservableList<Tag> getTagList() throws SQLException {
+        String sql = """
+            SELECT * FROM tag
+        """;
+        ResultSet resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
+        ObservableList<Tag> tagList = FXCollections.observableArrayList();
+        while (resultSet.next()) {
+            String name = resultSet.getString("name");
+            String bgColorHex = resultSet.getString("bg_color_hex");
+            String textColorHex = resultSet.getString("text_color_hex");
+
+            tagList.add(new Tag(name, bgColorHex, textColorHex));
+        }
+        return tagList;
     }
 }
 

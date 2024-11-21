@@ -26,7 +26,7 @@
                   <Insets left="20.0" right="100.0" top="20.0" />
                </VBox.margin>
                <children>
-                  <TableView fx:id="usersTableView" prefHeight="187.0" prefWidth="643.0" tableMenuButtonVisible="true">
+                  <TableView fx:id="tagTable" prefHeight="187.0" prefWidth="643.0" tableMenuButtonVisible="true">
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
@@ -100,7 +100,7 @@
                                        </VBox.margin>
                                        <children>
                                           <Label text="Label" />
-                                          <Button fx:id="confirmButton1" mnemonicParsing="false" text="Edit tag" />
+                                          <Button fx:id="confirmButton" mnemonicParsing="false" text="Edit tag" />
                                        </children>
                                     </HBox>
                                  </children>
