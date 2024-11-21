@@ -25,6 +25,7 @@ import java.util.List;
 public class AdminManagementNavBarView {
     public VBox root;
     private ComboBox<String> tableComboBox = new ComboBox<>();
+    private Label exportResultLabel = new Label();
 
     private void exportDatabaseToCsvFile(String table, File file) throws SQLException, IOException {
         String sql = String.format("SELECT * FROM %s", table);
@@ -55,12 +56,10 @@ public class AdminManagementNavBarView {
                 }
                 writer.append("\n");
             }
-            Label exportResultLabel = new Label("Export successfully!");
-            root.getChildren().add(exportResultLabel);
+            exportResultLabel.setText("Export successfully!");
         } catch (IOException e) {
             e.printStackTrace();
-            Label exportResultLabel = new Label("Fail to write data to CSV file!");
-            root.getChildren().add(exportResultLabel);
+            exportResultLabel.setText("Fail to write data to CSV file!");
         }
     }
 
@@ -103,6 +102,7 @@ public class AdminManagementNavBarView {
             tableComboBox.getItems().addAll(tablesList);
             tableComboBox.setValue(tablesList.getFirst());
             root.getChildren().add(tableComboBox);
+            root.getChildren().add(exportResultLabel);
         } else {
             String table = tableComboBox.getValue();
             FileChooser fileChooser = new FileChooser();
@@ -114,8 +114,7 @@ public class AdminManagementNavBarView {
             if (file != null) {
                 exportDatabaseToCsvFile(table, file);
             } else {
-                Label exportResultLabel = new Label("Fail to export!");
-                root.getChildren().add(exportResultLabel);
+                exportResultLabel.setText("No directory chosen!");
             }
         }
     }
