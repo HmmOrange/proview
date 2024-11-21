@@ -6,5 +6,5 @@
 }
 
 .book-cell-button:hover {
-    -fx-background-color: rgba(0, 0, 0, 0.1);
+    -fx-background-color: rgba(168, 218, 220, 0.3);
 }

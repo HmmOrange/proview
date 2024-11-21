@@ -14,7 +14,7 @@
    <children>
       <AnchorPane fx:id="topPane" prefHeight="20.0" prefWidth="1300.0" styleClass="nav-bar">
          <children>
-            <HBox layoutX="6.0" layoutY="10.0" spacing="10.0">
+           <HBox layoutX="6.0" layoutY="10.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="33.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -37,7 +37,7 @@ public class BookLib extends Book {
     public String getTags() throws SQLException {
         Connection connection = AppMain.connection;
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM tag WHERE book_id = " + id);
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM book_tag WHERE book_id = " + id);
 
         StringBuilder result = new StringBuilder();
         while (resultSet.next()) {

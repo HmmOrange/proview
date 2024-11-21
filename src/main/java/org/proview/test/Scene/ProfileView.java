@@ -26,31 +26,11 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class ProfileView {
-    private enum Size {
-        BOOK_CELL_HEIGHT(125),
-        BOOK_CELL_COMPACT_HEIGHT(75),
-        ACTIVITY_CELL_HEIGHT(75),
-        BOOK_LISTVIEW_WIDTH(400),
-        BOOK_LISTVIEW_COMPACT_WIDTH(800),
-        RECENT_ACTIVITY_LISTVIEW_WIDTH(350),
-        PADDING(10);
-
-        private final int value;
-
-        Size(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-    }
-
     public Label nameField;
     public Label emailField;
     public ImageView avatarImageView;
     public Button editProfileButton;
-    public ListView<Activity> recentActivityListView;
+    public VBox recentActivityListVBox;
     public VBox innerVbox;
     public Button cardButton;
     public Button compactButton;
@@ -83,13 +63,7 @@ public class ProfileView {
 
     private void loadRecentActivity() throws SQLException {
         ObservableList<Activity> activityList = ActivityManagement.getAllActivityList(UserManagement.getCurrentUser().getId());
-        ActivityManagement.initPersonalActivityList(recentActivityListView, activityList);
-        recentActivityListView.setPrefHeight(
-                Size.ACTIVITY_CELL_HEIGHT.getValue() * activityList.size()
-                        + Size.PADDING.getValue());
-        recentActivityListView.setMinWidth(
-                Size.RECENT_ACTIVITY_LISTVIEW_WIDTH.getValue()
-                        + Size.PADDING.getValue());
+        ActivityManagement.initPersonalActivityList(recentActivityListVBox, activityList);
     }
 
     public static void loadBorrowingList() throws SQLException {

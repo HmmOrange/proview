@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.GameView">
+    <top>
+        <fx:include source="NavBarView.fxml" />
+    </top>
+    <center>
+      <VBox alignment="CENTER" prefHeight="340.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="41.0" prefWidth="772.0" spacing="20.0">
+               <children>
+                  <Label fx:id="highScoreLabel" text="High Score: ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="difficultyLabel" text="Difficulty: ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#onRestartButtonClicked" text="Restart" />
+               </children>
+            </HBox>
+            <Label fx:id="pointLabel" text="Score: ">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <Label fx:id="lifeRemainsLabel" text="Life remains: ">
+               <font>
+                  <Font size="15.0" />
+               </font></Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" text="Question" wrapText="true">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                     <children>
+                        <Button fx:id="ans1Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns1ButtonClicked" text="Button" />
+                        <Button fx:id="ans2Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns2ButtonClicked" text="Button" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                     <children>
+                        <Button fx:id="ans3Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns3ButtonClicked" text="Button" />
+                        <Button fx:id="ans4Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns4ButtonClicked" text="Button" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#onNextButtonClicked" text="Next" />
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

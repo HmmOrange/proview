@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-
-<Button mnemonicParsing="false" styleClass="book-cell-button" stylesheets="@styles/ListView.css" onAction="#onMouseClick" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCompactView">
+<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="book-cell-button" stylesheets="@styles/ListView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCompactView">
    <graphic>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="800.0">
          <children>
@@ -41,22 +41,37 @@
                <children>
                   <HBox prefHeight="44.0" prefWidth="425.0">
                      <children>
-                        <Label fx:id="tagLabel" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="330.0" text="Science, Animals, World" wrapText="true">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
+                        <HBox fx:id="tagHBox" alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="316.0" spacing="3.0">
                            <HBox.margin>
-                              <Insets top="10.0" />
+                              <Insets right="10.0" />
                            </HBox.margin>
-                        </Label>
-                        <Label fx:id="infoLabel" alignment="CENTER_RIGHT" contentDisplay="TOP" prefHeight="25.0" prefWidth="166.0" text="4.5 🌟 102 👀 " wrapText="true">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="119.0" spacing="3.0">
+                           <children>
+                              <Label fx:id="ratingLabel" alignment="CENTER_RIGHT" contentDisplay="TOP" prefHeight="25.0" text="4.50" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="18">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </FontIcon>
+                              <Label fx:id="issuesLabel" text="4">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <FontIcon iconColor="#457b9d" iconLiteral="fas-book-reader" iconSize="18" />
+                           </children>
                            <HBox.margin>
-                              <Insets right="10.0" top="10.0" />
+                              <Insets right="10.0" />
                            </HBox.margin>
-                        </Label>
+                        </HBox>
                      </children>
                   </HBox>
                   <Label fx:id="copiesLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="25.0" prefWidth="538.0" text="3 copies available" wrapText="true">

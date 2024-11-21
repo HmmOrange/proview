@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
+
+<Label fx:id="tagLabel" styleClass="tag" stylesheets="@styles/TagView.css" text="Label" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.TagView">
+   <font>
+      <Font size="14.0" />
+   </font>
+   <padding>
+      <Insets left="5.0" right="5.0" />
+   </padding>
+</Label>

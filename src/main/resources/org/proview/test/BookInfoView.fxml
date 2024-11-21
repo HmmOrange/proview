@@ -4,7 +4,6 @@
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -16,14 +15,14 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
+<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" stylesheets="@styles/BookInfoView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
    <center>
       <ScrollPane>
          <content>
-            <AnchorPane prefHeight="702.0" prefWidth="920.0">
+            <AnchorPane prefHeight="986.0" prefWidth="920.0">
                <children>
                   <Label fx:id="titleLabel" layoutX="14.0" layoutY="14.0" prefHeight="88.0" prefWidth="738.0" text="Title">
                      <font>
@@ -69,11 +68,11 @@
                   <Line endX="750.0" layoutX="114.0" layoutY="428.0" startX="-100.0" />
                   <VBox layoutX="17.0" layoutY="441.0">
                      <children>
-                        <HBox>
+                        <HBox fx:id="ratingHBox" prefHeight="45.0" prefWidth="800.0" styleClass="hbox">
                            <children>
                               <Label text="Rate: ">
                                  <HBox.margin>
-                                    <Insets bottom="10.0" />
+                                    <Insets bottom="10.0" left="10.0" />
                                  </HBox.margin>
                                  <font>
                                     <Font size="24.0" />
@@ -88,20 +87,30 @@
                                  </padding>
                               </HBox>
                            </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                         </HBox>
-                        <TextArea fx:id="reviewTextArea" prefHeight="213.0" prefWidth="850.0" wrapText="true" />
-                        <HBox alignment="CENTER_RIGHT">
+                        <VBox fx:id="reviewHBox" alignment="TOP_RIGHT" styleClass="hbox">
                            <children>
+                              <TextArea fx:id="reviewTextArea" prefHeight="213.0" prefWidth="800.0" wrapText="true">
+                                 <VBox.margin>
+                                    <Insets left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </TextArea>
                               <Button fx:id="submitReviewButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSubmitReviewButtonClick" text="Submit">
-                                 <HBox.margin>
-                                    <Insets right="10.0" top="10.0" />
-                                 </HBox.margin>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
                               </Button>
                            </children>
-                        </HBox>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </VBox>
                      </children>
                   </VBox>
-                  <ListView fx:id="reviewListView" layoutX="13.0" layoutY="735.0" prefHeight="287.0" prefWidth="850.0" />
+                  <VBox fx:id="reviewListVBox" layoutX="17.0" layoutY="786.0" prefHeight="200.0" prefWidth="800.0" spacing="10.0" />
                   <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" layoutX="824.0" layoutY="46.0" mnemonicParsing="false" onAction="#onStarButtonClicked" text="Button" />
                </children>
             </AnchorPane>

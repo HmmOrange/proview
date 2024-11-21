@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -20,7 +19,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <ListView fx:id="recentReviewListView" layoutX="10.0" layoutY="57.0" prefHeight="116.0" prefWidth="350.0" />
+            <VBox fx:id="recentReviewListVBox" layoutX="14.0" layoutY="55.0" spacing="10.0" />
          </children></AnchorPane>
    </left>
    <center>
@@ -35,13 +34,13 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="topRatedBookListView" layoutX="21.0" layoutY="59.0" prefHeight="115.0" prefWidth="400.0" />
                         <Label layoutX="472.0" layoutY="14.0" prefHeight="30.0" prefWidth="196.0" text="Trending (7 days)">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="trendingBookListView" layoutX="472.0" layoutY="60.0" prefHeight="113.0" prefWidth="400.0" />
+                        <VBox fx:id="topRatedBookListVBox" layoutX="21.0" layoutY="61.0" prefHeight="200.0" prefWidth="401.0" spacing="10.0" />
+                        <VBox fx:id="trendingBookListVBox" layoutX="461.0" layoutY="61.0" prefHeight="200.0" prefWidth="401.0" spacing="10.0" />
                      </children>
                   </AnchorPane>
                </children>

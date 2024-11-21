@@ -2,6 +2,7 @@ package org.proview.test.Scene;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import org.proview.modal.Activity.Activity;
 import org.proview.modal.Activity.ActivityManagement;
 import org.proview.modal.Book.BookLib;
@@ -27,26 +28,17 @@ public class HomeView {
         }
     }
 
-    public ListView<BookLib> topRatedBookListView;
-    public ListView<BookLib> trendingBookListView;
-    public ListView<Activity> recentReviewListView;
+    public VBox trendingBookListVBox;
+    public VBox topRatedBookListVBox;
+    public VBox recentReviewListVBox;
 
     public void initialize() throws SQLException {
         ObservableList<BookLib> topRatedList = BookManagement.getTopRatedBookList();
         ObservableList<BookLib> trendingList = BookManagement.getTrendingBookList();
         ObservableList<Activity> activityList = ActivityManagement.getReviewActivityList();
 
-        BookManagement.initBookLibList(topRatedBookListView, topRatedList);
-        BookManagement.initBookLibList(trendingBookListView, trendingList);
-        ActivityManagement.initActivityList(recentReviewListView, activityList);
-
-        // Make the list view non-scrollable (there is probably a better way to do this)
-        topRatedBookListView.setPrefHeight(Size.BOOK_CELL_HEIGHT.getValue() * topRatedList.size() + Size.PADDING.getValue());
-        trendingBookListView.setPrefHeight(Size.BOOK_CELL_HEIGHT.getValue() * trendingList.size() + Size.PADDING.getValue());
-        recentReviewListView.setPrefHeight(Size.ACTIVITY_CELL_HEIGHT.getValue() * activityList.size() + Size.PADDING.getValue());
-
-        topRatedBookListView.setMinWidth(Size.BOOK_LISTVIEW_WIDTH.getValue() + 10);
-        trendingBookListView.setMinWidth(Size.BOOK_LISTVIEW_WIDTH.getValue() + 10);
-        recentReviewListView.setMinWidth(Size.RECENT_ACTIVITY_LISTVIEW_WIDTH.getValue() + 10);
+        BookManagement.initBookLibList(topRatedBookListVBox, topRatedList, true, true, true);
+        BookManagement.initBookLibList(trendingBookListVBox, trendingList, true, true, true);
+        ActivityManagement.initActivityList(recentReviewListVBox, activityList);
     }
 }

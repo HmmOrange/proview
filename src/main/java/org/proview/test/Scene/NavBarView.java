@@ -10,11 +10,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
+import org.proview.modal.Game.GameActivity;
 import org.proview.modal.User.Admin;
-import org.proview.modal.User.NormalUser;
 import org.proview.utils.SearchUtils;
 import org.proview.modal.User.UserManagement;
 import org.proview.test.AppMain;
@@ -23,6 +22,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class NavBarView {
@@ -155,6 +157,15 @@ public class NavBarView {
             System.out.println("Error loading ProfileView.fxml: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public void onGameButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
+        GameActivity.restartGame();
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("GameView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+        AppMain.window.setTitle("Hello!");
+        AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
     }
 }
 
