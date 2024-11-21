@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" stylesheets="@styles/BookInfoView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
+<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" stylesheets="@styles/BookInfoView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
@@ -116,7 +116,7 @@
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="reviewListVBox" layoutX="17.0" layoutY="786.0" prefHeight="200.0" prefWidth="800.0" spacing="10.0" />
+                  <VBox fx:id="reviewListVBox" layoutX="17.0" layoutY="786.0" spacing="10.0" />
                   <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" layoutX="824.0" layoutY="46.0" mnemonicParsing="false" onAction="#onStarButtonClicked" text="Button" />
                </children>
             </AnchorPane>

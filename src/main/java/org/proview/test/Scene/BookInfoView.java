@@ -291,10 +291,11 @@ public class BookInfoView {
 
         reloadReviewList();
     }
-    public void onLoadPrevReviewButtonClicked(ActionEvent actionEvent) {
-
+    public void onLoadPrevReviewButtonClicked(ActionEvent actionEvent) throws SQLException {
+        String review = SQLUtils.getReview(UserManagement.getCurrentUser().getId(), bookId);
+        reviewTextArea.setText(review);
     }
-    public void onDeletePrevReviewButtonClicked(ActionEvent actionEvent) throws SQLException, IOException {
+    public void onRemovePrevReviewButtonClicked(ActionEvent actionEvent) throws SQLException, IOException {
         SQLUtils.removeReview(UserManagement.getCurrentUser().getId(), bookId);
 
         submitReviewButton.setText("Submit Review");

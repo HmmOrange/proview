@@ -789,7 +789,7 @@ public class SQLUtils {
         preparedStatement.executeUpdate();
     }
 
-    public static void getReview(int userId, int bookId) throws SQLException {
+    public static String getReview(int userId, int bookId) throws SQLException {
         String sql = """
             SELECT * FROM review
             WHERE user_id = ? AND book_id = ?;
@@ -802,6 +802,7 @@ public class SQLUtils {
         if (resultSet.next()) {
             return resultSet.getString("review");
         }
+        return null;
     }
 }
 
