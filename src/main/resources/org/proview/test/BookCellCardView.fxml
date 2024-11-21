@@ -46,7 +46,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="copiesLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="38.0" prefWidth="365.0" text="3 copies available" wrapText="true">
+                        <Label fx:id="copiesLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="20.0" prefWidth="467.0" text="3 copies available" wrapText="true">
                            <font>
                               <Font name="System Italic" size="14.0" />
                            </font>

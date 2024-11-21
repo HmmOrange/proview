@@ -117,7 +117,7 @@ INSERT INTO book(name, author, description, time_added, copies)
 -- Add sample tags
 INSERT INTO tag (name, bg_color_hex, text_color_hex) VALUES
 ('Fiction', '#FFB3BA', '#5A5A5A'),
-('Non-Fiction', '#BAE1FF', '#4A4A4A'),
+('Non-fiction', '#BAE1FF', '#4A4A4A'),
 ('Science', '#BFFCC6', '#3A3A3A'),
 ('History', '#FFDFBA', '#5A5A5A'),
 ('Fantasy', '#D5BAFF', '#4A4A4A'),

@@ -2,6 +2,7 @@ package org.proview.test.Scene;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 import org.proview.modal.Book.BookGoogle;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Book.BookManagement;
@@ -12,8 +13,8 @@ import java.sql.SQLException;
 
 
 public class SearchResultView {
-    public ListView<BookLib> topResultListView;
-    public ListView<BookGoogle> googleBookListView;
+    public VBox topResultListVBox;
+    public VBox googleBookListVBox;
 
     public void initialize() throws SQLException, IOException {
         String curQuery = SearchUtils.getCurQuery().toLowerCase();
@@ -23,15 +24,8 @@ public class SearchResultView {
 
         ObservableList<BookLib> filteredBookList = SearchUtils.filterBookList(curQuery, bookLibList);
 
-        BookManagement.initBookLibList(topResultListView, filteredBookList);
-        BookManagement.initBookGoogleList(googleBookListView, bookGoogleList);
-
-        topResultListView.setMinHeight(150 * filteredBookList.size() + 10);
-        topResultListView.setMinWidth(500 + 10);
-
-        if (bookGoogleList != null) {
-            googleBookListView.setMinHeight(150 * bookGoogleList.size() + 10);
-            googleBookListView.setMinWidth(500 + 10);
-        }
+        BookManagement.initBookLibList(topResultListVBox, filteredBookList, true, true, false);
+        if (bookGoogleList != null)
+            BookManagement.initBookGoogleList(googleBookListVBox, bookGoogleList);
     }
 }

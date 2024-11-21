@@ -220,83 +220,32 @@ public class BookManagement {
             }
         }
         return bookList;
-    }
+    }it
 
-    public static void initBookLibList(ListView<BookLib> bookListView, ObservableList<BookLib> bookList) {
-        bookListView.setItems(bookList);
-        bookListView.setCellFactory(param -> new ListCell<>() {
-            {
-                setStyle("-fx-padding: 0px; -fx-margin: 0px; -fx-background-insets: 0px; -fx-border-insets: 0px;");
+    public static void initBookGoogleList(VBox bookListVBox, ObservableList<BookGoogle> bookList) {
+        bookListVBox.getChildren().clear();
+        int index = 0;
+        for (var item: bookList) {
+            index++;
+            try {
+                FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
+                Button button = loader.load();
+
+                // Get the controller of the cell
+                BookCellCardView cellView = loader.getController();
+
+                cellView.setData(
+                        item.getTitle(),
+                        item.getAuthor(),
+                        item.getCoverImageUrl(),
+                        item.getTags()
+                );
+                bookListVBox.getChildren().add(button);
+            } catch (Exception e) {
+                System.out.println(e);
+                throw new RuntimeException(e);
             }
-            @Override
-            protected void updateItem(BookLib item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty || item == null) {
-                    setGraphic(null);
-                } else {
-                    try {
-                        FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
-                        Button button = loader.load();
-
-                        // Get the controller of the cell
-                        BookCellCardView cellView = loader.getController();
-
-                        cellView.setData(
-                                item.getId(),
-                                "#" + (getIndex() + 1) + ". " + item.getTitle(),
-                                item.getAuthor(),
-                                item.getTags(),
-                                item.getRating(),
-                                item.getIssueCount(),
-                                item.getCopiesAvailable()
-                        );
-
-                        setGraphic(button);
-                    } catch (Exception e) {
-                        System.out.println(e);
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
-    }
-
-    public static void initBookGoogleList(ListView<BookGoogle> bookListView, ObservableList<BookGoogle> bookList) {
-        bookListView.setItems(bookList);
-        bookListView.setCellFactory(param -> new ListCell<>() {
-            {
-                setStyle("-fx-padding: 0px; -fx-margin: 0px; -fx-background-insets: 0px; -fx-border-insets: 0px;");
-            }
-            @Override
-            protected void updateItem(BookGoogle item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty || item == null) {
-                    setGraphic(null);
-                } else {
-                    try {
-                        FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
-                        Button button = loader.load();
-
-                        // Get the controller of the cell
-                        BookCellCardView cellView = loader.getController();
-
-                        cellView.setData(
-                                item.getTitle(),
-                                item.getAuthor(),
-                                item.getCoverImageUrl(),
-                                item.getTags()
-                        );
-
-                        setGraphic(button);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
+        }
     }
 
     public static void initBookLibList(VBox bookListVBox, ObservableList<BookLib> bookList, Boolean cardView, Boolean showCopiesAvailable, Boolean showRanking) {
