@@ -43,7 +43,7 @@
                      <graphic>
                         <FontIcon iconLiteral="far-list-alt" iconSize="14" />
                      </graphic></Button>
-                  <Button styleClass="nav-button" text="Games">
+                  <Button onAction="#onGameButtonClicked" styleClass="nav-button" text="Games">
                      <graphic>
                         <FontIcon iconLiteral="fas-gamepad" iconSize="14" />
                      </graphic></Button>
