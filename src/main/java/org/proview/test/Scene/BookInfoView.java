@@ -59,6 +59,9 @@ public class BookInfoView {
     public HBox ratingHBox;
     public VBox reviewHBox;
     public VBox reviewListVBox;
+    public Button submitReviewButton;
+    public Button loadPrevReviewButton;
+    public Button removePrevReviewButton;
     private int starMouseEntered = 0;
     private int bookId;
     private int curRating = 3;
@@ -217,6 +220,26 @@ public class BookInfoView {
             }
         });
         starRatingBar.applyCss();
+
+        // Review-related buttons
+        if (SQLUtils.hasReview(UserManagement.getCurrentUser().getId(), bookId)) {
+            loadPrevReviewButton.setVisible(true);
+            loadPrevReviewButton.setDisable(false);
+
+            removePrevReviewButton.setVisible(true);
+            removePrevReviewButton.setDisable(false);
+
+            submitReviewButton.setText("Repost Review");
+        }
+        else {
+            loadPrevReviewButton.setVisible(false);
+            loadPrevReviewButton.setDisable(true);
+
+            removePrevReviewButton.setVisible(false);
+            removePrevReviewButton.setDisable(true);
+
+            submitReviewButton.setText("Submit Review");
+        }
     }
 
     public void onBackButtonClick(ActionEvent actionEvent) throws IOException {
@@ -242,12 +265,6 @@ public class BookInfoView {
         AppMain.window.centerOnScreen();
     }
 
-    public void onSubmitReviewButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
-        User currentUser = UserManagement.getCurrentUser();
-        currentUser.addComment(bookId, reviewTextArea.getText());
-        reloadReviewList();
-    }
-
     public void onStarButtonClicked(ActionEvent mouseEvent) throws SQLException {
         if (Objects.equals(starButton.getId(), "star-icon-default")) {
             starButton.setId("star-icon-clicked");
@@ -256,5 +273,41 @@ public class BookInfoView {
             starButton.setId("star-icon-default");
             SQLUtils.removeFavourite(UserManagement.getCurrentUser().getId(), this.bookId);
         }
+    }
+
+    public void onSubmitReviewButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
+        User currentUser = UserManagement.getCurrentUser();
+        currentUser.addComment(bookId, reviewTextArea.getText());
+
+        submitReviewButton.setText("Repost Review");
+
+        loadPrevReviewButton.setVisible(true);
+        loadPrevReviewButton.setDisable(false);
+
+        removePrevReviewButton.setVisible(true);
+        removePrevReviewButton.setDisable(false);
+
+        reviewTextArea.clear();
+
+        reloadReviewList();
+    }
+    public void onLoadPrevReviewButtonClicked(ActionEvent actionEvent) {
+
+    }
+    public void onDeletePrevReviewButtonClicked(ActionEvent actionEvent) throws SQLException, IOException {
+        SQLUtils.removeReview(UserManagement.getCurrentUser().getId(), bookId);
+
+        submitReviewButton.setText("Submit Review");
+
+        loadPrevReviewButton.setVisible(false);
+        loadPrevReviewButton.setDisable(true);
+
+        removePrevReviewButton.setVisible(false);
+        removePrevReviewButton.setDisable(true);
+
+        reviewTextArea.clear();
+
+        reloadReviewList();
+
     }
 }

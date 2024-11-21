@@ -8,8 +8,4 @@ public class NormalUser extends User {
     public NormalUser(int id, String firstName, String lastName, String email) {
         super(id, firstName, lastName, email);
     }
-
-    public NormalUser(String username, String password) {
-        super(username, password);
-    }
 }

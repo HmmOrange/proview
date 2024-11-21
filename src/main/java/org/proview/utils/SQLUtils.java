@@ -18,8 +18,13 @@ import java.util.*;
 public class SQLUtils {
     static Connection connection = AppMain.connection;
 
-    public static void addComment(int book_id, int user_id, String review) throws SQLException {
-        String sql = "INSERT INTO review(book_id, user_id, review, time_added) VALUES (?, ?, ?, NOW());";
+    public static void addReview(int book_id, int user_id, String review) throws SQLException {
+        String sql = """
+        INSERT INTO review(book_id, user_id, review, time_added) VALUES (?, ?, ?, NOW())
+        ON DUPLICATE KEY UPDATE
+            review = VALUES(review),
+            time_added = CURRENT_TIMESTAMP;
+        """;
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, book_id);
         preparedStatement.setInt(2, user_id);
@@ -758,6 +763,45 @@ public class SQLUtils {
             tagMap.put(name, new TagStyle(bgColorHex, textColorHex));
         }
         return tagMap;
+    }
+
+    public static Boolean hasReview(int userId, int bookId) throws SQLException {
+        String sql = """
+            SELECT * FROM review
+            WHERE user_id = ? AND book_id = ?
+            LIMIT 1;
+        """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, bookId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return resultSet.next();
+    }
+
+    public static void removeReview(int userId, int bookId) throws SQLException {
+        String sql = """
+            DELETE FROM review
+            WHERE user_id = ? AND book_id = ?;
+        """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, bookId);
+        preparedStatement.executeUpdate();
+    }
+
+    public static void getReview(int userId, int bookId) throws SQLException {
+        String sql = """
+            SELECT * FROM review
+            WHERE user_id = ? AND book_id = ?;
+        """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, bookId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            return resultSet.getString("review");
+        }
     }
 }
 
