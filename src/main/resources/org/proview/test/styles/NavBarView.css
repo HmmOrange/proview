@@ -2,7 +2,7 @@
 
 .nav-bar {
     -fx-background-color: #457B9D;
-    -fx-padding: 0px;
+    -fx-padding: 5px;
     -fx-background-radius: 0px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
 }

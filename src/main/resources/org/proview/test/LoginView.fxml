@@ -15,7 +15,7 @@
       <children>
          <!-- Label hiển thị thông báo -->
          <Label fx:id="loginResultLabel" styleClass="header" text="Sign in to your account!" />
-         <Label styleClass="sub-header" text="Welcome back 😊!" />
+         <Label styleClass="sub-header" text="Welcome 😊!" />
    
             <!-- TextField và PasswordField -->
          <TextField fx:id="loginUsernameField" promptText="Username" styleClass="input" />
