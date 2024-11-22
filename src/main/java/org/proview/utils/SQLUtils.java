@@ -821,5 +821,40 @@ public class SQLUtils {
         }
         return tagList;
     }
+
+    public static void addTag(String name, String bgColorHex, String textColorHex) throws SQLException {
+        String sql = """
+            INSERT INTO tag (name, bg_color_hex, text_color_hex)
+            VALUES (?, ?, ?);
+        """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, bgColorHex);
+        preparedStatement.setString(3, textColorHex);
+        preparedStatement.executeUpdate();
+    }
+
+    public static void removeTag(String name) throws SQLException {
+        String sql = "DELETE FROM tag WHERE name = ?;";
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setString(1, name);
+        preparedStatement.executeUpdate();
+    }
+
+    public static void updateTag(String name, String bgColorHex, String textColorHex) throws SQLException {
+        if (!bgColorHex.startsWith("#"))
+            bgColorHex = "#" + bgColorHex;
+        if (!textColorHex.startsWith("#"))
+            textColorHex = "#" + textColorHex;
+        String sql = """
+            UPDATE tag SET bg_color_hex = ?, text_color_hex = ?
+            WHERE name = ?;
+        """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setString(1, bgColorHex);
+        preparedStatement.setString(2, textColorHex);
+        preparedStatement.setString(3, name);
+        preparedStatement.executeUpdate();
+    }
 }
 
