@@ -16,7 +16,7 @@
          <children>
             <HBox layoutX="6.0" layoutY="10.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="33.0" fitWidth="50.0" onMouseClicked="#onHomeButtonClick" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="33.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icons/LogoUET.png" />
                      </image>
