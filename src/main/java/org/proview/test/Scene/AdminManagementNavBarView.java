@@ -23,9 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AdminManagementNavBarView {
-    public VBox root;
-    private ComboBox<String> tableComboBox = new ComboBox<>();
-    private Label exportResultLabel = new Label();
+    /*public VBox root;
 
     private void exportDatabaseToCsvFile(String table, File file) throws SQLException, IOException {
         String sql = String.format("SELECT * FROM %s", table);
@@ -61,7 +59,7 @@ public class AdminManagementNavBarView {
             e.printStackTrace();
             exportResultLabel.setText("Fail to write data to CSV file!");
         }
-    }
+    }*/
 
     public void onIssuesButtonClick(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("IssueListView.fxml"));
@@ -103,27 +101,11 @@ public class AdminManagementNavBarView {
         AppMain.window.centerOnScreen();
     }
 
-    public void onExportButtonClicked(ActionEvent actionEvent) throws SQLException, IOException {
-        if (root.getChildren().stream().noneMatch(node -> node instanceof ComboBox)) {
-            String[] tables = {"book", "book_tag", "favourite", "game_history", "issue", "questions", "rating", "review", "tag", "user"};
-            List<String> tablesList = Arrays.asList(tables);
-            tableComboBox.getItems().addAll(tablesList);
-            tableComboBox.setValue(tablesList.getFirst());
-            root.getChildren().add(tableComboBox);
-            root.getChildren().add(exportResultLabel);
-        } else {
-            String table = tableComboBox.getValue();
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Choose Directory!");
-            fileChooser.setInitialFileName(table + ".csv");
-            fileChooser.getExtensionFilters().add(
-                    new FileChooser.ExtensionFilter("CSV Files (*.csv)", "*.csv"));
-            File file = fileChooser.showSaveDialog(((Node) actionEvent.getSource()).getScene().getWindow());
-            if (file != null) {
-                exportDatabaseToCsvFile(table, file);
-            } else {
-                exportResultLabel.setText("No directory chosen!");
-            }
-        }
+    public void onImportExportButtonClicked(ActionEvent actionEvent) throws SQLException, IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("ImportAndExportView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+        AppMain.window.setTitle("Hello!");
+        AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
     }
 }

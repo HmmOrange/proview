@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.ImportAndExportView">
+    <top>
+        <fx:include source="NavBarView.fxml" />
+    </top>
+    <left>
+        <fx:include source="AdminManagementNavBarView.fxml" />
+    </left>
+    <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Import">
+               <content>
+                  <VBox fx:id="importTabVbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="importResultLabel" />
+                        <ComboBox fx:id="importTableComboBox" prefWidth="150.0" promptText="Table" />
+                        <Button mnemonicParsing="false" onAction="#onChooseCSVFileButtonClicked" text="Choose CSV File" />
+                        <Button fx:id="importConfirmButton" mnemonicParsing="false" onAction="#onImportConfirmButtonClicked" text="Confirm" />
+                     </children>
+                  </VBox>
+               </content>
+          </Tab>
+          <Tab text="Export">
+               <content>
+                  <VBox fx:id="exportTabVbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="exportResultLabel" />
+                        <ComboBox fx:id="exportTableComboBox" prefWidth="150.0" promptText="Table" />
+                        <Button mnemonicParsing="false" onAction="#onChooseDirectoryButtonClicked" text="Choose Directory" />
+                        <Button fx:id="exportConfirmButton" mnemonicParsing="false" onAction="#onExportConfirmButtonClicked" text="Confirm" />
+                     </children>
+                  </VBox>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>

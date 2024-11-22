@@ -27,6 +27,6 @@
          </VBox.margin>
       </Button>
       <Button mnemonicParsing="false" onAction="#onTagsButtonClick" text="Tags" />
-      <Button mnemonicParsing="false" onAction="#onExportButtonClicked" text="Export" />
+      <Button mnemonicParsing="false" onAction="#onImportExportButtonClicked" text="Import/Export" />
    </children>
 </VBox>
