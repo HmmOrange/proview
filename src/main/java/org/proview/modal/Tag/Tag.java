@@ -17,6 +17,12 @@ public class Tag extends TagStyle {
         this.tagName = tagName;
     }
 
+    public Tag() {
+        super("#6c757d", "#ced4da");
+
+        this.tagName = "Label";
+    }
+
     public String getTagName() {
         return tagName;
     }

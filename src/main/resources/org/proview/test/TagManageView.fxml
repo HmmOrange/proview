@@ -9,9 +9,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="691.0" prefWidth="1233.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.TagManageView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="691.0" prefWidth="1233.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.TagManageView">
     <top>
         <fx:include source="NavBarView.fxml" />
     </top>
@@ -41,7 +42,7 @@
                               <VBox alignment="CENTER" prefHeight="247.0" prefWidth="220.0">
                                  <children>
                                     <Label fx:id="errorAddNameLabel" text="Error name label" />
-                                    <TextField fx:id="tagAddNameLabel" promptText="Name">
+                                    <TextField fx:id="tagAddNameLabel" onKeyTyped="#onTagAddKeyTyped" promptText="Name">
                                        <VBox.margin>
                                           <Insets left="10.0" right="10.0" top="10.0" />
                                        </VBox.margin>
@@ -51,7 +52,7 @@
                                           <Insets top="10.0" />
                                        </padding>
                                     </Label>
-                                    <TextField fx:id="tagAddBgColorHex" promptText="Background Color Hex">
+                                    <TextField fx:id="tagAddBgColorHex" onKeyTyped="#onTagAddKeyTyped" promptText="Background Color Hex">
                                        <VBox.margin>
                                           <Insets left="10.0" right="10.0" top="10.0" />
                                        </VBox.margin>
@@ -61,7 +62,7 @@
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <TextField fx:id="tagAddTextColorHex" promptText="Text Color Hex">
+                                    <TextField fx:id="tagAddTextColorHex" onKeyTyped="#onTagAddKeyTyped" promptText="Text Color Hex">
                                        <VBox.margin>
                                           <Insets left="10.0" right="10.0" top="10.0" />
                                        </VBox.margin>
@@ -71,7 +72,11 @@
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                        <children>
-                                          <Label fx:id="tagAddPreviewLabel" text="Label" />
+                                          <StackPane fx:id="tagAddPreviewStackPane">
+                                             <children>
+                                                <Label fx:id="tagAddPreviewLabel" text="Label" />
+                                             </children>
+                                          </StackPane>
                                           <Button fx:id="confirmAddButton" mnemonicParsing="false" text="Add tag">
                                              <HBox.margin>
                                                 <Insets />

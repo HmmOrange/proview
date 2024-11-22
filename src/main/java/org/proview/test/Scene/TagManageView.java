@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
 import org.proview.modal.Tag.Tag;
 import org.proview.utils.SQLUtils;
 
@@ -13,6 +15,8 @@ import java.sql.SQLException;
 import java.util.Comparator;
 
 public class TagManageView {
+    public StackPane tagAddPreviewStackPane;
+
     public static class RowData {
         private final Tag tag;
 
@@ -40,6 +44,15 @@ public class TagManageView {
     public TextField tagEditNameLabel;
     public TextField tagEditBgColorHex;
     public TextField tagEditTextColorHex;
+
+    public Label tagAddPreviewLabel;
+    public Label tagEditPreviewLabel;
+    public Label errorAddTextLabel;
+    public Label errorAddBgLabel;
+    public Label errorAddNameLabel;
+
+    private Tag previewAddTag;
+    private Tag previewEditTag;
 
     public void initTable() {
         String[] columnName = {"Tag Name", "Tag Background Color", "Tag Text Color", "Tag Preview"};
@@ -71,8 +84,16 @@ public class TagManageView {
 
     }
 
-    public void loadNodes() throws SQLException {
+    public void loadNodes() {
+        previewAddTag = new Tag();
+        previewEditTag = new Tag();
 
+        tagAddPreviewStackPane.getChildren().clear();
+        tagAddPreviewStackPane.getChildren().add(previewAddTag.getLabel());
+
+        errorAddNameLabel.setVisible(false);
+        errorAddBgLabel.setVisible(false);
+        errorAddTextLabel.setVisible(false);
     }
     public void reloadTable() throws SQLException {
         rowDataList.clear();
@@ -87,5 +108,9 @@ public class TagManageView {
         initTable();
         reloadTable();
         loadNodes();
+    }
+
+    public void onTagAddKeyTyped(KeyEvent keyEvent) {
+
     }
 }
