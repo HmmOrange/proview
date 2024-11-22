@@ -104,6 +104,6 @@ public abstract class User {
     }
 
     public void addComment(int book_id, String review) throws SQLException {
-        SQLUtils.addComment(book_id, id, review);
+        SQLUtils.addReview(book_id, id, review);
     }
 }

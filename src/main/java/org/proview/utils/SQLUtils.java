@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Review.Review;
+import org.proview.modal.Tag.Tag;
 import org.proview.modal.Tag.TagStyle;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
@@ -18,8 +19,13 @@ import java.util.*;
 public class SQLUtils {
     static Connection connection = AppMain.connection;
 
-    public static void addComment(int book_id, int user_id, String review) throws SQLException {
-        String sql = "INSERT INTO review(book_id, user_id, review, time_added) VALUES (?, ?, ?, NOW());";
+    public static void addReview(int book_id, int user_id, String review) throws SQLException {
+        String sql = """
+        INSERT INTO review(book_id, user_id, review, time_added) VALUES (?, ?, ?, NOW())
+        ON DUPLICATE KEY UPDATE
+            review = VALUES(review),
+            time_added = CURRENT_TIMESTAMP;
+        """;
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, book_id);
         preparedStatement.setInt(2, user_id);
@@ -758,6 +764,62 @@ public class SQLUtils {
             tagMap.put(name, new TagStyle(bgColorHex, textColorHex));
         }
         return tagMap;
+    }
+
+    public static Boolean hasReview(int userId, int bookId) throws SQLException {
+        String sql = """
+            SELECT * FROM review
+            WHERE user_id = ? AND book_id = ?
+            LIMIT 1;
+        """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, bookId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return resultSet.next();
+    }
+
+    public static void removeReview(int userId, int bookId) throws SQLException {
+        String sql = """
+            DELETE FROM review
+            WHERE user_id = ? AND book_id = ?;
+        """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, bookId);
+        preparedStatement.executeUpdate();
+    }
+
+    public static String getReview(int userId, int bookId) throws SQLException {
+        String sql = """
+            SELECT * FROM review
+            WHERE user_id = ? AND book_id = ?;
+        """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, bookId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            return resultSet.getString("review");
+        }
+        return null;
+    }
+
+    public static ObservableList<Tag> getTagList() throws SQLException {
+        String sql = """
+            SELECT * FROM tag
+        """;
+        ResultSet resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
+        ObservableList<Tag> tagList = FXCollections.observableArrayList();
+        while (resultSet.next()) {
+            String name = resultSet.getString("name");
+            String bgColorHex = resultSet.getString("bg_color_hex");
+            String textColorHex = resultSet.getString("text_color_hex");
+
+            tagList.add(new Tag(name, bgColorHex, textColorHex));
+        }
+        return tagList;
     }
 }
 

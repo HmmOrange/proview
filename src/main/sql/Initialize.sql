@@ -81,7 +81,8 @@ CREATE TABLE review
     time_added TIMESTAMP,
 
     FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    UNIQUE KEY unique_user_book (user_id, book_id)
 );
 
 CREATE TABLE favourite
