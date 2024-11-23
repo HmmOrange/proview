@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.StartGameView">
+    <top>
+        <fx:include source="NavBarView.fxml" />
+    </top>
+    <center>
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Trivia">
+               <font>
+                  <Font size="59.0" />
+               </font>
+            </Label>
+            <Label prefWidth="800.0" text="Choose the right answer. You have 3 lives. Game will end when all of your lives gone. You have 3 assistances. Good luck" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <Button mnemonicParsing="false" onAction="#onStartButtonClicked" text="Start" />
+         </children></VBox>
+   </center>
+</BorderPane>

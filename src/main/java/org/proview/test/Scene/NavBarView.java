@@ -161,8 +161,15 @@ public class NavBarView {
     }
 
     public void onGameButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
-        GameActivity.restartGame();
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("GameView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("StartGameView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+        AppMain.window.setTitle("Hello!");
+        AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
+    }
+
+    public void onDashboardButtonClicked(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("DashboardView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);

@@ -41,7 +41,7 @@
                      <graphic>
                         <FontIcon iconLiteral="fas-gamepad" iconSize="14" />
                      </graphic></Button>
-                  <Button styleClass="nav-button" text="Dashboard">
+                  <Button onAction="#onDashboardButtonClicked" styleClass="nav-button" text="Dashboard">
                      <graphic>
                         <FontIcon iconLiteral="far-chart-bar" iconSize="14" />
                      </graphic></Button>
