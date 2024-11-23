@@ -21,9 +21,9 @@
       <fx:include source="NavBarView.fxml" />
    </top>
    <center>
-      <ScrollPane>
+      <ScrollPane hbarPolicy="NEVER" prefHeight="1969.0" prefWidth="954.0">
          <content>
-            <AnchorPane prefHeight="986.0" prefWidth="920.0">
+            <AnchorPane prefHeight="1034.0" prefWidth="889.0">
                <children>
                   <Label fx:id="titleLabel" layoutX="14.0" layoutY="14.0" prefHeight="88.0" prefWidth="738.0" text="Title">
                      <font>
@@ -45,7 +45,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Line endX="750.0" layoutX="114.0" layoutY="93.0" startX="-100.0" />
+                  <Line endX="800.0" layoutX="114.0" layoutY="93.0" startX="-100.0" />
                   <Label fx:id="ratingLabel" layoutX="17.0" layoutY="243.0" prefHeight="35.0" prefWidth="458.0" text="Rating:">
                      <font>
                         <Font size="24.0" />
@@ -66,7 +66,7 @@
                         <Font size="48.0" />
                      </font>
                   </Label>
-                  <Line endX="750.0" layoutX="114.0" layoutY="680.0" startX="-100.0" />
+                  <Line endX="800.0" layoutX="113.0" layoutY="680.0" startX="-100.0" />
                   <VBox layoutX="17.0" layoutY="700.0">
                      <children>
                         <HBox fx:id="ratingHBox" prefHeight="45.0" prefWidth="800.0" styleClass="hbox">
@@ -120,7 +120,7 @@
                   <VBox fx:id="reviewListVBox" layoutX="17.0" layoutY="950.0" spacing="10.0" />
                   <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" layoutX="824.0" layoutY="46.0" mnemonicParsing="false" onAction="#onStarButtonClicked" text="Button">
                      <graphic>
-                        <FontIcon iconLiteral="far-star" />
+                        <FontIcon iconColor="WHITE" iconLiteral="far-star" />
                      </graphic></Button>
                </children>
             </AnchorPane>
@@ -137,14 +137,8 @@
             <Button fx:id="editButton" layoutX="98.0" layoutY="510.0" mnemonicParsing="false" onAction="#onEditButtonClick" prefHeight="25.0" prefWidth="152.0" text="Edit" />
             <TextField fx:id="durationField" alignment="CENTER" layoutX="99.0" layoutY="548.0" promptText="Duration" />
             <Label fx:id="borrowingProblemLabel" alignment="CENTER" layoutX="70.0" layoutY="535.0" prefHeight="17.0" prefWidth="209.0" wrapText="true" />
+            <Button fx:id="backButton" layoutX="99.0" layoutY="585.0" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="25.0" prefWidth="149.0" text="Back" textAlignment="CENTER" />
          </children>
       </AnchorPane>
    </left>
-   <bottom>
-      <AnchorPane prefHeight="62.0" prefWidth="1412.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="backButton" alignment="TOP_LEFT" layoutX="154.0" layoutY="19.0" mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" />
-         </children>
-      </AnchorPane>
-   </bottom>
 </BorderPane>
