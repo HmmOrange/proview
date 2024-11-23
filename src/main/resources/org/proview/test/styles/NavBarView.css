@@ -1,5 +1,9 @@
 /* NavBarView.css */
 
+.nav-button:hover .ikonli-font-icon {
+    -fx-icon-color: #FFFFFF;
+}
+
 .nav-bar {
     -fx-background-color: #457B9D;
     -fx-padding: 5px;
