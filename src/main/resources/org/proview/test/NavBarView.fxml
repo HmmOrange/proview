@@ -12,7 +12,7 @@
 
 <HBox fx:id="navBarHBox" prefHeight="50.0" prefWidth="1300.0" stylesheets="@styles/NavBarView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.NavBarView">
    <children>
-      <AnchorPane fx:id="topPane" prefHeight="20.0" prefWidth="1300.0" styleClass="nav-bar">
+      <AnchorPane fx:id="topPane" prefHeight="0.0" prefWidth="1300.0" styleClass="nav-bar">
          <children>
             <HBox layoutX="6.0" layoutY="10.0" spacing="10.0">
                <children>

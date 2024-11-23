@@ -14,8 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" stylesheets="@styles/BookInfoView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
+<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" stylesheets="@styles/BookInfoView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
@@ -39,11 +40,6 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="descriptionLabel" alignment="TOP_LEFT" layoutX="524.0" layoutY="110.0" prefHeight="242.0" prefWidth="352.0" text="Description:" wrapText="true">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
                   <Label fx:id="copiesLabel" layoutX="17.0" layoutY="198.0" prefHeight="35.0" prefWidth="458.0" text="Copies available:">
                      <font>
                         <Font size="24.0" />
@@ -60,13 +56,18 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="reviewLabel" layoutX="14.0" layoutY="348.0" prefHeight="88.0" prefWidth="850.0" text="Review">
+                  <Label fx:id="descriptionLabel" alignment="TOP_LEFT" layoutX="17.0" layoutY="330.0" prefHeight="242.0" prefWidth="925.0" text="Description:" wrapText="true">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="reviewLabel" layoutX="14.0" layoutY="600.0" prefHeight="88.0" prefWidth="850.0" text="Review">
                      <font>
                         <Font size="48.0" />
                      </font>
                   </Label>
-                  <Line endX="750.0" layoutX="114.0" layoutY="428.0" startX="-100.0" />
-                  <VBox layoutX="17.0" layoutY="441.0">
+                  <Line endX="750.0" layoutX="114.0" layoutY="680.0" startX="-100.0" />
+                  <VBox layoutX="17.0" layoutY="700.0">
                      <children>
                         <HBox fx:id="ratingHBox" prefHeight="45.0" prefWidth="800.0" styleClass="hbox">
                            <children>
@@ -116,8 +117,11 @@
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="reviewListVBox" layoutX="17.0" layoutY="786.0" spacing="10.0" />
-                  <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" layoutX="824.0" layoutY="46.0" mnemonicParsing="false" onAction="#onStarButtonClicked" text="Button" />
+                  <VBox fx:id="reviewListVBox" layoutX="17.0" layoutY="950.0" spacing="10.0" />
+                  <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" layoutX="824.0" layoutY="46.0" mnemonicParsing="false" onAction="#onStarButtonClicked" text="Button">
+                     <graphic>
+                        <FontIcon iconLiteral="far-star" />
+                     </graphic></Button>
                </children>
             </AnchorPane>
          </content>
