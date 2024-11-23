@@ -189,6 +189,7 @@ public class ImportAndExportView {
         if (importCsvFileToDatabase(table, csvFile)) {
             importResultLabel.setText("Import successfully!");
             csvFile = null;
+            importConfirmButton.setDisable(true);
         }
     }
 
@@ -197,6 +198,7 @@ public class ImportAndExportView {
         if (csvFile != null) {
             exportDatabaseToCsvFile(table, csvFile);
             csvFile = null;
+            exportConfirmButton.setDisable(true);
         } else {
             exportResultLabel.setText("No directory chosen!");
         }
