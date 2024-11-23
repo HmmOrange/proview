@@ -147,11 +147,7 @@ public class GameView {
         }
         pointLabel.setText("Score: " + GameActivity.getScore());
         if (GameActivity.getLifeRemains() == 0) {
-            if (GameActivity.getScore() > highScore) {
-                pointLabel.setText("End game. New High Score: " + GameActivity.getScore());
-            } else {
-                pointLabel.setText("End game. Final " + pointLabel.getText());
-            }
+            pointLabel.setText("Uh oh");
         }
         GameActivity.setCurrentQuestionID(GameActivity.getQuestionsChosen().get(GameActivity.getNumberOfQuestionsAnswered()));
         nextButton.setVisible(true);
@@ -202,7 +198,7 @@ public class GameView {
             AppMain.window.centerOnScreen();
         } else {
             GameActivity.endGame();
-            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("EndGameView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
             AppMain.window.setTitle("Hello!");
             AppMain.window.setScene(scene);
