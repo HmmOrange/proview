@@ -12,8 +12,15 @@
         <fx:include source="NavBarView.fxml" />
     </top>
     <center>
-      <VBox alignment="CENTER" prefHeight="340.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="700.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
          <children>
+            <HBox alignment="CENTER" prefHeight="38.0" prefWidth="772.0" spacing="20.0">
+               <children>
+                  <Button fx:id="fiftyFiftyButton" mnemonicParsing="false" onAction="#onFiftyFiftyButtonClicked" prefWidth="200.0" text="50:50" />
+                  <Button fx:id="shieldButton" mnemonicParsing="false" onAction="#onShieldButtonClicked" prefWidth="200.0" text="Shield" />
+                  <Button fx:id="doubleButton" mnemonicParsing="false" onAction="#onDoubleButtonClicked" prefWidth="200.0" text="2X" />
+               </children>
+            </HBox>
             <HBox alignment="CENTER" prefHeight="41.0" prefWidth="772.0" spacing="20.0">
                <children>
                   <Label fx:id="highScoreLabel" text="High Score: ">

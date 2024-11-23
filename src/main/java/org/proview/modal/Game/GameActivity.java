@@ -18,6 +18,9 @@ public class GameActivity {
     private static int lifeRemains = 3;
     private static Timestamp start_time = new Timestamp(System.currentTimeMillis());
     private static Timestamp end_time = new Timestamp(System.currentTimeMillis());
+    private static boolean ifFiftyFiftyUsed = false;
+    private static boolean ifShieldUsed = false;
+    private static boolean ifDoubleUsed = false;
 
 
     public static int getNumberOfQuestionsAnswered() {
@@ -88,6 +91,9 @@ public class GameActivity {
         GameActivity.setScore(0);
         GameActivity.setLifeRemains(3);
         GameActivity.setStart_time(new Timestamp(System.currentTimeMillis()));
+        GameActivity.setIfFiftyFiftyUsed(false);
+        GameActivity.setIfShieldUsed(false);
+        GameActivity.setIfDoubleUsed(false);
         System.out.println("start at : " + GameActivity.getStart_time());
     }
 
@@ -143,5 +149,29 @@ public class GameActivity {
             high_score = resultSet.getInt("high_score");
         }
         return high_score;
+    }
+
+    public static boolean isFiftyFiftyUsed() {
+        return ifFiftyFiftyUsed;
+    }
+
+    public static void setIfFiftyFiftyUsed(boolean i) {
+        ifFiftyFiftyUsed = i;
+    }
+
+    public static boolean isShieldUsed() {
+        return ifShieldUsed;
+    }
+
+    public static void setIfShieldUsed(boolean i) {
+        ifShieldUsed = i;
+    }
+
+    public static boolean isDoubleUsed() {
+        return ifDoubleUsed;
+    }
+
+    public static void setIfDoubleUsed(boolean i) {
+        ifDoubleUsed = i;
     }
 }

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import org.proview.modal.Game.GameActivity;
 import org.proview.test.AppMain;
 
@@ -28,6 +29,9 @@ public class GameView {
     public Button nextButton;
     public Label difficultyLabel;
     public Label highScoreLabel;
+    public Button fiftyFiftyButton;
+    public Button shieldButton;
+    public Button doubleButton;
 
     private boolean[] ifLabelHasCorrectAns = new boolean[4];
     private List<Button> ansButtons = new ArrayList<>();
@@ -35,6 +39,8 @@ public class GameView {
     private int highScore = 0;
     private final String rightAnswerLabelStyle = "-fx-background-color: green; -fx-text-fill: white;";
     private final String wrongAnswerLabelStyle = "-fx-background-color: red; -fx-text-fill: white;";
+    private boolean shield = false;
+    private boolean dupble = false;
 
     public void initialize() throws SQLException {
         nextButton.setDisable(true);
@@ -43,6 +49,11 @@ public class GameView {
         lifeRemainsLabel.setText(lifeRemainsLabel.getText() + GameActivity.getLifeRemains());
         highScore = GameActivity.getHighScore();
         highScoreLabel.setText(highScoreLabel.getText() + highScore);
+        fiftyFiftyButton.setTooltip(new Tooltip("Clear 2 incorrect answers in a multiple choice question."));
+        shieldButton.setTooltip(new Tooltip("Protect your life when you choose an incorrect answer."));
+        doubleButton.setTooltip(new Tooltip("Earn double points for a correct answer, but lose the same amount of points for a wrong answer."));
+        disableAssistancesUsed();
+
         int qId = GameActivity.getCurrentQuestionID();
 
         String sql = """
@@ -80,6 +91,7 @@ public class GameView {
                 ans3Button.setText(answers[answerOrderNo.get(2)]);
                 ans4Button.setText(answers[answerOrderNo.get(3)]);
             } else {
+                fiftyFiftyButton.setDisable(true);
                 ans3Button.setDisable(true);
                 ans3Button.setVisible(false);
                 ans4Button.setVisible(false);
@@ -113,9 +125,17 @@ public class GameView {
 
         if (ifLabelHasCorrectAns[ansId]) {
             GameActivity.setScore(GameActivity.getScore() + GameActivity.getScoreAdded(difficulty));
+            if (dupble) {
+                GameActivity.setScore(GameActivity.getScore() + GameActivity.getScoreAdded(difficulty));
+            }
             ansButtons.get(ansId).setStyle(rightAnswerLabelStyle);
         } else {
-            GameActivity.setLifeRemains(GameActivity.getLifeRemains() - 1);
+            if (!shield) {
+                GameActivity.setLifeRemains(GameActivity.getLifeRemains() - 1);
+            }
+            if (dupble) {
+                GameActivity.setScore(GameActivity.getScore() - GameActivity.getScoreAdded(difficulty));
+            }
             lifeRemainsLabel.setText("Life remains: " + GameActivity.getLifeRemains());
             ansButtons.get(ansId).setStyle(wrongAnswerLabelStyle);
             for (int i = 0; i < 4; i++) {
@@ -142,6 +162,18 @@ public class GameView {
     private void disableAnswerButtons() {
         for (Button b : ansButtons) {
             b.setDisable(true);
+        }
+    }
+
+    private void disableAssistancesUsed() {
+        if (GameActivity.isFiftyFiftyUsed()) {
+            fiftyFiftyButton.setDisable(true);
+        }
+        if (GameActivity.isShieldUsed()) {
+            shieldButton.setDisable(true);
+        }
+        if (GameActivity.isDoubleUsed()) {
+            doubleButton.setDisable(true);
         }
     }
 
@@ -189,4 +221,31 @@ public class GameView {
     }
 
 
+    public void onFiftyFiftyButtonClicked(ActionEvent actionEvent) {
+        int ansCleared = 0;
+        for (int i = 0; i < 4; i++) {
+            if (!ifLabelHasCorrectAns[i]) {
+                ansButtons.get(i).setDisable(true);
+                ansButtons.get(i).setVisible(false);
+                ansCleared++;
+            }
+            if (ansCleared == 2) {
+                GameActivity.setIfFiftyFiftyUsed(true);
+                fiftyFiftyButton.setStyle(rightAnswerLabelStyle);
+                break;
+            }
+        }
+    }
+
+    public void onShieldButtonClicked(ActionEvent actionEvent) {
+        GameActivity.setIfShieldUsed(true);
+        shieldButton.setStyle(rightAnswerLabelStyle);
+        shield = true;
+    }
+
+    public void onDoubleButtonClicked(ActionEvent actionEvent) {
+        GameActivity.setIfDoubleUsed(true);
+        doubleButton.setStyle(rightAnswerLabelStyle);
+        dupble = true;
+    }
 }
