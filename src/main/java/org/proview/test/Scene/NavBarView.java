@@ -167,5 +167,13 @@ public class NavBarView {
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();
     }
+
+    public void onDashboardButtonClicked(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("DashboardView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+        AppMain.window.setTitle("Hello!");
+        AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
+    }
 }
 

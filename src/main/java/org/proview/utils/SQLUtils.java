@@ -821,5 +821,17 @@ public class SQLUtils {
         }
         return tagList;
     }
+
+    public static int getTotalCopiesCount() throws SQLException {
+        int respond = 0;
+        String sql = """
+                SELECT SUM(copies) AS total FROM book;
+                """;
+        ResultSet resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
+        if (resultSet.next()) {
+            respond = resultSet.getInt("total");
+        }
+        return respond;
+    }
 }
 
