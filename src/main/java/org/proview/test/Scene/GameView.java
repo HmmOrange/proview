@@ -120,7 +120,7 @@ public class GameView {
         difficultyLabel.setText(difficultyLabel.getText() + difficulty);
     }
 
-    private void onAnswerButtonClick(int ansId) {
+    private void onAnswerButtonClick(int ansId) throws IOException, SQLException {
         GameActivity.setNumberOfQuestionsAnswered(GameActivity.getNumberOfQuestionsAnswered() + 1);
 
         if (ifLabelHasCorrectAns[ansId]) {
@@ -146,13 +146,20 @@ public class GameView {
             }
         }
         pointLabel.setText("Score: " + GameActivity.getScore());
+
         if (GameActivity.getLifeRemains() == 0) {
-            pointLabel.setText("Uh oh");
+            GameActivity.endGame();
+            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("EndGameView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+            AppMain.window.setTitle("End Game");
+            AppMain.window.setScene(scene);
+            AppMain.window.centerOnScreen();
+        } else {
+            GameActivity.setCurrentQuestionID(GameActivity.getQuestionsChosen().get(GameActivity.getNumberOfQuestionsAnswered()));
+            nextButton.setVisible(true);
+            nextButton.setDisable(false);
+            disableAnswerButtons();
         }
-        GameActivity.setCurrentQuestionID(GameActivity.getQuestionsChosen().get(GameActivity.getNumberOfQuestionsAnswered()));
-        nextButton.setVisible(true);
-        nextButton.setDisable(false);
-        disableAnswerButtons();
     }
 
     private void disableAnswerButtons() {
@@ -173,19 +180,19 @@ public class GameView {
         }
     }
 
-    public void onAns1ButtonClicked(ActionEvent actionEvent) {
+    public void onAns1ButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
         onAnswerButtonClick(0);
     }
 
-    public void onAns2ButtonClicked(ActionEvent actionEvent) {
+    public void onAns2ButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
         onAnswerButtonClick(1);
     }
 
-    public void onAns3ButtonClicked(ActionEvent actionEvent) {
+    public void onAns3ButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
         onAnswerButtonClick(2);
     }
 
-    public void onAns4ButtonClicked(ActionEvent actionEvent) {
+    public void onAns4ButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
         onAnswerButtonClick(3);
     }
 
@@ -215,7 +222,6 @@ public class GameView {
         AppMain.window.setScene(scene);
         AppMain.window.centerOnScreen();
     }
-
 
     public void onFiftyFiftyButtonClicked(ActionEvent actionEvent) {
         int ansCleared = 0;
