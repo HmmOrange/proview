@@ -37,3 +37,14 @@
     -fx-border-color: #1D3557;
     -fx-border-radius: 5;
 }
+
+.button {
+    -fx-font-size: 12px;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #457B9D;
+    -fx-background-radius: 10px;
+}
+
+.button:hover {
+    -fx-background-color: #1D3557;
+}
