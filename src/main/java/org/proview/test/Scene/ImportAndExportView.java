@@ -18,6 +18,7 @@ import java.util.Arrays;
 public class ImportAndExportView {
     private static final String[] tables = {"book", "book_tag", "favourite", "game_history",
             "issue", "questions", "rating", "review", "tag", "user"};
+    private File csvFile;
 
 
     private void initImportTab() {
@@ -157,18 +158,18 @@ public class ImportAndExportView {
     }
 
     public void onChooseCSVFileButtonClicked(ActionEvent actionEvent) throws FileNotFoundException {
-        String table = importTableComboBox.getValue();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose book cover");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("CSV Files (*.csv)", "*.csv")
         );
-        File csvFile = fileChooser.showOpenDialog(AppMain.window);
+        csvFile = fileChooser.showOpenDialog(AppMain.window);
         if (csvFile != null) {
-            if (importCsvFileToDatabase(table, csvFile)) {
-                importResultLabel.setText("Import successfully");
-            }
+            importResultLabel.setText(csvFile.getAbsolutePath());
+        } else {
+            importResultLabel.setText("Cannot find your file!");
         }
+        importConfirmButton.setDisable(false);
     }
 
     public void onChooseDirectoryButtonClicked(ActionEvent actionEvent) throws SQLException, IOException {
@@ -178,17 +179,26 @@ public class ImportAndExportView {
         fileChooser.setInitialFileName(table + ".csv");
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("CSV Files (*.csv)", "*.csv"));
-        File file = fileChooser.showSaveDialog(((Node) actionEvent.getSource()).getScene().getWindow());
-        if (file != null) {
-            exportDatabaseToCsvFile(table, file);
-        } else {
-            exportResultLabel.setText("No directory chosen!");
+        csvFile = fileChooser.showSaveDialog(((Node) actionEvent.getSource()).getScene().getWindow());
+        exportResultLabel.setText(csvFile.getAbsolutePath());
+        exportConfirmButton.setDisable(false);
+    }
+
+    public void onImportConfirmButtonClicked(ActionEvent actionEvent) throws FileNotFoundException {
+        String table = importTableComboBox.getValue();
+        if (importCsvFileToDatabase(table, csvFile)) {
+            importResultLabel.setText("Import successfully!");
+            csvFile = null;
         }
     }
 
-    public void onImportConfirmButtonClicked(ActionEvent actionEvent) {
-    }
-
-    public void onExportConfirmButtonClicked(ActionEvent actionEvent) {
+    public void onExportConfirmButtonClicked(ActionEvent actionEvent) throws SQLException, IOException {
+        String table = exportTableComboBox.getValue();
+        if (csvFile != null) {
+            exportDatabaseToCsvFile(table, csvFile);
+            csvFile = null;
+        } else {
+            exportResultLabel.setText("No directory chosen!");
+        }
     }
 }
