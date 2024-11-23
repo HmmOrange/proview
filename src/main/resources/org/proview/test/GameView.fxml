@@ -38,9 +38,9 @@
                <font>
                   <Font size="15.0" />
                </font></Label>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefWidth="1300.0">
                <children>
-                  <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" text="Question" wrapText="true">
+                  <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="-Infinity" prefWidth="1000.0" text="Question" textAlignment="CENTER" wrapText="true" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="29.0" />
                      </font>
@@ -51,14 +51,14 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                      <children>
-                        <Button fx:id="ans1Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns1ButtonClicked" text="Button" />
-                        <Button fx:id="ans2Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns2ButtonClicked" text="Button" />
+                        <Button fx:id="ans1Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns1ButtonClicked" prefWidth="300.0" text="Button" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="ans2Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns2ButtonClicked" prefWidth="300.0" text="Button" wrapText="true" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                      <children>
-                        <Button fx:id="ans3Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns3ButtonClicked" text="Button" />
-                        <Button fx:id="ans4Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns4ButtonClicked" text="Button" />
+                        <Button fx:id="ans3Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns3ButtonClicked" prefWidth="300.0" text="Button" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="ans4Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns4ButtonClicked" prefWidth="300.0" text="Button" textAlignment="CENTER" wrapText="true" />
                      </children>
                   </HBox>
                </children>

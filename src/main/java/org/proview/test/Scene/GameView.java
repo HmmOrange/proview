@@ -33,6 +33,8 @@ public class GameView {
     private List<Button> ansButtons = new ArrayList<>();
     private String difficulty = "easy";
     private int highScore = 0;
+    private final String rightAnswerLabelStyle = "-fx-background-color: green; -fx-text-fill: white;";
+    private final String wrongAnswerLabelStyle = "-fx-background-color: red; -fx-text-fill: white;";
 
     public void initialize() throws SQLException {
         nextButton.setDisable(true);
@@ -111,11 +113,17 @@ public class GameView {
 
         if (ifLabelHasCorrectAns[ansId]) {
             GameActivity.setScore(GameActivity.getScore() + GameActivity.getScoreAdded(difficulty));
-            ansButtons.get(ansId).setStyle("-fx-background-color: green; -fx-text-fill: white;");
+            ansButtons.get(ansId).setStyle(rightAnswerLabelStyle);
         } else {
             GameActivity.setLifeRemains(GameActivity.getLifeRemains() - 1);
             lifeRemainsLabel.setText("Life remains: " + GameActivity.getLifeRemains());
-            ansButtons.get(ansId).setStyle("-fx-background-color: red; -fx-text-fill: white;");
+            ansButtons.get(ansId).setStyle(wrongAnswerLabelStyle);
+            for (int i = 0; i < 4; i++) {
+                if (ifLabelHasCorrectAns[i]) {
+                    ansButtons.get(i).setStyle(rightAnswerLabelStyle);
+                    break;
+                }
+            }
         }
         pointLabel.setText("Score: " + GameActivity.getScore());
         if (GameActivity.getLifeRemains() == 0) {
