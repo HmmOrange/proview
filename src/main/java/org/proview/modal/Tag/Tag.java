@@ -65,4 +65,13 @@ public class Tag extends TagStyle {
     public String toString() {
         return tagName;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Tag tag) {
+            return tag.getTagName().equals(tagName);
+        }
+
+        return false;
+    }
 }

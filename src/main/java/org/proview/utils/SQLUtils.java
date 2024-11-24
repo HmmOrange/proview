@@ -868,5 +868,48 @@ public class SQLUtils {
         preparedStatement.setString(3, name);
         preparedStatement.executeUpdate();
     }
+
+    public static void upsertBookTags(int bookId, ObservableList<Tag> tagList) throws SQLException {
+        // Clear all old book tags
+        String sql = """
+            DELETE FROM book_tag WHERE book_id = ?;
+        """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, bookId);
+        preparedStatement.executeUpdate();
+
+        // Add new book tags
+        sql = """
+            INSERT INTO book_tag (book_id, tag) VALUES (?, ?);
+        """;
+        try (PreparedStatement preparedInsertStatement = AppMain.connection.prepareStatement(sql)) {
+            for (Tag tag : tagList) {
+                preparedInsertStatement.setInt(1, bookId);
+                preparedInsertStatement.setString(2, tag.getTagName());
+                preparedInsertStatement.addBatch();
+            }
+            preparedInsertStatement.executeBatch();
+        }
+    }
+
+    public static ObservableList<Tag> getBookTags(int bookId) throws SQLException {
+        String sql = """
+            SELECT t.name, t.bg_color_hex, t.text_color_hex
+            FROM book_tag bt
+            INNER JOIN tag t ON bt.tag = t.name
+            WHERE bt.book_id = ?;
+        """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, bookId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ObservableList<Tag> tagList = FXCollections.observableArrayList();
+        while (resultSet.next()) {
+            String name = resultSet.getString("name");
+            String bgColorHex = resultSet.getString("bg_color_hex");
+            String textColorHex = resultSet.getString("text_color_hex");
+            tagList.add(new Tag(name, bgColorHex, textColorHex));
+        }
+        return tagList;
+    }
 }
 
