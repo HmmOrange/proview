@@ -37,28 +37,7 @@ public class GamesAPI {
     }
 
     public static void insertQandAToDb() throws IOException, SQLException, InterruptedException {
-        String dropTableSQL = "DROP TABLE IF EXISTS questions";
-        String createTableSQL = """
-            CREATE TABLE questions (
-                id INT PRIMARY KEY AUTO_INCREMENT,
-                type VARCHAR(20),
-                difficulty VARCHAR(20),
-                question VARCHAR(200),
-                correct_answer VARCHAR(200),
-                incr_ans1 VARCHAR(200),
-                incr_ans2 VARCHAR(200),
-                incr_ans3 VARCHAR(200)
-            )
-            """;
         Connection connection = AppMain.connection;
-        try (
-            PreparedStatement dropStmt = connection.prepareStatement(dropTableSQL);
-            PreparedStatement createStmt = connection.prepareStatement(createTableSQL)) {
-            dropStmt.execute();
-            createStmt.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         for (int times = 0; times < 10; times++) {
             System.out.println("Requesting data, attempt: " + (times + 1));
             String response = getQandAFromAPI();
@@ -101,6 +80,9 @@ public class GamesAPI {
                         continue;
                     }
                     String type = questionNo.get("type").getAsString();
+                    if (type.equals("boolean")) {
+                        continue;
+                    }
                     String difficulty = questionNo.get("difficulty").getAsString();
                     String correctAnswer = questionNo.get("correct_answer").getAsString();
                     JsonArray incorrectAnswersArray = questionNo.getAsJsonArray("incorrect_answers");
@@ -128,30 +110,24 @@ public class GamesAPI {
                 System.out.println("Không tìm thấy q&a trong phản hồi JSON.");
             }
         }
-        addGameHistoryTableToDb();
-
     }
 
-    private static void addGameHistoryTableToDb() {
-        String dropTableSQL = "DROP TABLE IF EXISTS game_history";
-        String createTableSQL = """
-            CREATE TABLE game_history (
-                id INT PRIMARY KEY AUTO_INCREMENT,
-                user_id INT NOT NULL,
-                score INT NOT NULL,
-                question_answered INT NOT NULL,
-                start_time TIMESTAMP NOT NULL,
-                end_time TIMESTAMP NOT NULL
-            )
-            """;
-        Connection connection = AppMain.connection;
-        try (
-                PreparedStatement dropStmt = connection.prepareStatement(dropTableSQL);
-                PreparedStatement createStmt = connection.prepareStatement(createTableSQL)) {
-            dropStmt.execute();
-            createStmt.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+    public static void printInsertSqls() throws SQLException {
+        String unformattedSql = "INSERT INTO questions(type, difficulty, question, correct_answer, incr_ans1, incr_ans2, incr_ans3) VALUE ('%s', '%s', '%s', '%s', '%s', '%s', '%s');\n";
+
+        String getData = "SELECT type, difficulty, question, correct_answer, incr_ans1, incr_ans2, incr_ans3 FROM questions WHERE type = 'multiple'";
+        ResultSet resultSet = AppMain.connection.prepareStatement(getData).executeQuery();
+        while (resultSet.next()) {
+            String type = "multiple";
+            String difficulty = resultSet.getString("difficulty");
+            String question = resultSet.getString("question");
+            String correct_answer = resultSet.getString("correct_answer");
+            String incr_ans1 = resultSet.getString("incr_ans1");
+            String incr_ans2 = resultSet.getString("incr_ans2");
+            String incr_ans3 = resultSet.getString("incr_ans3");
+            String formattedSql = String.format(unformattedSql, type, difficulty, question, correct_answer, incr_ans1, incr_ans2, incr_ans3);
+            System.out.println(formattedSql);
         }
     }
 }
