@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.NormalUserDashboardView">
+    <top>
+        <fx:include source="NavBarView.fxml" />
+    </top>
+    <center>
+        <ScrollPane BorderPane.alignment="CENTER">
+            <content>
+                <VBox alignment="TOP_CENTER" prefHeight="645.0" prefWidth="1298.0" spacing="10.0">
+                    <children>
+                        <Label text="Issues">
+                            <font>
+                                <Font size="26.0" />
+                            </font>
+                        </Label>
+                        <HBox alignment="CENTER">
+                            <children>
+                                <LineChart fx:id="issuesCreatedNumberLineChart" legendVisible="false" title="Number of Issues You Have Created So Far">
+                                    <xAxis>
+                                        <CategoryAxis label="Date" side="BOTTOM" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis forceZeroInRange="false" label="Issues" pickOnBounds="false" side="LEFT" tickLabelGap="1.0" upperBound="10.0" />
+                                    </yAxis>
+                                </LineChart>
+                        <PieChart fx:id="issueStatusPieChart" title="Percentage of each Issue Current Status" />
+                            </children>
+                        </HBox>
+                        <Label text="Book">
+                            <font>
+                                <Font size="26.0" />
+                            </font>
+                        </Label>
+                        <HBox alignment="CENTER">
+                            <children>
+                        <BarChart fx:id="avgRatingBookCountBarChart" legendVisible="false" title="Number of Books in Each Range Of Average Rating">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis minorTickLength="1.0" side="LEFT" tickUnit="1.0" upperBound="1.0" />
+                          </yAxis>
+                        </BarChart>
+                                <PieChart fx:id="booksBorrowedPieChart" title="Percentage of Books That You Have Borrowed So Far" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>
