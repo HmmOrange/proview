@@ -16,58 +16,72 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" stylesheets="@styles/BookInfoView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
+<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" stylesheets="@styles/BookInfoView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
    <center>
       <ScrollPane hbarPolicy="NEVER" prefHeight="1969.0" prefWidth="954.0">
          <content>
-            <AnchorPane prefHeight="1034.0" prefWidth="889.0">
+            <VBox spacing="10.0">
                <children>
-                  <Label fx:id="titleLabel" layoutX="14.0" layoutY="14.0" prefHeight="88.0" prefWidth="738.0" text="Title">
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Label fx:id="titleLabel" prefHeight="88.0" prefWidth="804.0" text="Title">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onStarButtonClicked" text="Button">
+                           <graphic>
+                              <FontIcon iconColor="WHITE" iconLiteral="far-star" wrappingWidth="13.5" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Line endX="800.0" startX="-100.0" />
+                  <Label fx:id="authorLabel" prefHeight="35.0" prefWidth="900.0" text="Authors:">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <HBox>
+                     <children>
+                        <Label fx:id="tagLabel" prefHeight="35.0" prefWidth="60.0" text="Tags:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="tagListHBox" alignment="CENTER_LEFT" prefWidth="800.0" spacing="10.0" />
+                     </children>
+                  </HBox>
+                  <Label fx:id="copiesLabel" prefHeight="35.0" prefWidth="900.0" text="Copies available:">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="ratingLabel" prefHeight="35.0" prefWidth="900.0" text="Rating:">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="issueLabel" prefHeight="35.0" prefWidth="900.0" text="Borrow count:">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="descriptionLabel" alignment="TOP_LEFT" prefWidth="900.0" text="Description:" wrapText="true">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="reviewLabel" prefHeight="88.0" prefWidth="850.0" text="Review">
                      <font>
                         <Font size="48.0" />
                      </font>
                   </Label>
-                  <Label fx:id="authorLabel" layoutX="17.0" layoutY="110.0" prefHeight="35.0" prefWidth="438.0" text="Author:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="tagLabel" layoutX="17.0" layoutY="154.0" prefHeight="35.0" prefWidth="447.0" text="Tags:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="copiesLabel" layoutX="17.0" layoutY="198.0" prefHeight="35.0" prefWidth="458.0" text="Copies available:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Line endX="800.0" layoutX="114.0" layoutY="93.0" startX="-100.0" />
-                  <Label fx:id="ratingLabel" layoutX="17.0" layoutY="243.0" prefHeight="35.0" prefWidth="458.0" text="Rating:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="issueLabel" layoutX="17.0" layoutY="285.0" prefHeight="35.0" prefWidth="458.0" text="Borrow count:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="descriptionLabel" alignment="TOP_LEFT" layoutX="17.0" layoutY="330.0" prefHeight="242.0" prefWidth="925.0" text="Description:" wrapText="true">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="reviewLabel" layoutX="14.0" layoutY="600.0" prefHeight="88.0" prefWidth="850.0" text="Review">
-                     <font>
-                        <Font size="48.0" />
-                     </font>
-                  </Label>
-                  <Line endX="800.0" layoutX="113.0" layoutY="680.0" startX="-100.0" />
-                  <VBox layoutX="17.0" layoutY="700.0">
+                  <Line endX="800.0" startX="-100.0" />
+                  <VBox>
                      <children>
                         <HBox fx:id="ratingHBox" prefHeight="45.0" prefWidth="800.0" styleClass="hbox">
                            <children>
@@ -117,13 +131,12 @@
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="reviewListVBox" layoutX="17.0" layoutY="950.0" spacing="10.0" />
-                  <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" layoutX="824.0" layoutY="46.0" mnemonicParsing="false" onAction="#onStarButtonClicked" text="Button">
-                     <graphic>
-                        <FontIcon iconColor="WHITE" iconLiteral="far-star" />
-                     </graphic></Button>
+                  <VBox fx:id="reviewListVBox" spacing="10.0" />
                </children>
-            </AnchorPane>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </VBox>
          </content>
       </ScrollPane>
    </center>

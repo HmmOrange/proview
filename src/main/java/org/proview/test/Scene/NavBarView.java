@@ -10,7 +10,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import org.proview.modal.Game.GameActivity;
 import org.proview.modal.User.Admin;
@@ -33,9 +35,9 @@ public class NavBarView {
     public Button libraryButton;
     public Button logoutButton;
     public Button issueButton;
-    public Button profileButton;
     public HBox navBarHBox;
     public Label issueButtonLabel;
+    public Circle avatarImageCircle;
 
     public void loadProfileButton() throws IOException {
             // Load CSS
@@ -44,21 +46,17 @@ public class NavBarView {
 
             InputStream stream = new FileInputStream(UserManagement.getCurrentUser().getAvatarUrl());
             Image image = new Image(stream);
-            ImageView avatarImage = new ImageView(image);
+            // ImageView avatarImage = new ImageView(image);
             stream.close();
 
-            double radius = 25;
-            avatarImage.setFitWidth(2 * radius);
-            avatarImage.setFitHeight(2 * radius);
-            avatarImage.setClip(new Circle(radius, radius, radius));
-            avatarImage.setCache(true);
-
-            Circle circle = new Circle(radius);
-            profileButton.setGraphic(avatarImage);
-            profileButton.setShape(circle);
-            profileButton.setMinSize(2 * radius, 2 * radius);
-            profileButton.setMaxSize(2 * radius, 2 * radius);
-            profileButton.setId("profile-button");
+            avatarImageCircle.setFill(new ImagePattern(image));
+            avatarImageCircle.setOnMouseClicked(event -> {
+                try {
+                    onProfileButtonClick(event);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
     public void initialize() throws IOException {
         if (UserManagement.getCurrentUser() instanceof Admin) {
@@ -148,7 +146,7 @@ public class NavBarView {
         AppMain.window.centerOnScreen();
     }
 
-    public void onProfileButtonClick(ActionEvent actionEvent) throws IOException {
+    public void onProfileButtonClick(MouseEvent mouseClick) throws IOException {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("ProfileView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1300, 700);

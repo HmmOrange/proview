@@ -6,16 +6,31 @@ public class TagView {
     public Label tagLabel;
 
     public void setData(String tagName, String bgColorHex, String textColorHex) {
-        tagLabel.setText(tagName);
+        setName(tagName);
+        setStyle(bgColorHex, textColorHex);
+    }
 
+    public void setName(String name) {
+        tagLabel.setText(name);
+    }
+
+    public void setStyle(String bgColorHex, String textColorHex) {
         StringBuilder style = new StringBuilder();
 
         if (bgColorHex != null) {
-            style.append("-fx-background-color: #").append(bgColorHex.replace("#", "")).append("; ");
+            if (bgColorHex.startsWith("#"))
+                bgColorHex = bgColorHex.substring(1);
+            if (bgColorHex.isEmpty() || (bgColorHex.length() != 3 && bgColorHex.length() != 6))
+                bgColorHex = "6c757d";
+            style.append("-fx-background-color: #").append(bgColorHex).append("; ");
         }
 
         if (textColorHex != null) {
-            style.append("-fx-text-fill: #").append(textColorHex.replace("#", "")).append("; ");
+            if (textColorHex.startsWith("#"))
+                textColorHex = textColorHex.substring(1);
+            if (textColorHex.isEmpty() || (textColorHex.length() != 3 && textColorHex.length() != 6))
+                textColorHex = "ced4da";
+            style.append("-fx-text-fill: #").append(textColorHex).append("; ");
         }
 
         if (!style.isEmpty()) {

@@ -1,15 +1,18 @@
 package org.proview.test.Scene;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import org.proview.modal.Tag.Tag;
 import org.proview.test.AppMain;
+import org.proview.utils.SQLUtils;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -22,16 +25,33 @@ import java.sql.SQLException;
 public class EditBookInfoView {
     public TextField titleField;
     public TextField authorField;
-    public TextField tagField;
     public TextArea descriptionField;
     public TextField copiesField;
     public ImageView coverImage;
     public Button backButton;
     public Button confirmButton;
     public Button changeCoverButton;
+    public MenuButton tagSelectDropdown;
+    public HBox tagSelectedHBox;
+    private ObservableList<Tag> tagSelectedList = FXCollections.observableArrayList();
     private int id;
     private File coverFile;
 
+    private void addSelectedTag(Tag tag) {
+        // Making a cloned tag because a label can only have 1 parent.
+        Tag newTag = new Tag(tag.getTagName(), tag.getBgColorHex(), tag.getTextColorHex());
+        tagSelectedList.add(newTag);
+        tagSelectedHBox.getChildren().add(newTag.getLabel());
+    }
+
+    private void removeSelectedTag(Tag tag) {
+        tagSelectedList.removeIf(tagInList ->
+                tag.getTagName().equals((tagInList.getTagName()))
+        );
+        tagSelectedHBox.getChildren().removeIf(node ->
+                tag.getTagName().equals(((Label) node).getText())
+        );
+    }
     public void initialize(int id) throws SQLException, IOException {
         this.id = id;
         Connection connection = AppMain.connection;
@@ -46,16 +66,6 @@ public class EditBookInfoView {
             copiesField.setText(resultSet.getString("copies"));
         }
 
-        String tagSql = "SELECT tag FROM book_tag WHERE book_id = ?";
-        PreparedStatement tagPreparedStatement = connection.prepareStatement(tagSql);
-        tagPreparedStatement.setInt(1, id);
-        ResultSet tagResultSet = tagPreparedStatement.executeQuery();
-        if (tagResultSet.next()) {
-            StringBuilder tagSB = new StringBuilder(tagResultSet.getString("tag"));
-            while (tagResultSet.next()) tagSB.append(", ").append(tagResultSet.getString("tag"));
-            tagField.setText(tagSB.toString());
-        }
-
         InputStream stream = new FileInputStream(String.format("./assets/covers/cover%d.png", id));
         Image image = new Image(stream);
         coverImage.setImage(image);
@@ -66,7 +76,53 @@ public class EditBookInfoView {
         stream.close();
 
         coverFile = new File(String.format("./assets/covers/cover%d.png", id));
+
+        // Tag manu dropdown
+        ObservableList<Tag> oldBookTags = SQLUtils.getBookTags(id);
+        ObservableList<Tag> tagList = SQLUtils.getTagList();
+        ObservableList<Label> selectedTagList = FXCollections.observableArrayList();
+
+        for (Tag tag : tagList) {
+            CheckBox checkBox = new CheckBox();
+
+            boolean ifOldTag = oldBookTags.contains(tag);
+
+            checkBox.setSelected(ifOldTag);
+            if (ifOldTag) {
+                addSelectedTag(tag);
+            }
+
+            checkBox.setOnAction(event -> {
+                if (checkBox.isSelected()) {
+                    addSelectedTag(tag);
+                }
+                else {
+                    removeSelectedTag(tag);
+                }
+            });
+
+            HBox hBox = new HBox();
+            hBox.setSpacing(10);
+            hBox.getChildren().add(checkBox);
+            hBox.getChildren().add(tag.getLabel());
+
+            hBox.setOnMouseClicked(event -> {
+                if (!checkBox.isSelected()) {
+                    addSelectedTag(tag);
+                    checkBox.setSelected(true);
+                }
+                else {
+                    removeSelectedTag(tag);
+                    checkBox.setSelected(false);
+                }
+            });
+
+            CustomMenuItem customMenuItem = new CustomMenuItem(hBox);
+            customMenuItem.setHideOnClick(false);
+            tagSelectDropdown.getItems().add(customMenuItem);
+        }
     }
+
     public void onChangeCoverButtonClick(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose book cover");
@@ -102,7 +158,8 @@ public class EditBookInfoView {
         // Store cover images in a folder (in practice this is stored in a CDN)
         Files.copy(coverFile.toPath(), (new File(dstFilePath)).toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-        //tag
+        // Tag
+        SQLUtils.upsertBookTags(id, tagSelectedList);
 
         this.onBackButtonClick(actionEvent);
     }
