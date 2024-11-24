@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="book-cell-button" stylesheets="@styles/ListView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCardView">
+<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="book-cell-button" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCardView">
    <graphic>
       <HBox maxHeight="125.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="400.0">
          <children>
@@ -49,7 +50,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14" text="" wrappingWidth="15.75">
+                              <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14" styleClass="ikonli-font-icon" text="" wrappingWidth="15.75">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin>
@@ -59,7 +60,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <FontIcon iconColor="#457b9d" iconLiteral="fas-book-reader" iconSize="14" />
+                              <FontIcon iconColor="#457b9d" iconLiteral="fas-book-reader" iconSize="14" styleClass="ikonli-font-icon" />
                            </children>
                         </HBox>
                         <Label fx:id="copiesLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="20.0" prefWidth="193.0" text="3 copies available" wrapText="true">
@@ -80,4 +81,8 @@
          </children>
       </HBox>
    </graphic>
+   <stylesheets>
+      <URL value="@styles/ListView.css" />
+      <URL value="@styles/styles.css" />
+   </stylesheets>
 </Button>

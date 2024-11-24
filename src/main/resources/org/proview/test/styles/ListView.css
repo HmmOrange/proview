@@ -8,3 +8,11 @@
 .book-cell-button:hover {
     -fx-background-color: rgba(168, 218, 220, 0.3);
 }
+
+.ikonli-font-icon {
+    -fx-icon-size: 14;
+}
+
+.ikonli-font-icon:hover {
+    -fx-icon-size: 14;
+}

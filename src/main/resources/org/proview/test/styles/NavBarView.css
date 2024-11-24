@@ -1,5 +1,6 @@
 .nav-button:hover .ikonli-font-icon {
     -fx-icon-color: #FFFFFF;
+    -fx-icon-size: 14;
 }
 
 .nav-bar {
