@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
@@ -60,4 +61,8 @@
          </VBox.margin>
       </VBox>
    </children>
+   <stylesheets>
+      <URL value="@styles/styles.css" />
+      <URL value="@styles/ListView.css" />
+   </stylesheets>
 </VBox>

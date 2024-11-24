@@ -259,7 +259,10 @@ public class SQLUtils {
     }
 
     public static void addFavourite(int userId, int bookId) throws SQLException {
-        String sql = "INSERT INTO favourite(user_id, book_id, time_added) VALUES (?, ?, CURRENT_TIMESTAMP());";
+        String sql = """
+                INSERT INTO favourite(user_id, book_id, time_added) VALUES (?, ?, CURRENT_TIMESTAMP())
+                ON DUPLICATE KEY UPDATE time_added = CURRENT_TIMESTAMP;
+        """;
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, userId);
         preparedStatement.setInt(2, bookId);
@@ -309,12 +312,8 @@ public class SQLUtils {
         preparedStatement.setInt(1, book_id);
         preparedStatement.setInt(2, user_id);
         ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            res = true;
-        }
-        preparedStatement.close();
-        resultSet.close();
-        return res;
+
+        return resultSet.next();
     }
 
     public static boolean ifUserBorrowingBook(int user_id, int book_id) throws SQLException {

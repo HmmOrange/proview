@@ -98,10 +98,6 @@ public class ProfileView {
     }
 
     public void loadButtons() {
-        // Load CSS
-        String cssPath = Objects.requireNonNull(AppMain.class.getResource("styles/ProfileView.css")).toExternalForm();
-        profileBorderPane.getStylesheets().add(cssPath);
-
         // Load buttons
         FontIcon cardFontIcon = new FontIcon();
         cardFontIcon.getStyleClass().add("ikonli-font-icon");

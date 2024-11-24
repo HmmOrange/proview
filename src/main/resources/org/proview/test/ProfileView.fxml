@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -57,8 +58,8 @@
                <children>
                   <HBox alignment="CENTER_RIGHT" prefHeight="56.0" prefWidth="933.0">
                      <children>
-                        <Button fx:id="cardButton" mnemonicParsing="false" onAction="#onCardButtonClicked" />
-                        <Button fx:id="compactButton" mnemonicParsing="false" onAction="#onCompactButtonClicked">
+                        <Button fx:id="cardButton" mnemonicParsing="false" onAction="#onCardButtonClicked" styleClass="view-button" />
+                        <Button fx:id="compactButton" mnemonicParsing="false" onAction="#onCompactButtonClicked" styleClass="view-button">
                            <HBox.margin>
                               <Insets right="100.0" />
                            </HBox.margin>
@@ -69,4 +70,8 @@
          </content>
       </ScrollPane>
    </center>
+   <stylesheets>
+      <URL value="@styles/styles.css" />
+      <URL value="@styles/ProfileView.css" />
+   </stylesheets>
 </BorderPane>

@@ -1,9 +1,10 @@
 .nav-button:hover .ikonli-font-icon {
     -fx-icon-color: #FFFFFF;
+    -fx-icon-size: 14;
 }
 
 .nav-bar {
-    -fx-background-color: #457B9D;
+    -fx-background-color: -blue;
     -fx-padding: 5px;
     -fx-background-radius: 0px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
@@ -19,7 +20,7 @@
 }
 
 .nav-button:hover {
-    -fx-background-color: #1D3557;
+    -fx-background-color: -dark-blue;
     -fx-text-fill: #ffffff;
 }
 
@@ -36,6 +37,13 @@
     -fx-background-color: #f8f9fa;
     -fx-text-fill: #212529;
     -fx-padding: 7px 10px;
+    -fx-background-radius: 10px;
+    -fx-border-color: #f8f9fa;
+    -fx-border-radius: 10px;
+}
+
+.search-bar {
+    -fx-background-color: #f8f9fa;
     -fx-background-radius: 10px;
     -fx-border-color: #ced4da;
     -fx-border-radius: 10px;
@@ -61,6 +69,6 @@
 }
 
 .logout-button:hover {
-    -fx-background-color: #1D3557;
+    -fx-background-color: -dark-blue;
     -fx-text-fill: #ffffff;
 }

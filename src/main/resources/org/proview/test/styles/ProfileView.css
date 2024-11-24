@@ -22,14 +22,14 @@
     -fx-icon-code: "fas-th-list";
 }
 
-.button {
+.view-button {
     -fx-background-radius: 0;
 }
 
-.button:disabled {
+.view-button:disabled {
     -fx-opacity: 1;
 }
 
-.button:hover .ikonli-font-icon {
+.view-button:hover .ikonli-font-icon {
     -fx-icon-size: 24;
 }

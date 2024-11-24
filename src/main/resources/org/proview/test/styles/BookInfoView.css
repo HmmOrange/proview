@@ -1,7 +1,7 @@
 #star-icon-default .ikonli-font-icon {
     -fx-icon-size: 32;
     -fx-icon-code: "far-star";
-    -fx-icon-color: #000000;
+    -fx-icon-color: white;
 }
 
 #star-icon-clicked .ikonli-font-icon {
@@ -33,18 +33,18 @@
 }
 
 .hbox {
-    -fx-background-color: #A8DADC;
-    -fx-border-color: #1D3557;
+    -fx-background-color: -light-blue;
+    -fx-border-color: -dark-blue;
     -fx-border-radius: 5;
 }
 
 .button {
     -fx-font-size: 12px;
-    -fx-text-fill: #ffffff;
-    -fx-background-color: #457B9D;
+    -fx-text-fill: white;
+    -fx-background-color: -blue;
     -fx-background-radius: 10px;
 }
 
 .button:hover {
-    -fx-background-color: #1D3557;
+    -fx-background-color: -dark-blue;
 }
