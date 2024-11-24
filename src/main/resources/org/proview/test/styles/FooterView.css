@@ -1,0 +1,31 @@
+.container {
+    -fx-background-color: -blue;
+    -fx-border-radius: 0;
+}
+
+.label {
+    -fx-text-fill: white;
+    -fx-text-weight: 800;
+    -fx-font-size: 20;
+}
+
+.heart {
+    -fx-icon-code: "fas-heart";
+    -fx-icon-color: white;
+    -fx-icon-size: 16;
+}
+
+.github {
+    -fx-icon-code: "fab-github";
+    -fx-icon-color: white;
+    -fx-icon-size: 20;
+}
+
+.github:hover {
+    -fx-cursor: hand;
+    -fx-icon-color: black;
+}
+
+.separator {
+    -fx-stroke: white;
+}

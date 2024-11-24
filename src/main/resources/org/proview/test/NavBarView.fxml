@@ -51,8 +51,16 @@
             </HBox>
             <HBox alignment="CENTER" layoutX="532.0" layoutY="10.0" spacing="10.0">
                <children>
-                  <TextField fx:id="bookSearchBar" onAction="#onSearchButtonClick" prefHeight="33.0" prefWidth="595.0" promptText="Search..." styleClass="search-input" />
-                  <Button fx:id="searchButton" onAction="#onSearchButtonClick" prefHeight="15.0" prefWidth="16.0" styleClass="search-button" />
+                  <HBox alignment="CENTER" prefWidth="645.0" styleClass="search-bar">
+                     <children>
+                        <TextField fx:id="bookSearchBar" onAction="#onSearchButtonClick" prefHeight="33.0" prefWidth="606.0" promptText="Search..." styleClass="search-input" />
+                        <Button fx:id="searchButton" onAction="#onSearchButtonClick" prefHeight="15.0" prefWidth="16.0" styleClass="search-button">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-search" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
                   <Circle fx:id="avatarImageCircle" fill="#1fff78" radius="15.0" stroke="WHITE" strokeType="INSIDE" styleClass="avatar-circle" />
                   <Button fx:id="logoutButton" onAction="#onLogoutButtonClick" styleClass="logout-button" text="Log out" />
                </children>

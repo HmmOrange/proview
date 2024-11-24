@@ -52,6 +52,6 @@
       <AnchorPane prefHeight="578.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <AnchorPane prefHeight="49.0" prefWidth="1000.0" BorderPane.alignment="CENTER" />
+      <fx:include source="FooterView.fxml" />
    </bottom>
 </BorderPane>
