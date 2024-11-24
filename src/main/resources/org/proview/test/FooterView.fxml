@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1300.0" spacing="6.0" styleClass="container" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.FooterView">
+   <children>
+      <Label text="Made with" />
+      <FontIcon fx:id="heartIcon" onMouseEntered="#onHeartIconHovered" onMouseExited="#onHeartIconExited" styleClass="heart" />
+      <Label text="by ... " />
+      <Line endX="-95.4705810546875" endY="1.0649738311767578" startX="-95.4708251953125" startY="-10.961929321289062" styleClass="separator" />
+      <FontIcon fx:id="githubIcon" onMouseClicked="#onGithubIconClicked" styleClass="github" />
+   </children>
+   <stylesheets>
+      <URL value="@styles/styles.css" />
+      <URL value="@styles/FooterView.css" />
+   </stylesheets>
+</HBox>
