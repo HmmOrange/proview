@@ -9,7 +9,8 @@ public class BookLib extends Book {
     private int id;
     private String imagePath;
     private int copiesAvailable;
-    private double rating = -1;
+    private double rating = 0;
+    private int ratingCount = 0;
     private int issueCount = -1;
     private int issueCount7Days = -1;
 
@@ -51,21 +52,23 @@ public class BookLib extends Book {
 
 
     public double getRating() throws SQLException {
-        if (rating >= 0)
-            return rating;
-
         Connection connection = AppMain.connection;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM rating WHERE book_id = " + id);
 
-        double sum = 0, count = 0;
+        double sum = 0;
+        ratingCount = 0;
         while (resultSet.next()) {
             double rating = resultSet.getDouble("rating");
             sum += rating;
-            count++;
+            ratingCount++;
         }
 
-        return (double) Math.round(sum / count * 100) / 100;
+        return (double) Math.round(sum / ratingCount * 100) / 100;
+    }
+
+    public int getRatingCount() throws SQLException {
+        return ratingCount;
     }
 
     public int getIssueCount() throws SQLException {

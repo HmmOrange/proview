@@ -85,11 +85,16 @@ public class BookInfoView {
             tagListHBox.getChildren().add(tag.getLabel());
         }
     }
+
     private void reloadRatingLabel() throws SQLException {
         BookLib book = SQLUtils.getBook(bookId);
         assert book != null;
-        // If the label is already filled, only get the first default word (which is in fxml)
-        ratingLabel.setText(ratingLabel.getText().split(" ", 2)[0] + " " + String.format("%.2f", book.getRating()));
+        ratingLabel.setText(
+                ratingLabel.getText().split(" ", 2)[0] // If the label is already filled, only get the first default word (which in fxml is "Ratings:")
+                        + " " + String.format("%.2f", book.getRating())
+                        + " / 5.0 from "
+                        + book.getRatingCount() + " rating" + (book.getRatingCount() != 1 ? "s" : "")
+        );
     }
 
     public void initialize() throws SQLException {
