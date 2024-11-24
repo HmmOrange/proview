@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -11,14 +12,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.DashboardView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.AdminDashboardView">
     <top>
         <fx:include source="NavBarView.fxml" />
     </top>
     <center>
       <ScrollPane BorderPane.alignment="CENTER">
          <content>
-            <VBox alignment="TOP_CENTER" prefHeight="645.0" prefWidth="1298.0" spacing="10.0">
+            <VBox alignment="TOP_CENTER" prefHeight="743.0" prefWidth="1298.0" spacing="10.0">
                <children>
                   <Label text="Issues">
                      <font>
@@ -29,12 +30,13 @@
                      <children>
                         <LineChart fx:id="issuesCreatedNumberLineChart" legendVisible="false" title="Number of Issues Created">
                           <xAxis>
-                            <CategoryAxis label="Week" side="BOTTOM" />
+                            <CategoryAxis label="Date" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
                             <NumberAxis forceZeroInRange="false" label="Issues" pickOnBounds="false" side="LEFT" tickLabelGap="1.0" upperBound="10.0" />
                           </yAxis>
                         </LineChart>
+                        <PieChart fx:id="issueStatusPieChart" title="Percentage of Each Issue Current Status" />
                      </children>
                   </HBox>
                   <Label text="Book">
@@ -44,7 +46,32 @@
                   </Label>
                   <HBox alignment="CENTER">
                      <children>
+                        <BarChart fx:id="avgRatingBookCountBarChart" legendVisible="false" title="Number of Books in Each Range Of Average Rating">
+                          <xAxis>
+                            <CategoryAxis label="Rating" side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis label="Books" side="LEFT" />
+                          </yAxis>
+                        </BarChart>
                         <PieChart fx:id="copiesBorrowedPieChart" title="Percentage of copies being borrowed" />
+                     </children>
+                  </HBox>
+                  <Label text="Users">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <LineChart fx:id="newRegistrationLineChart" title="Number of New Registration Per Day So Far">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
                      </children>
                   </HBox>
                </children>

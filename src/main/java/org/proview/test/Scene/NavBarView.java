@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import org.proview.modal.Game.GameActivity;
 import org.proview.modal.User.Admin;
+import org.proview.modal.User.NormalUser;
 import org.proview.utils.SearchUtils;
 import org.proview.modal.User.UserManagement;
 import org.proview.test.AppMain;
@@ -169,7 +170,10 @@ public class NavBarView {
     }
 
     public void onDashboardButtonClicked(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("DashboardView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("AdminDashboardView.fxml"));
+        if (UserManagement.getCurrentUser() instanceof NormalUser) {
+            fxmlLoader = new FXMLLoader(AppMain.class.getResource("NormalUserDashboardView.fxml"));
+        }
         Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
         AppMain.window.setTitle("Hello!");
         AppMain.window.setScene(scene);
