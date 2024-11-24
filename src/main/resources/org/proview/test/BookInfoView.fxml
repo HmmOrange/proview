@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
    <top>
@@ -33,11 +32,7 @@
                               <Font size="48.0" />
                            </font>
                         </Label>
-                        <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onStarButtonClicked" text="Button">
-                           <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="far-star" wrappingWidth="13.5" />
-                           </graphic>
-                        </Button>
+                        <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onStarButtonClicked" prefHeight="40.0" prefWidth="84.0" text="Button" />
                      </children>
                   </HBox>
                   <Line endX="800.0" startX="-100.0" />

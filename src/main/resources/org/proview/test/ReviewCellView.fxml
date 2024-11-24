@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
@@ -7,7 +8,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefWidth="900.0" styleClass="box" stylesheets="@styles/ReviewCellView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ReviewCellView">
+<VBox prefWidth="900.0" styleClass="box" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ReviewCellView">
    <children>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="61.0" prefWidth="900.0">
          <children>
@@ -55,4 +56,8 @@
          </padding>
       </Label>
    </children>
+   <stylesheets>
+      <URL value="@styles/styles.css" />
+      <URL value="@styles/ReviewCellView.css" />
+   </stylesheets>
 </VBox>

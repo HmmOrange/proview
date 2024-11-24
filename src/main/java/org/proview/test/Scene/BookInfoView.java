@@ -115,16 +115,14 @@ public class BookInfoView {
             durationField.setDisable(false);
         }
 
-        // Load CSS
-        String cssPath = Objects.requireNonNull(AppMain.class.getResource("styles/BookInfoView.css")).toExternalForm();
-        System.out.println(cssPath);
-        borderPane.getStylesheets().add(cssPath);
-
         // Set star button
         FontIcon fontIcon = new FontIcon();
         fontIcon.getStyleClass().add("ikonli-font-icon");
         starButton.setGraphic(fontIcon);
-        starButton.setId("star-icon-default");
+        if (SQLUtils.isFavouriteBook(UserManagement.getCurrentUser().getId(), bookId))
+            starButton.setId("star-icon-clicked");
+        else
+            starButton.setId("star-icon-default");
         starButton.applyCss();
     }
 
@@ -280,7 +278,7 @@ public class BookInfoView {
     }
 
     public void onStarButtonClicked(ActionEvent mouseEvent) throws SQLException {
-        if (Objects.equals(starButton.getId(), "star-icon-default")) {
+        if (starButton.getId().equals("star-icon-default")) {
             starButton.setId("star-icon-clicked");
             SQLUtils.addFavourite(UserManagement.getCurrentUser().getId(), this.bookId);
         } else {
