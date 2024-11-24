@@ -7,13 +7,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.GameView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.GameView">
     <top>
         <fx:include source="NavBarView.fxml" />
     </top>
     <center>
-      <VBox alignment="CENTER" prefHeight="340.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="700.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
          <children>
+            <HBox alignment="CENTER" prefHeight="38.0" prefWidth="772.0" spacing="20.0">
+               <children>
+                  <Button fx:id="fiftyFiftyButton" mnemonicParsing="false" onAction="#onFiftyFiftyButtonClicked" prefWidth="200.0" text="50:50" />
+                  <Button fx:id="shieldButton" mnemonicParsing="false" onAction="#onShieldButtonClicked" prefWidth="200.0" text="Shield" />
+                  <Button fx:id="doubleButton" mnemonicParsing="false" onAction="#onDoubleButtonClicked" prefWidth="200.0" text="2X" />
+               </children>
+            </HBox>
             <HBox alignment="CENTER" prefHeight="41.0" prefWidth="772.0" spacing="20.0">
                <children>
                   <Label fx:id="highScoreLabel" text="High Score: ">
@@ -38,9 +45,9 @@
                <font>
                   <Font size="15.0" />
                </font></Label>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefWidth="1300.0">
                <children>
-                  <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" text="Question" wrapText="true">
+                  <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="-Infinity" prefWidth="1000.0" text="Question" textAlignment="CENTER" wrapText="true" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="29.0" />
                      </font>
@@ -51,14 +58,14 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                      <children>
-                        <Button fx:id="ans1Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns1ButtonClicked" text="Button" />
-                        <Button fx:id="ans2Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns2ButtonClicked" text="Button" />
+                        <Button fx:id="ans1Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns1ButtonClicked" prefWidth="300.0" text="Button" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="ans2Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns2ButtonClicked" prefWidth="300.0" text="Button" wrapText="true" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                      <children>
-                        <Button fx:id="ans3Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns3ButtonClicked" text="Button" />
-                        <Button fx:id="ans4Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns4ButtonClicked" text="Button" />
+                        <Button fx:id="ans3Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns3ButtonClicked" prefWidth="300.0" text="Button" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="ans4Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns4ButtonClicked" prefWidth="300.0" text="Button" textAlignment="CENTER" wrapText="true" />
                      </children>
                   </HBox>
                </children>

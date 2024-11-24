@@ -822,6 +822,18 @@ public class SQLUtils {
         return tagList;
     }
 
+    public static int getTotalCopiesCount() throws SQLException {
+        int respond = 0;
+        String sql = """
+                SELECT SUM(copies) AS total FROM book;
+                """;
+        ResultSet resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
+        if (resultSet.next()) {
+            respond = resultSet.getInt("total");
+        }
+        return respond;
+    }
+
     public static void addTag(String name, String bgColorHex, String textColorHex) throws SQLException {
         String sql = """
             INSERT INTO tag (name, bg_color_hex, text_color_hex)
