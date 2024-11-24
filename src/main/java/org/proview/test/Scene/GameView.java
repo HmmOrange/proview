@@ -65,56 +65,29 @@ public class GameView {
         preparedStatement.setInt(1, qId);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
-            String type = resultSet.getString("type");
-            if (type.equals("multiple")) {
-                difficulty = resultSet.getString("difficulty");
-                String question = resultSet.getString("question");
-                String correct_answer = resultSet.getString("correct_answer");
-                String incr_ans1 = resultSet.getString("incr_ans1");
-                String incr_ans2 = resultSet.getString("incr_ans2");
-                String incr_ans3 = resultSet.getString("incr_ans3");
-                String[] answers = {correct_answer, incr_ans1, incr_ans2, incr_ans3};
-                System.out.println(answers[0]);
-                Integer[] arr = {0, 1, 2, 3};
-                List<Integer> answerOrderNo = Arrays.asList(arr);
-                Collections.shuffle(answerOrderNo);
-                for (int i = 0; i < 4; i++) {
-                    if (answerOrderNo.get(i) == 0) {
-                        ifLabelHasCorrectAns[i] = true;
-                    } else {
-                        ifLabelHasCorrectAns[i] = false;
-                    }
+            difficulty = resultSet.getString("difficulty");
+            String question = resultSet.getString("question");
+            String correct_answer = resultSet.getString("correct_answer");
+            String incr_ans1 = resultSet.getString("incr_ans1");
+            String incr_ans2 = resultSet.getString("incr_ans2");
+            String incr_ans3 = resultSet.getString("incr_ans3");
+            String[] answers = {correct_answer, incr_ans1, incr_ans2, incr_ans3};
+            System.out.println(answers[0]);
+            Integer[] arr = {0, 1, 2, 3};
+            List<Integer> answerOrderNo = Arrays.asList(arr);
+            Collections.shuffle(answerOrderNo);
+            for (int i = 0; i < 4; i++) {
+                if (answerOrderNo.get(i) == 0) {
+                    ifLabelHasCorrectAns[i] = true;
+                } else {
+                    ifLabelHasCorrectAns[i] = false;
                 }
-                questionLabel.setText(question);
-                ans1Button.setText(answers[answerOrderNo.get(0)]);
-                ans2Button.setText(answers[answerOrderNo.get(1)]);
-                ans3Button.setText(answers[answerOrderNo.get(2)]);
-                ans4Button.setText(answers[answerOrderNo.get(3)]);
-            } else {
-                fiftyFiftyButton.setDisable(true);
-                ans3Button.setDisable(true);
-                ans3Button.setVisible(false);
-                ans4Button.setVisible(false);
-                ans4Button.setDisable(true);
-                String question = resultSet.getString("question");
-                String correct_answer = resultSet.getString("correct_answer");
-                String incr_ans1 = resultSet.getString("incr_ans1");
-                String[] answers = {correct_answer, incr_ans1};
-                System.out.println(answers[0]);
-                Integer[] arr = {0, 1};
-                List<Integer> answerOrderNo = Arrays.asList(arr);
-                Collections.shuffle(answerOrderNo);
-                for (int i = 0; i < 2; i++) {
-                    if (answerOrderNo.get(i) == 0) {
-                        ifLabelHasCorrectAns[i] = true;
-                    } else {
-                        ifLabelHasCorrectAns[i] = false;
-                    }
-                }
-                questionLabel.setText(question);
-                ans1Button.setText(answers[answerOrderNo.get(0)]);
-                ans2Button.setText(answers[answerOrderNo.get(1)]);
             }
+            questionLabel.setText(question);
+            ans1Button.setText(answers[answerOrderNo.get(0)]);
+            ans2Button.setText(answers[answerOrderNo.get(1)]);
+            ans3Button.setText(answers[answerOrderNo.get(2)]);
+            ans4Button.setText(answers[answerOrderNo.get(3)]);
         }
         ansButtons = List.of(ans1Button, ans2Button, ans3Button, ans4Button);
         difficultyLabel.setText(difficultyLabel.getText() + difficulty);
@@ -204,6 +177,7 @@ public class GameView {
             AppMain.window.setScene(scene);
             AppMain.window.centerOnScreen();
         } else {
+            /// end game when all questions have been answered
             GameActivity.endGame();
             FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("EndGameView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1300, 700);

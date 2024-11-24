@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS review;
 DROP TABLE IF EXISTS favourite;
 DROP TABLE IF EXISTS book;
 DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS game_history;
+DROP TABLE IF EXISTS questions;
 
 CREATE TABLE book
 (
@@ -94,6 +96,26 @@ CREATE TABLE favourite
     FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
     UNIQUE KEY unique_user_book (user_id, book_id)
+);
+
+CREATE TABLE game_history (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    score INT NOT NULL,
+    question_answered INT NOT NULL,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL
+);
+
+CREATE TABLE questions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    type VARCHAR(20),
+    difficulty VARCHAR(20),
+    question VARCHAR(200),
+    correct_answer VARCHAR(200),
+    incr_ans1 VARCHAR(200),
+    incr_ans2 VARCHAR(200),
+    incr_ans3 VARCHAR(200)
 );
 
 -- Add admin user (type 0)
