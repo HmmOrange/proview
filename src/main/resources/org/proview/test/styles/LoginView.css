@@ -42,7 +42,7 @@
 }
 
 .button:hover {
-    -fx-background-color: #1D3557;
+    -fx-background-color: -dark-blue;
 }
 
 /* Link nhỏ */

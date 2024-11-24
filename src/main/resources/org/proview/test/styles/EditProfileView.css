@@ -23,11 +23,11 @@
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-text-fill: #ffffff;
-    -fx-background-color: #457B9D;
+    -fx-background-color: -blue;
     -fx-background-radius: 10px;
     -fx-padding: 7px 20px;
 }
 
 .button:hover {
-    -fx-background-color: #1D3557;
+    -fx-background-color: -dark-blue;
 }

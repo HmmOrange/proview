@@ -3,7 +3,7 @@
 }
 
 .nav-bar {
-    -fx-background-color: #457B9D;
+    -fx-background-color: -blue;
     -fx-padding: 5px;
     -fx-background-radius: 0px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
@@ -19,7 +19,7 @@
 }
 
 .nav-button:hover {
-    -fx-background-color: #1D3557;
+    -fx-background-color: -dark-blue;
     -fx-text-fill: #ffffff;
 }
 
@@ -61,6 +61,6 @@
 }
 
 .logout-button:hover {
-    -fx-background-color: #1D3557;
+    -fx-background-color: -dark-blue;
     -fx-text-fill: #ffffff;
 }
