@@ -10,11 +10,11 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE book
 (
     id          INT PRIMARY KEY AUTO_INCREMENT,
-    name        VARCHAR(100) NULL,
-    author      VARCHAR(100) NULL,
-    description VARCHAR(500) NULL,
-    time_added  TIMESTAMP    NULL,
-    copies      INT          NULL
+    name        VARCHAR(100)  NULL,
+    author      VARCHAR(100)  NULL,
+    description VARCHAR(5000) NULL,
+    time_added  TIMESTAMP     NULL,
+    copies      INT           NULL
 );
 
 CREATE TABLE user
@@ -108,12 +108,10 @@ INSERT INTO user(username, password, type, firstName, lastName, email, registrat
 VALUES ('23021521', '23021521', 1, 'Tien Dat', 'Nguyen', '23021521@vnu.edu.vn', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 10 DAY), 1);
 
 -- Add 2 sample books
-INSERT INTO book(name, author, description, time_added, copies)
-    VALUES ('Book Number 1', 'Author #1', 'Very long description #1', CURRENT_TIMESTAMP(), 10);
-INSERT INTO book(name, author, description, time_added, copies)
-    VALUES ('Book Number 2', 'Author #2', 'Very long description #2', CURRENT_TIMESTAMP(), 5);
-INSERT INTO book(name, author, description, time_added, copies)
-    VALUES ('Book Number 3', 'Author #3', 'Very long description #3', CURRENT_TIMESTAMP(), 1);
+INSERT INTO book(name, author, description, time_added, copies) VALUES
+('Book Number 1', 'Author #1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec libero neque. Quisque ornare ante id dui pretium mattis. Etiam posuere, nunc non faucibus tempor, sapien neque viverra leo, sed dignissim arcu elit sed velit. Nam eget purus vel purus luctus ultricies. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla erat ligula, malesuada ut eleifend ut, hendrerit sit amet nibh. Quisque ut malesuada tellus. Vivamus nisi leo, suscipit a erat id, finibus molestie libero. Donec faucibus metus nunc, vel euismod ex congue at.', CURRENT_TIMESTAMP(), 10),
+('Book Number 2', 'Author #2', 'Very long description #2', CURRENT_TIMESTAMP(), 5),
+('Book Number 3', 'Author #3', 'Very long description #3', CURRENT_TIMESTAMP(), 1);
 
 -- Add sample tags
 INSERT INTO tag (name, bg_color_hex, text_color_hex) VALUES

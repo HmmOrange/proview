@@ -7,16 +7,16 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefWidth="800.0" styleClass="box" stylesheets="@styles/ReviewCellView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ReviewCellView">
+<VBox prefWidth="900.0" styleClass="box" stylesheets="@styles/ReviewCellView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ReviewCellView">
    <children>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="61.0" prefWidth="800.0">
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="61.0" prefWidth="900.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="61.0" prefWidth="60.0">
+            <VBox alignment="CENTER" prefHeight="61.0" prefWidth="83.0">
                <children>
                   <Circle fx:id="avatarCircle" fill="DODGERBLUE" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
             </VBox>
-            <VBox alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="240.0">
+            <VBox alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="205.0">
                <children>
                   <Label fx:id="reviewerLabel" prefHeight="27.0" text="Name">
                      <VBox.margin>
@@ -32,7 +32,7 @@
                   <Insets />
                </HBox.margin>
             </VBox>
-            <VBox alignment="CENTER_RIGHT" prefHeight="61.0" prefWidth="500.0">
+            <VBox alignment="CENTER_RIGHT" prefHeight="61.0" prefWidth="610.0">
                <children>
                   <Label fx:id="reviewDateLabel" alignment="CENTER_RIGHT" prefHeight="27.0" text="Date">
                      <font>
@@ -46,7 +46,7 @@
             </VBox>
          </children>
       </HBox>
-      <Label fx:id="reviewLabel" prefHeight="131.0" prefWidth="803.0" style="-fx-background-color: #E5E6E1;" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie mattis mauris id pharetra. Nulla facilisi. Suspendisse tristique, mi sit amet porttitor pretium, quam eros suscipit nibh, id dictum eros ligula a libero. Donec eget egestas urna. Cras risus nisi, malesuada ut mauris id, convallis iaculis justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque id aliquet neque, sit amet auctor risus. Integer scelerisque ac erat non convallis. Curabitur vestibulum tincidunt felis. Sed ut nisl sollicitudin, scelerisque arcu sed, placerat diam. Suspendisse potenti. Aliquam tortor augue, malesuada nec congue sit amet, mollis vel arcu. Morbi accumsan justo quis risus condimentum, at bibendum diam interdum.&#10;&#10;Maecenas ut neque velit. Nam lobortis dolor non metus luctus varius suscipit elementum leo. Etiam ullamcorper, arcu a tempus cursus, ex ipsum gravida ligula, sed condimentum turpis eros et urna. Sed eu imperdiet augue, non sagittis orci. Donec dapibus semper tortor nec tincidunt. Pellentesque vitae mauris enim. Praesent sed lacus aliquam, elementum est gravida, varius lacus. Etiam eleifend leo aliquet ante dapibus fringilla. Phasellus tempor iaculis nisl. Aliquam erat volutpat. Aliquam erat volutpat. Donec purus urna, suscipit sit amet nibh in, scelerisque scelerisque metus. Donec nunc est, lacinia eget felis in, dapibus ornare lacus. Fusce cursus ornare metus, non rutrum eros volutpat at.&#10;" wrapText="true">
+      <Label fx:id="reviewLabel" prefHeight="131.0" prefWidth="1071.0" style="-fx-background-color: #E5E6E1;" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie mattis mauris id pharetra. Nulla facilisi. Suspendisse tristique, mi sit amet porttitor pretium, quam eros suscipit nibh, id dictum eros ligula a libero. Donec eget egestas urna. Cras risus nisi, malesuada ut mauris id, convallis iaculis justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque id aliquet neque, sit amet auctor risus. Integer scelerisque ac erat non convallis. Curabitur vestibulum tincidunt felis. Sed ut nisl sollicitudin, scelerisque arcu sed, placerat diam. Suspendisse potenti. Aliquam tortor augue, malesuada nec congue sit amet, mollis vel arcu. Morbi accumsan justo quis risus condimentum, at bibendum diam interdum.&#10;&#10;Maecenas ut neque velit. Nam lobortis dolor non metus luctus varius suscipit elementum leo. Etiam ullamcorper, arcu a tempus cursus, ex ipsum gravida ligula, sed condimentum turpis eros et urna. Sed eu imperdiet augue, non sagittis orci. Donec dapibus semper tortor nec tincidunt. Pellentesque vitae mauris enim. Praesent sed lacus aliquam, elementum est gravida, varius lacus. Etiam eleifend leo aliquet ante dapibus fringilla. Phasellus tempor iaculis nisl. Aliquam erat volutpat. Aliquam erat volutpat. Donec purus urna, suscipit sit amet nibh in, scelerisque scelerisque metus. Donec nunc est, lacinia eget felis in, dapibus ornare lacus. Fusce cursus ornare metus, non rutrum eros volutpat at.&#10;" wrapText="true">
          <font>
             <Font size="18.0" />
          </font>

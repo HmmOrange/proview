@@ -120,7 +120,7 @@ public class BookInfoView {
 
         titleLabel.setText(book.getTitle());
         authorLabel.setText(authorLabel.getText() + " " + book.getAuthor());
-        descriptionLabel.setText(descriptionLabel.getText() + "\n" + book.getDescription());
+        descriptionLabel.setText(descriptionLabel.getText() + " " + book.getDescription());
         copiesLabel.setText(copiesLabel.getText() + " " + book.getCopiesAvailable());
         tagLabel.setText(tagLabel.getText() + " " + book.getTags());
         reloadRatingLabel();
