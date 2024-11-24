@@ -45,11 +45,16 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="tagLabel" prefHeight="35.0" prefWidth="900.0" text="Tags:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
+                  <HBox>
+                     <children>
+                        <Label fx:id="tagLabel" prefHeight="35.0" prefWidth="60.0" text="Tags:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="tagListHBox" alignment="CENTER_LEFT" prefWidth="800.0" spacing="10.0" />
+                     </children>
+                  </HBox>
                   <Label fx:id="copiesLabel" prefHeight="35.0" prefWidth="900.0" text="Copies available:">
                      <font>
                         <Font size="24.0" />

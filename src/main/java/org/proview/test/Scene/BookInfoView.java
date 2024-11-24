@@ -20,6 +20,8 @@ import org.proview.modal.Book.BookLib;
 import org.proview.modal.Issue.IssueManagement;
 import org.proview.modal.Review.Review;
 import org.proview.modal.Review.ReviewManagement;
+import org.proview.modal.Tag.Tag;
+import org.proview.modal.Tag.TagManagement;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.User;
 import org.proview.modal.User.UserManagement;
@@ -62,6 +64,7 @@ public class BookInfoView {
     public Button submitReviewButton;
     public Button loadPrevReviewButton;
     public Button removePrevReviewButton;
+    public HBox tagListHBox;
     private int starMouseEntered = 0;
     private int bookId;
     private int curRating = 3;
@@ -76,6 +79,12 @@ public class BookInfoView {
         ReviewManagement.initReviewList(reviewListVBox, reviewList);
     }
 
+    private void reloadTagList() throws SQLException, IOException {
+        ObservableList<Tag> tagList = SQLUtils.getBookTags(bookId);
+        for (Tag tag : tagList) {
+            tagListHBox.getChildren().add(tag.getLabel());
+        }
+    }
     private void reloadRatingLabel() throws SQLException {
         BookLib book = SQLUtils.getBook(bookId);
         assert book != null;
@@ -122,7 +131,7 @@ public class BookInfoView {
         authorLabel.setText(authorLabel.getText() + " " + book.getAuthor());
         descriptionLabel.setText(descriptionLabel.getText() + " " + book.getDescription());
         copiesLabel.setText(copiesLabel.getText() + " " + book.getCopiesAvailable());
-        tagLabel.setText(tagLabel.getText() + " " + book.getTags());
+        reloadTagList();
         reloadRatingLabel();
         issueLabel.setText(issueLabel.getText() + " " + book.getIssueCount());
 
