@@ -6,6 +6,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
 import org.proview.utils.SQLUtils;
+import org.proview.utils.TableViewUtils;
 
 import java.sql.SQLException;
 import java.util.Comparator;
@@ -31,28 +32,14 @@ public class UserManagForAdminView {
             if (finalI == 0 || finalI == 7 || finalI == 5 || finalI == 6) {
                 column.setComparator(Comparator.comparingInt(Integer::parseInt));
             }
+            TableViewUtils.setWrapTextToColumn(column);
             usersTableView.getColumns().add(column);
         }
         ObservableList<ObservableList<String>> data = SQLUtils.getUsersData();
         usersTableView.setItems(data);
 
         columnComboBox.getItems().addAll(columns);
-        FilteredList<ObservableList<String>> filteredData = new FilteredList<>(data, p -> true);
-        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            String selectedColumn = columnComboBox.getValue();
-            if (selectedColumn != null) {
-                int columnIndex = columnComboBox.getItems().indexOf(selectedColumn);
-                filteredData.setPredicate(row -> {
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true; // Show all rows if search text is empty
-                    }
-                    String cellValue = row.get(columnIndex); // Get value in the selected column
-                    return cellValue != null && cellValue.toLowerCase().contains(newValue.toLowerCase());
-                });
-            }
-        });
-        SortedList<ObservableList<String>> sortedData = new SortedList<>(filteredData);
-        sortedData.comparatorProperty().bind(usersTableView.comparatorProperty());
-        usersTableView.setItems(sortedData);
+
+        TableViewUtils.setSearchingFeature(data, searchTextField, columnComboBox, usersTableView);
     }
 }

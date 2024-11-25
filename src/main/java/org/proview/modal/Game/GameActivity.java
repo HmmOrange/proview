@@ -1,5 +1,6 @@
 package org.proview.modal.Game;
 
+import org.proview.api.GamesAPI;
 import org.proview.modal.User.UserManagement;
 import org.proview.test.AppMain;
 
@@ -94,7 +95,6 @@ public class GameActivity {
         GameActivity.setIfFiftyFiftyUsed(false);
         GameActivity.setIfShieldUsed(false);
         GameActivity.setIfDoubleUsed(false);
-        System.out.println("start at : " + GameActivity.getStart_time());
     }
 
     public static void endGame() throws SQLException {
