@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.RangeSlider?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.SearchResultView">
    <top>
@@ -18,9 +24,6 @@
    <bottom>
       <AnchorPane prefHeight="0.0" prefWidth="1300.0" BorderPane.alignment="CENTER" />
    </bottom>
-   <left>
-      <AnchorPane prefHeight="645.0" prefWidth="250.0" BorderPane.alignment="CENTER" />
-   </left>
    <center>
       <ScrollPane prefHeight="645.0" prefWidth="635.0" BorderPane.alignment="CENTER">
          <content>
@@ -57,4 +60,107 @@
          </content>
       </ScrollPane>
    </center>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="310.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="30.0" prefWidth="499.0" text="Filters">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <Label prefHeight="30.0" prefWidth="499.0" text="Include tags:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Label>
+            <FlowPane fx:id="tagIncludedSelectedFlowPane" hgap="5.0" minHeight="35.0" prefWidth="290.0" rowValignment="TOP" styleClass="border" vgap="5.0">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </FlowPane>
+            <MenuButton fx:id="tagIncludedSelectDropdown" mnemonicParsing="false" text="Select Tag...">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </MenuButton>
+            <Label prefHeight="30.0" prefWidth="499.0" text="Exclude tags:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <FlowPane fx:id="tagExcludedSelectedFlowPane" hgap="5.0" minHeight="35.0" prefWidth="200.0" styleClass="border" vgap="5.0">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </FlowPane>
+            <MenuButton fx:id="tagExcludedSelectDropdown" mnemonicParsing="false" text="Select Tag...">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </MenuButton>
+            <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="310.0" spacing="5.0">
+               <children>
+                  <Label prefHeight="30.0" prefWidth="126.0" text="Rating range:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="lowRatingLabel" text="0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </FontIcon>
+                  <Label text="-">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="highRatingLabel" text="5">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </FontIcon>
+               </children>
+            </HBox>
+            <RangeSlider fx:id="ratingSlider" blockIncrement="0.01" highValue="1.0" lowValue="0.0" max="5.0" showTickLabels="true">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </RangeSlider>
+           
+         </children>
+      </VBox>
+   </left>
+   <stylesheets>
+      <URL value="@styles/styles.css" />
+      <URL value="@styles/EditBookInfoView.css" />
+   </stylesheets>
 </BorderPane>
