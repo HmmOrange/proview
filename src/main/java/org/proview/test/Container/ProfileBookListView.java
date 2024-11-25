@@ -1,7 +1,6 @@
 package org.proview.test.Container;
 
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Book.BookManagement;
@@ -23,7 +22,7 @@ public class ProfileBookListView {
             borrowingBookList = ProfileView.borrowingBookList;
         }
 
-        BookManagement.initBookLibList(borrowingListVBox, borrowingBookList, ProfileView.cardView, false, false);
+        BookManagement.initBookList(borrowingListVBox, borrowingBookList, ProfileView.cardView, false, false);
     }
 
     private void loadOverdueListView() throws SQLException {
@@ -33,7 +32,7 @@ public class ProfileBookListView {
             overdueBookList = ProfileView.overdueBookList;
         }
 
-        BookManagement.initBookLibList(overdueListVBox, overdueBookList, ProfileView.cardView, false, false);
+        BookManagement.initBookList(overdueListVBox, overdueBookList, ProfileView.cardView, false, false);
     }
 
     private void loadPastIssuesListView() throws SQLException {
@@ -43,7 +42,7 @@ public class ProfileBookListView {
             pastIssuesBookList = ProfileView.pastIssuesBookList;
         }
 
-        BookManagement.initBookLibList(pastIssuesListVBox, pastIssuesBookList, ProfileView.cardView, false, false);
+        BookManagement.initBookList(pastIssuesListVBox, pastIssuesBookList, ProfileView.cardView, false, false);
     }
 
     private void loadFavouriteListView() throws SQLException {
@@ -53,7 +52,7 @@ public class ProfileBookListView {
             favouriteBookList = ProfileView.favouriteBookList;
         }
 
-        BookManagement.initBookLibList(favouriteListVBox, favouriteBookList, ProfileView.cardView, false, false);
+        BookManagement.initBookList(favouriteListVBox, favouriteBookList, ProfileView.cardView, false, false);
     }
 
     public void initialize() throws SQLException, FileNotFoundException {

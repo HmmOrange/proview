@@ -12,12 +12,12 @@
 
 <Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="book-cell-button" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCompactView">
    <graphic>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="800.0">
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="900.0">
          <children>
             <ImageView fx:id="coverImageView" fitHeight="75.0" fitWidth="46.875" pickOnBounds="true" preserveRatio="true" />
-            <VBox prefHeight="75.0" prefWidth="407.0">
+            <VBox prefHeight="75.0" prefWidth="640.0">
                <children>
-                  <Label fx:id="titleLabel" alignment="TOP_LEFT" prefHeight="31.0" prefWidth="355.0" text="#1. Book #1">
+                  <Label fx:id="titleLabel" alignment="TOP_LEFT" prefHeight="31.0" prefWidth="469.0" text="#1. Book #1">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -38,16 +38,16 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </VBox>
-            <VBox prefHeight="75.0" prefWidth="513.0">
+            <VBox prefHeight="75.0" prefWidth="550.0">
                <children>
-                  <HBox prefHeight="44.0" prefWidth="425.0">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="300.0">
                      <children>
-                        <HBox fx:id="tagHBox" alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="316.0" spacing="3.0">
+                        <HBox fx:id="tagHBox" alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="250.0" spacing="3.0">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="119.0" spacing="3.0">
+                        <HBox fx:id="infoHBox" alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="110.0" spacing="3.0">
                            <children>
                               <Label fx:id="ratingLabel" alignment="CENTER_RIGHT" contentDisplay="TOP" prefHeight="25.0" text="4.50" wrapText="true">
                                  <font>
@@ -57,7 +57,7 @@
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="18" styleClass="ikonli-font-icon">
+                              <FontIcon fx:id="starRatingIcon" iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="18" styleClass="ikonli-font-icon">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin>
@@ -67,7 +67,7 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <FontIcon iconColor="#457b9d" iconLiteral="fas-book-reader" iconSize="18" styleClass="ikonli-font-icon" />
+                              <FontIcon fx:id="issuesIcon" iconColor="#457b9d" iconLiteral="fas-book-reader" iconSize="18" styleClass="ikonli-font-icon" />
                            </children>
                            <HBox.margin>
                               <Insets right="10.0" />

@@ -1,7 +1,6 @@
 package org.proview.test.Scene;
 
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import org.proview.modal.Book.BookGoogle;
 import org.proview.modal.Book.BookLib;
@@ -24,8 +23,8 @@ public class SearchResultView {
 
         ObservableList<BookLib> filteredBookList = SearchUtils.filterBookList(curQuery, bookLibList);
 
-        BookManagement.initBookLibList(topResultListVBox, filteredBookList, true, true, false);
+        BookManagement.initBookList(topResultListVBox, filteredBookList, false, true, false);
         if (bookGoogleList != null)
-            BookManagement.initBookGoogleList(googleBookListVBox, bookGoogleList);
+            BookManagement.initBookList(googleBookListVBox, bookGoogleList, false, false, false);
     }
 }

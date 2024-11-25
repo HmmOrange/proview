@@ -9,9 +9,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.jetbrains.annotations.NotNull;
+import org.kordamp.ikonli.javafx.FontIcon;
 import org.proview.api.GoogleBooksAPI;
 import org.proview.modal.Tag.TagManagement;
 import org.proview.modal.Tag.TagStyle;
@@ -24,10 +23,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.*;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
-public class BookCellCardView {
+public class BookCellCardView extends CellView {
     public ImageView coverImageView;
     public Label titleLabel;
     public HBox tagHBox;
@@ -35,12 +33,20 @@ public class BookCellCardView {
     public Label issuesLabel;
     public Label copiesLabel;
     public Label authorLabel;
+    public FontIcon starRatingIcon;
+    public FontIcon issuesIcon;
+    public HBox infoHBox;
     private int id = -1;
 
+    // For Google books
+    @Override
     public void setData(String title, String authors, String imageUrl, String tags) throws IOException, SQLException {
         titleLabel.setText(title);
         authorLabel.setText(authors);
         copiesLabel.setText("View in Google Books 🔗");
+
+        infoHBox.getChildren().clear();
+        infoHBox.setPrefWidth(0);
 
         // System.out.println(imageUrl);
         InputStream stream = URI.create(imageUrl).toURL().openStream();
@@ -48,7 +54,7 @@ public class BookCellCardView {
 
         coverImageView.setImage(image);
 
-        double targetWidth = 100;
+        double targetWidth = 83.333;
         double targetHeight = 125;
         double scaleX = targetWidth / image.getWidth();
         double scaleY = targetHeight / image.getHeight();
@@ -66,7 +72,7 @@ public class BookCellCardView {
         stream.close();
 
         // Tags
-        String[] tagList = tags.replace(" ", "").split(",");
+        String[] tagList = tags.replaceAll(" {2}", " ").replaceAll(", ", ",").split(",");
         Map<String, TagStyle> tagMap = TagManagement.getTagList();
 
         for (String tag : tagList) {
@@ -90,6 +96,7 @@ public class BookCellCardView {
         }
     }
 
+    // For library books
     public void setData(int id, String title, String author, String tags, double rating, int issueCount, int copiesAvailable) throws IOException, SQLException {
         this.id = id;
         titleLabel.setText(title);
@@ -110,7 +117,7 @@ public class BookCellCardView {
 
         coverImageView.setImage(image);
 
-        double targetWidth = 100;
+        double targetWidth = 83.333;
         double targetHeight = 125;
         double scaleX = targetWidth / image.getWidth();
         double scaleY = targetHeight / image.getHeight();
@@ -128,7 +135,7 @@ public class BookCellCardView {
         stream.close();
 
         // Tags
-        String[] tagList = tags.replace(" ", "").split(",");
+        String[] tagList = tags.replaceAll(" {2}", " ").replaceAll(", ", ",").split(",");
         Map<String, TagStyle> tagMap = TagManagement.getTagList();
 
         for (String tag : tagList) {

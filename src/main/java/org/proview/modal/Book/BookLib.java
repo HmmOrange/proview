@@ -30,6 +30,7 @@ public class BookLib extends Book {
         this.rating = getRating();
     }
 
+    @Override
     public int getId() {
         return id;
     }
@@ -50,7 +51,7 @@ public class BookLib extends Book {
         return result.toString();
     }
 
-
+    @Override
     public double getRating() throws SQLException {
         Connection connection = AppMain.connection;
         Statement statement = connection.createStatement();
@@ -109,9 +110,15 @@ public class BookLib extends Book {
         return imagePath;
     }
 
+    @Override
     public int getCopiesAvailable() throws SQLException {
         copiesAvailable = SQLUtils.copiesAvailable(id);
         return copiesAvailable;
 
+    }
+
+    @Override
+    public String getCoverImageUrl() {
+        return "";
     }
 }

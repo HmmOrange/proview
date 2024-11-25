@@ -3,7 +3,6 @@ package org.proview.modal.Book;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Comparator;
-import java.util.Objects;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -12,16 +11,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.proview.api.GoogleBooksAPI;
 import org.proview.test.AppMain;
-import org.proview.test.Container.BookCellCompactView;
 import org.proview.test.Container.BookCellCardView;
-import org.proview.test.Container.ReviewCellView;
-import org.proview.test.Scene.ProfileView;
+import org.proview.test.Container.CellView;
 
 public class BookManagement {
     public static void addBook(String name, String author, String description, int copies, String tag) throws SQLException {
@@ -222,78 +216,47 @@ public class BookManagement {
         return bookList;
     }
 
-    public static void initBookGoogleList(VBox bookListVBox, ObservableList<BookGoogle> bookList) {
+    public static <T> void initBookList(VBox bookListVBox, ObservableList<T> bookList, Boolean cardView, Boolean showCopiesAvailable, Boolean showRanking) {
         bookListVBox.getChildren().clear();
         int index = 0;
-        for (var item: bookList) {
-            index++;
-            try {
-                FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
-                Button button = loader.load();
-
-                // Get the controller of the cell
-                BookCellCardView cellView = loader.getController();
-
-                cellView.setData(
-                        item.getTitle(),
-                        item.getAuthor(),
-                        item.getCoverImageUrl(),
-                        item.getTags()
-                );
-                bookListVBox.getChildren().add(button);
-            } catch (Exception e) {
-                System.out.println(e);
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    public static void initBookLibList(VBox bookListVBox, ObservableList<BookLib> bookList, Boolean cardView, Boolean showCopiesAvailable, Boolean showRanking) {
-        bookListVBox.getChildren().clear();
-        int index = 0;
-        for (var item: bookList) {
+        for (T item: bookList) {
             index++;
             try {
                 FXMLLoader loader;
-
-                // TODO: Use BookCell parent (do create one if not existed yet) of these 2 instead of if-else
                 if (cardView) {
                     loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
-                    Button button = loader.load();
-
-                    BookCellCardView cellView = loader.getController();
-
-                    cellView.setData(
-                            item.getId(),
-                            showRanking ? "#" + index + ". " + item.getTitle() : item.getTitle(),
-                            item.getAuthor(),
-                            item.getTags(),
-                            item.getRating(),
-                            item.getIssueCount(),
-                            showCopiesAvailable ? item.getCopiesAvailable() : -1
-                    );
-
-                    bookListVBox.getChildren().add(button);
                 }
-
                 else {
                     loader = new FXMLLoader(AppMain.class.getResource("BookCellCompactView.fxml"));
-                    Button button = loader.load();
-
-                    BookCellCompactView cellView = loader.getController();
-
-                    cellView.setData(
-                            item.getId(),
-                            showRanking ? "#" + index + ". " + item.getTitle() : item.getTitle(),
-                            item.getAuthor(),
-                            item.getTags(),
-                            item.getRating(),
-                            item.getIssueCount(),
-                            showCopiesAvailable ? item.getCopiesAvailable() : -1
-                    );
-
-                    bookListVBox.getChildren().add(button);
                 }
+                Button button = loader.load();
+
+                CellView cellView = loader.getController();
+
+                if (item instanceof BookLib) {
+                    BookLib bookLib = (BookLib) item;
+                    cellView.setData(
+                            bookLib.getId(),
+                            showRanking ? "#" + index + ". " + bookLib.getTitle() : bookLib.getTitle(),
+                            bookLib.getAuthor(),
+                            bookLib.getTags(),
+                            bookLib.getRating(),
+                            bookLib.getIssueCount(),
+                            showCopiesAvailable ? bookLib.getCopiesAvailable() : -1
+                    );
+                }
+                else {
+                    System.out.println("Hi");
+                    BookGoogle bookGoogle = (BookGoogle) item;
+                    cellView.setData(
+                            bookGoogle.getTitle(),
+                            bookGoogle.getAuthor(),
+                            bookGoogle.getCoverImageUrl(),
+                            bookGoogle.getTags()
+                    );
+                }
+
+                bookListVBox.getChildren().add(button);
             } catch (Exception e) {
                 System.out.println(e);
                 throw new RuntimeException(e);
