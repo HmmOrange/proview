@@ -8,12 +8,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<Button mnemonicParsing="false" styleClass="book-cell-button" stylesheets="@styles/ListView.css" onAction="#onMouseClick" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ActivityCellView">
+<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="book-cell-button" stylesheets="@styles/ListView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ActivityCellView">
    <graphic>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="350.0">
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="300.0">
          <children>
-            <ImageView fx:id="coverImageView" fitHeight="75.0" fitWidth="46.875" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="coverImageView" fitHeight="75.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
             <VBox prefHeight="75.0" prefWidth="364.0">
                <children>
                   <HBox alignment="CENTER">
@@ -21,7 +20,7 @@
                         <Insets left="10.0" top="5.0" />
                      </VBox.margin>
                      <children>
-                        <Label fx:id="titleLabel" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="200.0" text="{user}">
+                        <Label fx:id="titleLabel" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="159.0" text="{user}">
                            <font>
                               <Font size="14.0" />
                            </font>

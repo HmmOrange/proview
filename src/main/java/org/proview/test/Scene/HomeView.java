@@ -1,7 +1,6 @@
 package org.proview.test.Scene;
 
 import javafx.collections.ObservableList;
-import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import org.proview.modal.Activity.Activity;
 import org.proview.modal.Activity.ActivityManagement;
@@ -37,8 +36,8 @@ public class HomeView {
         ObservableList<BookLib> trendingList = BookManagement.getTrendingBookList();
         ObservableList<Activity> activityList = ActivityManagement.getReviewActivityList();
 
-        BookManagement.initBookLibList(topRatedBookListVBox, topRatedList, true, true, true);
-        BookManagement.initBookLibList(trendingBookListVBox, trendingList, true, true, true);
+        BookManagement.initBookList(topRatedBookListVBox, topRatedList, true, true, true);
+        BookManagement.initBookList(trendingBookListVBox, trendingList, true, true, true);
         ActivityManagement.initActivityList(recentReviewListVBox, activityList);
     }
 }

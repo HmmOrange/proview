@@ -43,7 +43,7 @@ public class PersonalActivityCellView {
         Image image = new Image(stream);
 
         coverImageView.setImage(image);
-        double targetWidth = 46.875;
+        double targetWidth = 50;
         double targetHeight = 75;
         double scaleX = targetWidth / image.getWidth();
         double scaleY = targetHeight / image.getHeight();

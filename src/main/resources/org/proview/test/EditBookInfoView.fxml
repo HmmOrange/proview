@@ -31,7 +31,7 @@
                   <TextField fx:id="authorField" promptText="Author" />
                   <TextField fx:id="copiesField" prefHeight="25.0" prefWidth="168.0" promptText="Number of copies available" />
                   <TextArea fx:id="descriptionField" prefHeight="128.0" prefWidth="435.0" promptText="Description" wrapText="true" />
-                  <HBox fx:id="tagSelectedHBox" alignment="CENTER_LEFT" minHeight="30.0" prefWidth="437.0" spacing="10.0" styleClass="border">
+                  <HBox fx:id="tagSelectedHBox" alignment="CENTER_LEFT" minHeight="30.0" prefWidth="437.0" spacing="10.0" styleClass="border" stylesheets="@styles/EditBookInfoView.css">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>

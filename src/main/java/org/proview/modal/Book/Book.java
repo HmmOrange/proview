@@ -32,6 +32,12 @@ public abstract class Book {
         return description;
     }
 
+    public abstract int getId();
+
+    public abstract double getRating() throws SQLException;
+
+    public abstract int getIssueCount() throws SQLException;
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -46,5 +52,7 @@ public abstract class Book {
 
     public abstract String getTags() throws SQLException;
 
+    public abstract int getCopiesAvailable() throws SQLException;
 
+    public abstract String getCoverImageUrl();
 }

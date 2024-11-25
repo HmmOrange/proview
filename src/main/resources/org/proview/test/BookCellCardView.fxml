@@ -12,10 +12,10 @@
 
 <Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="book-cell-button" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCardView">
    <graphic>
-      <HBox maxHeight="125.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="400.0">
+      <HBox maxHeight="125.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="475.0">
          <children>
-            <ImageView fx:id="coverImageView" fitHeight="125.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
-            <VBox prefHeight="250.0" prefWidth="550.0">
+            <ImageView fx:id="coverImageView" fitHeight="125.0" fitWidth="83.333" pickOnBounds="true" preserveRatio="true" />
+            <VBox prefHeight="125.0" prefWidth="386.667">
                <children>
                   <Label fx:id="titleLabel" alignment="TOP_LEFT" prefHeight="31.0" prefWidth="355.0" text="#1. Book #1">
                      <font>
@@ -25,7 +25,7 @@
                         <Insets left="10.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="authorLabel" alignment="TOP_LEFT" prefHeight="59.0" prefWidth="280.0" text="Author">
+                  <Label fx:id="authorLabel" alignment="TOP_LEFT" prefHeight="24.0" prefWidth="352.0" text="Author">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -33,24 +33,24 @@
                         <Insets left="10.0" />
                      </VBox.margin>
                   </Label>
-                  <HBox fx:id="tagHBox" prefHeight="49.0" prefWidth="290.0" spacing="5.0">
+                  <HBox fx:id="tagHBox" alignment="BOTTOM_LEFT" prefHeight="43.0" spacing="5.0">
                      <VBox.margin>
-                        <Insets left="10.0" />
+                        <Insets bottom="5.0" left="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox>
+                  <HBox alignment="CENTER_LEFT" prefWidth="375.0">
                      <VBox.margin>
                         <Insets left="10.0" />
                      </VBox.margin>
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="95.0" spacing="3.0">
+                        <HBox fx:id="infoHBox" alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="93.0" spacing="3.0">
                            <children>
                               <Label fx:id="ratingLabel" alignment="CENTER_RIGHT" contentDisplay="TOP" prefHeight="0.0" text="4.50" wrapText="true">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14" styleClass="ikonli-font-icon" text="" wrappingWidth="15.75">
+                              <FontIcon fx:id="starRatingIcon" iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14" styleClass="ikonli-font-icon" text="" wrappingWidth="15.75">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin>
@@ -60,10 +60,10 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <FontIcon iconColor="#457b9d" iconLiteral="fas-book-reader" iconSize="14" styleClass="ikonli-font-icon" />
+                              <FontIcon fx:id="issuesIcon" iconColor="#457b9d" iconLiteral="fas-book-reader" iconSize="14" styleClass="ikonli-font-icon" />
                            </children>
                         </HBox>
-                        <Label fx:id="copiesLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="20.0" prefWidth="193.0" text="3 copies available" wrapText="true">
+                        <Label fx:id="copiesLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="20.0" prefWidth="289.0" text="3 copies available" wrapText="true">
                            <font>
                               <Font name="System Italic" size="14.0" />
                            </font>
@@ -75,7 +75,7 @@
                   </HBox>
                </children>
                <HBox.margin>
-                  <Insets left="10.0" />
+                  <Insets />
                </HBox.margin>
             </VBox>
          </children>
