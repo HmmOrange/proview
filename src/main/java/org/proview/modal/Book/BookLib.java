@@ -1,5 +1,7 @@
 package org.proview.modal.Book;
 
+import javafx.collections.ObservableList;
+import org.proview.modal.Tag.Tag;
 import org.proview.test.AppMain;
 import org.proview.utils.SQLUtils;
 
@@ -110,6 +112,10 @@ public class BookLib extends Book {
         return imagePath;
     }
 
+    public ObservableList<Tag> getTagList() throws SQLException{
+        return SQLUtils.getBookTags(id);
+    }
+
     @Override
     public int getCopiesAvailable() throws SQLException {
         copiesAvailable = SQLUtils.copiesAvailable(id);
@@ -121,4 +127,6 @@ public class BookLib extends Book {
     public String getCoverImageUrl() {
         return "";
     }
+
+
 }

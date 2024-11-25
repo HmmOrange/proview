@@ -6,6 +6,7 @@ import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Tag.Tag;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class SearchUtils {
@@ -14,6 +15,26 @@ public class SearchUtils {
     private static ObservableList<Tag> tagExcludedList;
     private static double lowRating = 0.0;
     private static double highRating = 5.0;
+
+    public static ObservableList<Tag> getTagIncludedList() {
+        if (tagIncludedList == null)
+            tagIncludedList = FXCollections.observableArrayList();
+        return tagIncludedList;
+    }
+
+    public static ObservableList<Tag> getTagExcludedList() {
+        if (tagExcludedList == null)
+            tagExcludedList = FXCollections.observableArrayList();
+        return tagExcludedList;
+    }
+
+    public static double getLowRating() {
+        return lowRating;
+    }
+
+    public static double getHighRating() {
+        return highRating;
+    }
 
     public static void setCurQuery(String curQuery) {
         SearchUtils.curQuery = curQuery;
@@ -39,18 +60,64 @@ public class SearchUtils {
         return curQuery;
     }
 
-    public static ObservableList<BookLib> filterBookList(String curQuery, ObservableList<BookLib> bookList) {
+    public static ObservableList<BookLib> filterBookList(ObservableList<BookLib> bookList) throws SQLException {
+        curQuery = curQuery.toLowerCase();
+
+        if (tagIncludedList == null)
+            tagIncludedList = FXCollections.observableArrayList();
+
+        if (tagExcludedList == null)
+            tagExcludedList = FXCollections.observableArrayList();
+
+        ObservableList<BookLib> filteredList = FXCollections.observableArrayList();
+        filteredList.addAll(bookList);
+
+        for (BookLib bookLib : bookList) {
+            ObservableList<Tag> tagList = bookLib.getTagList();
+
+            boolean qualifiedTag = false;
+
+            if (tagIncludedList.isEmpty()) {
+                qualifiedTag = true;
+            }
+            else {
+                for (Tag tag : tagList) {
+                    if (tagIncludedList.contains(tag)) {
+                        qualifiedTag = true;
+                        break;
+                    }
+                }
+            }
+
+            if (qualifiedTag) {
+                for (Tag tag : tagList) {
+                    if (tagExcludedList.contains(tag)) {
+                        qualifiedTag = false;
+                        break;
+                    }
+                }
+            }
+
+            if (qualifiedTag) {
+                if (lowRating > bookLib.getRating() || highRating < bookLib.getRating()) {
+                    qualifiedTag = false;
+                }
+            }
+
+            if (!qualifiedTag) filteredList.remove(bookLib);
+        }
+
         Set<BookLib> bookSet = new LinkedHashSet<>();
 
         // Search by whole query first
-        for (var i : bookList) {
+        for (var i : filteredList) {
             if (i.getTitle().toLowerCase().contains(curQuery) || i.getAuthor().toLowerCase().contains(curQuery))
                 bookSet.add(i);
         }
 
         // Search titles & authors with partial token sorting ratio
         Map<BookLib, Integer> ratioList = new HashMap<>();
-        for (var i : bookList) {
+        for (var i : filteredList) {
             System.out.println(i.getTitle() + " " + FuzzySearch.tokenSetRatio(curQuery, i.getTitle() + " " + i.getAuthor()));
             ratioList.put(i, FuzzySearch.tokenSetRatio(curQuery, i.getTitle()));
         }
