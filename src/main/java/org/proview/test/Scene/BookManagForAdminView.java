@@ -2,10 +2,7 @@ package org.proview.test.Scene;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
 import org.proview.utils.SQLUtils;
 import org.proview.utils.TableViewUtils;
 
@@ -15,16 +12,16 @@ import java.util.Comparator;
 public class BookManagForAdminView {
     public TableView<ObservableList<String>> booksTableView = new TableView<>();
     public Label totalBooksLabel;
-    public Label avgRatingLabel;
+    public Label reviewsLabel;
     public ComboBox<String> columnComboBox;
     public TextField searchTextField;
 
     public void initialize() throws SQLException {
         totalBooksLabel.setText(Integer.toString((int) (SQLUtils.getBooksCount().getFirst() - 0)));
-        avgRatingLabel.setText(Double.toString(SQLUtils.getBooksCount().get(1)));
+        reviewsLabel.setText(Integer.toString((int) (SQLUtils.getBooksCount().get(1) - 0)));
 
-        String[] columns = {"ID", "Title", "Author", "TagView", "Description", "Copies", "Total queries"};
-        int[] prefWidthForEachColumn = {30, 100, 100, 100, 300, 40, 70};
+        String[] columns = {"ID", "Title", "Author", "TagView", "Description", "Copies", "Total queries", "Reviews", "Average Rating"};
+        int[] prefWidthForEachColumn = {30, 100, 100, 100, 300, 40, 70, 40, 60};
 
         for (int i = 0; i < columns.length; i++) {
             TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns[i]);
