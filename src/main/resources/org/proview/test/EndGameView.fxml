@@ -1,25 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.EndGameView">
-    <top>
-        <fx:include source="NavBarView.fxml" />
-    </top>
-    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
+   <top>
+      <fx:include source="NavBarView.fxml" />
+   </top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" styleClass="end-game-form" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="scoreLabel" text="End game. ">
+            <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <VBox.margin>
+                  <Insets top="-70.0" />
+               </VBox.margin>
+               <image>
+                  <Image url="@icons/catendgame.gif" />
+               </image>
+            </ImageView>
+            <Label fx:id="scoreLabel" styleClass="title-label" text="You lost!">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" onAction="#onRestartButtonClicked" text="Restart" />
-            <Button mnemonicParsing="false" onAction="#onBackButtonClicked" text="Back" />
-         </children></VBox>
+            <Label styleClass="description-label" text="Your score:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label styleClass="description-label" text="Better luck next time." />
+            <Button mnemonicParsing="false" onAction="#onRestartButtonClicked" prefHeight="35.0" prefWidth="111.0" text="Restart" />
+            <Button mnemonicParsing="false" onAction="#onBackButtonClicked" prefHeight="35.0" prefWidth="111.0" text="Back">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="50.0" left="100.0" right="100.0" top="50.0" />
+         </BorderPane.margin>
+         <stylesheets>
+            <URL value="@styles/EndGameView.css" />
+            <URL value="@styles/styles.css" />
+         </stylesheets>
+      </VBox>
    </center>
 </BorderPane>

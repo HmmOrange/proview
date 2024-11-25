@@ -19,7 +19,7 @@
          <children>
             <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <VBox.margin>
-                  <Insets top="-80.0" />
+                  <Insets top="-100.0" />
                </VBox.margin>
                <image>
                   <Image url="@icons/catstartgame.gif" />
@@ -29,6 +29,9 @@
                <font>
                   <Font size="34.0" />
                </font>
+               <VBox.margin>
+                  <Insets top="-20.0" />
+               </VBox.margin>
             </Label>
             <Label prefWidth="800.0" styleClass="description-label" text="Choose the right answer. You have 3 lives. Game will end when all of your lives gone. You have 3 assistances. Good luck!" textAlignment="CENTER" wrapText="true">
                <font>
