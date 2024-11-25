@@ -3,8 +3,10 @@ package org.proview.utils;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public class TableViewUtils {
     public static void setWrapTextToColumn(TableColumn<ObservableList<String>, String> column) {
@@ -24,6 +26,8 @@ public class TableViewUtils {
                     text.setText(null);
                 } else {
                     text.setText(item);
+                    setTextAlignment(TextAlignment.LEFT);
+                    setAlignment(Pos.CENTER_LEFT);
                 }
             }
         });
