@@ -2,10 +2,8 @@ package org.proview.test.Scene;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.CustomMenuItem;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
+import javafx.event.ActionEvent;
+import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -37,6 +35,8 @@ public class SearchResultView {
     public Label lowRatingLabel;
     public Label highRatingLabel;
 
+    public Button applyFiltersButton;
+
     private void addSelectedTag(Tag tag, ObservableList<Tag> tagList, FlowPane tagFlowPane) {
         // Making a cloned tag because a label can only have 1 parent.
         Tag newTag = new Tag(tag.getTagName(), tag.getBgColorHex(), tag.getTextColorHex());
@@ -56,9 +56,18 @@ public class SearchResultView {
     private void loadFilters() throws SQLException {
         ObservableList<Tag> tagIncludedList = SQLUtils.getTagList();
         ObservableList<Tag> tagExcludedList = SQLUtils.getTagList();
+
         // Tag included dropdown
+        ObservableList<Tag> oldIncludedList = SearchUtils.getTagIncludedList();
         for (Tag tag : tagIncludedList) {
             CheckBox checkBox = new CheckBox();
+
+            boolean ifOldTag = oldIncludedList.contains(tag);
+
+            checkBox.setSelected(ifOldTag);
+            if (ifOldTag) {
+                addSelectedTag(tag, tagIncludedSelectedList, tagIncludedSelectedFlowPane);
+            }
 
             checkBox.setOnAction(event -> {
                 if (checkBox.isSelected()) {
@@ -91,8 +100,17 @@ public class SearchResultView {
         }
 
         // Tag excluded dropdown
+        ObservableList<Tag> oldExcludedList = SearchUtils.getTagExcludedList();
+
         for (Tag tag : tagExcludedList) {
             CheckBox checkBox = new CheckBox();
+
+            boolean ifOldTag = oldIncludedList.contains(tag);
+
+            checkBox.setSelected(ifOldTag);
+            if (ifOldTag) {
+                addSelectedTag(tag, tagExcludedSelectedList, tagExcludedSelectedFlowPane);
+            }
 
             checkBox.setOnAction(event -> {
                 if (checkBox.isSelected()) {
@@ -125,8 +143,8 @@ public class SearchResultView {
         }
 
         // Rating slider
-        ratingSlider.adjustLowValue(0);
-        ratingSlider.adjustHighValue(5);
+        ratingSlider.adjustLowValue(SearchUtils.getLowRating());
+        ratingSlider.adjustHighValue(SearchUtils.getHighRating());
 
         ratingSlider.lowValueProperty().addListener((obs, oldVal, newVal) -> {
             lowRatingLabel.setText(String.format("%.2f", newVal.doubleValue()));
@@ -137,18 +155,29 @@ public class SearchResultView {
             highRatingLabel.setText(String.format("%.2f", newVal.doubleValue()));
         });
     }
-    public void initialize() throws SQLException, IOException {
-        String curQuery = SearchUtils.getCurQuery().toLowerCase();
 
+    private void reloadSearch() throws SQLException {
         ObservableList<BookLib> bookLibList = BookManagement.getTopRatedBookList();
-        ObservableList<BookGoogle> bookGoogleList = BookManagement.getGoogleBookList(curQuery);
-
-        ObservableList<BookLib> filteredBookList = SearchUtils.filterBookList(curQuery, bookLibList);
-
+        ObservableList<BookLib> filteredBookList = SearchUtils.filterBookList(bookLibList);
         BookManagement.initBookList(topResultListVBox, filteredBookList, false, true, false);
-        if (bookGoogleList != null)
-            BookManagement.initBookList(googleBookListVBox, bookGoogleList, false, false, false);
+    }
 
+    public void initialize() throws SQLException, IOException {
+        reloadSearch();
         loadFilters();
+
+//        ObservableList<BookGoogle> bookGoogleList = BookManagement.getGoogleBookList(SearchUtils.getCurQuery());
+//
+//        if (bookGoogleList != null)
+//            BookManagement.initBookList(googleBookListVBox, bookGoogleList, false, false, false);
+    }
+
+    public void onApplyFiltersButtonClicked(ActionEvent actionEvent) throws SQLException {
+        SearchUtils.setHighRating(ratingSlider.getHighValue());
+        SearchUtils.setLowRating(ratingSlider.getLowValue());
+        SearchUtils.setTagIncludedList(tagIncludedSelectedList);
+        SearchUtils.setTagExcludedList(tagExcludedSelectedList);
+
+        reloadSearch();
     }
 }
