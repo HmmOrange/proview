@@ -3,10 +3,17 @@ package org.proview.utils;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import org.proview.test.AppMain;
+import org.proview.test.Scene.BookInfoView;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class TableViewUtils {
     public static void setWrapTextToColumn(TableColumn<ObservableList<String>, String> column) {
@@ -53,5 +60,36 @@ public class TableViewUtils {
         SortedList<ObservableList<String>> sortedData = new SortedList<>(currentFilteredData);
         sortedData.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedData);
+    }
+
+    public static void setBookViewRedirection(TableView<ObservableList<String>> booksTableView, int bookIdPos) {
+        booksTableView.setRowFactory(tv -> {
+            TableRow<ObservableList<String>> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    int bookId = Integer.parseInt(row.getItem().get(bookIdPos));
+                    FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("BookInfoView.fxml"));
+                    Scene scene = null;
+                    try {
+                        scene = new Scene(fxmlLoader.load(), 1300, 700);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    AppMain.window.setTitle("Hello!");
+                    AppMain.window.setScene(scene);
+                    AppMain.window.centerOnScreen();
+
+                    BookInfoView tempBookInfoView = fxmlLoader.getController();
+                    try {
+                        tempBookInfoView.setData(bookId);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            return row;
+        });
     }
 }

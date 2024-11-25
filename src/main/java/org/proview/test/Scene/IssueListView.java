@@ -53,6 +53,7 @@ public class IssueListView {
             TableViewUtils.setWrapTextToColumn(column);
             borrowingTableView.getColumns().add(column);
         }
+        TableViewUtils.setBookViewRedirection(borrowingTableView, 4);
 
         ///xử lý trạng thái sách
         if (UserManagement.getCurrentUser() instanceof Admin) {
@@ -138,6 +139,7 @@ public class IssueListView {
             }
             borrowedTableView.getColumns().add(column);
         }
+        TableViewUtils.setBookViewRedirection(borrowedTableView, 4);
     }
 
     public TableView<ObservableList<String>> borrowingTableView = new TableView<>();

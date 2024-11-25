@@ -42,6 +42,7 @@ public class BookManagForAdminView {
         }
         ObservableList<ObservableList<String>> data = SQLUtils.getBooksData();
         booksTableView.setItems(data);
+        TableViewUtils.setBookViewRedirection(booksTableView, 0);
 
         ///searching feature
         columnComboBox.getItems().addAll(columns);
