@@ -4,14 +4,35 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.proview.modal.Book.BookLib;
+import org.proview.modal.Tag.Tag;
 
 import java.util.*;
 
 public class SearchUtils {
     private static String curQuery = null;
+    private static ObservableList<Tag> tagIncludedList;
+    private static ObservableList<Tag> tagExcludedList;
+    private static double lowRating = 0.0;
+    private static double highRating = 5.0;
 
     public static void setCurQuery(String curQuery) {
         SearchUtils.curQuery = curQuery;
+    }
+
+    public static void setTagIncludedList(ObservableList<Tag> tagIncludedList) {
+        SearchUtils.tagIncludedList = tagIncludedList;
+    }
+
+    public static void setTagExcludedList(ObservableList<Tag> tagExcludedList) {
+        SearchUtils.tagExcludedList = tagExcludedList;
+    }
+
+    public static void setLowRating(double lowRating) {
+        SearchUtils.lowRating = lowRating;
+    }
+
+    public static void setHighRating(double highRating) {
+        SearchUtils.highRating = highRating;
     }
 
     public static String getCurQuery() {
