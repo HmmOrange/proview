@@ -30,11 +30,6 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label styleClass="description-label" text="Your score:">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
             <Label styleClass="description-label" text="Better luck next time." />
             <Button mnemonicParsing="false" onAction="#onRestartButtonClicked" prefHeight="35.0" prefWidth="111.0" text="Restart" />
             <Button mnemonicParsing="false" onAction="#onBackButtonClicked" prefHeight="35.0" prefWidth="111.0" text="Back">
