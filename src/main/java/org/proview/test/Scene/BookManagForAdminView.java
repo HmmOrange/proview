@@ -23,17 +23,16 @@ public class BookManagForAdminView {
         totalBooksLabel.setText(Integer.toString((int) (SQLUtils.getBooksCount().getFirst() - 0)));
         avgRatingLabel.setText(Double.toString(SQLUtils.getBooksCount().get(1)));
 
-        String[] columns = {"ID", "Title", "Author", "TagView", "Description", "Copies", "Total queries", "Reviews", "Average Rating"};
-        int[] prefWidthForEachColumn = {30, 100, 100, 100, 300, 40, 40, 40, 50};
+        String[] columns = {"ID", "Title", "Author", "TagView", "Description", "Copies", "Total queries"};
+        int[] prefWidthForEachColumn = {30, 100, 100, 100, 300, 40, 70};
 
         for (int i = 0; i < columns.length; i++) {
             TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns[i]);
             int finalI = i;
             column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(finalI)));
-            if (finalI == 0 || finalI == 5 || finalI == 6 || finalI == 7) {
+            if (finalI == 0 || finalI == 5 || finalI == 6) {
                 column.setComparator(Comparator.comparingInt(Integer::parseInt));
             }
-            if (finalI == 8) column.setComparator(Comparator.comparingDouble(Double::parseDouble));
 
             column.setPrefWidth(prefWidthForEachColumn[finalI]);
             TableViewUtils.setWrapTextToColumn(column);

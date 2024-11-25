@@ -486,11 +486,9 @@ public class SQLUtils {
             String author = resultSet.getString("author");
             String description = resultSet.getString("description");
             String copies = Integer.toString(resultSet.getInt("copies"));
-            String avgRating = Double.toString(resultSet.getDouble("average_rating"));
             String issues = Integer.toString(resultSet.getInt("total_issues"));
-            String reviews = Integer.toString(resultSet.getInt("totalreviews"));
             String tags = resultSet.getString("concatenated_tags");
-            respond.add(FXCollections.observableArrayList(id, name, author, tags, description, copies, issues, reviews, avgRating));
+            respond.add(FXCollections.observableArrayList(id, name, author, tags, description, copies, issues));
         }
         return respond;
     }
