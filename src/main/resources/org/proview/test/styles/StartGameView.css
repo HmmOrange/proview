@@ -1,0 +1,32 @@
+.start-game-form {
+    -fx-padding: 20px;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+}
+
+.title-label {
+    -fx-font-size: 34px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.description-label {
+    -fx-font-size: 21px;
+    -fx-text-fill: #666;
+    -fx-text-alignment: center;
+    -fx-margin-bottom: 20px;
+}
+
+.button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #457B9D;
+    -fx-background-radius: 10px;
+    -fx-padding: 7px 20px;
+}
+
+.button:hover {
+    -fx-background-color: -dark-blue;
+}
