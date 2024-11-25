@@ -53,6 +53,7 @@ public class IssueListView {
             TableViewUtils.setWrapTextToColumn(column);
             borrowingTableView.getColumns().add(column);
         }
+        TableViewUtils.setBookViewRedirection(borrowingTableView, 4);
 
         ///xử lý trạng thái sách
         if (UserManagement.getCurrentUser() instanceof Admin) {
@@ -138,6 +139,7 @@ public class IssueListView {
             }
             borrowedTableView.getColumns().add(column);
         }
+        TableViewUtils.setBookViewRedirection(borrowedTableView, 4);
     }
 
     public TableView<ObservableList<String>> borrowingTableView = new TableView<>();
@@ -169,44 +171,11 @@ public class IssueListView {
         ObservableList<ObservableList<String>> currentList = SQLUtils.getCurrentIssuesList();
         borrowingTableView.setItems(currentList);
         TableViewUtils.setSearchingFeature(currentList, currentSearchTextField, currentColumnComboBox, borrowingTableView);
-        /*FilteredList<ObservableList<String>> currentFilteredData = new FilteredList<>(currentList, p -> true);
-        currentSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            String selectedColumn = currentColumnComboBox.getValue();
-            if (selectedColumn != null) {
-                int columnIndex = currentColumnComboBox.getItems().indexOf(selectedColumn);
-                currentFilteredData.setPredicate(row -> {
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true; // Show all rows if search text is empty
-                    }
-                    String cellValue = row.get(columnIndex); // Get value in the selected column
-                    return cellValue != null && cellValue.toLowerCase().contains(newValue.toLowerCase());
-                });
-            }
-        });
-        SortedList<ObservableList<String>> borrowingSortedData = new SortedList<>(currentFilteredData);
-        borrowingSortedData.comparatorProperty().bind(borrowingTableView.comparatorProperty());
-        borrowingTableView.setItems(borrowingSortedData);*/
+
 
         ///Search in pastIssuesTable
         ObservableList<ObservableList<String>> pastList = SQLUtils.getPastIssuesList();
         borrowedTableView.setItems(pastList);
         TableViewUtils.setSearchingFeature(pastList, pastSearchTextField, pastColumnComboBox, borrowedTableView);
-        /*FilteredList<ObservableList<String>> pastFilteredData = new FilteredList<>(pastList, p -> true);
-        pastSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            String selectedColumn = pastColumnComboBox.getValue();
-            if (selectedColumn != null) {
-                int columnIndex = pastColumnComboBox.getItems().indexOf(selectedColumn);
-                pastFilteredData.setPredicate(row -> {
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true; // Show all rows if search text is empty
-                    }
-                    String cellValue = row.get(columnIndex); // Get value in the selected column
-                    return cellValue != null && cellValue.toLowerCase().contains(newValue.toLowerCase());
-                });
-            }
-        });
-        SortedList<ObservableList<String>> borrowedSortedData = new SortedList<>(pastFilteredData);
-        borrowedSortedData.comparatorProperty().bind(borrowedTableView.comparatorProperty());
-        borrowedTableView.setItems(borrowedSortedData);*/
     }
 }
