@@ -40,6 +40,19 @@
     -fx-background-color: -dark-blue;
 }
 
+.sign-up-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #2A9D8F;
+    -fx-background-radius: 10px;
+    -fx-padding: 7px 20px;
+}
+
+.sign-up-button:hover {
+    -fx-text-fill: -dark-blue;
+}
+
 .small-link {
     -fx-font-size: 12px;
     -fx-text-fill: #007bff;
