@@ -15,9 +15,9 @@ public class EndGameView {
 
     public void initialize() throws SQLException {
         if (GameActivity.getScore() > GameActivity.getHighScore()) {
-            scoreLabel.setText("End game. New High Score: " + GameActivity.getScore());
+            scoreLabel.setText("End game! New High Score: " + GameActivity.getScore());
         } else {
-            scoreLabel.setText("End game. Final Score: " + GameActivity.getScore());
+            scoreLabel.setText("End game! Final Score: " + GameActivity.getScore());
         }
     }
 

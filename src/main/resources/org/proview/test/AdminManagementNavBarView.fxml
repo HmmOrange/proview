@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="107.0" spacing="10.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.AdminManagementNavBarView">
+<VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="148.0" spacing="10.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.AdminManagementNavBarView">
    <children>
-      <Button mnemonicParsing="false" onAction="#onIssuesButtonClick" text="Issues">
+      <Button mnemonicParsing="false" onAction="#onAddDeleteButtonClick" prefWidth="105.0" text="Add/Delete">
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </Button>
-      <Button mnemonicParsing="false" onAction="#onAddDeleteButtonClick" text="Add/Delete">
+      <Button mnemonicParsing="false" onAction="#onImportExportButtonClicked" prefWidth="105.0" text="Import/Export" />
+      <Button mnemonicParsing="false" onAction="#onIssuesButtonClick" prefWidth="105.0" text="Issues">
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </Button>
-      <Button mnemonicParsing="false" onAction="#onUsersButtonClick" text="Users">
+      <Button mnemonicParsing="false" onAction="#onUsersButtonClick" prefWidth="105.0" text="Users">
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </Button>
-      <Button mnemonicParsing="false" onAction="#onBooksButtonClick" text="Books">
+      <Button mnemonicParsing="false" onAction="#onBooksButtonClick" prefWidth="105.0" text="Books">
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </Button>
-      <Button mnemonicParsing="false" onAction="#onTagsButtonClick" text="Tags" />
-      <Button mnemonicParsing="false" onAction="#onImportExportButtonClicked" text="Import/Export" />
+      <Button mnemonicParsing="false" onAction="#onTagsButtonClick" prefWidth="105.0" text="Tags" />
    </children>
+   <stylesheets>
+      <URL value="@styles/AdminManagementNavBarView.css" />
+      <URL value="@styles/styles.css" />
+   </stylesheets>
 </VBox>

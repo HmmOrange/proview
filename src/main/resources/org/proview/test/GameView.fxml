@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.GameView">
     <top>
         <fx:include source="NavBarView.fxml" />
     </top>
     <center>
-      <VBox alignment="CENTER" prefHeight="700.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="700.0" prefWidth="900.0" styleClass="game-form" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER" prefHeight="38.0" prefWidth="772.0" spacing="20.0">
                <children>
-                  <Button fx:id="fiftyFiftyButton" mnemonicParsing="false" onAction="#onFiftyFiftyButtonClicked" prefWidth="200.0" text="50:50" />
-                  <Button fx:id="shieldButton" mnemonicParsing="false" onAction="#onShieldButtonClicked" prefWidth="200.0" text="Shield" />
-                  <Button fx:id="doubleButton" mnemonicParsing="false" onAction="#onDoubleButtonClicked" prefWidth="200.0" text="2X" />
+                  <Button fx:id="fiftyFiftyButton" mnemonicParsing="false" onAction="#onFiftyFiftyButtonClicked" prefWidth="200.0" styleClass="assistance-button" text="50:50">
+                     <graphic>
+                        <FontIcon iconLiteral="fas-dice" />
+                     </graphic></Button>
+                  <Button fx:id="shieldButton" mnemonicParsing="false" onAction="#onShieldButtonClicked" prefWidth="200.0" styleClass="assistance-button" text="Shield">
+                     <graphic>
+                        <FontIcon iconLiteral="fas-user-shield" />
+                     </graphic></Button>
+                  <Button fx:id="doubleButton" mnemonicParsing="false" onAction="#onDoubleButtonClicked" prefWidth="200.0" styleClass="assistance-button" text="Double">
+                     <graphic>
+                        <FontIcon iconLiteral="fas-angle-double-up" />
+                     </graphic></Button>
                </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" top="-10.0" />
+               </VBox.margin>
             </HBox>
             <HBox alignment="CENTER" prefHeight="41.0" prefWidth="772.0" spacing="20.0">
                <children>
@@ -33,45 +49,65 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#onRestartButtonClicked" text="Restart" />
+                  <Button mnemonicParsing="false" onAction="#onRestartButtonClicked" styleClass="restart-button" text="Restart" />
                </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </HBox>
             <Label fx:id="pointLabel" text="Score: ">
                <font>
-                  <Font size="28.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
             <Label fx:id="lifeRemainsLabel" text="Life remains: ">
                <font>
-                  <Font size="15.0" />
+                  <Font size="14.0" />
                </font></Label>
-            <HBox alignment="CENTER" prefWidth="1300.0">
+            <ImageView fitHeight="125.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </ImageView>
+            <VBox prefHeight="213.0" prefWidth="1100.0">
                <children>
-                  <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="-Infinity" prefWidth="1000.0" text="Question" textAlignment="CENTER" wrapText="true" HBox.hgrow="ALWAYS">
+                  <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="1100.0" styleClass="question-input" text="Question" textAlignment="CENTER" wrapText="true">
                      <font>
-                        <Font size="29.0" />
+                        <Font size="24.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets bottom="30.0" />
+                     </VBox.margin>
                   </Label>
-               </children>
-            </HBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0" spacing="30.0">
                      <children>
-                        <Button fx:id="ans1Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns1ButtonClicked" prefWidth="300.0" text="Button" textAlignment="CENTER" wrapText="true" />
-                        <Button fx:id="ans2Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns2ButtonClicked" prefWidth="300.0" text="Button" wrapText="true" />
+                        <Button fx:id="ans1Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns1ButtonClicked" prefWidth="400.0" styleClass="answer-button" text="A" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="ans2Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns2ButtonClicked" prefWidth="400.0" styleClass="answer-button" text="B" wrapText="true" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                      <children>
-                        <Button fx:id="ans3Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns3ButtonClicked" prefWidth="300.0" text="Button" textAlignment="CENTER" wrapText="true" />
-                        <Button fx:id="ans4Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns4ButtonClicked" prefWidth="300.0" text="Button" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="ans3Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns3ButtonClicked" prefWidth="400.0" styleClass="answer-button" text="C" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="ans4Button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onAns4ButtonClicked" prefWidth="400.0" styleClass="answer-button" text="D" textAlignment="CENTER" wrapText="true" />
                      </children>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
                   </HBox>
                </children>
             </VBox>
-            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#onNextButtonClicked" text="Next" />
+            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#onNextButtonClicked" prefHeight="26.0" prefWidth="116.0" styleClass="next-button" text="Next">
+               <VBox.margin>
+                  <Insets bottom="-10.0" top="10.0" />
+               </VBox.margin></Button>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="50.0" left="100.0" right="100.0" top="50.0" />
+         </BorderPane.margin>
+         <stylesheets>
+            <URL value="@styles/styles.css" />
+            <URL value="@styles/GameView.css" />
+         </stylesheets>
       </VBox>
    </center>
 </BorderPane>
