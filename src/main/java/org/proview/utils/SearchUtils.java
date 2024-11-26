@@ -2,6 +2,7 @@ package org.proview.utils;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.ImageView;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Tag.Tag;
@@ -75,15 +76,12 @@ public class SearchUtils {
         for (BookLib bookLib : bookList) {
             ObservableList<Tag> tagList = bookLib.getTagList();
 
-            boolean qualifiedTag = false;
+            boolean qualifiedTag = true;
 
-            if (tagIncludedList.isEmpty()) {
-                qualifiedTag = true;
-            }
-            else {
-                for (Tag tag : tagList) {
-                    if (tagIncludedList.contains(tag)) {
-                        qualifiedTag = true;
+            if (!tagIncludedList.isEmpty()) {
+                for (Tag tag : tagIncludedList) {
+                    if (!tagList.contains(tag)) {
+                        qualifiedTag = false;
                         break;
                     }
                 }
