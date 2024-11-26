@@ -44,6 +44,12 @@ public class PersonalActivityCellView {
             case Activity.Type.WARNING:
                 activityTypeLabel.setText("About to due: " + Objects.requireNonNull(SQLUtils.getBook(bookId).getTitle()));
                 break;
+            case Activity.Type.FAVOURITE:
+                activityTypeLabel.setText("Add favourite: " + Objects.requireNonNull(SQLUtils.getBook(bookId).getTitle()));
+                break;
+            case Activity.Type.RATING:
+                activityTypeLabel.setText("Rating: " + Objects.requireNonNull(SQLUtils.getBook(bookId).getTitle()));
+                break;
         }
 
         descriptionLabel.setText(description);

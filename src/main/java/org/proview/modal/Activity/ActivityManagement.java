@@ -5,8 +5,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import org.proview.modal.Favourite.Favourite;
+import org.proview.modal.Favourite.FavouriteManagement;
 import org.proview.modal.Issue.Issue;
 import org.proview.modal.Issue.IssueManagement;
+import org.proview.modal.Rating.Rating;
+import org.proview.modal.Rating.RatingManagement;
 import org.proview.modal.Review.Review;
 import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
@@ -17,6 +21,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Duration;
+import java.util.Comparator;
 
 public class ActivityManagement {
     public static void initActivityList(VBox activityListVBox, ObservableList<Activity> activityList) {
@@ -118,6 +123,26 @@ public class ActivityManagement {
                 }
             }
         }
+
+        //Get Activity.Type.FAVOURITE
+        ObservableList<Favourite> favouriteObservableList = FavouriteManagement.getFavouriteListOfUser(userId);
+        for (var f : favouriteObservableList) {
+            int bookId = f.getBookId();
+            String description = "";
+            Timestamp timestamp = f.getTimeAdded();
+            activityObservableList.add(new Activity(bookId, userId, description, timestamp, Activity.Type.FAVOURITE));
+        }
+
+        //Get Activity.Type.RATING
+        ObservableList<Rating> ratingObservableList = RatingManagement.getRatingListFromUser(userId);
+        for (var r : ratingObservableList) {
+            int bookId = r.getBookId();
+            String description = "You rated this book %d star%s".formatted(r.getStar(), (r.getStar()>1) ? "s." : ".");
+            Timestamp timestamp = r.getTimeAdded();
+            activityObservableList.add(new Activity(bookId, userId, description, timestamp, Activity.Type.RATING));
+        }
+        FXCollections.sort(activityObservableList, Comparator.comparing(Activity::getTimestampAdded));
+        FXCollections.reverse(activityObservableList);
         return activityObservableList;
     }
 }
