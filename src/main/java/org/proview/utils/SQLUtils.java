@@ -488,7 +488,9 @@ public class SQLUtils {
             String copies = Integer.toString(resultSet.getInt("copies"));
             String issues = Integer.toString(resultSet.getInt("total_issues"));
             String tags = resultSet.getString("concatenated_tags");
-            respond.add(FXCollections.observableArrayList(id, name, author, tags, description, copies, issues));
+            String reviews = resultSet.getString("totalreviews");
+            String rating = resultSet.getString("average_rating");
+            respond.add(FXCollections.observableArrayList(id, name, author, tags, description, copies, issues, reviews, rating));
         }
         return respond;
     }
@@ -733,16 +735,16 @@ public class SQLUtils {
     public static List<Double> getBooksCount() throws SQLException {
         List<Double> respond = new ArrayList<>();
         String sql = """
-            SELECT total.total, avgrating.avgrating
+            SELECT total.total, reviews.reviews
             FROM (
                 (SELECT COUNT(*) AS total FROM book) AS total,
-                (SELECT ROUND(AVG(rating),1) AS avgrating FROM rating) AS avgrating
+                (SELECT COUNT(*) AS reviews FROM review) AS reviews
             );
         """;
         ResultSet resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
         if (resultSet.next()) {
             respond.add(resultSet.getDouble("total"));
-            respond.add(resultSet.getDouble("avgrating"));
+            respond.add(resultSet.getDouble("reviews"));
         }
         return respond;
     }

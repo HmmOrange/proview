@@ -22,64 +22,35 @@ public class IssueManagement {
         preparedStatement.executeUpdate();
     }
 
-    public static ObservableList<Issue> getIssueListFrom(String username) throws SQLException {
+    public static ObservableList<Issue> getIssueListFrom(int userId) throws SQLException {
         ObservableList<Issue> issues = FXCollections.observableArrayList();
         Connection connection = AppMain.connection;
-        /*Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM issue WHERE username = " + username);
-        while (resultSet.next()) {
-            int issueId = resultSet.getInt("id");
-            int bookId = resultSet.getInt("book_id");
-            int duration = resultSet.getInt("duration");
-            Issue curIssue = new Issue(issueId, bookId, duration, username);
-            issues.add(curIssue);
-        }*/
-        String sql = "SELECT * FROM issue WHERE username = ?";
+        String sql = "SELECT * FROM issue WHERE user_id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, username);
+        preparedStatement.setInt(1, userId);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             int issueId = resultSet.getInt("id");
             int bookId = resultSet.getInt("book_id");
             int duration = resultSet.getInt("duration");
-            Issue curIssue = new Issue(issueId, bookId, duration, username);
+            Timestamp start_time = resultSet.getTimestamp("start_date");
+            String status = resultSet.getString("status");
+            String username = resultSet.getString("username");
+            Issue curIssue = new Issue(issueId, bookId, duration, username, status, start_time);
+            if (status.equals("Returned")) {
+                Timestamp end_time = resultSet.getTimestamp("end_date");
+                curIssue = new Issue(issueId, bookId, duration, username, status, start_time, end_time);
+            }
             issues.add(curIssue);
         }
         return issues;
     }
 
-    /*public static ObservableList<Issue> getUserIssueListFrom(String username) throws SQLException {
-        ObservableList<Issue> issues = FXCollections.observableArrayList();
-        Connection connection = AppMain.connection;
-        String sql = "SELECT * FROM issue WHERE username = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, username);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            int issueId = resultSet.getInt("id");
-            int bookId = resultSet.getInt("book_id");
-            int duration = resultSet.getInt("duration");
-            String startDate = resultSet.getDate("start_date").toString();
-            String bookName = "";
-
-            String nameSql = "SELECT name FROM book WHERE id = ?";
-            PreparedStatement namePreparedStatement = connection.prepareStatement(nameSql);
-            namePreparedStatement.setInt(1, bookId);
-            ResultSet nameResultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                bookName = nameResultSet.getString("name");
-            }
-            Issue curIssue = new Issue(issueId, bookId, bookName, startDate, duration);
-            issues.add(curIssue);
-        }
-        return issues;
-    }*/
-
-    public static ObservableList<String> getIssueListViewFrom(String username) throws SQLException {
+    public static ObservableList<String> getIssueListViewFrom(int userId) throws SQLException {
         ObservableList<Issue> currentIssueList = null;
         ObservableList<String> issueStringList = FXCollections.observableArrayList();
         try {
-            currentIssueList = IssueManagement.getIssueListFrom(username);
+            currentIssueList = IssueManagement.getIssueListFrom(userId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

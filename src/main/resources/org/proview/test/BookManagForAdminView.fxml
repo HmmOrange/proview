@@ -37,12 +37,12 @@
                   </VBox>
                   <VBox alignment="CENTER" prefWidth="239.0">
                      <children>
-                        <Label fx:id="avgRatingLabel" text="10">
+                        <Label fx:id="reviewsLabel" text="10">
                            <font>
                               <Font size="62.0" />
                            </font>
                         </Label>
-                        <Label text="Average Rating">
+                        <Label text="Reviews">
                            <font>
                               <Font size="24.0" />
                            </font>

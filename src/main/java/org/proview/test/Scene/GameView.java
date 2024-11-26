@@ -133,12 +133,20 @@ public class GameView {
             nextButton.setDisable(false);
             disableAnswerButtons();
         }
+
+        disableAssistancesAfterAnswered();
     }
 
     private void disableAnswerButtons() {
         for (Button b : ansButtons) {
             b.setDisable(true);
         }
+    }
+
+    private void disableAssistancesAfterAnswered() {
+        fiftyFiftyButton.setDisable(true);
+        shieldButton.setDisable(true);
+        doubleButton.setDisable(true);
     }
 
     private void disableAssistancesUsed() {
