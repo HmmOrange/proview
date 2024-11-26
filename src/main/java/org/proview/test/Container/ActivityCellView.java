@@ -44,7 +44,7 @@ public class ActivityCellView {
         Image image = new Image(stream);
 
         coverImageView.setImage(image);
-        double targetWidth = 60 ;
+        double targetWidth = 50;
         double targetHeight = 75;
         double scaleX = targetWidth / image.getWidth();
         double scaleY = targetHeight / image.getHeight();

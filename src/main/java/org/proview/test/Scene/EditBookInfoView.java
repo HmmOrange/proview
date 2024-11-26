@@ -80,7 +80,6 @@ public class EditBookInfoView {
         // Tag manu dropdown
         ObservableList<Tag> oldBookTags = SQLUtils.getBookTags(id);
         ObservableList<Tag> tagList = SQLUtils.getTagList();
-        ObservableList<Label> selectedTagList = FXCollections.observableArrayList();
 
         for (Tag tag : tagList) {
             CheckBox checkBox = new CheckBox();

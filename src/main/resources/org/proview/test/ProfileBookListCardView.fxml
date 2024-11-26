@@ -7,27 +7,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ProfileBookListView">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ProfileBookListView">
    <children>
-      <HBox prefWidth="200.0">
+      <HBox prefWidth="200.0" spacing="5.0">
          <children>
-            <VBox prefWidth="450.0">
+            <VBox>
                <children>
                   <Label prefHeight="30.0" prefWidth="191.0" text="Borrowing">
                      <font>
                         <Font size="20.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" top="20.0" />
+                        <Insets bottom="10.0" left="10.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox fx:id="borrowingListVBox" prefHeight="200.0" prefWidth="100.0">
+                  <VBox fx:id="borrowingListVBox" prefHeight="200.0" prefWidth="475.0">
                      <VBox.margin>
-                        <Insets left="20.0" />
+                        <Insets left="10.0" />
                      </VBox.margin></VBox>
                </children>
             </VBox>
-            <VBox prefHeight="100.0" prefWidth="450.0">
+            <VBox prefHeight="100.0">
                <children>
                   <Label prefHeight="30.0" prefWidth="191.0" text="Favourite">
                      <font>
@@ -37,14 +37,17 @@
                         <Insets bottom="10.0" left="10.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox fx:id="favouriteListVBox" prefHeight="200.0" prefWidth="100.0" />
+                  <VBox fx:id="favouriteListVBox" prefHeight="200.0" prefWidth="475.0">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin></VBox>
                </children>
             </VBox>
          </children>
       </HBox>
-      <HBox prefWidth="900.0">
+      <HBox prefWidth="900.0" spacing="5.0">
          <children>
-            <VBox prefWidth="450.0">
+            <VBox>
                <children>
                   <Label prefHeight="30.0" prefWidth="191.0" text="Overdue">
                      <font>
@@ -54,13 +57,13 @@
                         <Insets bottom="10.0" left="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox fx:id="overdueListVBox" prefHeight="200.0" prefWidth="100.0">
+                  <VBox fx:id="overdueListVBox" prefHeight="200.0" prefWidth="475.0">
                      <VBox.margin>
-                        <Insets left="20.0" />
+                        <Insets left="10.0" />
                      </VBox.margin></VBox>
                </children>
             </VBox>
-            <VBox prefHeight="100.0" prefWidth="450.0">
+            <VBox prefHeight="100.0">
                <children>
                   <Label prefHeight="30.0" prefWidth="191.0" text="Past Issues">
                      <font>
@@ -70,7 +73,10 @@
                         <Insets bottom="10.0" left="10.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox fx:id="pastIssuesListVBox" prefHeight="200.0" prefWidth="100.0" />
+                  <VBox fx:id="pastIssuesListVBox" prefHeight="200.0" prefWidth="475.0">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin></VBox>
                </children>
             </VBox>
          </children>

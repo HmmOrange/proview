@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -18,38 +17,49 @@
       <fx:include source="NavBarView.fxml" />
    </top>
    <left>
-      <AnchorPane prefHeight="627.0" prefWidth="367.0" BorderPane.alignment="CENTER">
+      <VBox BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="avatarImageView" fitHeight="150.0" fitWidth="200.0" layoutX="84.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="nameField" contentDisplay="CENTER" layoutX="22.0" layoutY="176.0" prefHeight="23.0" prefWidth="163.0" text="Name" textAlignment="CENTER">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="emailField" alignment="BOTTOM_LEFT" layoutX="22.0" layoutY="204.0" text="Email">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Button fx:id="editProfileButton" layoutX="270.0" layoutY="176.0" mnemonicParsing="false" onAction="#onEditProfileButtonClick">
-               <graphic>
-                  <FontIcon iconLiteral="far-edit" iconSize="24">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </FontIcon>
-               </graphic>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </Button>
-            <VBox fx:id="recentActivityListVBox" layoutX="22.0" layoutY="241.0">
-               <padding>
-                  <Insets right="20.0" />
-               </padding>
+            <ImageView fx:id="avatarImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <HBox>
+               <children>
+                  <VBox>
+                     <children>
+                        <Label fx:id="nameField" contentDisplay="CENTER" prefHeight="23.0" prefWidth="163.0" text="Name" textAlignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="emailField" alignment="BOTTOM_LEFT" text="Email">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Button fx:id="editProfileButton" mnemonicParsing="false" onAction="#onEditProfileButtonClick">
+                     <graphic>
+                        <FontIcon iconLiteral="far-edit" iconSize="24">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </FontIcon>
+                     </graphic>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" />
+               </VBox.margin>
+            </HBox>
+            <VBox fx:id="recentActivityListVBox" prefWidth="300.0">
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
             </VBox>
          </children>
-      </AnchorPane>
+      </VBox>
    </left>
    <center>
       <ScrollPane>
