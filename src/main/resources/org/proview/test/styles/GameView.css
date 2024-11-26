@@ -52,7 +52,7 @@
 }
 
 .answer-button {
-    -fx-font-size: 14px;
+    -fx-font-size: 16px;
     -fx-background-color: #ffffff;
     -fx-text-fill: #000000;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
@@ -63,8 +63,8 @@
 }
 .answer-button:disabled {
     -fx-background-color: #A8A8A8; /* Light gray to indicate disabled */
-    -fx-text-fill: #FFFFFF; /* Keep the text fill white */
-    -fx-opacity: 0.7; /* Optional: Slight transparency to differentiate */
+    -fx-text-fill: white; /* Keep the text fill white */
+    -fx-opacity: 1; /* Optional: Slight transparency to differentiate */
     -fx-cursor: not-allowed; /* Optional: Change the cursor to indicate disabled */
 }
 

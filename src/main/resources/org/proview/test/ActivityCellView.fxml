@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="book-cell-button" stylesheets="@styles/ListView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ActivityCellView">
+<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="book-cell-button" stylesheets="@styles/ListView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ActivityCellView">
    <graphic>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="300.0">
          <children>
@@ -25,7 +25,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="timeLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="17.0" prefWidth="100.0" text="3 hours ago" wrapText="true">
+                        <Label fx:id="timeLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="17.0" prefWidth="105.0" text="29 minutes ago" wrapText="true">
                            <font>
                               <Font name="System Italic" size="12.0" />
                            </font>
