@@ -15,7 +15,7 @@
 <?import org.controlsfx.control.RangeSlider?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.SearchResultView">
+<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.SearchResultView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
@@ -38,7 +38,7 @@
                         <Insets left="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox fx:id="topResultListVBox" prefHeight="296.0" prefWidth="800.0" spacing="10.0">
+                  <VBox fx:id="topResultListVBox" prefWidth="800.0" spacing="10.0">
                      <VBox.margin>
                         <Insets left="20.0" />
                      </VBox.margin>
@@ -124,7 +124,7 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="lowRatingLabel" text="0">
+                  <Label fx:id="lowRatingLabel" text="0.00">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -139,7 +139,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="highRatingLabel" text="5">
+                  <Label fx:id="highRatingLabel" text="5.00">
                      <font>
                         <Font size="18.0" />
                      </font>

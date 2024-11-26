@@ -156,20 +156,23 @@ public class SearchResultView {
         });
     }
 
-    private void reloadSearch() throws SQLException {
+    private void reloadLibSearch() throws SQLException {
         ObservableList<BookLib> bookLibList = BookManagement.getTopRatedBookList();
         ObservableList<BookLib> filteredBookList = SearchUtils.filterBookList(bookLibList);
         BookManagement.initBookList(topResultListVBox, filteredBookList, false, true, false);
     }
 
-    public void initialize() throws SQLException, IOException {
-        reloadSearch();
-        loadFilters();
+    private void reloadGoogleSearch() throws SQLException, IOException {
+        ObservableList<BookGoogle> bookGoogleList = BookManagement.getGoogleBookList(SearchUtils.getCurQuery());
 
-//        ObservableList<BookGoogle> bookGoogleList = BookManagement.getGoogleBookList(SearchUtils.getCurQuery());
-//
-//        if (bookGoogleList != null)
-//            BookManagement.initBookList(googleBookListVBox, bookGoogleList, false, false, false);
+        if (bookGoogleList != null)
+            BookManagement.initBookList(googleBookListVBox, bookGoogleList, false, false, false);
+    }
+
+    public void initialize() throws SQLException, IOException {
+        loadFilters();
+        reloadLibSearch();
+        reloadGoogleSearch();
     }
 
     public void onApplyFiltersButtonClicked(ActionEvent actionEvent) throws SQLException {
@@ -178,6 +181,6 @@ public class SearchResultView {
         SearchUtils.setTagIncludedList(tagIncludedSelectedList);
         SearchUtils.setTagExcludedList(tagExcludedSelectedList);
 
-        reloadSearch();
+        reloadLibSearch();
     }
 }

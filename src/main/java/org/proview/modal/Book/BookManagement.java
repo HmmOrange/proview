@@ -16,6 +16,8 @@ import org.proview.api.GoogleBooksAPI;
 import org.proview.test.AppMain;
 import org.proview.test.Container.BookCellCardView;
 import org.proview.test.Container.CellView;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 
 public class BookManagement {
     public static void addBook(String name, String author, String description, int copies, String tag) throws SQLException {
@@ -218,49 +220,60 @@ public class BookManagement {
 
     public static <T> void initBookList(VBox bookListVBox, ObservableList<T> bookList, Boolean cardView, Boolean showCopiesAvailable, Boolean showRanking) {
         bookListVBox.getChildren().clear();
-        int index = 0;
-        for (T item: bookList) {
-            index++;
-            try {
-                FXMLLoader loader;
-                if (cardView) {
-                    loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
-                }
-                else {
-                    loader = new FXMLLoader(AppMain.class.getResource("BookCellCompactView.fxml"));
-                }
-                Button button = loader.load();
 
-                CellView cellView = loader.getController();
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() {
+                int index = 0;
+                for (T item : bookList) {
+                    index++;
+                    try {
+                        FXMLLoader loader;
+                        if (cardView) {
+                            loader = new FXMLLoader(AppMain.class.getResource("BookCellCardView.fxml"));
+                        } else {
+                            loader = new FXMLLoader(AppMain.class.getResource("BookCellCompactView.fxml"));
+                        }
+                        Button button = loader.load();
 
-                if (item instanceof BookLib) {
-                    BookLib bookLib = (BookLib) item;
-                    cellView.setData(
-                            bookLib.getId(),
-                            showRanking ? "#" + index + ". " + bookLib.getTitle() : bookLib.getTitle(),
-                            bookLib.getAuthor(),
-                            bookLib.getTags(),
-                            bookLib.getRating(),
-                            bookLib.getIssueCount(),
-                            showCopiesAvailable ? bookLib.getCopiesAvailable() : -1
-                    );
-                }
-                else {
-                    System.out.println("Hi");
-                    BookGoogle bookGoogle = (BookGoogle) item;
-                    cellView.setData(
-                            bookGoogle.getTitle(),
-                            bookGoogle.getAuthor(),
-                            bookGoogle.getCoverImageUrl(),
-                            bookGoogle.getTags()
-                    );
-                }
+                        CellView cellView = loader.getController();
 
-                bookListVBox.getChildren().add(button);
-            } catch (Exception e) {
-                System.out.println(e);
-                throw new RuntimeException(e);
+                        if (item instanceof BookLib bookLib) {
+                            cellView.setData(
+                                    bookLib.getId(),
+                                    showRanking ? "#" + index + ". " + bookLib.getTitle() : bookLib.getTitle(),
+                                    bookLib.getAuthor(),
+                                    bookLib.getTags(),
+                                    bookLib.getRating(),
+                                    bookLib.getIssueCount(),
+                                    showCopiesAvailable ? bookLib.getCopiesAvailable() : -1
+                            );
+                        } else {
+                            BookGoogle bookGoogle = (BookGoogle) item;
+                            cellView.setData(
+                                    bookGoogle.getTitle(),
+                                    bookGoogle.getAuthor(),
+                                    bookGoogle.getCoverImageUrl(),
+                                    bookGoogle.getTags()
+                            );
+                        }
+
+                        // Add the button to the VBox on the JavaFX Application Thread
+                        Platform.runLater(() -> bookListVBox.getChildren().add(button));
+
+                        // Introduce a small delay to allow the UI to update incrementally
+                        Thread.sleep(50);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        throw new RuntimeException(e);
+                    }
+                }
+                return null;
             }
-        }
+        };
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 }
