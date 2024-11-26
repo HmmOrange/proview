@@ -16,6 +16,7 @@ import org.proview.test.Container.PersonalActivityCellView;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.Duration;
 
 public class ActivityManagement {
     public static void initActivityList(VBox activityListVBox, ObservableList<Activity> activityList) {
@@ -90,7 +91,7 @@ public class ActivityManagement {
             Timestamp timestamp = i.getTimestampAdded();
             activityObservableList.add(new Activity(bookId, userId, description, timestamp, Activity.Type.REVIEW));
         }
-        // Get Activity.Type.ISSUE_START and Activity.Type.ISSUE_END
+        // Get Activity.Type.ISSUE_START, Activity.Type.ISSUE_END, Activity.Type.WARNING, OVERDUE
         ObservableList<Issue> issueObservableList = IssueManagement.getIssueListFrom(userId);
         for (var i : issueObservableList) {
             int bookId = i.getBookId();
@@ -100,6 +101,21 @@ public class ActivityManagement {
             if (i.getStatus().equals("Returned")) {
                 Timestamp end_time = i.getEnd_time();
                 activityObservableList.add(new Activity(bookId, userId, description, end_time, Activity.Type.ISSUE_END));
+            } else {
+                long duration = i.getDuration();
+                Timestamp current = new Timestamp(System.currentTimeMillis());
+                Timestamp dueTime = new Timestamp(start_time.getTime() + duration * 1000 * 3600 * 24);
+                if (dueTime.getTime() < current.getTime()) {
+                    activityObservableList.add(new Activity(bookId, userId, description, dueTime, Activity.Type.OVERDUE));
+                } else if (dueTime.getTime() - current.getTime() < 24 * 3600 * 1000) {
+                    long seconds = (dueTime.getTime() - current.getTime()) / 1000;
+                    long hours = seconds / 3600;
+                    seconds %= 3600;
+                    long minutes = seconds / 60;
+                    seconds %= 60;
+                    description = String.format("Due in: %02d:%02d:%02d", hours, minutes, seconds);
+                    activityObservableList.add(new Activity(bookId, userId, description, dueTime, Activity.Type.WARNING));
+                }
             }
         }
         return activityObservableList;

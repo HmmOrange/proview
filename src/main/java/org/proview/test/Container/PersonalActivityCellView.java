@@ -38,6 +38,12 @@ public class PersonalActivityCellView {
             case Activity.Type.ISSUE_END:
                 activityTypeLabel.setText("Returned: " + Objects.requireNonNull(SQLUtils.getBook(bookId).getTitle()));
                 break;
+            case Activity.Type.OVERDUE:
+                activityTypeLabel.setText("Overdue: " + Objects.requireNonNull(SQLUtils.getBook(bookId).getTitle()));
+                break;
+            case Activity.Type.WARNING:
+                activityTypeLabel.setText("About to due: " + Objects.requireNonNull(SQLUtils.getBook(bookId).getTitle()));
+                break;
         }
 
         descriptionLabel.setText(description);
