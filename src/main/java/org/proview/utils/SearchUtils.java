@@ -2,6 +2,7 @@ package org.proview.utils;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.ImageView;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Tag.Tag;

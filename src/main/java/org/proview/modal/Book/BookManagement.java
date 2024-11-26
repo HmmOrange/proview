@@ -11,6 +11,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import org.proview.api.GoogleBooksAPI;
 import org.proview.test.AppMain;
@@ -18,6 +20,8 @@ import org.proview.test.Container.BookCellCardView;
 import org.proview.test.Container.CellView;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import org.proview.test.Scene.SearchResultView;
+import org.proview.utils.SearchUtils;
 
 public class BookManagement {
     public static void addBook(String name, String author, String description, int copies, String tag) throws SQLException {
@@ -260,9 +264,6 @@ public class BookManagement {
 
                         // Add the button to the VBox on the JavaFX Application Thread
                         Platform.runLater(() -> bookListVBox.getChildren().add(button));
-
-                        // Introduce a small delay to allow the UI to update incrementally
-                        Thread.sleep(50);
                     } catch (Exception e) {
                         e.printStackTrace();
                         throw new RuntimeException(e);

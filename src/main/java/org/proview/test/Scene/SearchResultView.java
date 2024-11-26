@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -12,16 +14,21 @@ import org.proview.modal.Book.BookGoogle;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.Book.BookManagement;
 import org.proview.modal.Tag.Tag;
+import org.proview.modal.User.UserManagement;
+import org.proview.test.AppMain;
 import org.proview.utils.SQLUtils;
 import org.proview.utils.SearchUtils;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
-
+import javafx.concurrent.Task;
 
 public class SearchResultView {
     public VBox topResultListVBox;
     public VBox googleBookListVBox;
+    public ImageView loadingImageView;
 
     public MenuButton tagIncludedSelectDropdown;
     public FlowPane tagIncludedSelectedFlowPane;
@@ -163,10 +170,31 @@ public class SearchResultView {
     }
 
     private void reloadGoogleSearch() throws SQLException, IOException {
-        ObservableList<BookGoogle> bookGoogleList = BookManagement.getGoogleBookList(SearchUtils.getCurQuery());
+        Task<ObservableList<BookGoogle>> task = new Task<>() {
+            @Override
+            protected ObservableList<BookGoogle> call() throws Exception {
+                return BookManagement.getGoogleBookList(SearchUtils.getCurQuery());
+            }
+        };
 
-        if (bookGoogleList != null)
-            BookManagement.initBookList(googleBookListVBox, bookGoogleList, false, false, false);
+        task.setOnSucceeded(event -> {
+            ObservableList<BookGoogle> bookGoogleList = task.getValue();
+            if (bookGoogleList != null) {
+                BookManagement.initBookList(googleBookListVBox, bookGoogleList, false, false, false);
+            }
+        });
+
+        // Handle errors
+        task.setOnFailed(event -> {
+            googleBookListVBox.getChildren().clear();
+            Label errorLabel = new Label("Failed to load Google books.");
+            googleBookListVBox.getChildren().add(errorLabel);
+            task.getException().printStackTrace();
+        });
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     public void initialize() throws SQLException, IOException {

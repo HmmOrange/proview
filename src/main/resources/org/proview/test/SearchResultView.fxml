@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -43,14 +44,19 @@
                         <Insets left="20.0" />
                      </VBox.margin>
                   </VBox>
-                  <Label prefHeight="30.0" prefWidth="499.0" text="More results from Google Books">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                  <HBox>
                      <VBox.margin>
                         <Insets left="20.0" />
                      </VBox.margin>
-                  </Label>
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="304.0" text="More results from Google Books">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="loadingImageView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </HBox>
                   <VBox fx:id="googleBookListVBox" prefHeight="281.0" prefWidth="800.0" spacing="10.0">
                      <VBox.margin>
                         <Insets left="20.0" />
