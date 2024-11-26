@@ -1,3 +1,11 @@
+.assistance-button:pressed .ikonli-font-icon,
+.assistance-button:focused .ikonli-font-icon,
+.assistance-button:visited .ikonli-font-icon,
+.assistance-button:active .ikonli-font-icon,
+.assistance-button:hover .ikonli-font-icon {
+    -fx-icon-color: #FFFFFF;
+}
+
 .game-form {
     -fx-padding: 20px;
     -fx-background-color: #f0f0f0;
@@ -44,7 +52,7 @@
 }
 
 .answer-button {
-    -fx-font-size: 14px;
+    -fx-font-size: 16px;
     -fx-background-color: #ffffff;
     -fx-text-fill: #000000;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
@@ -52,6 +60,12 @@
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-cursor: hand;
+}
+.answer-button:disabled {
+    -fx-background-color: #A8A8A8; /* Light gray to indicate disabled */
+    -fx-text-fill: white; /* Keep the text fill white */
+    -fx-opacity: 1; /* Optional: Slight transparency to differentiate */
+    -fx-cursor: not-allowed; /* Optional: Change the cursor to indicate disabled */
 }
 
 .next-button {
