@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.EditProfileView">
+<AnchorPane prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.EditProfileView">
    <VBox alignment="CENTER" layoutX="435.0" layoutY="1.0" onKeyReleased="#onKeyReleased" prefHeight="345.0" prefWidth="419.0" spacing="15.0" styleClass="register-form">
       <children>
          <ImageView fx:id="avatarImageView" fitHeight="150.0" fitWidth="274.0" pickOnBounds="true" preserveRatio="true" />
@@ -28,7 +28,7 @@
          <PasswordField fx:id="newPasswordField" alignment="CENTER" promptText="New Password" styleClass="input" />
          <PasswordField fx:id="confirmPasswordField" alignment="CENTER" promptText="Confirm Password" styleClass="input" />
          <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="45.0" prefWidth="398.0" text="Confirm" />
-         <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="35.0" prefWidth="409.0" text="Back" />
+         <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="35.0" prefWidth="409.0" styleClass="back-button" text="Back" />
       </children>
       <VBox.margin>
          <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
