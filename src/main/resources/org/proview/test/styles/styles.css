@@ -1,3 +1,18 @@
+@font-face {
+    font-family: "Montserrat SemiBold";
+    src: url("../fonts/Montserrat-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Montserrat Italic";
+    src: url("../fonts/Montserrat-Italic.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Montserrat Light";
+    src: url("../fonts/Montserrat-Light.ttf") format("truetype");
+}
+
 * {
     -red: #E63946;
     -white: #F1FAEE;

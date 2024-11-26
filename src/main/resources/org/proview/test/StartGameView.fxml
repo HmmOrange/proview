@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -11,19 +15,37 @@
         <fx:include source="NavBarView.fxml" />
     </top>
     <center>
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" spacing="20.0" styleClass="start-game-form" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Trivia">
+            <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <VBox.margin>
+                  <Insets top="-100.0" />
+               </VBox.margin>
+               <image>
+                  <Image url="@icons/catstartgame.gif" />
+               </image>
+            </ImageView>
+            <Label styleClass="title-label" text="Welcome to the trivia game!">
                <font>
-                  <Font size="59.0" />
+                  <Font size="34.0" />
                </font>
+               <VBox.margin>
+                  <Insets top="-20.0" />
+               </VBox.margin>
             </Label>
-            <Label prefWidth="800.0" text="Choose the right answer. You have 3 lives. Game will end when all of your lives gone. You have 3 assistances. Good luck" textAlignment="CENTER" wrapText="true">
+            <Label prefWidth="800.0" styleClass="description-label" text="Choose the right answer. You have 3 lives. Game will end when all of your lives gone. You have 3 assistances. Good luck!" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font size="21.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" onAction="#onStartButtonClicked" text="Start" />
-         </children></VBox>
+            <Button mnemonicParsing="false" onAction="#onStartButtonClicked" prefHeight="35.0" prefWidth="111.0" styleClass="start-button" text="Start" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="50.0" left="100.0" right="100.0" top="50.0" />
+         </BorderPane.margin>
+         <stylesheets>
+            <URL value="@styles/styles.css" />
+            <URL value="@styles/StartGameView.css" />
+         </stylesheets></VBox>
    </center>
 </BorderPane>

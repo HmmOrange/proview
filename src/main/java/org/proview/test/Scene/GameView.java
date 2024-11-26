@@ -37,8 +37,8 @@ public class GameView {
     private List<Button> ansButtons = new ArrayList<>();
     private String difficulty = "easy";
     private int highScore = 0;
-    private final String rightAnswerLabelStyle = "-fx-background-color: green; -fx-text-fill: white;";
-    private final String wrongAnswerLabelStyle = "-fx-background-color: red; -fx-text-fill: white;";
+    private final String rightAnswerLabelStyle = "-fx-background-color: green; -fx-text-fill: #ffffff;";
+    private final String wrongAnswerLabelStyle = "-fx-background-color: red; -fx-text-fill: #ffffff;";
     private boolean shield = false;
     private boolean dupble = false;
 

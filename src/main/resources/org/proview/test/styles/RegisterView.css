@@ -35,7 +35,7 @@
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-text-fill: #ffffff;
-    -fx-background-color: -dark-blue;
+    -fx-background-color: -blue;
     -fx-background-radius: 10px;
     -fx-padding: 7px 20px;
 }
@@ -44,6 +44,18 @@
     -fx-background-color: -dark-blue;
 }
 
+.back-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #d46b2a;
+    -fx-background-radius: 10px;
+    -fx-padding: 7px 20px;
+}
+
+.back-button:hover {
+    -fx-background-color: -dark-blue;
+}
 /* Styling for the small link */
 .small-link {
     -fx-font-size: 12px;

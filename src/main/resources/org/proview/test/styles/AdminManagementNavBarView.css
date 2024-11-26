@@ -1,0 +1,20 @@
+.button {
+    -fx-background-color: -blue;
+    -fx-padding: 5px;
+    -fx-background-radius: 0px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+}
+
+.button {
+    -fx-background-color: #f8f9fa;
+    -fx-text-fill: #000000;
+    -fx-font-weight: 800; /* Semi-bold */
+    -fx-padding: 7px 10px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: -dark-blue;
+    -fx-text-fill: #ffffff;
+}

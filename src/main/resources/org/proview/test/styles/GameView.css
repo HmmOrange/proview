@@ -1,0 +1,64 @@
+.game-form {
+    -fx-padding: 20px;
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+}
+
+.assistance-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.assistance-button:hover {
+    -fx-background-color: -dark-blue;
+    -fx-text-fill: #ffffff;
+}
+
+.restart-button {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: -blue;
+    -fx-background-radius: 10px;
+    -fx-padding: 5px 10px;
+}
+
+.restart-button:hover {
+    -fx-background-color: -dark-blue;
+    -fx-text-fill: #ffffff;
+}
+
+.question-input {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-padding: 30px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-border-color: #f0f0f0;
+}
+
+.answer-button {
+    -fx-font-size: 14px;
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+    -fx-padding: 25px 10px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.next-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: -blue;
+    -fx-background-radius: 10px;
+    -fx-padding: 5px 10px;
+}

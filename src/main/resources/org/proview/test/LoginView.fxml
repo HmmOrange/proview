@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.LoginView">
+<AnchorPane prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.LoginView">
    <VBox alignment="CENTER" layoutX="435.0" layoutY="223.0" onKeyReleased="#onKeyReleased" prefHeight="345.0" prefWidth="419.0" spacing="15.0" styleClass="login-form">
       <children>
          <!-- Label hiển thị thông báo -->
@@ -26,7 +26,7 @@
          <Button fx:id="loginButton" onAction="#onLoginButtonClick" prefHeight="0.0" prefWidth="379.0" styleClass="button" text="Login" />
 
             <!-- Button Sign Up -->
-         <Button fx:id="registerButton" onAction="#onRegisterButtonClick" prefHeight="25.0" prefWidth="379.0" styleClass="button" text="Sign up" />
+         <Button fx:id="registerButton" onAction="#onRegisterButtonClick" prefHeight="25.0" prefWidth="379.0" styleClass="sign-up-button" text="Sign up" />
       </children>
       <VBox.margin>
          <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
