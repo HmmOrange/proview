@@ -34,7 +34,7 @@ public class CreateIssueView {
     }
 
     private void reloadIssueListView() throws SQLException {
-        bookIssuedList.setItems(IssueManagement.getIssueListViewFrom(UserManagement.getCurrentUser().getUsername()));
+        bookIssuedList.setItems(IssueManagement.getIssueListViewFrom(UserManagement.getCurrentUser().getId()));
     }
 
     public void onBorrowButtonClick(ActionEvent actionEvent) throws SQLException {

@@ -9,6 +9,10 @@ public class Activity {
         RATE,
         ISSUE_START,
         ISSUE_END,
+        WARNING,
+        OVERDUE,
+        RATING,
+        FAVOURITE
     }
 
     private int bookId;

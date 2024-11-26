@@ -31,6 +31,13 @@ public class PersonalActivityCellView {
         switch (type) {
             case Activity.Type.REVIEW:
                 activityTypeLabel.setText("Reviewed: " + Objects.requireNonNull(SQLUtils.getBook(bookId)).getTitle());
+                break;
+            case Activity.Type.ISSUE_START:
+                activityTypeLabel.setText("Started borrowing: " + Objects.requireNonNull(SQLUtils.getBook(bookId)).getTitle());
+                break;
+            case Activity.Type.ISSUE_END:
+                activityTypeLabel.setText("Returned: " + Objects.requireNonNull(SQLUtils.getBook(bookId).getTitle()));
+                break;
         }
 
         descriptionLabel.setText(description);
