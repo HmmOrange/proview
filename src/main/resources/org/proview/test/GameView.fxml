@@ -64,7 +64,7 @@
                <font>
                   <Font size="14.0" />
                </font></Label>
-            <ImageView fitHeight="125.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="catMemeImageView" fitHeight="125.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
