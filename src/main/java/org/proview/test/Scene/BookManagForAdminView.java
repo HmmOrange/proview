@@ -20,7 +20,7 @@ public class BookManagForAdminView {
         totalBooksLabel.setText(Integer.toString((int) (SQLUtils.getBooksCount().getFirst() - 0)));
         reviewsLabel.setText(Integer.toString((int) (SQLUtils.getBooksCount().get(1) - 0)));
 
-        String[] columns = {"ID", "Title", "Author", "TagView", "Description", "Copies", "Total queries", "Reviews", "Average Rating"};
+        String[] columns = {"ID", "Title", "Author", "Tags", "Description", "Copies", "Total queries", "Reviews", "Average Rating"};
         int[] prefWidthForEachColumn = {30, 100, 100, 100, 300, 40, 70, 40, 60};
 
         for (int i = 0; i < columns.length; i++) {
