@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import org.proview.modal.Tag.Tag;
 import org.proview.test.AppMain;
+import org.proview.utils.PopUpWindowUtils;
 import org.proview.utils.SQLUtils;
 
 import java.io.*;
@@ -143,24 +144,26 @@ public class EditBookInfoView {
     }
 
     public void onConfirmButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
-        Connection connection = AppMain.connection;
-        String sql = "UPDATE book SET name = ?, author = ?, description = ?, copies = ? WHERE id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, titleField.getText());
-        preparedStatement.setString(2, authorField.getText());
-        preparedStatement.setString(3, descriptionField.getText());
-        preparedStatement.setString(4, copiesField.getText());
-        preparedStatement.setInt(5, id);
-        preparedStatement.executeUpdate();
+        if (PopUpWindowUtils.showConfirmation("Warning!", "Are you sure to confirm those changes?")) {
+            Connection connection = AppMain.connection;
+            String sql = "UPDATE book SET name = ?, author = ?, description = ?, copies = ? WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, titleField.getText());
+            preparedStatement.setString(2, authorField.getText());
+            preparedStatement.setString(3, descriptionField.getText());
+            preparedStatement.setString(4, copiesField.getText());
+            preparedStatement.setInt(5, id);
+            preparedStatement.executeUpdate();
 
-        String dstFilePath = String.format("./assets/covers/cover%d.png", id);
-        // Store cover images in a folder (in practice this is stored in a CDN)
-        Files.copy(coverFile.toPath(), (new File(dstFilePath)).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            String dstFilePath = String.format("./assets/covers/cover%d.png", id);
+            // Store cover images in a folder (in practice this is stored in a CDN)
+            Files.copy(coverFile.toPath(), (new File(dstFilePath)).toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-        // Tag
-        SQLUtils.upsertBookTags(id, tagSelectedList);
-
-        this.onBackButtonClick(actionEvent);
+            // Tag
+            SQLUtils.upsertBookTags(id, tagSelectedList);
+            PopUpWindowUtils.showNotification("Done!", "Changes confirmed!", Alert.AlertType.INFORMATION);
+            this.onBackButtonClick(actionEvent);
+        }
     }
 
     public void onBackButtonClick(ActionEvent actionEvent) throws SQLException, IOException {

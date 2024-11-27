@@ -3,6 +3,7 @@ package org.proview.test.Scene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -14,6 +15,7 @@ import javafx.stage.FileChooser;
 import org.proview.modal.Book.BookManagement;
 import org.proview.modal.User.UserManagement;
 import org.proview.test.AppMain;
+import org.proview.utils.PopUpWindowUtils;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -74,24 +76,26 @@ public class EditProfileView {
                 if (!Objects.equals(currentPasswordField.getText(), passwordRS.getString("password"))) {
                     editProfileResultLabel.setText("Current password incorrect");
                 } else {
-                    String editProfileSql = "UPDATE user SET firstname = ?, lastname = ?, email = ?, username = ? WHERE id = ?";
-                    PreparedStatement editProfilePS = connection.prepareStatement(editProfileSql);
-                    editProfilePS.setString(1, firstNameField.getText());
-                    editProfilePS.setString(2, lastNameField.getText());
-                    editProfilePS.setString(3, emailField.getText());
-                    editProfilePS.setString(4, registerUsernameField.getText());
-                    editProfilePS.setInt(5, UserManagement.getCurrentUser().getId());
-                    editProfilePS.executeUpdate();
-                    UserManagement.getCurrentUser().setFirstName(firstNameField.getText());
-                    UserManagement.getCurrentUser().setLastName(lastNameField.getText());
-                    UserManagement.getCurrentUser().setEmail(emailField.getText());
-                    UserManagement.getCurrentUser().setUsername(registerUsernameField.getText());
+                    if (PopUpWindowUtils.showConfirmation("Warning", "Are you sure to confirm those changes?")) {
+                        String editProfileSql = "UPDATE user SET firstname = ?, lastname = ?, email = ?, username = ? WHERE id = ?";
+                        PreparedStatement editProfilePS = connection.prepareStatement(editProfileSql);
+                        editProfilePS.setString(1, firstNameField.getText());
+                        editProfilePS.setString(2, lastNameField.getText());
+                        editProfilePS.setString(3, emailField.getText());
+                        editProfilePS.setString(4, registerUsernameField.getText());
+                        editProfilePS.setInt(5, UserManagement.getCurrentUser().getId());
+                        editProfilePS.executeUpdate();
+                        UserManagement.getCurrentUser().setFirstName(firstNameField.getText());
+                        UserManagement.getCurrentUser().setLastName(lastNameField.getText());
+                        UserManagement.getCurrentUser().setEmail(emailField.getText());
+                        UserManagement.getCurrentUser().setUsername(registerUsernameField.getText());
 
-                    String dstFilePath = "./assets/avatars/user" + UserManagement.getCurrentUser().getId() + ".png";
-                    Files.copy(avatarFile.toPath(), (new File(dstFilePath)).toPath(), StandardCopyOption.REPLACE_EXISTING);
+                        String dstFilePath = "./assets/avatars/user" + UserManagement.getCurrentUser().getId() + ".png";
+                        Files.copy(avatarFile.toPath(), (new File(dstFilePath)).toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-
-                    onBackButtonClick(actionEvent);
+                        PopUpWindowUtils.showNotification("Done!", "Changes confirmed", Alert.AlertType.INFORMATION);
+                        onBackButtonClick(actionEvent);
+                    }
                 }
             }
         }

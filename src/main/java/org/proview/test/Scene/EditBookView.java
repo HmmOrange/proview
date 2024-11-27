@@ -4,16 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import org.proview.modal.Book.BookManagement;
 import org.proview.modal.User.UserManagement;
 import org.proview.test.AppMain;
+import org.proview.utils.PopUpWindowUtils;
 
 import java.nio.file.StandardCopyOption;
 
@@ -29,7 +27,6 @@ public class EditBookView {
     public TextField bookAddDescription;
     public TextField bookAddCopies;
     public TextField bookAddTag;
-    public TextField bookRemoveID;
     public Button addBookButton;
     public Button addCoverButton;
     public Label fileAddedLabel;
@@ -39,48 +36,36 @@ public class EditBookView {
 
 
     public void onAddBookButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
-        String coverFilePath = coverFile.toURI().toString().substring(6); // This has prefix 'file:/'
-        String extension = "";
+        if (PopUpWindowUtils.showConfirmation("Warning", "Are you sure to add this book?")) {
+            String coverFilePath = coverFile.toURI().toString().substring(6); // This has prefix 'file:/'
+            String extension = "";
 
-        int i = coverFilePath.lastIndexOf('.');
-        if (i > 0) {
-            extension = coverFilePath.substring(i);
+            int i = coverFilePath.lastIndexOf('.');
+            if (i > 0) {
+                extension = coverFilePath.substring(i);
+            }
+
+            // If folder does not exist yet, create one
+            File coverImageFolderPath = new File("./assets/covers");
+            if (!coverImageFolderPath.exists()) {
+                coverImageFolderPath.mkdirs();
+            }
+
+            String dstFilePath = "./assets/covers/cover" + (BookManagement.getBookCount() + 1) + extension;
+
+            // Add book to DB
+            BookManagement.addBook(
+                    bookAddName.getText(),
+                    bookAddAuthor.getText(),
+                    bookAddDescription.getText(),
+                    Integer.parseInt(bookAddCopies.getText()),
+                    bookAddTag.getText()
+            );
+
+            // Store cover images in a folder (in practice this is stored in a CDN)
+            Files.copy(coverFile.toPath(), (new File(dstFilePath)).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            PopUpWindowUtils.showNotification("Done!", "Book has been added!", Alert.AlertType.INFORMATION);
         }
-
-        // If folder does not exist yet, create one
-        File coverImageFolderPath = new File("./assets/covers");
-        if (!coverImageFolderPath.exists()){
-            coverImageFolderPath.mkdirs();
-        }
-
-        String dstFilePath = "./assets/covers/cover" + (BookManagement.getBookCount() + 1) + extension;
-
-        // Add book to DB
-        BookManagement.addBook(
-                bookAddName.getText(),
-                bookAddAuthor.getText(),
-                bookAddDescription.getText(),
-                Integer.parseInt(bookAddCopies.getText()),
-                bookAddTag.getText()
-        );
-
-        // Store cover images in a folder (in practice this is stored in a CDN)
-        Files.copy(coverFile.toPath(), (new File(dstFilePath)).toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-    }
-
-    public void onRemoveButtonClick(ActionEvent actionEvent) throws SQLException {
-        BookManagement.removeBook(Integer.parseInt(bookRemoveID.getText()));
-    }
-
-    public void onLogoutButtonClick(ActionEvent actionEvent) throws IOException {
-        UserManagement.setCurrentUser(null);
-
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-        AppMain.window.setTitle("Hello!");
-        AppMain.window.setScene(scene);
-        AppMain.window.centerOnScreen();
     }
 
     public void onAddCoverButtonClick(ActionEvent actionEvent) {
@@ -105,11 +90,4 @@ public class EditBookView {
         }
     }
 
-    public void onBackButtonClick(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-        AppMain.window.setTitle("Hello!");
-        AppMain.window.setScene(scene);
-        AppMain.window.centerOnScreen();
-    }
 }
