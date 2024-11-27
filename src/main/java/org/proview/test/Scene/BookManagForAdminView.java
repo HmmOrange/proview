@@ -61,7 +61,7 @@ public class BookManagForAdminView {
             ObservableList<String> row = cellData.getValue();
             if (row != null && !row.isEmpty()) {
                 String bookId = row.getFirst(); // Giả sử cột đầu tiên là bookId
-                String path = "./assets/covers/cover%s.png".formatted(bookId);  // Tạo đường dẫn
+                String path = "./assets/covers/cover%s.png".formatted(String.valueOf(Integer.parseInt(bookId)));  // Tạo đường dẫn
                 return new SimpleStringProperty(path);
             }
             return new SimpleStringProperty(""); // Trả về chuỗi rỗng nếu không có dữ liệu
