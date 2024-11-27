@@ -15,9 +15,9 @@
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="900.0">
          <children>
             <ImageView fx:id="coverImageView" fitHeight="75.0" fitWidth="46.875" pickOnBounds="true" preserveRatio="true" />
-            <VBox prefHeight="75.0" prefWidth="640.0">
+            <VBox prefHeight="75.0">
                <children>
-                  <Label fx:id="titleLabel" alignment="TOP_LEFT" prefHeight="31.0" prefWidth="469.0" text="#1. Book #1">
+                  <Label fx:id="titleLabel" alignment="TOP_LEFT" minWidth="300.0" prefHeight="31.0" text="#1. Book #1">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -25,7 +25,7 @@
                         <Insets left="10.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="authorLabel" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="722.0" text="Author">
+                  <Label fx:id="authorLabel" alignment="TOP_LEFT" prefHeight="27.0" text="Author">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -38,11 +38,11 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </VBox>
-            <VBox prefHeight="75.0" prefWidth="550.0">
+            <VBox prefHeight="75.0">
                <children>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="300.0">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="44.0">
                      <children>
-                        <HBox fx:id="tagHBox" alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="250.0" spacing="3.0">
+                        <HBox fx:id="tagHBox" alignment="CENTER_RIGHT" minWidth="250.0" prefHeight="44.0" spacing="3.0">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>

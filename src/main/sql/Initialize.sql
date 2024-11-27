@@ -124,11 +124,11 @@ VALUES ('admin', 'admin', 0, 'UET', 'VNU', 'abc@vnu.edu.vn', DATE_SUB(CURRENT_TI
 
 -- Add 3 sample users (type 1)
 INSERT INTO user(username, password, type, firstName, lastName, email, registration_date, card_view)
-VALUES ('23021497', '23021497', 1, 'Quang Dung', 'Nguyen', '23021497@vnu.edu.vn', CURRENT_TIMESTAMP, 1);
+VALUES ('23021497', '23021497', 1, 'Quang Dung', 'Nguyen', '23021497@vnu.edu.vn', CURRENT_TIMESTAMP, 0);
 INSERT INTO user(username, password, type, firstName, lastName, email, registration_date, card_view)
 VALUES ('23021501', '23021501', 1, 'Anh Duy', 'Le', '23021501@vnu.edu.vn', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 5 DAY), 0);
 INSERT INTO user(username, password, type, firstName, lastName, email, registration_date, card_view)
-VALUES ('23021521', '23021521', 1, 'Tien Dat', 'Nguyen', '23021521@vnu.edu.vn', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 10 DAY), 1);
+VALUES ('23021521', '23021521', 1, 'Tien Dat', 'Nguyen', '23021521@vnu.edu.vn', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 10 DAY), 0);
 
 -- Add sample books
 INSERT INTO book(name, author, description, time_added, copies) VALUES
