@@ -80,6 +80,24 @@ public class SQLUtils {
         }
     }
 
+    public static Boolean checkUser(String username) throws SQLException {
+        String sql = "SELECT * FROM user WHERE username = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, username);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        return resultSet.next();
+    }
+
+    public static int getLatestID() throws SQLException {
+        String sql = "SELECT MAX(id) AS latest_id FROM user";
+        PreparedStatement idPS = connection.prepareStatement(sql);
+        ResultSet idRS = idPS.executeQuery();
+        if (idRS.next()) {
+            return idRS.getInt("latest_id");
+        }
+        return -1;
+    }
     public static BookLib getBook(int id) throws SQLException {
         String sql = "SELECT * FROM book WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);

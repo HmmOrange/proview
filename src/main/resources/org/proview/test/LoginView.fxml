@@ -10,13 +10,19 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.LoginView">
+<AnchorPane prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.LoginView">
    <VBox alignment="CENTER" layoutX="435.0" layoutY="223.0" onKeyReleased="#onKeyReleased" prefHeight="345.0" prefWidth="419.0" spacing="15.0" styleClass="login-form">
       <children>
          <!-- Label hiển thị thông báo -->
          <Label fx:id="loginResultLabel" styleClass="header" text="Sign in to your account!" />
-         <Label styleClass="sub-header" text="Welcome 😊!" />
+         <Label fx:id="subHeaderLabel" styleClass="sub-header" text="Welcome 😊!" />
+         <Label fx:id="errorLabel" text="Error" textFill="RED">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Label>
    
             <!-- TextField và PasswordField -->
          <TextField fx:id="loginUsernameField" promptText="Username" styleClass="input" />

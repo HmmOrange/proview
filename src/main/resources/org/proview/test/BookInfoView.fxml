@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
+<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
@@ -142,12 +142,23 @@
             <ImageView fx:id="coverImage" fitHeight="480.0" fitWidth="300.0" layoutX="24.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <viewport>
                   <Rectangle2D />
-               </viewport></ImageView>
+               </viewport>
+            </ImageView>
             <Button fx:id="editButton" layoutX="98.0" layoutY="510.0" mnemonicParsing="false" onAction="#onEditButtonClick" prefHeight="25.0" prefWidth="152.0" text="Edit" />
-            <TextField fx:id="durationField" alignment="CENTER" layoutX="99.0" layoutY="548.0" promptText="Duration" />
+            <HBox alignment="CENTER" layoutX="99.0" layoutY="548.0" prefHeight="25.0" prefWidth="153.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="durationField" alignment="CENTER" prefHeight="25.0" prefWidth="107.0" promptText="Duration" />
+                  <Label fx:id="daysLabel" text="days" />
+               </children>
+            </HBox>
             <Label fx:id="borrowingProblemLabel" alignment="CENTER" layoutX="70.0" layoutY="535.0" prefHeight="17.0" prefWidth="209.0" wrapText="true" />
             <Button fx:id="backButton" layoutX="99.0" layoutY="585.0" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="25.0" prefWidth="149.0" text="Back" textAlignment="CENTER" />
             <Button fx:id="deleteButton" layoutX="100.0" layoutY="548.0" mnemonicParsing="false" onAction="#onDeleteButtonClicked" prefHeight="25.0" prefWidth="147.0" text="Delete" />
+            <HBox alignment="CENTER" layoutX="4.0" layoutY="477.0" prefHeight="17.0" prefWidth="341.0">
+               <children>
+                  <Label fx:id="errorLabel" text="Error" textFill="RED" />
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
    </left>
