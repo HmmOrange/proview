@@ -5,7 +5,15 @@
     -fx-padding: 0;
 }
 
-.book-cell-button:hover {
+.cell-form {
+    -fx-padding: 0px;
+    -fx-background-color: #f0f0f0;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+}
+
+.cell-form:hover {
     -fx-background-color: rgba(168, 218, 220, 0.3);
 }
 

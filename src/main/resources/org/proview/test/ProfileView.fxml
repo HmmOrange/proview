@@ -79,7 +79,7 @@
       </ScrollPane>
    </left>
    <center>
-      <ScrollPane>
+      <ScrollPane hbarPolicy="NEVER" vbarPolicy="NEVER">
          <content>
             <VBox fx:id="innerVbox">
                <children>

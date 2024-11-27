@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -20,7 +19,7 @@
                <children>
                   <Label text="Recent reviews">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                      <VBox.margin>
                         <Insets left="5.0" top="20.0" />
@@ -37,7 +36,7 @@
       </ScrollPane>
    </left>
    <center>
-      <ScrollPane prefHeight="578.0" prefWidth="637.0" BorderPane.alignment="CENTER">
+      <ScrollPane hbarPolicy="NEVER" prefHeight="578.0" prefWidth="637.0" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
          <content>
             <HBox spacing="5.0">
                <children>
@@ -45,7 +44,7 @@
                      <children>
                         <Label prefHeight="30.0" prefWidth="191.0" text="Top-rated books">
                            <font>
-                              <Font size="20.0" />
+                              <Font name="System Bold" size="20.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="5.0" top="20.0" />
@@ -65,7 +64,7 @@
                      <children>
                         <Label prefHeight="30.0" prefWidth="196.0" text="Trending (7 days)">
                            <font>
-                              <Font size="20.0" />
+                              <Font name="System Bold" size="20.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="5.0" top="20.0" />
@@ -83,7 +82,4 @@
          </content>
       </ScrollPane>
    </center>
-   <right>
-      <AnchorPane prefHeight="578.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
-   </right>
 </BorderPane>
