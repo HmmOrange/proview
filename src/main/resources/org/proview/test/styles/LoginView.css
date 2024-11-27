@@ -50,7 +50,7 @@
 }
 
 .sign-up-button:hover {
-    -fx-text-fill: -dark-blue;
+    -fx-background-color: -dark-blue;
 }
 
 .small-link {
