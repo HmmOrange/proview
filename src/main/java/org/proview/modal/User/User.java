@@ -3,6 +3,7 @@ package org.proview.modal.User;
 import org.proview.utils.SQLUtils;
 
 import java.sql.SQLException;
+import java.util.Objects;
 
 public abstract class User {
     protected int id;
@@ -105,5 +106,19 @@ public abstract class User {
 
     public void addComment(int book_id, String review) throws SQLException {
         SQLUtils.addReview(book_id, id, review);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof User)) {
+            return false;
+        }
+
+        User u = (User) o;
+        return (u.getId() == id);
     }
 }

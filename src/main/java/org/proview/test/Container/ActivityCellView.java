@@ -32,8 +32,9 @@ public class ActivityCellView {
 
     public void setData(Activity.Type type, int userId, int bookId, String description, Timestamp timestamp) throws IOException, SQLException {
         titleLabel.setText(Objects.requireNonNull(SQLUtils.getUser(userId)).getFullName());
-        if (type == Activity.Type.REVIEW)
+        if (type == Activity.Type.REVIEW) {
             activityTypeLabel.setText("Reviewed: " + Objects.requireNonNull(SQLUtils.getBook(bookId)).getTitle());
+        }
         descriptionLabel.setText(description);
         timeLabel.setText(TimeAgo.using(timestamp.getTime()).replace("about ", ""));
 

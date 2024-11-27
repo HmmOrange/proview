@@ -78,14 +78,30 @@ public class DashboardUtils {
         public static class IssuesNumberLineChart {
             public static XYChart.Series<String, Integer> getChartData() throws SQLException {
                 XYChart.Series<String, Integer> respond = new XYChart.Series<>();
-                String sql = """
+                /// remain days
+                String remainDaysSql = """
+                        SELECT DATE(start_date) AS date, COUNT(*) AS total
+                        FROM issue
+                        WHERE DATE(start_date) < (SELECT MAX(DATE(start_date)) - INTERVAL 7 DAY FROM issue)
+                        GROUP BY DATE(start_date)
+                        ORDER BY date ASC;
+                        """;
+                ResultSet remainDaysResultSet = AppMain.connection.prepareStatement(remainDaysSql).executeQuery();
+                while (remainDaysResultSet.next()) {
+                    String date = remainDaysResultSet.getDate("date").toString();
+                    int count = remainDaysResultSet.getInt("total");
+                    respond.getData().add(new XYChart.Data<>(date, count));
+                }
+
+                /// get statistics 7 days before today
+                String sevenDaysSql = """
                             WITH RECURSIVE date_series AS (
-                              SELECT MIN(DATE(start_date)) AS date
-                              FROM issue
-                              UNION
-                              SELECT DATE_ADD(date, INTERVAL 1 DAY)
-                              FROM date_series
-                              WHERE date < (SELECT MAX(DATE(start_date)) FROM issue)
+                                SELECT MAX(DATE(start_date)) AS date
+                                FROM issue
+                                UNION
+                                SELECT DATE_SUB(date, INTERVAL 1 DAY)
+                                FROM date_series
+                                WHERE date > (SELECT MAX(DATE(start_date)) - INTERVAL 7 DAY FROM issue)
                             )
                             SELECT ds.date, COALESCE(COUNT(i.start_date), 0) AS total
                             FROM date_series ds
@@ -93,12 +109,13 @@ public class DashboardUtils {
                             GROUP BY ds.date
                             ORDER BY ds.date
                             """;
-                ResultSet resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
-                while (resultSet.next()) {
-                    String date = resultSet.getDate("date").toString();
-                    int count = resultSet.getInt("total");
+                ResultSet sevenDaysResultSet = AppMain.connection.prepareStatement(sevenDaysSql).executeQuery();
+                while (sevenDaysResultSet.next()) {
+                    String date = sevenDaysResultSet.getDate("date").toString();
+                    int count = sevenDaysResultSet.getInt("total");
                     respond.getData().add(new XYChart.Data<>(date, count));
                 }
+
                 return respond;
             }
         }
@@ -134,11 +151,11 @@ public class DashboardUtils {
                             FROM date_series
                             WHERE date > (SELECT MAX(DATE(registration_date)) - INTERVAL 7 DAY FROM user)
                             )
-                            SELECT ds.date, COALESCE(COUNT(u.registration_date), 0) AS total
-                            FROM date_series ds
-                            LEFT JOIN user u ON DATE(u.registration_date) = ds.date
-                            GROUP BY ds.date
-                            ORDER BY ds.date DESC;
+                        SELECT ds.date, COALESCE(COUNT(u.registration_date), 0) AS total
+                        FROM date_series ds
+                        LEFT JOIN user u ON DATE(u.registration_date) = ds.date
+                        GROUP BY ds.date
+                        ORDER BY ds.date DESC;
                        """;
                 ResultSet sevenDaysRS = AppMain.connection.prepareStatement(sevenDaysSql).executeQuery();
                 while (sevenDaysRS.next()) {

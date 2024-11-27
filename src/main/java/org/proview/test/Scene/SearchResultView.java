@@ -187,7 +187,7 @@ public class SearchResultView {
         // Handle errors
         task.setOnFailed(event -> {
             googleBookListVBox.getChildren().clear();
-            Label errorLabel = new Label("Failed to load Google books.");
+            Label errorLabel = new Label("Failed to load from Google books.");
             googleBookListVBox.getChildren().add(errorLabel);
             task.getException().printStackTrace();
         });

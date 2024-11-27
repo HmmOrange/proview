@@ -64,7 +64,7 @@
                <font>
                   <Font size="14.0" />
                </font></Label>
-            <ImageView fitHeight="125.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="catMemeImageView" fitHeight="125.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
@@ -72,12 +72,12 @@
             <VBox prefHeight="213.0" prefWidth="1100.0">
                <children>
                   <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="1100.0" styleClass="question-input" text="Question" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
                      <VBox.margin>
                         <Insets bottom="30.0" />
                      </VBox.margin>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
                   </Label>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0" spacing="30.0">
                      <children>

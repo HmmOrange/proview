@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import org.proview.test.AppMain;
 import org.proview.test.Scene.BookInfoView;
+import org.proview.test.Scene.ProfileView;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -85,6 +86,29 @@ public class TableViewUtils {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            return row;
+        });
+    }
+
+    public static void setUserProfileViewRedirection(TableView<ObservableList<String>> usersTableView, int userIdPos) {
+        usersTableView.setRowFactory(tv -> {
+            TableRow<ObservableList<String>> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    try {
+                        ProfileView.setUserFromId(Integer.parseInt(row.getItem().get(userIdPos)));
+                        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("ProfileView.fxml"));
+                        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+                        AppMain.window.setTitle("Hello!");
+                        AppMain.window.setScene(scene);
+                        AppMain.window.centerOnScreen();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }

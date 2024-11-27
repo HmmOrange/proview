@@ -6,9 +6,12 @@ import java.sql.Timestamp;
 public class Activity {
     public enum Type {
         REVIEW,
-        RATE,
         ISSUE_START,
         ISSUE_END,
+        WARNING,
+        OVERDUE,
+        RATING,
+        FAVOURITE
     }
 
     private int bookId;

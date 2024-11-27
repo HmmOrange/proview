@@ -6,9 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.proview.modal.Game.GameActivity;
 import org.proview.test.AppMain;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,6 +35,7 @@ public class GameView {
     public Button fiftyFiftyButton;
     public Button shieldButton;
     public Button doubleButton;
+    public ImageView catMemeImageView;
 
     private boolean[] ifLabelHasCorrectAns = new boolean[4];
     private List<Button> ansButtons = new ArrayList<>();
@@ -53,7 +57,7 @@ public class GameView {
         shieldButton.setTooltip(new Tooltip("Protect your life when you choose an incorrect answer."));
         doubleButton.setTooltip(new Tooltip("Earn double points for a correct answer, but lose the same amount of points for a wrong answer."));
         disableAssistancesUsed();
-
+        loadCatMemeImage("catthink");
         int qId = GameActivity.getCurrentQuestionID();
 
         String sql = """
@@ -102,6 +106,9 @@ public class GameView {
                 GameActivity.setScore(GameActivity.getScore() + GameActivity.getScoreAdded(difficulty));
             }
             ansButtons.get(ansId).setStyle(rightAnswerLabelStyle);
+
+            ///load meme
+            loadMemeOnAnswered(difficulty, true);
         } else {
             if (!shield) {
                 GameActivity.setLifeRemains(GameActivity.getLifeRemains() - 1);
@@ -117,6 +124,9 @@ public class GameView {
                     break;
                 }
             }
+
+            ///load meme
+            loadMemeOnAnswered(difficulty, false);
         }
         pointLabel.setText("Score: " + GameActivity.getScore());
 
@@ -133,12 +143,20 @@ public class GameView {
             nextButton.setDisable(false);
             disableAnswerButtons();
         }
+
+        disableAssistancesAfterAnswered();
     }
 
     private void disableAnswerButtons() {
         for (Button b : ansButtons) {
             b.setDisable(true);
         }
+    }
+
+    private void disableAssistancesAfterAnswered() {
+        fiftyFiftyButton.setDisable(true);
+        shieldButton.setDisable(true);
+        doubleButton.setDisable(true);
     }
 
     private void disableAssistancesUsed() {
@@ -150,6 +168,29 @@ public class GameView {
         }
         if (GameActivity.isDoubleUsed()) {
             doubleButton.setDisable(true);
+        }
+    }
+
+    private void loadCatMemeImage(String fileName) {
+        String path = "./src/main/resources/org/proview/test/icons/" + fileName + ".gif";
+        File memeFile = new File(path);
+        if (memeFile.exists()) {
+            Image memeImage = new Image(memeFile.toURI().toString());
+            catMemeImageView.setImage(memeImage);
+        }
+    }
+
+    private void loadMemeOnAnswered (String difficulty, boolean correct) {
+        String[] difficulties = {"easy", "medium", "hard"};
+        for (int i = 0; i < difficulties.length; i++) {
+            if (difficulty.equals(difficulties[i])) {
+                if (correct) {
+                    loadCatMemeImage("catcorrect" + (i+1));
+                } else {
+                    loadCatMemeImage("catwrong" + (i+1));
+                }
+                break;
+            }
         }
     }
 
@@ -211,17 +252,23 @@ public class GameView {
                 break;
             }
         }
+        ///load meme
+        loadCatMemeImage("cat50-50");
     }
 
     public void onShieldButtonClicked(ActionEvent actionEvent) {
         GameActivity.setIfShieldUsed(true);
         shieldButton.setStyle(rightAnswerLabelStyle);
         shield = true;
+        /// load meme
+        loadCatMemeImage("catshield");
     }
 
     public void onDoubleButtonClicked(ActionEvent actionEvent) {
         GameActivity.setIfDoubleUsed(true);
         doubleButton.setStyle(rightAnswerLabelStyle);
         dupble = true;
+        /// load meme
+        loadCatMemeImage("catdouble");
     }
 }
