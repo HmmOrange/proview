@@ -9,6 +9,7 @@ import java.net.URI;
 import java.sql.SQLException;
 import java.util.Map;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -54,8 +55,11 @@ public abstract class CellView {
 
         // Tags
         ObservableList<Tag> tagList = SQLUtils.getBookTags(id);
-        for (Tag tag : tagList) {
-            tagHBox.getChildren().add(tag.getLabel());
+        for (int i = 0; i < 3; i++) {
+            tagHBox.getChildren().add(tagList.get(i).getLabel());
+        }
+        if (tagList.size() > 3) {
+            tagHBox.getChildren().add(new Tag("+" + (tagList.size() - 3)).getLabel());
         }
     }
 
@@ -81,25 +85,17 @@ public abstract class CellView {
         // Tags
         String[] tagList = tags.replaceAll(" {2}", " ").replaceAll(", ", ",").split(",");
         Map<String, TagStyle> tagMap = TagManagement.getTagList();
-
+        ObservableList<Tag> tagObservableList = FXCollections.observableArrayList();
         for (String tag : tagList) {
-            FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("TagView.fxml"));
-            Label tagLabel = loader.load();
-            TagView tagView = loader.getController();
-
-            String bgColorHex = null;
-            String textColorHex = null;
             if (tagMap.containsKey(tag)) {
-                bgColorHex = tagMap.get(tag).getBgColorHex();
-                textColorHex = tagMap.get(tag).getTextColorHex();
+                tagObservableList.add(new Tag(tag, tagMap.get(tag)));
             }
-
-            tagView.setData(
-                    tag,
-                    bgColorHex,
-                    textColorHex
-            );
-            tagHBox.getChildren().add(tagLabel);
+        }
+        for (int i = 0; i < 3; i++) {
+            tagHBox.getChildren().add(tagObservableList.get(i).getLabel());
+        }
+        if (tagObservableList.size() > 3) {
+            tagHBox.getChildren().add(new Tag("+" + (tagObservableList.size() - 3)).getLabel());
         }
     }
 }
