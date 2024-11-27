@@ -35,6 +35,7 @@ public class UserManagForAdminView {
             TableViewUtils.setWrapTextToColumn(column);
             usersTableView.getColumns().add(column);
         }
+        TableViewUtils.setUserProfileViewRedirection(usersTableView, 0);
         ObservableList<ObservableList<String>> data = SQLUtils.getUsersData();
         usersTableView.setItems(data);
 

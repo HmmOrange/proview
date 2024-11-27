@@ -17,15 +17,20 @@ import org.proview.modal.Activity.ActivityManagement;
 import org.proview.modal.Book.BookLib;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
+import org.proview.modal.User.User;
 import org.proview.modal.User.UserManagement;
 import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
 
 import java.io.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
 public class ProfileView {
+    private static User user = UserManagement.getCurrentUser();
+
     public Label nameField;
     public Label emailField;
     public ImageView avatarImageView;
@@ -43,11 +48,38 @@ public class ProfileView {
 
     public static Boolean cardView;
 
-    private void loadProfile() throws IOException {
-        nameField.setText("Name: " + UserManagement.getCurrentUser().getFullName());
-        emailField.setText("Mail: " + UserManagement.getCurrentUser().getEmail());
+    public static User getUser() {
+        return user;
+    }
 
-        InputStream stream = new FileInputStream("./assets/avatars/user" + UserManagement.getCurrentUser().getId() + ".png");
+    public static void setUser(User newUser) {
+        user = newUser;
+    }
+
+    public static void setUserFromId(int userId) throws SQLException {
+        String sql = """
+                SELECT * FROM user WHERE id = ?
+                """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            int type = resultSet.getInt("type");
+            if (type == 0) {
+                user = new Admin(userId, resultSet.getString("firstname"),
+                        resultSet.getString("lastname"), resultSet.getString("email"));
+            } else {
+                user = new NormalUser(userId, resultSet.getString("firstname"),
+                        resultSet.getString("lastname"), resultSet.getString("email"));
+            }
+        }
+    }
+
+    private void loadProfile() throws IOException {
+        nameField.setText("Name: " + user.getFullName());
+        emailField.setText("Mail: " + user.getEmail());
+
+        InputStream stream = new FileInputStream("./assets/avatars/user" + user.getId() + ".png");
         Image image = new Image(stream);
         avatarImageView.setImage(image);
         avatarImageView.setFitHeight(150);
@@ -56,31 +88,31 @@ public class ProfileView {
         avatarImageView.setCache(true);
         stream.close();
 
-        if (UserManagement.getCurrentUser() instanceof Admin) {
+        if (user instanceof Admin || !user.equals(UserManagement.getCurrentUser())) {
             editProfileButton.setDisable(true);
             editProfileButton.setVisible(false);
         }
     }
 
     private void loadRecentActivity() throws SQLException {
-        ObservableList<Activity> activityList = ActivityManagement.getAllActivityList(UserManagement.getCurrentUser().getId());
+        ObservableList<Activity> activityList = ActivityManagement.getAllActivityList(user.getId());
         ActivityManagement.initPersonalActivityList(recentActivityListVBox, activityList);
     }
 
     public static void loadBorrowingList() throws SQLException {
-        borrowingBookList = SQLUtils.getBorrowingBookList(UserManagement.getCurrentUser().getId());
+        borrowingBookList = SQLUtils.getBorrowingBookList(user.getId());
     }
 
     public static void loadOverdueBookList() throws SQLException {
-        overdueBookList = SQLUtils.getOverdueBookList(UserManagement.getCurrentUser().getId());
+        overdueBookList = SQLUtils.getOverdueBookList(user.getId());
     }
 
     public static void loadPastIssuesBookList() throws SQLException {
-        pastIssuesBookList = SQLUtils.getPastIssuesBookList(UserManagement.getCurrentUser().getId());
+        pastIssuesBookList = SQLUtils.getPastIssuesBookList(user.getId());
     }
 
     public static void loadFavouriteBookList() throws SQLException {
-        favouriteBookList = SQLUtils.getFavouriteBookList(UserManagement.getCurrentUser().getId());
+        favouriteBookList = SQLUtils.getFavouriteBookList(user.getId());
     }
 
     public void loadPreferredView() throws IOException {
@@ -130,7 +162,7 @@ public class ProfileView {
     }
 
     public void initialize() throws SQLException, IOException {
-        cardView = UserManagement.getCurrentUser().getCardView();
+        cardView = user.getCardView();
 
         loadProfile();
         loadRecentActivity();
@@ -147,7 +179,7 @@ public class ProfileView {
     }
 
     public void onEditProfileButtonClick(ActionEvent actionEvent) throws IOException {
-        if (UserManagement.getCurrentUser() instanceof NormalUser) {
+        if (user instanceof NormalUser) {
             FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("EditProfileView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
             AppMain.window.setTitle("Hello!");
@@ -158,14 +190,14 @@ public class ProfileView {
 
     public void onCardButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
         cardView = !cardView;
-        UserManagement.getCurrentUser().setCardView(cardView);
+        user.setCardView(cardView);
         loadPreferredView();
         loadButtons();
     }
 
     public void onCompactButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
         cardView = !cardView;
-        UserManagement.getCurrentUser().setCardView(cardView);
+        user.setCardView(cardView);
         loadPreferredView();
         loadButtons();
     }
@@ -176,4 +208,5 @@ public class ProfileView {
         pastIssuesBookList = null;
         favouriteBookList = null;
     }
+
 }
