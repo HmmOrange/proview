@@ -67,6 +67,9 @@ public class BookInfoView {
     public Button removePrevReviewButton;
     public HBox tagListHBox;
     public Button deleteButton;
+    public Label errorLabel;
+    public Label daysLabel;
+
     private int starMouseEntered = 0;
     private int bookId;
     private int curRating = 3;
@@ -102,22 +105,20 @@ public class BookInfoView {
     public void initialize() throws SQLException {
         durationField.setVisible(false);
         durationField.setDisable(true);
+        daysLabel.setVisible(false);
         borrowingProblemLabel.setVisible(false);
         borrowingProblemLabel.setDisable(true);
         if (UserManagement.getCurrentUser() instanceof NormalUser) {
             deleteButton.setDisable(true);
             deleteButton.setVisible(false);
             editButton.setText("Borrow");
-            editButton.setOnAction(actionEvent -> {
-                try {
-                    this.onBorrowButtonClick(actionEvent);
-                } catch (SQLException | IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+            editButton.setOnAction(this::onBorrowButtonClick);
             durationField.setVisible(true);
             durationField.setDisable(false);
+            daysLabel.setVisible(true);
         }
+
+        errorLabel.setText("");
 
         // Set star button
         FontIcon fontIcon = new FontIcon();
@@ -165,6 +166,7 @@ public class BookInfoView {
             editButton.setDisable(true);
             durationField.setVisible(false);
             durationField.setDisable(true);
+            daysLabel.setVisible(false);
         } else if (UserManagement.getCurrentUser() instanceof NormalUser
                 && SQLUtils.ifBookUnavailable(id)) {
             borrowingProblemLabel.setDisable(false);
@@ -266,9 +268,33 @@ public class BookInfoView {
         AppMain.window.centerOnScreen();
     }
 
-    public void onBorrowButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
-        IssueManagement.addIssue(UserManagement.getCurrentUser().getUsername(), bookId, Integer.parseInt(durationField.getText()));
-        this.onBackButtonClick(actionEvent);
+    public void onBorrowButtonClick(ActionEvent actionEvent) {
+        try {
+            String durationInput = durationField.getText();
+
+            // Check if the input is a valid integer
+            if (!durationInput.matches("\\d+")) {
+                throw new IllegalArgumentException("Duration must be a positive number.");
+            }
+
+            int duration = Integer.parseInt(durationInput);
+
+            if (duration <= 0) {
+                throw new IllegalArgumentException("Duration must be a positive number.");
+            }
+
+            if (duration > 90) {
+                throw new IllegalArgumentException("Duration cannot exceed 90 days.");
+            }
+
+            IssueManagement.addIssue(UserManagement.getCurrentUser().getUsername(), bookId, duration);
+            this.onBackButtonClick(actionEvent);
+
+        } catch (IllegalArgumentException e) {
+            errorLabel.setText(e.getMessage());
+        } catch (Exception e) {
+            errorLabel.setText("An unexpected error occurred: " + e.getMessage());
+        }
     }
 
     public void onEditButtonClick(ActionEvent actionEvent) throws IOException, SQLException {
