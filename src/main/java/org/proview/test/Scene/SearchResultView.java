@@ -166,6 +166,9 @@ public class SearchResultView {
     private void reloadLibSearch() throws SQLException {
         ObservableList<BookLib> bookLibList = BookManagement.getTopRatedBookList();
         ObservableList<BookLib> filteredBookList = SearchUtils.filterBookList(bookLibList);
+        if (filteredBookList.size() > 20)
+            filteredBookList.remove(20, filteredBookList.size());
+
         BookManagement.initBookList(topResultListVBox, filteredBookList, false, true, false);
     }
 
