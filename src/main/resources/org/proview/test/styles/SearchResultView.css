@@ -1,7 +1,7 @@
 
 .filter-form {
     -fx-padding: 20px;
-    -fx-background-color: #f0f0f0;
+    -fx-background-color: #ffffff;
     -fx-background-radius: 20px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
 }
