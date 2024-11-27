@@ -19,12 +19,14 @@ import org.proview.modal.Tag.Tag;
 import org.proview.modal.Tag.TagManagement;
 import org.proview.modal.Tag.TagStyle;
 import org.proview.test.AppMain;
+import org.proview.utils.ImageUtils;
 import org.proview.utils.SQLUtils;
 
 public abstract class CellView {
     public abstract void setData(String title, String authors, String imageUrl, String tags) throws IOException, SQLException;
     public abstract void setData(int id, String title, String author, double rating, int issueCount, int copiesAvailable) throws IOException, SQLException;
 
+    // Lib book
     public void setData(
             Label titleLabel, String title,
             Label authorLabel, String author,
@@ -47,32 +49,7 @@ public abstract class CellView {
             copiesLabel.setVisible(false);
         }
 
-        String imageUrl = "./assets/covers/cover" + id + ".png";
-        InputStream stream = new FileInputStream(imageUrl);
-        Image image = new Image(stream);
-
-        coverImageView.setImage(image);
-
-        double scaleX = targetWidth / image.getWidth();
-        double scaleY = targetHeight / image.getHeight();
-        double scale = Math.min(scaleX, scaleY);
-
-        double scaledWidth = image.getWidth() * scale;
-        double scaledHeight = image.getHeight() * scale;
-
-        double viewportX = Math.max(0, (scaledWidth - targetWidth) / 2 / scale);
-        double viewportY = Math.max(0, (scaledHeight - targetHeight) / 2 / scale);
-        double viewportWidth = Math.min(image.getWidth(), targetWidth / scale);
-        double viewportHeight = Math.min(image.getHeight(), targetHeight / scale);
-
-        coverImageView.setViewport(new Rectangle2D(viewportX, viewportY, viewportWidth, viewportHeight));
-        coverImageView.setFitWidth(targetWidth);
-        coverImageView.setFitHeight(targetHeight);
-        coverImageView.setPreserveRatio(false);
-        coverImageView.setSmooth(true);
-        coverImageView.setCache(true);
-
-        stream.close();
+        ImageUtils.insertImage(coverImageView, id, targetWidth, targetHeight);
 
         // Tags
         ObservableList<Tag> tagList = SQLUtils.getBookTags(id);
@@ -98,32 +75,7 @@ public abstract class CellView {
         infoHBox.getChildren().clear();
         infoHBox.setPrefWidth(0);
 
-        // System.out.println(imageUrl);
-        InputStream stream = URI.create(imageUrl).toURL().openStream();
-        Image image = new Image(stream);
-
-        coverImageView.setImage(image);
-
-        double scaleX = targetWidth / image.getWidth();
-        double scaleY = targetHeight / image.getHeight();
-        double scale = Math.min(scaleX, scaleY);
-
-        double scaledWidth = image.getWidth() * scale;
-        double scaledHeight = image.getHeight() * scale;
-
-        double viewportX = Math.max(0, (scaledWidth - targetWidth) / 2 / scale);
-        double viewportY = Math.max(0, (scaledHeight - targetHeight) / 2 / scale);
-        double viewportWidth = Math.min(image.getWidth(), targetWidth / scale);
-        double viewportHeight = Math.min(image.getHeight(), targetHeight / scale);
-
-        coverImageView.setViewport(new Rectangle2D(viewportX, viewportY, viewportWidth, viewportHeight));
-        coverImageView.setFitWidth(targetWidth);
-        coverImageView.setFitHeight(targetHeight);
-        coverImageView.setPreserveRatio(false);
-        coverImageView.setSmooth(true);
-        coverImageView.setCache(true);
-
-        stream.close();
+        ImageUtils.insertImage(coverImageView, imageUrl, targetWidth, targetHeight);
 
         // Tags
         String[] tagList = tags.replaceAll(" {2}", " ").replaceAll(", ", ",").split(",");
