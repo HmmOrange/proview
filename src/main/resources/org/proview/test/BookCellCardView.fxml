@@ -10,19 +10,19 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="book-cell-button" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCardView">
+<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="cell-form" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCardView">
    <graphic>
       <HBox maxHeight="125.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="475.0">
          <children>
-            <ImageView fx:id="coverImageView" fitHeight="125.0" fitWidth="83.333" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="coverImageView" fitHeight="125.0" fitWidth="83.333333" pickOnBounds="true" preserveRatio="true" />
             <VBox prefHeight="125.0" prefWidth="386.667">
                <children>
-                  <Label fx:id="titleLabel" alignment="TOP_LEFT" prefHeight="31.0" prefWidth="355.0" text="#1. Book #1">
+                  <Label fx:id="titleLabel" alignment="TOP_LEFT" prefHeight="31.0" prefWidth="355.0" text="1. Book #1">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="10.0" top="10.0" />
+                        <Insets left="10.0" />
                      </VBox.margin>
                   </Label>
                   <Label fx:id="authorLabel" alignment="TOP_LEFT" prefHeight="24.0" prefWidth="352.0" text="Author">
@@ -30,7 +30,7 @@
                         <Font size="14.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="10.0" top="-5.0" />
                      </VBox.margin>
                   </Label>
                   <HBox fx:id="tagHBox" alignment="BOTTOM_LEFT" prefHeight="43.0" spacing="5.0">

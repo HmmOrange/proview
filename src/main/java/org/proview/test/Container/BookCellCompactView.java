@@ -48,7 +48,7 @@ public class BookCellCompactView extends CellView {
                 copiesLabel,
                 infoHBox,
                 imageUrl, coverImageView,
-                50, 75,
+                60, 90,
                 tags, tagHBox
         );
     }
@@ -62,7 +62,7 @@ public class BookCellCompactView extends CellView {
                 issuesLabel, issueCount,
                 copiesLabel, copiesAvailable,
                 coverImageView, id,
-                50, 75,
+                60, 90,
                 tagHBox
         );
     }

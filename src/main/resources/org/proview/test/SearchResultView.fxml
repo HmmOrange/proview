@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.RangeSlider?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
@@ -27,55 +26,86 @@
       <AnchorPane prefHeight="0.0" prefWidth="1300.0" BorderPane.alignment="CENTER" />
    </bottom>
    <center>
-      <ScrollPane prefHeight="645.0" prefWidth="635.0" BorderPane.alignment="CENTER">
+      <ScrollPane hbarPolicy="NEVER" prefHeight="645.0" prefWidth="635.0" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
          <content>
-            <VBox prefHeight="579.0" prefWidth="900.0" spacing="15.0">
+            <VBox prefHeight="641.0" prefWidth="950.0" spacing="15.0">
                <children>
-                  <Label text="Top results:" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 20 0 10 20;" />
+                  <Label prefHeight="60.0" prefWidth="983.0" styleClass="top-result-header" text="Top results:">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></Label>
                   <VBox fx:id="topResultListVBox" prefWidth="800.0" spacing="10.0" style="-fx-padding: 0 20;">
-                  </VBox>
+                     <VBox.margin>
+                        <Insets left="10.0" top="-10.0" />
+                     </VBox.margin></VBox>
                   <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-padding: 20 20 0 20;">
                      <children>
-                        <Label text="More results from Google Books:" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+                        <Label prefWidth="311.0" styleClass="header" text="More results from Google Books:" />
                         <ImageView fx:id="loadingImageView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </HBox>
                   <VBox fx:id="googleBookListVBox" prefHeight="281.0" prefWidth="800.0" spacing="10.0" style="-fx-padding: 0 20;">
-                  </VBox>
+                     <VBox.margin>
+                        <Insets left="10.0" top="-10.0" />
+                     </VBox.margin></VBox>
                </children>
+               <stylesheets>
+                  <URL value="@styles/SearchResultView.css" />
+                  <URL value="@styles/styles.css" />
+               </stylesheets>
             </VBox>
          </content>
       </ScrollPane>
    </center>
    <left>
-      <VBox prefHeight="200.0" prefWidth="310.0" spacing="15.0" style="-fx-background-color: #f4f4f4; -fx-padding: 20; -fx-border-color: #dcdcdc; -fx-border-width: 1;">
+      <VBox prefHeight="592.0" prefWidth="285.0" spacing="15.0" style="-fx-background-color: #f4f4f4; -fx-padding: 20; -fx-border-width: 1;" styleClass="filter-form">
          <children>
-            <Label text="Filters" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
-            <Label text="Include tags:" style="-fx-font-size: 18px;" />
-            <FlowPane fx:id="tagIncludedSelectedFlowPane" hgap="5.0" vgap="5.0" minHeight="35.0" prefWidth="290.0" style="-fx-border-color: #dcdcdc; -fx-border-radius: 5; -fx-padding: 5;">
+            <Label styleClass="header" text="Filters" />
+            <Label styleClass="sub-header" text="Include tags:" />
+            <FlowPane fx:id="tagIncludedSelectedFlowPane" hgap="5.0" minHeight="35.0" prefWidth="290.0" styleClass="flow-pane" vgap="5.0">
             </FlowPane>
-            <MenuButton fx:id="tagIncludedSelectDropdown" mnemonicParsing="false" text="Select Tag..." style="-fx-padding: 5 10; -fx-font-size: 14px;" />
-            <Label text="Exclude tags:" style="-fx-font-size: 18px; -fx-padding: 10 0 0 0;" />
-            <FlowPane fx:id="tagExcludedSelectedFlowPane" hgap="5.0" vgap="5.0" minHeight="35.0" prefWidth="200.0" style="-fx-border-color: #dcdcdc; -fx-border-radius: 5; -fx-padding: 5;">
+            <MenuButton fx:id="tagIncludedSelectDropdown" mnemonicParsing="false" text="Select tag..." />
+            <Label style="-fx-font-size: 18px; -fx-padding: 10 0 0 0;" text="Exclude tags:" />
+            <FlowPane fx:id="tagExcludedSelectedFlowPane" hgap="5.0" minHeight="35.0" prefWidth="200.0" styleClass="flow-pane" vgap="5.0">
             </FlowPane>
-            <MenuButton fx:id="tagExcludedSelectDropdown" mnemonicParsing="false" text="Select Tag..." style="-fx-padding: 5 10; -fx-font-size: 14px;" />
+            <MenuButton fx:id="tagExcludedSelectDropdown" mnemonicParsing="false" text="Select Tag..." />
             <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-padding: 10 0;">
                <children>
-                  <Label text="Rating range:" style="-fx-font-size: 18px;" />
-                  <Label fx:id="lowRatingLabel" text="0.00" style="-fx-font-size: 18px;" />
-                  <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14" />
-                  <Label text="-" style="-fx-font-size: 18px;" />
-                  <Label fx:id="highRatingLabel" text="5.00" style="-fx-font-size: 18px;" />
-                  <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14" />
+                  <Label styleClass="sub-header" text="Rating range:" />
+                  <Label fx:id="lowRatingLabel" styleClass="sub-header" text="0.00" />
+                  <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14">
+                     <HBox.margin>
+                        <Insets left="-7.0" />
+                     </HBox.margin></FontIcon>
+                  <Label style="-fx-font-size: 18px;" text="-">
+                     <HBox.margin>
+                        <Insets left="-5.0" right="-5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="highRatingLabel" styleClass="sub-header" text="5.00" />
+                  <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14">
+                     <HBox.margin>
+                        <Insets left="-7.0" />
+                     </HBox.margin></FontIcon>
                </children>
             </HBox>
-            <RangeSlider fx:id="ratingSlider" blockIncrement="0.01" highValue="1.0" lowValue="0.0" max="5.0" showTickLabels="true" style="-fx-padding: 0 10;" />
-            <Button fx:id="applyFiltersButton" text="Apply" style="-fx-background-color: #457B9D; -fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 10; -fx-border-radius: 5; -fx-background-radius: 5;" />
+            <RangeSlider fx:id="ratingSlider" blockIncrement="0.01" highValue="1.0" lowValue="0.0" max="5.0" prefWidth="243.0" showTickLabels="true">
+               <VBox.margin>
+                  <Insets top="-10.0" />
+               </VBox.margin></RangeSlider>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="applyFiltersButton" alignment="TOP_CENTER" prefWidth="68.0" styleClass="apply-button" text="Apply" />
+               </children>
+            </VBox>
          </children>
+         <stylesheets>
+            <URL value="@styles/SearchResultView.css" />
+            <URL value="@styles/styles.css" />
+         </stylesheets>
+         <BorderPane.margin>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </BorderPane.margin>
       </VBox>
    </left>
-   <stylesheets>
-      <URL value="@styles/styles.css" />
-      <URL value="@styles/EditBookInfoView.css" />
-   </stylesheets>
 </BorderPane>

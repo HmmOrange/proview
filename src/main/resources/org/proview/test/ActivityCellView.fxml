@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="book-cell-button" stylesheets="@styles/ListView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ActivityCellView">
+<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="cell-form" stylesheets="@styles/ListView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ActivityCellView">
    <graphic>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="300.0">
          <children>
