@@ -148,6 +148,7 @@ public class NavBarView {
 
     public void onProfileButtonClick(MouseEvent mouseClick) throws IOException {
         try {
+            ProfileView.setUser(UserManagement.getCurrentUser());
             FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("ProfileView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
             AppMain.window.setTitle("Hello!");
