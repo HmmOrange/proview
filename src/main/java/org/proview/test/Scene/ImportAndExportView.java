@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.proview.test.AppMain;
+import org.proview.utils.PopUpWindowUtils;
 
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -16,55 +17,51 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 public class ImportAndExportView {
-    private static final String[] tables = {"book", "book_tag", "favourite", "game_history",
+    private static final String[] exportTables = {"book", "book_tag", "favourite", "game_history",
             "issue", "questions", "rating", "review", "tag", "user"};
+    private static final String[] importTables = {"book", "questions", "user"};
     private File csvFile;
 
 
     private void initImportTab() {
-        importTableComboBox.getItems().addAll(tables);
-        importTableComboBox.setValue(tables[0]);
+        importTableComboBox.getItems().addAll(importTables);
+        importTableComboBox.setValue(importTables[0]);
         importConfirmButton.setDisable(true);
     }
 
     private void initExportTab() {
-        exportTableComboBox.getItems().addAll(tables);
-        exportTableComboBox.setValue(tables[0]);
+        exportTableComboBox.getItems().addAll(exportTables);
+        exportTableComboBox.setValue(exportTables[0]);
         exportConfirmButton.setDisable(true);
     }
 
     private String[] getColumnsInTable(String table) throws SQLException {
-        String sql = String.format("SELECT * FROM %s", table);
-        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        int numberOfColumns = resultSet.getMetaData().getColumnCount();
+        String[] respond = new String[1];
+        if (table.equals("book")) {
 
-        String[] respond = new String[numberOfColumns];
-        for (int i = 1; i <= numberOfColumns; i++) {
-            String columnName = resultSet.getMetaData().getColumnName(i);
-            respond[i-1] = columnName;
         }
         return respond;
     }
 
-    private String importSql (String table, String[] columns) {
-        StringBuilder queryBuilder = new StringBuilder("INSERT IGNORE INTO ").append(table).append(" (");
-        for (int i = 0; i < columns.length; i++) {
-            queryBuilder.append(columns[i].trim());
-            if (i < columns.length - 1) {
-                queryBuilder.append(", ");
-            }
+    private String importSql (String table) throws SQLException {
+        String query = "";
+        if (table.equals("book")) {
+            query = """
+                INSERT INTO book (name, author, description, time_added, copies)
+                VALUE (?, ?, ?, CURRENT_TIMESTAMP, ?)
+                """;
+        } else if (table.equals("user")) {
+            query = """
+                    INSERT INTO user
+                    (username, password, type, firstname, lastname, email, registration_date, card_view)
+                    VALUE (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, 0)
+                    """;
+        } else if (table.equals("questions")) {
+            query = """
+                    INSERT INTO questions (type, difficulty, question, correct_answer, incr_ans1, incr_ans2, incr_ans3)
+                    VALUE ('multiple', ?, ?, ?, ?, ?, ?)
+                    """;
         }
-        queryBuilder.append(") VALUES (");
-
-        for (int i = 0; i < columns.length; i++) {
-            queryBuilder.append("?");
-            if (i < columns.length - 1) {
-                queryBuilder.append(", ");
-            }
-        }
-        queryBuilder.append(");");
-        String query = queryBuilder.toString();
         return query;
     }
 
@@ -118,7 +115,7 @@ public class ImportAndExportView {
                 importResultLabel.setText("Columns count doesn't match with database");
                 return false;
             }
-            String sql = importSql(table, getColumnsInTable(table));
+            String sql = importSql(table);
             PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
             String line;
             while ((line = reader.readLine()) != null) {
@@ -185,11 +182,13 @@ public class ImportAndExportView {
     }
 
     public void onImportConfirmButtonClicked(ActionEvent actionEvent) throws FileNotFoundException {
-        String table = importTableComboBox.getValue();
-        if (importCsvFileToDatabase(table, csvFile)) {
-            importResultLabel.setText("Import successfully!");
-            csvFile = null;
-            importConfirmButton.setDisable(true);
+        if (PopUpWindowUtils.showConfirmation("Warning!", "Are you sure to import to database?")) {
+            String table = importTableComboBox.getValue();
+            if (importCsvFileToDatabase(table, csvFile)) {
+                importResultLabel.setText("Import successfully!");
+                csvFile = null;
+                importConfirmButton.setDisable(true);
+            }
         }
     }
 
