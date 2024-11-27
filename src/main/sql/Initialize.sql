@@ -181,7 +181,7 @@ INSERT INTO book(name, author, description, time_added, copies) VALUES
 ('The House of the Spirits', 'Isabel Allende', 'A multi-generational story with magical realism.', CURRENT_TIMESTAMP(), 10),
 ('The Secret History', 'Donna Tartt', 'A psychological exploration of crime and consequence.', CURRENT_TIMESTAMP(), 11),
 ('The Midnight Library', 'Matt Haig', 'A novel about all the lives we could live and the choices we make. A magical journey through parallel lives.', CURRENT_TIMESTAMP(), 12),
-('The Alchemist', 'Paulo Coelho', 'A philosophical story of a shepherd on a journey to discover his personal legend and fulfill his dreams.', CURRENT_TIMESTAMP(), 20),
+('The Alchemist', 'Paulo Coelho', 'A philosophical story of a shepherd on a journey to discover his personal legend and fulfill his dreams.', CURRENT_TIMESTAMP(), 20);
 
 -- Add sample tags
 INSERT INTO tag (name, bg_color_hex, text_color_hex) VALUES
