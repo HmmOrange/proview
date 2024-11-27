@@ -3,7 +3,6 @@ package org.proview.utils;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.proview.test.AppMain;
@@ -15,7 +14,7 @@ import java.io.InputStream;
 import java.net.URI;
 
 public class Utils {
-    public static void insertImage(ImageView imageView, Image image, double targetWidth, double targetHeight) {
+    public static void insertBookImage(ImageView imageView, Image image, double targetWidth, double targetHeight) {
         imageView.setImage(image);
         double scaleX = targetWidth / image.getWidth();
         double scaleY = targetHeight / image.getHeight();
@@ -36,21 +35,21 @@ public class Utils {
         imageView.setCache(true);
     }
 
-    public static void insertImage(ImageView imageView, String imageUrl, double targetWidth, double targetHeight) throws IOException {
+    public static void insertBookImage(ImageView imageView, String imageUrl, double targetWidth, double targetHeight) throws IOException {
         InputStream stream = URI.create(imageUrl).toURL().openStream();
         Image image = new Image(stream);
 
-        insertImage(imageView, image, targetWidth, targetHeight);
+        insertBookImage(imageView, image, targetWidth, targetHeight);
 
         stream.close();
     }
 
-    public static void insertImage(ImageView imageView, int id, double targetWidth, double targetHeight) throws FileNotFoundException {
+    public static void insertBookImage(ImageView imageView, int id, double targetWidth, double targetHeight) throws FileNotFoundException {
         String imageUrl = "./assets/covers/cover" + id + ".png";
         InputStream stream = new FileInputStream(imageUrl);
         Image image = new Image(stream);
 
-        insertImage(imageView, image, targetWidth, targetHeight);
+        insertBookImage(imageView, image, targetWidth, targetHeight);
     }
 
     public static void switchScene(String fxmlPath) throws IOException {

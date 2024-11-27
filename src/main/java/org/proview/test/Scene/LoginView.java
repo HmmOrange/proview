@@ -26,6 +26,7 @@ public class LoginView {
     public Button registerButton;
     public Label loginResultLabel;
     public Label errorLabel;
+    public Label subHeaderLabel;
     public void onLoginButtonClick(ActionEvent actionEvent) {
         try {
             String username = loginUsernameField.getText();
@@ -49,14 +50,11 @@ public class LoginView {
             // Save details of logged-in user
             UserManagement.setCurrentUser(checkingUser);
             Utils.switchScene("HomeView.fxml");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             errorLabel.setText(e.getMessage());
+        } catch (Exception e) {
+            errorLabel.setText("An unexpected error occurred: " + e.getMessage());
         }
-        catch (Exception e) {
-            errorLabel.setText("An unexpected error occurred.");
-        }
-
     }
 
     public void initialize() {

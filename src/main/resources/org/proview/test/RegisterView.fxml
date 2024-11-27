@@ -11,12 +11,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1300.0" stylesheets="@styles/RegisterView.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.RegisterView">
+<AnchorPane prefHeight="700.0" prefWidth="1300.0" stylesheets="@styles/RegisterView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.RegisterView">
    <VBox alignment="CENTER" layoutX="435.0" layoutY="24.0" onKeyReleased="#onKeyReleased" prefHeight="345.0" prefWidth="419.0" spacing="15.0" styleClass="register-form">
       <children>
          <ImageView fx:id="avatarField" fitHeight="150.0" fitWidth="274.0" pickOnBounds="true" preserveRatio="true" />
          <Button fx:id="addAvatarButton" alignment="CENTER" mnemonicParsing="false" onAction="#onAddAvatarButtonClick" text="Add Avatar" />
-         <Label fx:id="registerResultLabel" alignment="CENTER" prefHeight="17.0" prefWidth="408.0">
+         <Label fx:id="successLabel" text="Success" textFill="#00a14e">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Label>
+         <Label fx:id="errorLabel" alignment="CENTER" prefHeight="17.0" prefWidth="408.0" text="Error" textFill="RED">
             <font>
                <Font size="14.0" />
             </font></Label>

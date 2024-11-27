@@ -1,26 +1,17 @@
 package org.proview.test.Container;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.UndeclaredThrowableException;
-import java.net.URI;
 import java.sql.SQLException;
 import java.util.Map;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import org.proview.modal.Tag.Tag;
 import org.proview.modal.Tag.TagManagement;
 import org.proview.modal.Tag.TagStyle;
-import org.proview.test.AppMain;
 import org.proview.utils.Utils;
 import org.proview.utils.SQLUtils;
 
@@ -51,7 +42,7 @@ public abstract class CellView {
             copiesLabel.setVisible(false);
         }
 
-        Utils.insertImage(coverImageView, id, targetWidth, targetHeight);
+        Utils.insertBookImage(coverImageView, id, targetWidth, targetHeight);
 
         // Tags
         ObservableList<Tag> tagList = SQLUtils.getBookTags(id);
@@ -80,7 +71,7 @@ public abstract class CellView {
         infoHBox.getChildren().clear();
         infoHBox.setPrefWidth(0);
 
-        Utils.insertImage(coverImageView, imageUrl, targetWidth, targetHeight);
+        Utils.insertBookImage(coverImageView, imageUrl, targetWidth, targetHeight);
 
         // Tags
         String[] tagList = tags.replaceAll(" {2}", " ").replaceAll(", ", ",").split(",");

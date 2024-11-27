@@ -17,7 +17,7 @@
       <children>
          <!-- Label hiển thị thông báo -->
          <Label fx:id="loginResultLabel" styleClass="header" text="Sign in to your account!" />
-         <Label styleClass="sub-header" text="Welcome 😊!" />
+         <Label fx:id="subHeaderLabel" styleClass="sub-header" text="Welcome 😊!" />
          <Label fx:id="errorLabel" text="Error" textFill="RED">
             <font>
                <Font size="14.0" />
