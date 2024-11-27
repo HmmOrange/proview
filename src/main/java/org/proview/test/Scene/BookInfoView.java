@@ -269,34 +269,34 @@ public class BookInfoView {
         AppMain.window.centerOnScreen();
     }
 
-    public void onBorrowButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
-        if (PopUpWindowUtils.showConfirmation("Warning!", "Are you sure to borrow this book?")) {
-            try {
-                String durationInput = durationField.getText();
+    public void onBorrowButtonClick(ActionEvent actionEvent) {
+        try {
+            String durationInput = durationField.getText();
 
-                // Check if the input is a valid integer
-                if (!durationInput.matches("\\d+")) {
-                    throw new IllegalArgumentException("Duration must be a positive number.");
-                }
+            // Check if the input is a valid integer
+            if (!durationInput.matches("\\d+")) {
+                throw new IllegalArgumentException("Duration must be a positive number.");
+            }
 
-                int duration = Integer.parseInt(durationInput);
+            int duration = Integer.parseInt(durationInput);
 
-                if (duration <= 0) {
-                    throw new IllegalArgumentException("Duration must be a positive number.");
-                }
+            if (duration <= 0) {
+                throw new IllegalArgumentException("Duration must be a positive number.");
+            }
 
-                if (duration > 90) {
-                    throw new IllegalArgumentException("Duration cannot exceed 90 days.");
-                }
+            if (duration > 90) {
+                throw new IllegalArgumentException("Duration cannot exceed 90 days.");
+            }
 
+            if (PopUpWindowUtils.showConfirmation("Warning!", "Are you sure to borrow this book?")) {
                 IssueManagement.addIssue(UserManagement.getCurrentUser().getUsername(), bookId, duration);
                 this.onBackButtonClick(actionEvent);
-
-            } catch (IllegalArgumentException e) {
-                errorLabel.setText(e.getMessage());
-            } catch (Exception e) {
-                errorLabel.setText("An unexpected error occurred: " + e.getMessage());
             }
+
+        } catch (IllegalArgumentException e) {
+            errorLabel.setText(e.getMessage());
+        } catch (Exception e) {
+            errorLabel.setText("An unexpected error occurred: " + e.getMessage());
         }
     }
 
