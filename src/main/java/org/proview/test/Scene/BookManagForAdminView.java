@@ -2,9 +2,14 @@ package org.proview.test.Scene;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.TextAlignment;
+import org.proview.modal.User.NormalUser;
+import org.proview.modal.User.UserManagement;
 import org.proview.utils.SQLUtils;
 import org.proview.utils.TableViewUtils;
 
@@ -18,10 +23,16 @@ public class BookManagForAdminView {
     public Label reviewsLabel;
     public ComboBox<String> columnComboBox;
     public TextField searchTextField;
+    public Label tagsLabel;
+    public BorderPane homeBorderPane;
 
     public void initialize() throws SQLException {
+        if (UserManagement.getCurrentUser() instanceof NormalUser) {
+            homeBorderPane.setLeft(null);
+        }
         totalBooksLabel.setText(Integer.toString((int) (SQLUtils.getBooksCount().getFirst() - 0)));
         reviewsLabel.setText(Integer.toString((int) (SQLUtils.getBooksCount().get(1) - 0)));
+        tagsLabel.setText(Integer.toString(SQLUtils.getTagList().size()));
 
         String[] columns = {"ID", "Title", "Author", "Tags", "Description", "Copies", "Total queries", "Reviews", "Average Rating"};
         int[] prefWidthForEachColumn = {30, 100, 100, 100, 300, 40, 70, 40, 60};
@@ -41,6 +52,10 @@ public class BookManagForAdminView {
             TableViewUtils.setWrapTextToColumn(column);
 
             booksTableView.getColumns().add(column);
+
+            if (UserManagement.getCurrentUser() instanceof NormalUser && i == 6) {
+                booksTableView.getColumns().remove(column);
+            }
         }
         ObservableList<ObservableList<String>> data = SQLUtils.getBooksData();
         booksTableView.setItems(data);
@@ -83,9 +98,11 @@ public class BookManagForAdminView {
                     if (file.exists()) { // Check if the file exists
                         Image image = new Image(file.toURI().toString());
                         imageView.setImage(image);
-                        imageView.setFitWidth(100); // Set desired width
-                        imageView.setFitHeight(140); // Set desired height
+                        imageView.setFitWidth(80); // Set desired width
+                        imageView.setFitHeight(120); // Set desired height
                         setGraphic(imageView);      // Add the ImageView to the cell
+                        setTextAlignment(TextAlignment.CENTER);
+                        setAlignment(Pos.CENTER);
                     } else {
                         System.err.println("File not found: " + file.getAbsolutePath());
                         setGraphic(null);

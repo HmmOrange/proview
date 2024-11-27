@@ -30,26 +30,13 @@ public class EditBookView {
     public TextField bookAddCopies;
     public TextField bookAddTag;
     public TextField bookRemoveID;
-    public ListView<String> bookList;
     public Button addBookButton;
-    public Button logoutButton;
     public Button addCoverButton;
     public Label fileAddedLabel;
     public ImageView coverImageView;
-    public Button backButton;
 
     private File coverFile;
 
-    @FXML
-    public void initialize() throws SQLException {
-        ReloadBookListView();
-    }
-
-    private void ReloadBookListView() throws SQLException {
-        System.out.println("reload");
-
-        bookList.setItems(BookManagement.getBookListView());
-    }
 
     public void onAddBookButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
         String coverFilePath = coverFile.toURI().toString().substring(6); // This has prefix 'file:/'
@@ -80,13 +67,10 @@ public class EditBookView {
         // Store cover images in a folder (in practice this is stored in a CDN)
         Files.copy(coverFile.toPath(), (new File(dstFilePath)).toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-        // Reload the list view
-        ReloadBookListView();
     }
 
     public void onRemoveButtonClick(ActionEvent actionEvent) throws SQLException {
         BookManagement.removeBook(Integer.parseInt(bookRemoveID.getText()));
-        ReloadBookListView();
     }
 
     public void onLogoutButtonClick(ActionEvent actionEvent) throws IOException {
