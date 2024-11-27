@@ -31,6 +31,7 @@ import org.proview.test.AppMain;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -65,6 +66,7 @@ public class BookInfoView {
     public Button loadPrevReviewButton;
     public Button removePrevReviewButton;
     public HBox tagListHBox;
+    public Button deleteButton;
     private int starMouseEntered = 0;
     private int bookId;
     private int curRating = 3;
@@ -103,6 +105,8 @@ public class BookInfoView {
         borrowingProblemLabel.setVisible(false);
         borrowingProblemLabel.setDisable(true);
         if (UserManagement.getCurrentUser() instanceof NormalUser) {
+            deleteButton.setDisable(true);
+            deleteButton.setVisible(false);
             editButton.setText("Borrow");
             editButton.setOnAction(actionEvent -> {
                 try {
@@ -322,5 +326,26 @@ public class BookInfoView {
 
         reloadReviewList();
 
+    }
+
+    public void onDeleteButtonClicked(ActionEvent actionEvent) throws SQLException, IOException {
+        String sql = """
+                DELETE FROM book
+                WHERE id = ?
+                """;
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        preparedStatement.setInt(1, bookId);
+        preparedStatement.execute();
+        showNotification("Warning!", "This book has been deleted", Alert.AlertType.INFORMATION);
+        onBackButtonClick(actionEvent);
+    }
+
+    ///for notification
+    public static void showNotification(String title, String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null); // Không có tiêu đề con
+        alert.setContentText(message);
+        alert.showAndWait(); // Hiển thị và chờ người dùng đóng
     }
 }

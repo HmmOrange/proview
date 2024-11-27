@@ -84,7 +84,7 @@ public class BookManagForAdminView {
                         Image image = new Image(file.toURI().toString());
                         imageView.setImage(image);
                         imageView.setFitWidth(100); // Set desired width
-                        imageView.setFitHeight(100); // Set desired height
+                        imageView.setFitHeight(140); // Set desired height
                         setGraphic(imageView);      // Add the ImageView to the cell
                     } else {
                         System.err.println("File not found: " + file.getAbsolutePath());
