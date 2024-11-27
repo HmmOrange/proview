@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.EditBookView">
@@ -17,42 +17,33 @@
       <fx:include source="AdminManagementNavBarView.fxml" />
    </left>
    <center>
-      <VBox alignment="CENTER" prefHeight="549.0" prefWidth="483.0" spacing="20.0">
-          <padding>
-              <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
-          </padding>
-         <TextField fx:id="bookAddName" promptText="Book name" />
-         <TextField fx:id="bookAddAuthor" promptText="Author" />
-         <TextField fx:id="bookAddDescription" promptText="Description" />
-         <TextField fx:id="bookAddCopies" promptText="Amount of copies available" />
-         <HBox prefHeight="100.0" prefWidth="200.0">
-            <children>
-               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                  <children>
-                     <Button fx:id="addCoverButton" mnemonicParsing="false" onAction="#onAddCoverButtonClick" text="Add cover" />
-                     <Label fx:id="fileAddedLabel" text="...">
-                        <VBox.margin>
-                           <Insets top="20.0" />
-                        </VBox.margin>
-                     </Label>
-                  </children>
-               </VBox>
-               <ImageView fx:id="coverImageView" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                  <HBox.margin>
-                     <Insets left="20.0" />
-                  </HBox.margin>
-               </ImageView>
-            </children>
-         </HBox>
-         <HBox alignment="CENTER" prefHeight="54.0" prefWidth="249.0">
-            <children>
-                <Button fx:id="addBookButton" onAction="#onAddBookButtonClick" text="Add">
-                  <HBox.margin>
-                     <Insets right="20.0" />
-                  </HBox.margin>
-               </Button>
-            </children>
-         </HBox>
+      <VBox alignment="CENTER" prefHeight="549.0" prefWidth="483.0" spacing="15.0" styleClass="register-form" BorderPane.alignment="CENTER">
+         <ImageView fx:id="coverImageView" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+            <VBox.margin>
+               <Insets top="-30.0" />
+            </VBox.margin>
+         </ImageView>
+         <Label fx:id="fileAddedLabel" text="...">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+         </Label>
+         <Button fx:id="addCoverButton" mnemonicParsing="false" onAction="#onAddCoverButtonClick" text="Add cover" />
+         <TextField fx:id="bookAddName" prefWidth="1000.0" promptText="Book name" styleClass="input" />
+         <TextField fx:id="bookAddAuthor" promptText="Author" styleClass="input" />
+         <TextField fx:id="bookAddDescription" promptText="Description" styleClass="input" />
+         <TextField fx:id="bookAddCopies" promptText="Amount of copies available" styleClass="input" />
+          <Button fx:id="addBookButton" onAction="#onAddBookButtonClick" text="Add" />
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets bottom="50.0" left="250.0" right="275.0" top="50.0" />
+         </BorderPane.margin>
+         <stylesheets>
+            <URL value="@styles/RegisterView.css" />
+            <URL value="@styles/styles.css" />
+         </stylesheets>
       </VBox>
    </center>
 </BorderPane>
