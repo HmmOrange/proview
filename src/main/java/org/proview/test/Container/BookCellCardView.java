@@ -3,6 +3,7 @@ package org.proview.test.Container;
 import com.google.gson.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
@@ -58,14 +59,20 @@ public class BookCellCardView extends CellView {
         double targetHeight = 125;
         double scaleX = targetWidth / image.getWidth();
         double scaleY = targetHeight / image.getHeight();
-        double scale = Math.max(scaleX, scaleY);
+        double scale = Math.min(scaleX, scaleY);
 
-        coverImageView.setImage(image);
-        coverImageView.setFitWidth(image.getWidth() * scale);
-        coverImageView.setFitHeight(image.getHeight() * scale);
-        coverImageView.setPreserveRatio(true);
-        Rectangle clip = new Rectangle(targetWidth, targetHeight);
-        coverImageView.setClip(clip);
+        double scaledWidth = image.getWidth() * scale;
+        double scaledHeight = image.getHeight() * scale;
+
+        double viewportX = Math.max(0, (scaledWidth - targetWidth) / 2 / scale);
+        double viewportY = Math.max(0, (scaledHeight - targetHeight) / 2 / scale);
+        double viewportWidth = Math.min(image.getWidth(), targetWidth / scale);
+        double viewportHeight = Math.min(image.getHeight(), targetHeight / scale);
+
+        coverImageView.setViewport(new Rectangle2D(viewportX, viewportY, viewportWidth, viewportHeight));
+        coverImageView.setFitWidth(targetWidth);
+        coverImageView.setFitHeight(targetHeight);
+        coverImageView.setPreserveRatio(false);
         coverImageView.setSmooth(true);
         coverImageView.setCache(true);
 
@@ -121,14 +128,20 @@ public class BookCellCardView extends CellView {
         double targetHeight = 125;
         double scaleX = targetWidth / image.getWidth();
         double scaleY = targetHeight / image.getHeight();
-        double scale = Math.max(scaleX, scaleY);
+        double scale = Math.min(scaleX, scaleY);
 
-        coverImageView.setImage(image);
-        coverImageView.setFitWidth(image.getWidth() * scale);
-        coverImageView.setFitHeight(image.getHeight() * scale);
-        coverImageView.setPreserveRatio(true);
-        Rectangle clip = new Rectangle(targetWidth, targetHeight);
-        coverImageView.setClip(clip);
+        double scaledWidth = image.getWidth() * scale;
+        double scaledHeight = image.getHeight() * scale;
+
+        double viewportX = Math.max(0, (scaledWidth - targetWidth) / 2 / scale);
+        double viewportY = Math.max(0, (scaledHeight - targetHeight) / 2 / scale);
+        double viewportWidth = Math.min(image.getWidth(), targetWidth / scale);
+        double viewportHeight = Math.min(image.getHeight(), targetHeight / scale);
+
+        coverImageView.setViewport(new Rectangle2D(viewportX, viewportY, viewportWidth, viewportHeight));
+        coverImageView.setFitWidth(targetWidth);
+        coverImageView.setFitHeight(targetHeight);
+        coverImageView.setPreserveRatio(false);
         coverImageView.setSmooth(true);
         coverImageView.setCache(true);
 
@@ -203,5 +216,4 @@ public class BookCellCardView extends CellView {
             }
         }
     }
-
 }
