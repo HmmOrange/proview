@@ -16,42 +16,52 @@ import org.proview.utils.Utils;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Objects;
 
 public class LoginView {
-
     public TextField loginUsernameField;
     public TextField loginPasswordField;
     public Button loginButton;
     public Button registerButton;
     public Label loginResultLabel;
+    public Label errorLabel;
+    public void onLoginButtonClick(ActionEvent actionEvent) {
+        try {
+            String username = loginUsernameField.getText();
+            String password = loginPasswordField.getText();
 
-    public void onLoginButtonClick(ActionEvent actionEvent) throws IOException, SQLException {
-        String username = loginUsernameField.getText();
-        String password = loginPasswordField.getText();
+            if (username.isEmpty() || password.isEmpty()) {
+                throw new IllegalArgumentException("Username and password must not be empty.");
+            }
+            if (!username.matches("^[a-zA-Z0-9_]+$")) { // Only alphanumeric and underscore
+                throw new IllegalArgumentException("Username can only contain letters, numbers, and underscores.");
+            }
+            if (!password.equalsIgnoreCase("admin") && password.length() < 8) {
+                throw new IllegalArgumentException("Password must be at least 8 characters long.");
+            }
 
-        if (Objects.equals(loginUsernameField.getText(), "")) {
-            loginResultLabel.setText("Please enter username!");
-            return;
+            User checkingUser = SQLUtils.getUser(username, password);
+            if (checkingUser == null) {
+                throw new IllegalArgumentException("Username or password is incorrect.");
+            }
+
+            // Save details of logged-in user
+            UserManagement.setCurrentUser(checkingUser);
+            Utils.switchScene("HomeView.fxml");
+        }
+        catch (IllegalArgumentException e) {
+            errorLabel.setText(e.getMessage());
+        }
+        catch (Exception e) {
+            errorLabel.setText("An unexpected error occurred.");
         }
 
-        if (Objects.equals(loginPasswordField.getText(), "")) {
-            loginResultLabel.setText("Please enter password!");
-            return;
-        }
-
-        User checkingUser = SQLUtils.getUser(username, password);
-        if (checkingUser == null) {
-            loginResultLabel.setText("Username/Password is incorrect");
-            return;
-        }
-
-        // Save details of logged-in user
-        UserManagement.setCurrentUser(checkingUser);
-
-        Utils.switchScene("HomeView.fxml");
     }
 
+    public void initialize() {
+        errorLabel.setText("");
+    }
     public void onRegisterButtonClick(ActionEvent actionEvent) throws IOException {
         Utils.switchScene("RegisterView.fxml");
     }
