@@ -49,12 +49,26 @@
                         </Label>
                      </children>
                   </VBox>
+                  <VBox alignment="CENTER" prefWidth="239.0">
+                     <children>
+                        <Label fx:id="tagsLabel" text="10">
+                           <font>
+                              <Font size="62.0" />
+                           </font>
+                        </Label>
+                        <Label text="Tags">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </HBox>
             <HBox prefHeight="25.0" prefWidth="1193.0" spacing="20.0">
                <children>
                   <ComboBox fx:id="columnComboBox" prefHeight="25.0" prefWidth="150.0" promptText="Column" />
-                  <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="1031.0" promptText="Search" />
+                  <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="1000.0" promptText="Search" />
                </children>
             </HBox>
             <TableView fx:id="booksTableView" prefHeight="487.0" prefWidth="1193.0">

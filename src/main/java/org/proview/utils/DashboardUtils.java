@@ -231,7 +231,7 @@ public class DashboardUtils {
                                 FROM date_series
                                 WHERE date < (SELECT MAX(DATE(start_date)) FROM issue WHERE user_id = 2)
                             )
-                            SELECT ds.date, COALESCE(COUNT(i.start_date), 0) AS total
+                            SELECT COALESCE(ds.date, CURRENT_TIMESTAMP) AS date, COALESCE(COUNT(i.start_date), 0) AS total
                             FROM date_series ds
                             LEFT JOIN issue i ON DATE(i.start_date) = ds.date AND i.user_id = 2
                             GROUP BY ds.date
