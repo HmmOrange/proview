@@ -268,8 +268,10 @@ public class BookInfoView {
     }
 
     public void onBorrowButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
-        IssueManagement.addIssue(UserManagement.getCurrentUser().getUsername(), bookId, Integer.parseInt(durationField.getText()));
-        this.onBackButtonClick(actionEvent);
+        if (PopUpWindowUtils.showConfirmation("Warning!", "Are you sure to borrow this book?")) {
+            IssueManagement.addIssue(UserManagement.getCurrentUser().getUsername(), bookId, Integer.parseInt(durationField.getText()));
+            this.onBackButtonClick(actionEvent);
+        }
     }
 
     public void onEditButtonClick(ActionEvent actionEvent) throws IOException, SQLException {

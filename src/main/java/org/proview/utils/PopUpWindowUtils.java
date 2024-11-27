@@ -1,17 +1,21 @@
 package org.proview.utils;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Screen;
 
 import java.util.Optional;
 
 public class PopUpWindowUtils {
     ///for notification
     public static void showNotification(String title, String message, Alert.AlertType type) {
+
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+
         alert.showAndWait();
     }
 
@@ -21,6 +25,7 @@ public class PopUpWindowUtils {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+
 
         Optional<ButtonType> result = alert.showAndWait();
 
