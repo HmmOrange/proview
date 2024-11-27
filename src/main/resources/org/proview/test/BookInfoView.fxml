@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
+<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
@@ -147,6 +147,7 @@
             <TextField fx:id="durationField" alignment="CENTER" layoutX="99.0" layoutY="548.0" promptText="Duration" />
             <Label fx:id="borrowingProblemLabel" alignment="CENTER" layoutX="70.0" layoutY="535.0" prefHeight="17.0" prefWidth="209.0" wrapText="true" />
             <Button fx:id="backButton" layoutX="99.0" layoutY="585.0" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="25.0" prefWidth="149.0" text="Back" textAlignment="CENTER" />
+            <Button fx:id="deleteButton" layoutX="100.0" layoutY="548.0" mnemonicParsing="false" onAction="#onDeleteButtonClicked" prefHeight="25.0" prefWidth="147.0" text="Delete" />
          </children>
       </AnchorPane>
    </left>

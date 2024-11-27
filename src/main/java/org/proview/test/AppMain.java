@@ -113,8 +113,7 @@ public class AppMain extends Application {
 
         // Uncomment this if in need of creating new fresh tables in DB
         runSQLScript(connection);
-        // GamesAPI.insertQandAToDb();
-        // GoogleBooksAPI.loadMissingImages();
+        GamesAPI.insertQandAToDb();
         launch();
     }
 }

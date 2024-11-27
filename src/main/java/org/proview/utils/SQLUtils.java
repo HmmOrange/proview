@@ -481,7 +481,7 @@ public class SQLUtils {
                 """;
         ResultSet resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
         while (resultSet.next()) {
-            String id = Integer.toString(resultSet.getInt("id"));
+            String id = String.format("%03d", resultSet.getInt("id"));
             String name = resultSet.getString("name");
             String author = resultSet.getString("author");
             String description = resultSet.getString("description");
@@ -533,7 +533,7 @@ public class SQLUtils {
         PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
-            String id = Integer.toString(resultSet.getInt("id"));
+            String id = String.format("%03d", resultSet.getInt("id"));
             String username = resultSet.getString("username");
             String fullname = resultSet.getString("fullname");
             String email = resultSet.getString("email");
@@ -655,9 +655,9 @@ public class SQLUtils {
             );
             ResultSet borrowingRS = borrowingPS.executeQuery();
             while(borrowingRS.next()) {
-                String id = Integer.toString(borrowingRS.getInt("id"));
+                String id = String.format("%03d", borrowingRS.getInt("id"));
                 String username = borrowingRS.getString("username");
-                String bookId = Integer.toString(borrowingRS.getInt("bookid"));
+                String bookId = String.format("%03d", borrowingRS.getInt("bookid"));
                 String title = borrowingRS.getString("bookname");
                 String author = borrowingRS.getString("author");
                 String end_date = borrowingRS.getTimestamp("end_date").toString();
@@ -675,9 +675,9 @@ public class SQLUtils {
             borrowingPS.setString(1, UserManagement.getCurrentUser().getUsername());
             ResultSet borrowingRS = borrowingPS.executeQuery();
             while(borrowingRS.next()) {
-                String id = Integer.toString(borrowingRS.getInt("id"));
+                String id = String.format("%03d", borrowingRS.getInt("id"));
                 String username = borrowingRS.getString("username");
-                String bookId = Integer.toString(borrowingRS.getInt("bookid"));
+                String bookId = String.format("%03d", borrowingRS.getInt("bookid"));
                 String title = borrowingRS.getString("bookname");
                 String author = borrowingRS.getString("author");
                 String end_date = borrowingRS.getTimestamp("end_date").toString();
@@ -699,8 +699,8 @@ public class SQLUtils {
                     "FROM book_issue WHERE status = 'Returned'");
             ResultSet borrowedRS = borrowedPS.executeQuery();
             while (borrowedRS.next()) {
-                String id = Integer.toString(borrowedRS.getInt("id"));
-                String bookId = Integer.toString(borrowedRS.getInt("bookid"));
+                String id = String.format("%03d", borrowedRS.getInt("id"));
+                String bookId = String.format("%03d", borrowedRS.getInt("bookid"));
                 String username = borrowedRS.getString("username");
                 String title = borrowedRS.getString("bookname");
                 String author = borrowedRS.getString("author");
@@ -718,8 +718,8 @@ public class SQLUtils {
             borrowedPS.setString(1, UserManagement.getCurrentUser().getUsername());
             ResultSet borrowedRS = borrowedPS.executeQuery();
             while (borrowedRS.next()) {
-                String id = Integer.toString(borrowedRS.getInt("id"));
-                String bookId = Integer.toString(borrowedRS.getInt("bookid"));
+                String id = String.format("%03d", borrowedRS.getInt("id"));
+                String bookId = String.format("%03d", borrowedRS.getInt("bookid"));
                 String username = borrowedRS.getString("username");
                 String title = borrowedRS.getString("bookname");
                 String author = borrowedRS.getString("author");
