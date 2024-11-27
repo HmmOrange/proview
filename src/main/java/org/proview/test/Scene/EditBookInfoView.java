@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import org.proview.modal.Tag.Tag;
@@ -33,8 +34,8 @@ public class EditBookInfoView {
     public Button confirmButton;
     public Button changeCoverButton;
     public MenuButton tagSelectDropdown;
-    public HBox tagSelectedHBox;
-    private ObservableList<Tag> tagSelectedList = FXCollections.observableArrayList();
+    public FlowPane tagSelectedFlowPane;
+    private final ObservableList<Tag> tagSelectedList = FXCollections.observableArrayList();
     private int id;
     private File coverFile;
 
@@ -42,14 +43,14 @@ public class EditBookInfoView {
         // Making a cloned tag because a label can only have 1 parent.
         Tag newTag = new Tag(tag.getTagName(), tag.getBgColorHex(), tag.getTextColorHex());
         tagSelectedList.add(newTag);
-        tagSelectedHBox.getChildren().add(newTag.getLabel());
+        tagSelectedFlowPane.getChildren().add(newTag.getLabel());
     }
 
     private void removeSelectedTag(Tag tag) {
         tagSelectedList.removeIf(tagInList ->
                 tag.getTagName().equals((tagInList.getTagName()))
         );
-        tagSelectedHBox.getChildren().removeIf(node ->
+        tagSelectedFlowPane.getChildren().removeIf(node ->
                 tag.getTagName().equals(((Label) node).getText())
         );
     }

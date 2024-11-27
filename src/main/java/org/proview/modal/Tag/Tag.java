@@ -18,10 +18,18 @@ public class Tag extends TagStyle {
         this.tagName = tagName;
     }
 
+    public Tag(String tagName) {
+        super("#6c757d", "#ced4da");
+        this.tagName = tagName;
+    }
     public Tag() {
         super("#6c757d", "#ced4da");
-
         this.tagName = "Tag";
+    }
+
+    public Tag(String tagName, TagStyle tagStyle) {
+        super(tagStyle.getBgColorHex(), tagStyle.getTextColorHex());
+        this.tagName = tagName;
     }
 
     public String getTagName() {

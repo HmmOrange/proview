@@ -36,6 +36,18 @@ public class HomeView {
         ObservableList<BookLib> trendingList = BookManagement.getTrendingBookList();
         ObservableList<Activity> activityList = ActivityManagement.getReviewActivityList();
 
+        if (topRatedList.size() > 20) {
+            topRatedList.remove(20, topRatedList.size());
+        }
+
+        if (trendingList.size() > 20) {
+            trendingList.remove(20, trendingList.size());
+        }
+
+        if (activityList.size() > 20) {
+            activityList.remove(20, activityList.size());
+        }
+
         BookManagement.initBookList(topRatedBookListVBox, topRatedList, true, true, true);
         BookManagement.initBookList(trendingBookListVBox, trendingList, true, true, true);
         ActivityManagement.initActivityList(recentReviewListVBox, activityList);

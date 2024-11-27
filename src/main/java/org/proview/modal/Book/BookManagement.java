@@ -247,7 +247,6 @@ public class BookManagement {
                                     bookLib.getId(),
                                     showRanking ? "#" + index + ". " + bookLib.getTitle() : bookLib.getTitle(),
                                     bookLib.getAuthor(),
-                                    bookLib.getTags(),
                                     bookLib.getRating(),
                                     bookLib.getIssueCount(),
                                     showCopiesAvailable ? bookLib.getCopiesAvailable() : -1
