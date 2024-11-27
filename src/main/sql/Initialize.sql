@@ -161,7 +161,7 @@ INSERT INTO book(name, author, description, time_added, copies) VALUES
 ('Les Misérables', 'Victor Hugo', 'A sweeping story of love and revolution.', CURRENT_TIMESTAMP(), 6),
 ('The Fault in Our Stars', 'John Green', 'A love story between two teens facing challenges.', CURRENT_TIMESTAMP(), 18),
 ('The Hunger Games', 'Suzanne Collins', 'A dystopian story of survival and rebellion.', CURRENT_TIMESTAMP(), 20),
-('A Song of Ice and Fire', 'George R.R. Martin', 'An intricate tale of power and betrayal.', CURRENT_TIMESTAMP(), 15),
+('A Lost Lady', 'Willa Cather', 'Marian Forrester is the symbolic flower of the Old American West. She draws her strength from that solid foundation, bringing delight and beauty to her elderly husband, to the small town of Sweet Water where they live, to the prairie land itself, and to the young narrator of her story, Neil Herbert.', CURRENT_TIMESTAMP(), 15),
 ('The Martian', 'Andy Weir', 'A gripping survival story set on Mars.', CURRENT_TIMESTAMP(), 12),
 ('Fahrenheit 451', 'Ray Bradbury', 'A dystopian novel about censorship and knowledge.', CURRENT_TIMESTAMP(), 10),
 ('The Girl on the Train', 'Paula Hawkins', 'A psychological thriller with an unreliable narrator.', CURRENT_TIMESTAMP(), 9),
@@ -181,7 +181,7 @@ INSERT INTO book(name, author, description, time_added, copies) VALUES
 ('The House of the Spirits', 'Isabel Allende', 'A multi-generational story with magical realism.', CURRENT_TIMESTAMP(), 10),
 ('The Secret History', 'Donna Tartt', 'A psychological exploration of crime and consequence.', CURRENT_TIMESTAMP(), 11),
 ('The Midnight Library', 'Matt Haig', 'A novel about all the lives we could live and the choices we make. A magical journey through parallel lives.', CURRENT_TIMESTAMP(), 12),
-('The Alchemist', 'Paulo Coelho', 'A philosophical story of a shepherd on a journey to discover his personal legend and fulfill his dreams.', CURRENT_TIMESTAMP(), 20);
+('The 48 Laws of Power', 'Robert Greene', '"The 48 Laws of Power" by Robert Greene outlines 48 principles for gaining and maintaining power, based on the tactics of historical leaders. The book covers strategies like manipulation and influence, offering controversial yet practical advice on navigating power dynamics in business and life.', CURRENT_TIMESTAMP(), 20);
 
 -- Add sample tags
 INSERT INTO tag (name, bg_color_hex, text_color_hex) VALUES
