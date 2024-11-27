@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.UndeclaredThrowableException;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.Map;
@@ -19,7 +20,7 @@ import org.proview.modal.Tag.Tag;
 import org.proview.modal.Tag.TagManagement;
 import org.proview.modal.Tag.TagStyle;
 import org.proview.test.AppMain;
-import org.proview.utils.ImageUtils;
+import org.proview.utils.Utils;
 import org.proview.utils.SQLUtils;
 
 public abstract class CellView {
@@ -49,7 +50,7 @@ public abstract class CellView {
             copiesLabel.setVisible(false);
         }
 
-        ImageUtils.insertImage(coverImageView, id, targetWidth, targetHeight);
+        Utils.insertImage(coverImageView, id, targetWidth, targetHeight);
 
         // Tags
         ObservableList<Tag> tagList = SQLUtils.getBookTags(id);
@@ -75,7 +76,7 @@ public abstract class CellView {
         infoHBox.getChildren().clear();
         infoHBox.setPrefWidth(0);
 
-        ImageUtils.insertImage(coverImageView, imageUrl, targetWidth, targetHeight);
+        Utils.insertImage(coverImageView, imageUrl, targetWidth, targetHeight);
 
         // Tags
         String[] tagList = tags.replaceAll(" {2}", " ").replaceAll(", ", ",").split(",");

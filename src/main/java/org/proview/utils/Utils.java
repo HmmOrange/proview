@@ -1,17 +1,20 @@
 package org.proview.utils;
 
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.proview.test.AppMain;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URI;
 
-public class ImageUtils {
+public class Utils {
     public static void insertImage(ImageView imageView, Image image, double targetWidth, double targetHeight) {
         imageView.setImage(image);
         double scaleX = targetWidth / image.getWidth();
@@ -48,5 +51,13 @@ public class ImageUtils {
         Image image = new Image(stream);
 
         insertImage(imageView, image, targetWidth, targetHeight);
+    }
+
+    public static void switchScene(String fxmlPath) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource(fxmlPath));
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+        AppMain.window.setTitle("Hello!");
+        AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
     }
 }

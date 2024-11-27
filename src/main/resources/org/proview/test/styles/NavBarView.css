@@ -24,6 +24,11 @@
     -fx-text-fill: #ffffff;
 }
 
+.nav-button-active {
+    -fx-background-color: -dark-blue;
+    -fx-text-fill: #ffffff;
+}
+
 .avatar-circle {
     -fx-stroke-width: 0;
 }

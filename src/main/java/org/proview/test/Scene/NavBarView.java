@@ -20,6 +20,7 @@ import org.proview.modal.User.NormalUser;
 import org.proview.utils.SearchUtils;
 import org.proview.modal.User.UserManagement;
 import org.proview.test.AppMain;
+import org.proview.utils.Utils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -36,17 +37,12 @@ public class NavBarView {
     public Button logoutButton;
     public Button issueButton;
     public HBox navBarHBox;
-    public Label issueButtonLabel;
     public Circle avatarImageCircle;
 
     public void loadProfileButton() throws IOException {
             // Load CSS
-            String cssPath = Objects.requireNonNull(AppMain.class.getResource("styles/NavBarView.css")).toExternalForm();
-            navBarHBox.getStylesheets().add(cssPath);
-
             InputStream stream = new FileInputStream(UserManagement.getCurrentUser().getAvatarUrl());
             Image image = new Image(stream);
-            // ImageView avatarImage = new ImageView(image);
             stream.close();
 
             avatarImageCircle.setFill(new ImagePattern(image));
@@ -70,51 +66,17 @@ public class NavBarView {
         loadProfileButton();
     }
 
-    public void onEditBookButtonClick(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("EditBookView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-        AppMain.window.setTitle("Hello!");
-        AppMain.window.setScene(scene);
-        AppMain.window.centerOnScreen();
-    }
-
     public void onLogoutButtonClick(ActionEvent actionEvent) throws IOException {
         UserManagement.setCurrentUser(null);
         ProfileView.resetBookList();
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-        AppMain.window.setTitle("Hello!");
-        AppMain.window.setScene(scene);
-        AppMain.window.centerOnScreen();
+        Utils.switchScene("LoginView.fxml");
     }
 
     public void onSearchButtonClick(ActionEvent actionEvent) throws IOException {
         String curQuery = bookSearchBar.getText();
         if (curQuery != null) {
             SearchUtils.setCurQuery(curQuery);
-
-            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("SearchResultView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-            AppMain.window.setScene(scene);
-            AppMain.window.centerOnScreen();
-        }
-    }
-
-    public void setBookSearchBar(String query) {
-        bookSearchBar.setText(query);
-    }
-
-    public void onKeyReleased(KeyEvent keyEvent) throws IOException {
-        if (keyEvent.getCode() == KeyCode.ENTER) {
-            String curQuery = bookSearchBar.getText();
-            if (curQuery != null) {
-                SearchUtils.setCurQuery(curQuery);
-
-                FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("SearchResultView.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-                AppMain.window.setScene(scene);
-                AppMain.window.centerOnScreen();
-            }
+            Utils.switchScene("SearchResultView.fxml");
         }
     }
 
@@ -125,58 +87,36 @@ public class NavBarView {
         AppMain.window.centerOnScreen();
     }
 
-    public void onIssueButtonClick(ActionEvent actionEvent) {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("IssueListView.fxml"));
-        Scene scene = null;
-        try {
-            scene = new Scene(fxmlLoader.load(), 1300, 700);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        AppMain.window.setTitle("Hello!");
-        AppMain.window.setScene(scene);
-        AppMain.window.centerOnScreen();
+    public void onIssueButtonClick(ActionEvent actionEvent) throws IOException {
+        Utils.switchScene("IssueListView.fxml");
     }
 
     public void onHomeButtonClick(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-        AppMain.window.setTitle("Hello!");
-        AppMain.window.setScene(scene);
-        AppMain.window.centerOnScreen();
+        Utils.switchScene("HomeView.fxml");
     }
 
     public void onProfileButtonClick(MouseEvent mouseClick) throws IOException {
-        try {
-            ProfileView.setUser(UserManagement.getCurrentUser());
-            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("ProfileView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-            AppMain.window.setTitle("Hello!");
-            AppMain.window.setScene(scene);
-            AppMain.window.centerOnScreen();
-        } catch (IOException e) {
-            System.out.println("Error loading ProfileView.fxml: " + e.getMessage());
-            e.printStackTrace();
-        }
+        ProfileView.setUser(UserManagement.getCurrentUser());
+        Utils.switchScene("ProfileView.fxml");
     }
 
     public void onGameButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("StartGameView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-        AppMain.window.setTitle("Hello!");
-        AppMain.window.setScene(scene);
-        AppMain.window.centerOnScreen();
+        Utils.switchScene("StartGameView.fxml");
     }
 
     public void onDashboardButtonClicked(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("AdminDashboardView.fxml"));
         if (UserManagement.getCurrentUser() instanceof NormalUser) {
-            fxmlLoader = new FXMLLoader(AppMain.class.getResource("NormalUserDashboardView.fxml"));
+            Utils.switchScene("NormalUserDashboardView.fxml");
         }
-        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-        AppMain.window.setTitle("Hello!");
-        AppMain.window.setScene(scene);
-        AppMain.window.centerOnScreen();
+        else {
+            Utils.switchScene("AdminDashboardView.fxml");
+        }
+    }
+
+    public void setButtonActive(Button button) {
+
+
+        button.getStylesheets().add("nav-button-active");
     }
 }
 
