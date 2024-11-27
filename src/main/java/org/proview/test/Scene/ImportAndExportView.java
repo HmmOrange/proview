@@ -7,14 +7,22 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import org.proview.test.AppMain;
 import org.proview.utils.PopUpWindowUtils;
+import org.proview.utils.SQLUtils;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ImportAndExportView {
     private static final String[] exportTables = {"book", "book_tag", "favourite", "game_history",
@@ -36,30 +44,33 @@ public class ImportAndExportView {
     }
 
     private String[] getColumnsInTable(String table) throws SQLException {
-        String[] respond = new String[1];
         if (table.equals("book")) {
-
+            return new String[]{"name", "author", "description", "copies", "coverUrl"};
+        } else if (table.equals("user")){
+            return new String[]{"username", "password", "firstName", "lastName", "email"};
+        } else if (table.equals("questions")) {
+            return new String[]{"difficulty", "question", "correct_answer", "incr_ans1", "incr_ans2", "incr_ans3"};
         }
-        return respond;
+        return new String[0];
     }
 
     private String importSql (String table) throws SQLException {
         String query = "";
         if (table.equals("book")) {
             query = """
-                INSERT INTO book (name, author, description, time_added, copies)
-                VALUE (?, ?, ?, CURRENT_TIMESTAMP, ?)
+                INSERT INTO book (name, author, description, copies, time_added)
+                VALUE (?, ?, ?, ?, CURRENT_TIMESTAMP)
                 """;
         } else if (table.equals("user")) {
             query = """
                     INSERT INTO user
-                    (username, password, type, firstname, lastname, email, registration_date, card_view)
-                    VALUE (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, 0)
+                    (username, password, firstname, lastname, email, type, registration_date, card_view)
+                    VALUE (?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP, 0)
                     """;
         } else if (table.equals("questions")) {
             query = """
-                    INSERT INTO questions (type, difficulty, question, correct_answer, incr_ans1, incr_ans2, incr_ans3)
-                    VALUE ('multiple', ?, ?, ?, ?, ?, ?)
+                    INSERT INTO questions (difficulty, question, correct_answer, incr_ans1, incr_ans2, incr_ans3, type)
+                    VALUE (?, ?, ?, ?, ?, ?, 'multiple')
                     """;
         }
         return query;
@@ -119,16 +130,26 @@ public class ImportAndExportView {
             PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
             String line;
             while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
                 System.out.println(line);
                 String[] datas = line.split(",");
-                System.out.println(Arrays.asList(datas).toString());
                 if (datas.length != columns.length) {
+                    System.out.println(Arrays.toString(datas));
                     System.out.println(datas.length + " " + columns.length);
                     importResultLabel.setText("Data in rows (Column doesn't match)");
                     return false;
                 }
-                for (int i = 0; i < datas.length; i++) {
-                    preparedStatement.setString(i + 1, datas[i].trim());
+                if (!table.equals("book")) {
+                    for (int i = 0; i < datas.length; i++) {
+                        preparedStatement.setString(i + 1, datas[i].trim());
+                    }
+                } else {
+                    for (int i = 0; i < datas.length - 1; i++) {
+                        preparedStatement.setString(i + 1, datas[i].trim());
+                    }
+                    downloadImageToPng(datas[datas.length - 1].trim(), "./assets/covers", "cover%d.png".formatted(SQLUtils.getBookList().getLast().getId() + 1));
                 }
                 preparedStatement.addBatch();
             }
@@ -138,6 +159,35 @@ public class ImportAndExportView {
             throw new RuntimeException(e);
         }
         return true;
+    }
+
+    public void downloadImageToPng(String imageUrl, String outputFolderPath, String outputFileName) {
+        try {
+            // Tải ảnh từ URL
+            URL url = new URL(imageUrl);
+            BufferedImage image = ImageIO.read(url);
+
+            if (image != null) {
+                // Thư mục đích và tên file PNG
+                File outputFolder = new File(outputFolderPath);
+                if (!outputFolder.exists()) {
+                    outputFolder.mkdirs(); // Tạo thư mục nếu chưa tồn tại
+                }
+
+                File outputFile = new File(outputFolder, outputFileName); // Tên tệp đầu ra
+
+                // Lưu ảnh dưới định dạng PNG
+                ImageIO.write(image, "PNG", outputFile);
+
+                this.importResultLabel.setText("Image stored at: " + outputFile.getAbsolutePath());
+                System.out.println("Image stored at: " + outputFile.getAbsolutePath());
+            } else {
+                this.importResultLabel.setText("Cannot download from URL.");
+                System.out.println("Cannot download from URL.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public ComboBox<String> importTableComboBox;
@@ -200,6 +250,37 @@ public class ImportAndExportView {
             exportConfirmButton.setDisable(true);
         } else {
             exportResultLabel.setText("No directory chosen!");
+        }
+    }
+
+    public void onDownloadTemplateFileClicked(ActionEvent actionEvent) throws SQLException {
+        String table = exportTableComboBox.getValue();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Directory!");
+        fileChooser.setInitialFileName(table + "template.csv");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("CSV Files (*.csv)", "*.csv"));
+        csvFile = fileChooser.showSaveDialog(((Node) actionEvent.getSource()).getScene().getWindow());
+
+        // Kiểm tra nếu người dùng đã chọn thư mục
+        if (csvFile != null) {
+
+            // Tạo mảng dữ liệu từ hàm getColumnsInTable
+            String[] columns = getColumnsInTable(importTableComboBox.getValue());
+            importResultLabel.setText("Download successfully.");
+            // Ghi dữ liệu vào file CSV
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile))) {
+                // Viết các cột vào file, phân cách bằng dấu phẩy
+                writer.write(String.join(",", columns));
+                writer.newLine(); // Thêm dòng mới nếu cần
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                importResultLabel.setText("Download failed.");
+            }
+        } else {
+            // Thông báo nếu không chọn thư mục
+            importResultLabel.setText("No directory choosen.");
         }
     }
 }

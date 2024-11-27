@@ -24,6 +24,7 @@
                      <children>
                         <Label fx:id="importResultLabel" />
                         <ComboBox fx:id="importTableComboBox" prefWidth="150.0" promptText="Table" />
+                        <Button mnemonicParsing="false" onAction="#onDownloadTemplateFileClicked" text="Download Template File" />
                         <Button mnemonicParsing="false" onAction="#onChooseCSVFileButtonClicked" text="Choose CSV File" />
                         <Button fx:id="importConfirmButton" mnemonicParsing="false" onAction="#onImportConfirmButtonClicked" text="Confirm" />
                      </children>
