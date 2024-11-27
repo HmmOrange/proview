@@ -908,5 +908,22 @@ public class SQLUtils {
         }
         return tagList;
     }
+
+    public static ObservableList<BookLib> getBookList() throws SQLException {
+        String sql = "SELECT * FROM book";
+        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ObservableList<BookLib> bookLib = FXCollections.observableArrayList();
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String title = resultSet.getString("name");
+            String author = resultSet.getString("author");
+            String description = resultSet.getString("description");
+            int copiesAvailable = copiesAvailable(id);
+
+            bookLib.add(new BookLib(id, title, author, description, copiesAvailable));
+        }
+        return bookLib;
+    }
 }
 

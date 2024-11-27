@@ -15,6 +15,8 @@ import java.sql.*;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.proview.api.GamesAPI;
+import org.proview.api.GoogleBooksAPI;
+import org.proview.utils.SearchUtils;
 
 
 public class AppMain extends Application {
@@ -110,8 +112,9 @@ public class AppMain extends Application {
         }
 
         // Uncomment this if in need of creating new fresh tables in DB
-        runSQLScript(connection);
-        GamesAPI.insertQandAToDb();
+        // runSQLScript(connection);
+        // GamesAPI.insertQandAToDb();
+        // GoogleBooksAPI.loadMissingImages();
         launch();
     }
 }
