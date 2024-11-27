@@ -1,23 +1,30 @@
 package org.proview.test.Container;
 
+import com.google.gson.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.kordamp.ikonli.javafx.FontIcon;
+import org.proview.api.GoogleBooksAPI;
 import org.proview.modal.Tag.TagManagement;
 import org.proview.modal.Tag.TagStyle;
 import org.proview.test.AppMain;
 import org.proview.test.Scene.BookInfoView;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -53,14 +60,20 @@ public class BookCellCompactView extends CellView {
         double targetHeight = 75;
         double scaleX = targetWidth / image.getWidth();
         double scaleY = targetHeight / image.getHeight();
-        double scale = Math.max(scaleX, scaleY);
+        double scale = Math.min(scaleX, scaleY);
 
-        coverImageView.setImage(image);
-        coverImageView.setFitWidth(image.getWidth() * scale);
-        coverImageView.setFitHeight(image.getHeight() * scale);
-        coverImageView.setPreserveRatio(true);
-        Rectangle clip = new Rectangle(targetWidth, targetHeight);
-        coverImageView.setClip(clip);
+        double scaledWidth = image.getWidth() * scale;
+        double scaledHeight = image.getHeight() * scale;
+
+        double viewportX = Math.max(0, (scaledWidth - targetWidth) / 2 / scale);
+        double viewportY = Math.max(0, (scaledHeight - targetHeight) / 2 / scale);
+        double viewportWidth = Math.min(image.getWidth(), targetWidth / scale);
+        double viewportHeight = Math.min(image.getHeight(), targetHeight / scale);
+
+        coverImageView.setViewport(new Rectangle2D(viewportX, viewportY, viewportWidth, viewportHeight));
+        coverImageView.setFitWidth(targetWidth);
+        coverImageView.setFitHeight(targetHeight);
+        coverImageView.setPreserveRatio(false);
         coverImageView.setSmooth(true);
         coverImageView.setCache(true);
 
@@ -111,14 +124,20 @@ public class BookCellCompactView extends CellView {
         double targetHeight = 75;
         double scaleX = targetWidth / image.getWidth();
         double scaleY = targetHeight / image.getHeight();
-        double scale = Math.max(scaleX, scaleY);
+        double scale = Math.min(scaleX, scaleY);
 
-        coverImageView.setImage(image);
-        coverImageView.setFitWidth(image.getWidth() * scale);
-        coverImageView.setFitHeight(image.getHeight() * scale);
-        coverImageView.setPreserveRatio(true);
-        Rectangle clip = new Rectangle(targetWidth, targetHeight);
-        coverImageView.setClip(clip);
+        double scaledWidth = image.getWidth() * scale;
+        double scaledHeight = image.getHeight() * scale;
+
+        double viewportX = Math.max(0, (scaledWidth - targetWidth) / 2 / scale);
+        double viewportY = Math.max(0, (scaledHeight - targetHeight) / 2 / scale);
+        double viewportWidth = Math.min(image.getWidth(), targetWidth / scale);
+        double viewportHeight = Math.min(image.getHeight(), targetHeight / scale);
+
+        coverImageView.setViewport(new Rectangle2D(viewportX, viewportY, viewportWidth, viewportHeight));
+        coverImageView.setFitWidth(targetWidth);
+        coverImageView.setFitHeight(targetHeight);
+        coverImageView.setPreserveRatio(false);
         coverImageView.setSmooth(true);
         coverImageView.setCache(true);
 
@@ -150,13 +169,47 @@ public class BookCellCompactView extends CellView {
     }
 
     public void onMouseClick(ActionEvent actionEvent) throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("BookInfoView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-        AppMain.window.setTitle("Hello!");
-        AppMain.window.setScene(scene);
-        AppMain.window.centerOnScreen();
+        if (id >= 0) { // this seems tricky, maybe there is a better way to handle this
+            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("BookInfoView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+            AppMain.window.setTitle("Hello!");
+            AppMain.window.setScene(scene);
+            AppMain.window.centerOnScreen();
 
-        BookInfoView tempBookInfoView = fxmlLoader.getController();
-        tempBookInfoView.setData(this.id);
+            BookInfoView tempBookInfoView = fxmlLoader.getController();
+            tempBookInfoView.setData(this.id);
+        } else {
+            String previewLink = "";
+            String response = GoogleBooksAPI.getBooksFromAPI(titleLabel.getText());
+            JsonParser parser = new JsonParser();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+            JsonElement el = parser.parse(response);
+            response = gson.toJson(el); // done
+
+            response = StringEscapeUtils.unescapeJava(response);
+
+            JsonObject jsonObject = el.getAsJsonObject();
+            JsonArray items = jsonObject.getAsJsonArray("items");
+
+            if (items != null && items.size() > 0) {
+                JsonObject volumeInfo = items.get(0).getAsJsonObject().getAsJsonObject("volumeInfo");
+                previewLink = volumeInfo.get("previewLink").getAsString();
+                System.out.println("Preview Link: " + previewLink);
+            } else {
+                System.out.println("Không tìm thấy previewLink trong phản hồi JSON.");
+            }
+
+            URL url = URI.create(previewLink).toURL();
+            if (Desktop.isDesktopSupported()) {
+                try {
+                    Desktop.getDesktop().browse(new URI(url.toString()));
+                } catch (IOException | URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Desktop không được hỗ trợ.");
+            }
+        }
     }
 }
