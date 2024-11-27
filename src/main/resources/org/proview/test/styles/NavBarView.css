@@ -27,6 +27,15 @@
 .nav-button-active {
     -fx-background-color: -dark-blue;
     -fx-text-fill: #ffffff;
+    -fx-font-weight: 800;
+    -fx-padding: 7px 10px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.nav-button-active .ikonli-font-icon {
+    -fx-icon-color: #FFFFFF;
+    -fx-icon-size: 14;
 }
 
 .avatar-circle {

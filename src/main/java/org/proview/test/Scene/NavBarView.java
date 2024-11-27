@@ -36,24 +36,28 @@ public class NavBarView {
     public Button libraryButton;
     public Button logoutButton;
     public Button issueButton;
+    public Button dashboardButton;
+    public Button homeButton;
+    public Button gameButton;
+    public Button emptyButton = new Button();
     public HBox navBarHBox;
     public Circle avatarImageCircle;
 
     public void loadProfileButton() throws IOException {
-            // Load CSS
-            InputStream stream = new FileInputStream(UserManagement.getCurrentUser().getAvatarUrl());
-            Image image = new Image(stream);
-            stream.close();
+        // Load CSS
+        InputStream stream = new FileInputStream(UserManagement.getCurrentUser().getAvatarUrl());
+        Image image = new Image(stream);
+        stream.close();
 
-            avatarImageCircle.setFill(new ImagePattern(image));
-            avatarImageCircle.setOnMouseClicked(event -> {
-                try {
-                    onProfileButtonClick(event);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }
+        avatarImageCircle.setFill(new ImagePattern(image));
+        avatarImageCircle.setOnMouseClicked(event -> {
+            try {
+                onProfileButtonClick(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
     public void initialize() throws IOException {
         if (UserManagement.getCurrentUser() instanceof Admin) {
             issueButton.setText("Manage");
@@ -64,15 +68,53 @@ public class NavBarView {
         }
 
         loadProfileButton();
+
+
+        homeButton.getStyleClass().removeAll("nav-button-active");
+        issueButton.getStyleClass().removeAll("nav-button-active");
+        dashboardButton.getStyleClass().removeAll("nav-button-active");
+        gameButton.getStyleClass().removeAll("nav-button-active");
+        libraryButton.getStyleClass().removeAll("nav-button-active");
+
+        Button currentViewButton = UserManagement.getCurrentViewButton();
+        if (currentViewButton == null) {
+            homeButton.getStyleClass().add("nav-button-active");
+        }
+        else {
+            switch (currentViewButton.getId()) {
+                case null:
+                    break;
+                case "homeButton":
+                    homeButton.getStyleClass().add("nav-button-active");
+                    break;
+                case "issueButton":
+                    issueButton.getStyleClass().add("nav-button-active");
+                    break;
+                case "dashboardButton":
+                    dashboardButton.getStyleClass().add("nav-button-active");
+                    break;
+                case "gameButton":
+                    gameButton.getStyleClass().add("nav-button-active");
+                    break;
+                case "libraryButton":
+                    libraryButton.getStyleClass().add("nav-button-active");
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     public void onLogoutButtonClick(ActionEvent actionEvent) throws IOException {
         UserManagement.setCurrentUser(null);
         ProfileView.resetBookList();
+
+        UserManagement.setCurrentViewButton(null);
         Utils.switchScene("LoginView.fxml");
     }
 
     public void onSearchButtonClick(ActionEvent actionEvent) throws IOException {
+        UserManagement.setCurrentViewButton(emptyButton);
         String curQuery = bookSearchBar.getText();
         if (curQuery != null) {
             SearchUtils.setCurQuery(curQuery);
@@ -81,42 +123,39 @@ public class NavBarView {
     }
 
     public void onLibraryButtonClick(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LibraryView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-        AppMain.window.setScene(scene);
-        AppMain.window.centerOnScreen();
+        UserManagement.setCurrentViewButton(libraryButton);
+        Utils.switchScene("LibraryView.fxml");
     }
 
     public void onIssueButtonClick(ActionEvent actionEvent) throws IOException {
+        UserManagement.setCurrentViewButton(issueButton);
         Utils.switchScene("IssueListView.fxml");
     }
 
     public void onHomeButtonClick(ActionEvent actionEvent) throws IOException {
+        UserManagement.setCurrentViewButton(homeButton);
         Utils.switchScene("HomeView.fxml");
     }
 
     public void onProfileButtonClick(MouseEvent mouseClick) throws IOException {
+        UserManagement.setCurrentViewButton(emptyButton);
         ProfileView.setUser(UserManagement.getCurrentUser());
         Utils.switchScene("ProfileView.fxml");
     }
 
-    public void onGameButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
+    public void onGameButtonClicked(ActionEvent actionEvent) throws IOException {
+        UserManagement.setCurrentViewButton(gameButton);
         Utils.switchScene("StartGameView.fxml");
     }
 
     public void onDashboardButtonClicked(ActionEvent actionEvent) throws IOException {
+        UserManagement.setCurrentViewButton(dashboardButton);
         if (UserManagement.getCurrentUser() instanceof NormalUser) {
             Utils.switchScene("NormalUserDashboardView.fxml");
         }
         else {
             Utils.switchScene("AdminDashboardView.fxml");
         }
-    }
-
-    public void setButtonActive(Button button) {
-
-
-        button.getStylesheets().add("nav-button-active");
     }
 }
 
