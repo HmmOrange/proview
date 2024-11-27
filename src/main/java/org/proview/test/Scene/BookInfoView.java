@@ -25,6 +25,7 @@ import org.proview.modal.Tag.TagManagement;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.User;
 import org.proview.modal.User.UserManagement;
+import org.proview.utils.PopUpWindowUtils;
 import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
 
@@ -268,32 +269,34 @@ public class BookInfoView {
         AppMain.window.centerOnScreen();
     }
 
-    public void onBorrowButtonClick(ActionEvent actionEvent) {
-        try {
-            String durationInput = durationField.getText();
+    public void onBorrowButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
+        if (PopUpWindowUtils.showConfirmation("Warning!", "Are you sure to borrow this book?")) {
+            try {
+                String durationInput = durationField.getText();
 
-            // Check if the input is a valid integer
-            if (!durationInput.matches("\\d+")) {
-                throw new IllegalArgumentException("Duration must be a positive number.");
+                // Check if the input is a valid integer
+                if (!durationInput.matches("\\d+")) {
+                    throw new IllegalArgumentException("Duration must be a positive number.");
+                }
+
+                int duration = Integer.parseInt(durationInput);
+
+                if (duration <= 0) {
+                    throw new IllegalArgumentException("Duration must be a positive number.");
+                }
+
+                if (duration > 90) {
+                    throw new IllegalArgumentException("Duration cannot exceed 90 days.");
+                }
+
+                IssueManagement.addIssue(UserManagement.getCurrentUser().getUsername(), bookId, duration);
+                this.onBackButtonClick(actionEvent);
+
+            } catch (IllegalArgumentException e) {
+                errorLabel.setText(e.getMessage());
+            } catch (Exception e) {
+                errorLabel.setText("An unexpected error occurred: " + e.getMessage());
             }
-
-            int duration = Integer.parseInt(durationInput);
-
-            if (duration <= 0) {
-                throw new IllegalArgumentException("Duration must be a positive number.");
-            }
-
-            if (duration > 90) {
-                throw new IllegalArgumentException("Duration cannot exceed 90 days.");
-            }
-
-            IssueManagement.addIssue(UserManagement.getCurrentUser().getUsername(), bookId, duration);
-            this.onBackButtonClick(actionEvent);
-
-        } catch (IllegalArgumentException e) {
-            errorLabel.setText(e.getMessage());
-        } catch (Exception e) {
-            errorLabel.setText("An unexpected error occurred: " + e.getMessage());
         }
     }
 
@@ -355,23 +358,18 @@ public class BookInfoView {
     }
 
     public void onDeleteButtonClicked(ActionEvent actionEvent) throws SQLException, IOException {
-        String sql = """
-                DELETE FROM book
-                WHERE id = ?
-                """;
-        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
-        preparedStatement.setInt(1, bookId);
-        preparedStatement.execute();
-        showNotification("Warning!", "This book has been deleted", Alert.AlertType.INFORMATION);
-        onBackButtonClick(actionEvent);
+        if (PopUpWindowUtils.showConfirmation("Warning!", "Are you sure to delete this book?")) {
+            String sql = """
+                    DELETE FROM book
+                    WHERE id = ?
+                    """;
+            PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
+            preparedStatement.setInt(1, bookId);
+            preparedStatement.execute();
+            PopUpWindowUtils.showNotification("Done!", "This book has been deleted.", Alert.AlertType.INFORMATION);
+            onBackButtonClick(actionEvent);
+        }
     }
 
-    ///for notification
-    public static void showNotification(String title, String message, Alert.AlertType type) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null); // Không có tiêu đề con
-        alert.setContentText(message);
-        alert.showAndWait(); // Hiển thị và chờ người dùng đóng
-    }
+
 }

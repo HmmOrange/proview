@@ -123,8 +123,10 @@ public class NavBarView {
     }
 
     public void onLibraryButtonClick(ActionEvent actionEvent) throws IOException {
-        UserManagement.setCurrentViewButton(libraryButton);
-        Utils.switchScene("LibraryView.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("BookManagForAdminView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+        AppMain.window.setScene(scene);
+        AppMain.window.centerOnScreen();
     }
 
     public void onIssueButtonClick(ActionEvent actionEvent) throws IOException {

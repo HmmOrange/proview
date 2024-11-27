@@ -457,7 +457,7 @@ public class SQLUtils {
         ObservableList<ObservableList<String>> respond = FXCollections.observableArrayList();
         String sql = """
                 WITH avg_rating AS (
-                    SELECT book_id, ROUND(AVG(rating), 1) AS average_rating 
+                    SELECT book_id, ROUND(AVG(rating), 2) AS average_rating 
                     FROM rating
                     GROUP BY book_id
                 ),

@@ -7,64 +7,72 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import org.proview.test.AppMain;
+import org.proview.utils.PopUpWindowUtils;
+import org.proview.utils.SQLUtils;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ImportAndExportView {
-    private static final String[] tables = {"book", "book_tag", "favourite", "game_history",
+    private static final String[] exportTables = {"book", "book_tag", "favourite", "game_history",
             "issue", "questions", "rating", "review", "tag", "user"};
+    private static final String[] importTables = {"book", "questions", "user"};
     private File csvFile;
 
 
     private void initImportTab() {
-        importTableComboBox.getItems().addAll(tables);
-        importTableComboBox.setValue(tables[0]);
+        importTableComboBox.getItems().addAll(importTables);
+        importTableComboBox.setValue(importTables[0]);
         importConfirmButton.setDisable(true);
     }
 
     private void initExportTab() {
-        exportTableComboBox.getItems().addAll(tables);
-        exportTableComboBox.setValue(tables[0]);
+        exportTableComboBox.getItems().addAll(exportTables);
+        exportTableComboBox.setValue(exportTables[0]);
         exportConfirmButton.setDisable(true);
     }
 
     private String[] getColumnsInTable(String table) throws SQLException {
-        String sql = String.format("SELECT * FROM %s", table);
-        PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        int numberOfColumns = resultSet.getMetaData().getColumnCount();
-
-        String[] respond = new String[numberOfColumns];
-        for (int i = 1; i <= numberOfColumns; i++) {
-            String columnName = resultSet.getMetaData().getColumnName(i);
-            respond[i-1] = columnName;
+        if (table.equals("book")) {
+            return new String[]{"name", "author", "description", "copies", "coverUrl"};
+        } else if (table.equals("user")){
+            return new String[]{"username", "password", "firstName", "lastName", "email"};
+        } else if (table.equals("questions")) {
+            return new String[]{"difficulty", "question", "correct_answer", "incr_ans1", "incr_ans2", "incr_ans3"};
         }
-        return respond;
+        return new String[0];
     }
 
-    private String importSql (String table, String[] columns) {
-        StringBuilder queryBuilder = new StringBuilder("INSERT IGNORE INTO ").append(table).append(" (");
-        for (int i = 0; i < columns.length; i++) {
-            queryBuilder.append(columns[i].trim());
-            if (i < columns.length - 1) {
-                queryBuilder.append(", ");
-            }
+    private String importSql (String table) throws SQLException {
+        String query = "";
+        if (table.equals("book")) {
+            query = """
+                INSERT INTO book (name, author, description, copies, time_added)
+                VALUE (?, ?, ?, ?, CURRENT_TIMESTAMP)
+                """;
+        } else if (table.equals("user")) {
+            query = """
+                    INSERT INTO user
+                    (username, password, firstname, lastname, email, type, registration_date, card_view)
+                    VALUE (?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP, 0)
+                    """;
+        } else if (table.equals("questions")) {
+            query = """
+                    INSERT INTO questions (difficulty, question, correct_answer, incr_ans1, incr_ans2, incr_ans3, type)
+                    VALUE (?, ?, ?, ?, ?, ?, 'multiple')
+                    """;
         }
-        queryBuilder.append(") VALUES (");
-
-        for (int i = 0; i < columns.length; i++) {
-            queryBuilder.append("?");
-            if (i < columns.length - 1) {
-                queryBuilder.append(", ");
-            }
-        }
-        queryBuilder.append(");");
-        String query = queryBuilder.toString();
         return query;
     }
 
@@ -118,20 +126,30 @@ public class ImportAndExportView {
                 importResultLabel.setText("Columns count doesn't match with database");
                 return false;
             }
-            String sql = importSql(table, getColumnsInTable(table));
+            String sql = importSql(table);
             PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
             String line;
             while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
                 System.out.println(line);
                 String[] datas = line.split(",");
-                System.out.println(Arrays.asList(datas).toString());
                 if (datas.length != columns.length) {
+                    System.out.println(Arrays.toString(datas));
                     System.out.println(datas.length + " " + columns.length);
                     importResultLabel.setText("Data in rows (Column doesn't match)");
                     return false;
                 }
-                for (int i = 0; i < datas.length; i++) {
-                    preparedStatement.setString(i + 1, datas[i].trim());
+                if (!table.equals("book")) {
+                    for (int i = 0; i < datas.length; i++) {
+                        preparedStatement.setString(i + 1, datas[i].trim());
+                    }
+                } else {
+                    for (int i = 0; i < datas.length - 1; i++) {
+                        preparedStatement.setString(i + 1, datas[i].trim());
+                    }
+                    downloadImageToPng(datas[datas.length - 1].trim(), "./assets/covers", "cover%d.png".formatted(SQLUtils.getBookList().getLast().getId() + 1));
                 }
                 preparedStatement.addBatch();
             }
@@ -141,6 +159,35 @@ public class ImportAndExportView {
             throw new RuntimeException(e);
         }
         return true;
+    }
+
+    public void downloadImageToPng(String imageUrl, String outputFolderPath, String outputFileName) {
+        try {
+            // Tải ảnh từ URL
+            URL url = new URL(imageUrl);
+            BufferedImage image = ImageIO.read(url);
+
+            if (image != null) {
+                // Thư mục đích và tên file PNG
+                File outputFolder = new File(outputFolderPath);
+                if (!outputFolder.exists()) {
+                    outputFolder.mkdirs(); // Tạo thư mục nếu chưa tồn tại
+                }
+
+                File outputFile = new File(outputFolder, outputFileName); // Tên tệp đầu ra
+
+                // Lưu ảnh dưới định dạng PNG
+                ImageIO.write(image, "PNG", outputFile);
+
+                this.importResultLabel.setText("Image stored at: " + outputFile.getAbsolutePath());
+                System.out.println("Image stored at: " + outputFile.getAbsolutePath());
+            } else {
+                this.importResultLabel.setText("Cannot download from URL.");
+                System.out.println("Cannot download from URL.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public ComboBox<String> importTableComboBox;
@@ -185,11 +232,13 @@ public class ImportAndExportView {
     }
 
     public void onImportConfirmButtonClicked(ActionEvent actionEvent) throws FileNotFoundException {
-        String table = importTableComboBox.getValue();
-        if (importCsvFileToDatabase(table, csvFile)) {
-            importResultLabel.setText("Import successfully!");
-            csvFile = null;
-            importConfirmButton.setDisable(true);
+        if (PopUpWindowUtils.showConfirmation("Warning!", "Are you sure to import to database?")) {
+            String table = importTableComboBox.getValue();
+            if (importCsvFileToDatabase(table, csvFile)) {
+                importResultLabel.setText("Import successfully!");
+                csvFile = null;
+                importConfirmButton.setDisable(true);
+            }
         }
     }
 
@@ -201,6 +250,37 @@ public class ImportAndExportView {
             exportConfirmButton.setDisable(true);
         } else {
             exportResultLabel.setText("No directory chosen!");
+        }
+    }
+
+    public void onDownloadTemplateFileClicked(ActionEvent actionEvent) throws SQLException {
+        String table = exportTableComboBox.getValue();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Directory!");
+        fileChooser.setInitialFileName(table + "template.csv");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("CSV Files (*.csv)", "*.csv"));
+        csvFile = fileChooser.showSaveDialog(((Node) actionEvent.getSource()).getScene().getWindow());
+
+        // Kiểm tra nếu người dùng đã chọn thư mục
+        if (csvFile != null) {
+
+            // Tạo mảng dữ liệu từ hàm getColumnsInTable
+            String[] columns = getColumnsInTable(importTableComboBox.getValue());
+            importResultLabel.setText("Download successfully.");
+            // Ghi dữ liệu vào file CSV
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile))) {
+                // Viết các cột vào file, phân cách bằng dấu phẩy
+                writer.write(String.join(",", columns));
+                writer.newLine(); // Thêm dòng mới nếu cần
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                importResultLabel.setText("Download failed.");
+            }
+        } else {
+            // Thông báo nếu không chọn thư mục
+            importResultLabel.setText("No directory choosen.");
         }
     }
 }
