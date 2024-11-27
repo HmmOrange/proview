@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import org.proview.modal.User.UserManagement;
 import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
+import org.proview.utils.Utils;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -26,20 +27,6 @@ public class LoginView {
     public Label loginResultLabel;
 
     public void onLoginButtonClick(ActionEvent actionEvent) throws IOException, SQLException {
-        /*
-        String usn = loginUsernameField.getText();
-        String pw = loginPasswordField.getText();
-        if (Objects.equals(loginUsernameField.getText(), "")) {
-            loginResultLabel.setText("Please enter username");
-        } else if (Objects.equals(loginPasswordField.getText(), "")) {
-            loginResultLabel.setText("Please enter password");
-        } else if (UserManagement.isValidLoginCredentials(usn, pw) == null) {
-            loginResultLabel.setText("Wrong username or password");
-        } else {
-            loginResultLabel.setText("Welcome, " + usn);
-        }
-        */
-
         String username = loginUsernameField.getText();
         String password = loginPasswordField.getText();
 
@@ -62,36 +49,11 @@ public class LoginView {
         // Save details of logged-in user
         UserManagement.setCurrentUser(checkingUser);
 
-        // Check if user is admin
-        /*if (checkingUser.getType() == 0) {
-            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-            AppMain.window.setTitle("Hello!");
-            AppMain.window.setScene(scene);
-            AppMain.window.centerOnScreen();
-        }
-
-        // Check if user is normal user
-        if (checkingUser.getType() == 1) {
-            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("CreateIssueView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 500, 500);
-            AppMain.window.setTitle("Hello!");
-            AppMain.window.setScene(scene);
-            AppMain.window.centerOnScreen();
-        }*/
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("HomeView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-        AppMain.window.setTitle("Hello!");
-        AppMain.window.setScene(scene);
-        AppMain.window.centerOnScreen();
+        Utils.switchScene("HomeView.fxml");
     }
 
     public void onRegisterButtonClick(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("RegisterView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-        AppMain.window.setTitle("Hello!");
-        AppMain.window.setScene(scene);
-        AppMain.window.centerOnScreen();
+        Utils.switchScene("RegisterView.fxml");
     }
 
     public void onKeyReleased(KeyEvent keyEvent) throws IOException, SQLException {

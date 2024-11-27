@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,7 +18,6 @@ import org.proview.test.AppMain;
 import org.proview.test.Scene.BookInfoView;
 
 import java.awt.*;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.*;
@@ -42,134 +40,31 @@ public class BookCellCardView extends CellView {
     // For Google books
     @Override
     public void setData(String title, String authors, String imageUrl, String tags) throws IOException, SQLException {
-        titleLabel.setText(title);
-        authorLabel.setText(authors);
-        copiesLabel.setText("View in Google Books 🔗");
-
-        infoHBox.getChildren().clear();
-        infoHBox.setPrefWidth(0);
-
-        // System.out.println(imageUrl);
-        InputStream stream = URI.create(imageUrl).toURL().openStream();
-        Image image = new Image(stream);
-
-        coverImageView.setImage(image);
-
-        double targetWidth = 83.333;
-        double targetHeight = 125;
-        double scaleX = targetWidth / image.getWidth();
-        double scaleY = targetHeight / image.getHeight();
-        double scale = Math.min(scaleX, scaleY);
-
-        double scaledWidth = image.getWidth() * scale;
-        double scaledHeight = image.getHeight() * scale;
-
-        double viewportX = Math.max(0, (scaledWidth - targetWidth) / 2 / scale);
-        double viewportY = Math.max(0, (scaledHeight - targetHeight) / 2 / scale);
-        double viewportWidth = Math.min(image.getWidth(), targetWidth / scale);
-        double viewportHeight = Math.min(image.getHeight(), targetHeight / scale);
-
-        coverImageView.setViewport(new Rectangle2D(viewportX, viewportY, viewportWidth, viewportHeight));
-        coverImageView.setFitWidth(targetWidth);
-        coverImageView.setFitHeight(targetHeight);
-        coverImageView.setPreserveRatio(false);
-        coverImageView.setSmooth(true);
-        coverImageView.setCache(true);
-
-        stream.close();
-
-        // Tags
-        String[] tagList = tags.replaceAll(" {2}", " ").replaceAll(", ", ",").split(",");
-        Map<String, TagStyle> tagMap = TagManagement.getTagList();
-
-        for (String tag : tagList) {
-            FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("TagView.fxml"));
-            Label tagLabel = loader.load();
-            TagView tagView = loader.getController();
-
-            String bgColorHex = null;
-            String textColorHex = null;
-            if (tagMap.containsKey(tag)) {
-                bgColorHex = tagMap.get(tag).getBgColorHex();
-                textColorHex = tagMap.get(tag).getTextColorHex();
-            }
-
-            tagView.setData(
-                    tag,
-                    bgColorHex,
-                    textColorHex
-            );
-            tagHBox.getChildren().add(tagLabel);
-        }
+        super.setData(
+            titleLabel, title,
+            authorLabel, authors,
+            copiesLabel,
+            infoHBox,
+            imageUrl, coverImageView,
+            83.333, 125,
+            tags, tagHBox
+        );
     }
 
     // For library books
-    public void setData(int id, String title, String author, String tags, double rating, int issueCount, int copiesAvailable) throws IOException, SQLException {
+    @Override
+    public void setData(int id, String title, String author, double rating, int issueCount, int copiesAvailable) throws IOException, SQLException {
         this.id = id;
-        titleLabel.setText(title);
-        authorLabel.setText(author);
-        ratingLabel.setText(String.format("%.2f", rating));
-        issuesLabel.setText(String.valueOf(issueCount));
-
-        if (copiesAvailable >= 0)
-            copiesLabel.setText(copiesAvailable + (copiesAvailable == 1 ? " copy" : " copies") + " available");
-        else {
-            copiesLabel.setDisable(true);
-            copiesLabel.setVisible(false);
-        }
-
-        String imageUrl = "./assets/covers/cover" + id + ".png";
-        InputStream stream = new FileInputStream(imageUrl);
-        Image image = new Image(stream);
-
-        coverImageView.setImage(image);
-
-        double targetWidth = 83.333;
-        double targetHeight = 125;
-        double scaleX = targetWidth / image.getWidth();
-        double scaleY = targetHeight / image.getHeight();
-        double scale = Math.min(scaleX, scaleY);
-
-        double scaledWidth = image.getWidth() * scale;
-        double scaledHeight = image.getHeight() * scale;
-
-        double viewportX = Math.max(0, (scaledWidth - targetWidth) / 2 / scale);
-        double viewportY = Math.max(0, (scaledHeight - targetHeight) / 2 / scale);
-        double viewportWidth = Math.min(image.getWidth(), targetWidth / scale);
-        double viewportHeight = Math.min(image.getHeight(), targetHeight / scale);
-
-        coverImageView.setViewport(new Rectangle2D(viewportX, viewportY, viewportWidth, viewportHeight));
-        coverImageView.setFitWidth(targetWidth);
-        coverImageView.setFitHeight(targetHeight);
-        coverImageView.setPreserveRatio(false);
-        coverImageView.setSmooth(true);
-        coverImageView.setCache(true);
-
-        stream.close();
-
-        // Tags
-        String[] tagList = tags.replaceAll(" {2}", " ").replaceAll(", ", ",").split(",");
-        Map<String, TagStyle> tagMap = TagManagement.getTagList();
-
-        for (String tag : tagList) {
-            FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("TagView.fxml"));
-            Label tagLabel = loader.load();
-            TagView tagView = loader.getController();
-
-            String bgColorHex = null;
-            String textColorHex = null;
-            if (tagMap.containsKey(tag)) {
-                bgColorHex = tagMap.get(tag).getBgColorHex();
-                textColorHex = tagMap.get(tag).getTextColorHex();
-            }
-
-            tagView.setData(
-                    tag,
-                    bgColorHex,
-                    textColorHex
-            );
-            tagHBox.getChildren().add(tagLabel);
-        }
+        super.setData(
+            titleLabel, title,
+            authorLabel, author,
+            ratingLabel, rating,
+            issuesLabel, issueCount,
+            copiesLabel, copiesAvailable,
+            coverImageView, id,
+            83.333, 125,
+            tagHBox
+        );
     }
 
     public void onMouseClick(ActionEvent actionEvent) throws IOException, SQLException {

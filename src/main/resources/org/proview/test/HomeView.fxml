@@ -9,28 +9,32 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.HomeView">
+<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.HomeView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
    <left>
-      <VBox spacing="10.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Recent reviews">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="5.0" top="20.0" />
-               </VBox.margin>
-            </Label>
-            <VBox fx:id="recentReviewListVBox" prefWidth="300.0" spacing="10.0">
-               <padding>
-                  <Insets left="5.0" right="5.0" />
-               </padding>
+      <ScrollPane hbarPolicy="NEVER" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+         <content>
+            <VBox spacing="10.0">
+               <children>
+                  <Label text="Recent reviews">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <VBox fx:id="recentReviewListVBox" prefWidth="300.0" spacing="10.0">
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
+                  </VBox>
+               </children>
             </VBox>
-         </children>
-      </VBox>
+         </content>
+      </ScrollPane>
    </left>
    <center>
       <ScrollPane prefHeight="578.0" prefWidth="637.0" BorderPane.alignment="CENTER">
