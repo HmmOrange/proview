@@ -22,6 +22,24 @@
     -fx-icon-code: "fas-th-list";
 }
 
+.form {
+    /*-fx-padding: 20px;*/
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+}
+
+.icon-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-padding: 5px 5px 5px 5px;
+    -fx-border-color: transparent;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
 .view-button {
     -fx-background-radius: 0;
 }
@@ -34,3 +52,4 @@
     -fx-icon-size: 24;
     -fx-cursor: hand;
 }
+
