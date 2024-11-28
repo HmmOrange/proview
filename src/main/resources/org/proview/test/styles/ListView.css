@@ -24,3 +24,15 @@
 .ikonli-font-icon:hover {
     -fx-icon-size: 14;
 }
+
+.ikonli-font-icon-rated {
+    -fx-icon-size: 14;
+    -fx-icon-code: "fas-star";
+    -fx-icon-color: goldenrod;
+}
+
+.ikonli-font-icon-default {
+    -fx-icon-size: 14;
+    -fx-icon-code: "fas-star";
+    -fx-icon-color: gray;
+}

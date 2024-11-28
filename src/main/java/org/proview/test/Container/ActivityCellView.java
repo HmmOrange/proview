@@ -7,11 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
+import org.kordamp.ikonli.javafx.FontIcon;
 import org.proview.modal.Activity.Activity;
 import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
 import org.proview.test.Scene.BookInfoView;
+import org.proview.utils.Utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,41 +31,32 @@ public class ActivityCellView {
     public Label timeLabel;
     public ImageView coverImageView;
     public Label activityTypeLabel;
+    public HBox descriptionHBox;
     private int id = -1;
 
     public void setData(Activity.Type type, int userId, int bookId, String description, Timestamp timestamp) throws IOException, SQLException {
         titleLabel.setText(Objects.requireNonNull(SQLUtils.getUser(userId)).getFullName());
         if (type == Activity.Type.REVIEW) {
             activityTypeLabel.setText("Reviewed: " + Objects.requireNonNull(SQLUtils.getBook(bookId)).getTitle());
+            descriptionLabel.setText(description);
         } else if (type == Activity.Type.RATING) {
-            activityTypeLabel.setText("Rating: " + Objects.requireNonNull(SQLUtils.getBook(bookId).getTitle()));
+            activityTypeLabel.setText("Rated: " + Objects.requireNonNull(Objects.requireNonNull(SQLUtils.getBook(bookId)).getTitle()));
+            descriptionHBox.getChildren().clear();
+            FontIcon[] starIconList = new FontIcon[5];
+            for (int i = 0; i < 5; i++) {
+                starIconList[i] = new FontIcon();
+                if (i < Integer.parseInt(description)) {
+                    starIconList[i].getStyleClass().setAll("ikonli-font-icon-rated");
+                } else {
+                    starIconList[i].getStyleClass().setAll("ikonli-font-icon-default");
+                }
+                descriptionHBox.getChildren().add(starIconList[i]);
+            }
         }
-        descriptionLabel.setText(description);
+
         timeLabel.setText(TimeAgo.using(timestamp.getTime()).replace("about ", ""));
-
         this.id = bookId;
-
-        String imageUrl = "./assets/covers/cover" + id + ".png";
-        InputStream stream = new FileInputStream(imageUrl);
-        Image image = new Image(stream);
-
-        coverImageView.setImage(image);
-        double targetWidth = 50;
-        double targetHeight = 75;
-        double scaleX = targetWidth / image.getWidth();
-        double scaleY = targetHeight / image.getHeight();
-        double scale = Math.max(scaleX, scaleY);
-
-        coverImageView.setImage(image);
-        coverImageView.setFitWidth(image.getWidth() * scale);
-        coverImageView.setFitHeight(image.getHeight() * scale);
-        coverImageView.setPreserveRatio(true);
-        Rectangle clip = new Rectangle(targetWidth, targetHeight);
-        coverImageView.setClip(clip);
-        coverImageView.setSmooth(true);
-        coverImageView.setCache(true);
-
-        stream.close();
+        Utils.insertBookImage(coverImageView, id, 50, 75);
     }
 
     public void onMouseClick(ActionEvent mouseEvent) throws IOException, SQLException {
