@@ -12,6 +12,7 @@ import org.proview.modal.Issue.IssueManagement;
 import org.proview.modal.Rating.Rating;
 import org.proview.modal.Rating.RatingManagement;
 import org.proview.modal.Review.Review;
+import org.proview.modal.User.UserManagement;
 import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
 import org.proview.test.Container.ActivityCellView;
@@ -86,6 +87,19 @@ public class ActivityManagement {
             Timestamp timestamp = i.getTimestampAdded();
             activityObservableList.add(new Activity(book_id, user_id, description, timestamp, Activity.Type.REVIEW));
         }
+
+        ObservableList<Rating> ratingObservableList = RatingManagement.getRatingListFromUser
+                (-1);
+        for (var r : ratingObservableList) {
+            int userId = r.getUserId();
+            int bookId = r.getBookId();
+            String description = "Rated this book %d star%s".formatted(r.getStar(), (r.getStar()>1) ? "s." : ".");
+            Timestamp timestamp = r.getTimeAdded();
+            activityObservableList.add(new Activity(bookId, userId, description, timestamp, Activity.Type.RATING));
+        }
+
+        FXCollections.sort(activityObservableList, Comparator.comparing(Activity::getTimestampAdded));
+        FXCollections.reverse(activityObservableList);
         return activityObservableList;
     }
 
