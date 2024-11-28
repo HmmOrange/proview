@@ -1,5 +1,6 @@
 package org.proview.utils;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -7,12 +8,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import org.proview.test.AppMain;
 import org.proview.test.Scene.BookInfoView;
 import org.proview.test.Scene.ProfileView;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -115,5 +119,49 @@ public class TableViewUtils {
             });
             return row;
         });
+    }
+
+    public static void addCoverColumn(TableView<ObservableList<String>> tableView, int bookIdPos) {
+        TableColumn<ObservableList<String>, String> cover = new TableColumn<>("Book Cover");
+
+        cover.setCellValueFactory(cellData -> {
+            ObservableList<String> row = cellData.getValue();
+            if (row != null && !row.isEmpty()) {
+                String bookId = row.get(bookIdPos);
+                String path = "./assets/covers/cover%s.png".formatted(String.valueOf(Integer.parseInt(bookId)));
+                return new SimpleStringProperty(path);
+            }
+            return new SimpleStringProperty("");
+        });
+
+        cover.setCellFactory(column -> new TableCell<>() {
+            private final ImageView imageView = new ImageView();
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setGraphic(null); // Clear the cell content
+                } else {
+                    // Set an image based on the cell value (item)
+                    File file = new File(item); // Use the item as the path
+                    if (file.exists()) { // Check if the file exists
+                        Image image = new Image(file.toURI().toString());
+                        imageView.setImage(image);
+                        imageView.setFitWidth(80); // Set desired width
+                        imageView.setFitHeight(120); // Set desired height
+                        setGraphic(imageView);      // Add the ImageView to the cell
+                        setTextAlignment(TextAlignment.CENTER);
+                        setAlignment(Pos.CENTER);
+                    } else {
+                        System.err.println("File not found: " + file.getAbsolutePath());
+                        setGraphic(null);
+                    }
+                }
+            }
+        });
+
+        tableView.getColumns().add(cover);
     }
 }

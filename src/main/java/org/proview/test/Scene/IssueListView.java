@@ -5,11 +5,15 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.UserManagement;
@@ -17,6 +21,7 @@ import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
 import org.proview.utils.TableViewUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Comparator;
@@ -51,6 +56,9 @@ public class IssueListView {
             }
             column.setPrefWidth(prefWidthForBorrowingTable[finalI]);
             TableViewUtils.setWrapTextToColumn(column);
+            if (i == 4) {
+                TableViewUtils.addCoverColumn(borrowingTableView, 4);
+            }
             borrowingTableView.getColumns().add(column);
         }
         TableViewUtils.setBookViewRedirection(borrowingTableView, 4);
@@ -64,6 +72,9 @@ public class IssueListView {
                 private final ComboBox<String> comboBox = new ComboBox<>();
                 private final Button confirmButton = new Button("Confirm");
                 private final HBox hBox = new HBox(5, comboBox, confirmButton); // HBox chứa ComboBox và Confirm
+                {
+                    hBox.setAlignment(Pos.CENTER);
+                }
 
                 {
                     comboBox.getItems().addAll("Picked up", "Not picked up", "Returned", "Missing");
@@ -136,6 +147,9 @@ public class IssueListView {
             TableViewUtils.setWrapTextToColumn(column);
             if (columns2[finalI].equals("ID") || columns2[finalI].equals("Book ID")) {
                 column.setComparator(Comparator.comparingInt(Integer::parseInt));
+            }
+            if (i == 2) {
+                TableViewUtils.addCoverColumn(borrowedTableView, 4);
             }
             borrowedTableView.getColumns().add(column);
         }

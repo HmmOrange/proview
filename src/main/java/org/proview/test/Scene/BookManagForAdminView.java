@@ -39,7 +39,7 @@ public class BookManagForAdminView {
 
         for (int i = 0; i < columns.length; i++) {
             if (i == 1) {
-                addCoverColumn();
+                TableViewUtils.addCoverColumn(booksTableView, 0);
             }
             TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns[i]);
             int finalI = i;
@@ -66,52 +66,6 @@ public class BookManagForAdminView {
 
         TableViewUtils.setSearchingFeature(data, searchTextField, columnComboBox, booksTableView);
 
-    }
-
-    private void addCoverColumn() {
-        TableColumn<ObservableList<String>, String> statusColumn = new TableColumn<>("Cover");
-
-        // Set the cell value factory to provide some data to the column
-        statusColumn.setCellValueFactory(cellData -> {
-            ObservableList<String> row = cellData.getValue();
-            if (row != null && !row.isEmpty()) {
-                String bookId = row.getFirst(); // Giả sử cột đầu tiên là bookId
-                String path = "./assets/covers/cover%s.png".formatted(String.valueOf(Integer.parseInt(bookId)));  // Tạo đường dẫn
-                return new SimpleStringProperty(path);
-            }
-            return new SimpleStringProperty(""); // Trả về chuỗi rỗng nếu không có dữ liệu
-        });
-
-        // Set the cell factory to render an image
-        statusColumn.setCellFactory(column -> new TableCell<>() {
-            private final ImageView imageView = new ImageView();
-
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty || item == null) {
-                    setGraphic(null); // Clear the cell content
-                } else {
-                    // Set an image based on the cell value (item)
-                    File file = new File(item); // Use the item as the path
-                    if (file.exists()) { // Check if the file exists
-                        Image image = new Image(file.toURI().toString());
-                        imageView.setImage(image);
-                        imageView.setFitWidth(80); // Set desired width
-                        imageView.setFitHeight(120); // Set desired height
-                        setGraphic(imageView);      // Add the ImageView to the cell
-                        setTextAlignment(TextAlignment.CENTER);
-                        setAlignment(Pos.CENTER);
-                    } else {
-                        System.err.println("File not found: " + file.getAbsolutePath());
-                        setGraphic(null);
-                    }
-                }
-            }
-        });
-
-        booksTableView.getColumns().add(statusColumn);
     }
 
 }
