@@ -21,16 +21,16 @@ import java.util.Objects;
 
 // There surely is a way to create inheritance for ActivityCellView and PersonalActivityCellView, right...?
 
-public class ActivityCellView {
+public class ActivityCellView extends CellView {
     public Label titleLabel;
     public Label descriptionLabel;
     public Label timeLabel;
     public ImageView coverImageView;
     public Label activityTypeLabel;
     public HBox descriptionHBox;
-    private int id = -1;
 
     public void setData(Activity.Type type, int userId, int bookId, String description, Timestamp timestamp) throws IOException, SQLException {
+        super.id = bookId;
         titleLabel.setText(Objects.requireNonNull(SQLUtils.getUser(userId)).getFullName());
         if (type == Activity.Type.REVIEW) {
             activityTypeLabel.setText("Reviewed: " + Objects.requireNonNull(SQLUtils.getBook(bookId)).getTitle());
@@ -51,19 +51,10 @@ public class ActivityCellView {
         }
 
         timeLabel.setText(TimeAgo.using(timestamp.getTime()).replace("about ", ""));
-        this.id = bookId;
         Utils.insertBookImage(coverImageView, id, 50, 75);
     }
 
     public void onMouseClick(ActionEvent mouseEvent) throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("BookInfoView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-        AppMain.window.setTitle("Hello!");
-        AppMain.window.setScene(scene);
-        AppMain.window.centerOnScreen();
-
-        BookInfoView tempBookInfoView = fxmlLoader.getController();
-        tempBookInfoView.setData(this.id);
+        super.onMouseClicked();
     }
-
 }

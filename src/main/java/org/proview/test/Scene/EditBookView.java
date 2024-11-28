@@ -33,7 +33,12 @@ public class EditBookView {
 
     public void onAddBookButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
         if (PopUpWindowUtils.showConfirmation("Warning", "Are you sure to add this book?")) {
-            String coverFilePath = coverFile.toURI().toString().substring(6); // This has prefix 'file:/'
+            String coverFilePath;
+            try {
+                coverFilePath = coverFile.toURI().toString().substring(6); // This has prefix 'file:/'
+            } catch (NullPointerException e) {
+                coverFilePath = "file://assets/samples/defaultCover.png";
+            }
             String extension = "";
 
             int i = coverFilePath.lastIndexOf('.');
