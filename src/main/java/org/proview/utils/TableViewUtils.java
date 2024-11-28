@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import org.proview.model.User.UserManagement;
 import org.proview.test.AppMain;
 import org.proview.test.Scene.BookInfoView;
 import org.proview.test.Scene.ProfileView;
@@ -73,6 +74,7 @@ public class TableViewUtils {
         booksTableView.setRowFactory(tv -> {
             TableRow<ObservableList<String>> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
+                UserManagement.setCurrentAdminViewButton(null);
                 if (event.getClickCount() == 2 && !row.isEmpty()) {
                     int bookId = Integer.parseInt(row.getItem().get(bookIdPos));
                     FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("BookInfoView.fxml"));
@@ -104,6 +106,7 @@ public class TableViewUtils {
         usersTableView.setRowFactory(tv -> {
             TableRow<ObservableList<String>> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
+                UserManagement.setCurrentAdminViewButton(null);
                 if (event.getClickCount() == 2 && !row.isEmpty()) {
                     try {
                         ProfileView.setUserFromId(Integer.parseInt(row.getItem().get(userIdPos)));
