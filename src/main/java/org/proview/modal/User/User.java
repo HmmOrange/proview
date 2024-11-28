@@ -1,7 +1,11 @@
 package org.proview.modal.User;
 
+import javafx.scene.chart.XYChart;
+import org.proview.test.AppMain;
 import org.proview.utils.SQLUtils;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -106,6 +110,55 @@ public abstract class User {
 
     public void addComment(int book_id, String review) throws SQLException {
         SQLUtils.addReview(book_id, id, review);
+    }
+
+    public static class AverageRatingBooksCountBarChart {
+        public static XYChart.Series<String, Integer> getChartData() throws SQLException {
+            XYChart.Series<String, Integer> respond = new XYChart.Series<>();
+            String noRatingSql = """
+                        SELECT COUNT(*) AS count FROM book
+                        WHERE id NOT IN (SELECT book_id FROM rating)
+                        """;
+            ResultSet noRatingResultSet = AppMain.connection.prepareStatement(noRatingSql).executeQuery();
+            if (noRatingResultSet.next()) {
+                respond.getData().add(new XYChart.Data<>("0", noRatingResultSet.getInt("count")));
+            }
+
+            String between0And5Sql = """
+                        WITH avg_rating AS (
+                            SELECT AVG(rating) AS avg FROM rating
+                            GROUP BY book_id
+                        )
+                        SELECT COUNT(*) AS count
+                        FROM avg_rating
+                        WHERE FLOOR(avg) = ?
+                        """;
+            PreparedStatement preparedStatement = AppMain.connection.prepareStatement(between0And5Sql);
+            for (int i = 0; i <= 4; i++) {
+                preparedStatement.setInt(1, i);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    respond.getData().add(new XYChart.Data<>("%d - <%d".formatted(i, i+1),
+                            resultSet.getInt("count")));
+                }
+            }
+
+            String perfectSql = """
+                        WITH avg_rating AS (
+                            SELECT AVG(rating) AS avg FROM rating
+                            GROUP BY book_id
+                        )
+                        SELECT COUNT(*) AS count
+                        FROM avg_rating
+                        WHERE avg = 5
+                        """;
+            ResultSet perfectRS = AppMain.connection.prepareStatement(perfectSql).executeQuery();
+            if (perfectRS.next()) {
+                respond.getData().add(new XYChart.Data<>("5", perfectRS.getInt("count")));
+            }
+
+            return respond;
+        }
     }
 
     @Override

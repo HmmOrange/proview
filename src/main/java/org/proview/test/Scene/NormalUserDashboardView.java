@@ -7,7 +7,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Tooltip;
-import org.proview.utils.DashboardUtils;
+import org.proview.modal.User.NormalUser;
 
 import java.sql.SQLException;
 import java.util.Objects;
@@ -19,7 +19,7 @@ public class NormalUserDashboardView {
     public BarChart<String, Integer> avgRatingBookCountBarChart;
 
     private void initIssueCreatedNumberLineChart() throws SQLException {
-        XYChart.Series<String, Integer> datas = DashboardUtils.NormalUser.IssuesCreatedLineChart.getChartData();
+        XYChart.Series<String, Integer> datas = NormalUser.IssuesCreatedLineChart.getChartData();
         issuesCreatedNumberLineChart.getData().add(datas);
         for (XYChart.Data<String, Integer> data : datas.getData()) {
             String tooltipString = data.getXValue() + ": ";
@@ -38,8 +38,8 @@ public class NormalUserDashboardView {
 
     private void initBooksBorrowedPieChart() throws SQLException {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Borrowed", DashboardUtils.NormalUser.BookBorrowedPieChart.getBooksBorrowedCount()),
-                new PieChart.Data("Haven't Borrowed", DashboardUtils.NormalUser.BookBorrowedPieChart.getBooksHaventBorrowedCount())
+                new PieChart.Data("Borrowed", NormalUser.BookBorrowedPieChart.getBooksBorrowedCount()),
+                new PieChart.Data("Haven't Borrowed", NormalUser.BookBorrowedPieChart.getBooksHaventBorrowedCount())
         );
         booksBorrowedPieChart.setData(pieChartData);
 
@@ -53,10 +53,10 @@ public class NormalUserDashboardView {
 
     private void initIssueStatusPieChart() throws SQLException {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Picked up", DashboardUtils.NormalUser.IssueStatusPieChart.getCountOfStatus("Picked up")),
-                new PieChart.Data("Not picked up", DashboardUtils.NormalUser.IssueStatusPieChart.getCountOfStatus("Not picked up")),
-                new PieChart.Data("Returned", DashboardUtils.NormalUser.IssueStatusPieChart.getCountOfStatus("Returned")),
-                new PieChart.Data("Missing", DashboardUtils.NormalUser.IssueStatusPieChart.getCountOfStatus("Missing"))
+                new PieChart.Data("Picked up", NormalUser.IssueStatusPieChart.getCountOfStatus("Picked up")),
+                new PieChart.Data("Not picked up", NormalUser.IssueStatusPieChart.getCountOfStatus("Not picked up")),
+                new PieChart.Data("Returned", NormalUser.IssueStatusPieChart.getCountOfStatus("Returned")),
+                new PieChart.Data("Missing", NormalUser.IssueStatusPieChart.getCountOfStatus("Missing"))
         );
         issueStatusPieChart.setData(pieChartData);
 
@@ -69,7 +69,7 @@ public class NormalUserDashboardView {
     }
 
     private void initAvgRatingBookCountBarChart() throws SQLException {
-        XYChart.Series<String, Integer> datas = DashboardUtils.NormalUser.AverageRatingBooksCountBarChart.getChartData();
+        XYChart.Series<String, Integer> datas = NormalUser.AverageRatingBooksCountBarChart.getChartData();
         avgRatingBookCountBarChart.getData().add(datas);
         for (XYChart.Data<String, Integer> data : datas.getData()) {
             StringBuilder tooltipString = new StringBuilder();

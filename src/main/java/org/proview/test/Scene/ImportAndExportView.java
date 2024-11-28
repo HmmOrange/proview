@@ -136,8 +136,6 @@ public class ImportAndExportView {
                 System.out.println(line);
                 String[] datas = line.split(",");
                 if (datas.length != columns.length) {
-                    System.out.println(Arrays.toString(datas));
-                    System.out.println(datas.length + " " + columns.length);
                     importResultLabel.setText("Data in rows (Column doesn't match)");
                     return false;
                 }
