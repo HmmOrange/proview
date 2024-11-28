@@ -714,7 +714,6 @@ INSERT INTO review(book_id, user_id, review, time_added) VALUES (1, 2, 'An excep
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (1, 3, 'A fantastic book that combines thorough research with engaging storytelling. Truly a great addition to any library.', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 HOUR));
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (2, 2, 'The book covers important topics but lacks depth in some areas. Overall, it is informative but not particularly engaging.', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 3 HOUR));
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (3, 3, 'A solid read with practical insights and a clear structure. While not groundbreaking, it offers value to its audience.', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 2 DAY));
-INSERT INTO review(book_id, user_id, review, time_added) VALUES (5, 1, 'This book provides a well-rounded perspective on the topic, and the author’s writing style is both engaging and informative.', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 3 DAY));
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (12, 2, 'An exceptional piece of literature that delves deeply into its subject matter. Highly recommended for curious minds.', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 2 WEEK));
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (22, 3, 'The narrative flows effortlessly, making it an enjoyable and thought-provoking read. A must-have for enthusiasts.', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH));
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (8, 4, 'A thoroughly researched and well-written book that offers fresh insights and practical advice on the topic.', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 5 MINUTE));
@@ -727,7 +726,6 @@ INSERT INTO review(book_id, user_id, review, time_added) VALUES (41, 10, 'A mast
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (3, 11, 'The author’s expertise shines through in this work, making it a valuable resource for readers.', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 2 DAY));
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (26, 12, 'This book strikes the perfect balance between entertainment and information, making it a pleasure to read.', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 HOUR));
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (50, 13, 'An enlightening book that manages to both educate and inspire, leaving the reader with a sense of purpose.', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 15 SECOND));
-INSERT INTO review(book_id, user_id, review, time_added) VALUES (2, 1, 'A fantastic read that goes beyond surface-level analysis to uncover deeper truths.', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 7 HOUR));
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (18, 3, 'The writing style is so engaging that it’s hard to put this book down. A true masterpiece.', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 5 DAY));
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (30, 4, 'A thought-provoking book that opens up new ways of thinking and approaches to life.', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 10 MINUTE));
 INSERT INTO review(book_id, user_id, review, time_added) VALUES (46, 6, 'This book is filled with practical advice and fresh ideas that make it stand out from the crowd.', DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 DAY));
@@ -1067,6 +1065,7 @@ INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALU
 INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 23 DAY), 43, 11, (SELECT username FROM user WHERE id = 11), 50, 'Missing');
 INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 13 DAY), 50, 12, (SELECT username FROM user WHERE id = 12), 50, 'Picked up');
 INSERT INTO issue(start_date, duration, user_id, username, book_id, status) VALUES (DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 59 DAY), 45, 13, (SELECT username FROM user WHERE id = 13), 50, 'Not picked up');
+DELETE FROM issue WHERE user_id = 1;
 
 -- Add sample favourites
 INSERT IGNORE INTO favourite (book_id, user_id, time_added) VALUES (1, 2, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 36 DAY));
