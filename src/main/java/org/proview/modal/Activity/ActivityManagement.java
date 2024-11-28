@@ -21,6 +21,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Comparator;
 
 public class ActivityManagement {
@@ -113,12 +116,17 @@ public class ActivityManagement {
                 if (dueTime.getTime() < current.getTime()) {
                     activityObservableList.add(new Activity(bookId, userId, description, dueTime, Activity.Type.OVERDUE));
                 } else if (dueTime.getTime() - current.getTime() < 24 * 3600 * 1000) {
-                    long seconds = (dueTime.getTime() - current.getTime()) / 1000;
-                    long hours = seconds / 3600;
-                    seconds %= 3600;
-                    long minutes = seconds / 60;
-                    seconds %= 60;
-                    description = String.format("Due in: %02d:%02d:%02d", hours, minutes, seconds);
+                    String dueTimeStr = dueTime.toString();
+                    if (dueTimeStr.contains(" ")) {
+                        dueTimeStr = dueTimeStr.replace(" ", "T");
+                    }
+                    LocalDateTime dueDateTime = LocalDateTime.parse(dueTimeStr);
+                    dueDateTime = dueDateTime.minusDays(1);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss.S");
+                    String tempFormattedDueDateTime = dueDateTime.format(formatter);
+                    StringBuilder formattedDueDateTime = new StringBuilder(tempFormattedDueDateTime);
+                    formattedDueDateTime.delete(17, 19);
+                    description = String.format("Post at: %s", formattedDueDateTime.toString());
                     activityObservableList.add(new Activity(bookId, userId, description, dueTime, Activity.Type.WARNING));
                 }
             }
