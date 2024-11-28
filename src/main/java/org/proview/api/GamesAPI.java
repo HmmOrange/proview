@@ -59,7 +59,7 @@ public class GamesAPI {
 
 
             String addQandASql = """
-                    INSERT INTO questions(type, difficulty, question, correct_answer, incr_ans1, incr_ans2, incr_ans3)
+                    INSERT IGNORE INTO questions(type, difficulty, question, correct_answer, incr_ans1, incr_ans2, incr_ans3)
                     VALUE (?, ?, ?, ?, ?, ?, ?)
                     """;
             if (items != null && items.size() > 0) {
