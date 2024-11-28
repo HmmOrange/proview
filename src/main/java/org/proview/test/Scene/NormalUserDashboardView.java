@@ -7,23 +7,23 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Tooltip;
-import org.proview.utils.DashboardUtils;
+import org.proview.modal.User.NormalUser;
 
 import java.sql.SQLException;
 import java.util.Objects;
 
 public class NormalUserDashboardView {
-    public LineChart<String, Integer> issuesCreatedNumberLineChart;
+    public LineChart<String, Number> issuesCreatedNumberLineChart;
     public PieChart booksBorrowedPieChart;
     public PieChart issueStatusPieChart;
-    public BarChart<String, Integer> avgRatingBookCountBarChart;
+    public BarChart<String, Number> avgRatingBookCountBarChart;
 
     private void initIssueCreatedNumberLineChart() throws SQLException {
-        XYChart.Series<String, Integer> datas = DashboardUtils.NormalUser.IssuesCreatedLineChart.getChartData();
+        XYChart.Series<String, Number> datas = NormalUser.IssuesCreatedLineChart.getChartData();
         issuesCreatedNumberLineChart.getData().add(datas);
-        for (XYChart.Data<String, Integer> data : datas.getData()) {
+        for (XYChart.Data<String, Number> data : datas.getData()) {
             String tooltipString = data.getXValue() + ": ";
-            int yValue = data.getYValue();
+            int yValue = (int) data.getYValue();
             if (yValue == 0) {
                 tooltipString += "No new issue.";
             } else if (yValue == 1) {
@@ -38,8 +38,8 @@ public class NormalUserDashboardView {
 
     private void initBooksBorrowedPieChart() throws SQLException {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Borrowed", DashboardUtils.NormalUser.BookBorrowedPieChart.getBooksBorrowedCount()),
-                new PieChart.Data("Haven't Borrowed", DashboardUtils.NormalUser.BookBorrowedPieChart.getBooksHaventBorrowedCount())
+                new PieChart.Data("Borrowed", NormalUser.BookBorrowedPieChart.getBooksBorrowedCount()),
+                new PieChart.Data("Haven't Borrowed", NormalUser.BookBorrowedPieChart.getBooksHaventBorrowedCount())
         );
         booksBorrowedPieChart.setData(pieChartData);
 
@@ -53,10 +53,10 @@ public class NormalUserDashboardView {
 
     private void initIssueStatusPieChart() throws SQLException {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Picked up", DashboardUtils.NormalUser.IssueStatusPieChart.getCountOfStatus("Picked up")),
-                new PieChart.Data("Not picked up", DashboardUtils.NormalUser.IssueStatusPieChart.getCountOfStatus("Not picked up")),
-                new PieChart.Data("Returned", DashboardUtils.NormalUser.IssueStatusPieChart.getCountOfStatus("Returned")),
-                new PieChart.Data("Missing", DashboardUtils.NormalUser.IssueStatusPieChart.getCountOfStatus("Missing"))
+                new PieChart.Data("Picked up", NormalUser.IssueStatusPieChart.getCountOfStatus("Picked up")),
+                new PieChart.Data("Not picked up", NormalUser.IssueStatusPieChart.getCountOfStatus("Not picked up")),
+                new PieChart.Data("Returned", NormalUser.IssueStatusPieChart.getCountOfStatus("Returned")),
+                new PieChart.Data("Missing", NormalUser.IssueStatusPieChart.getCountOfStatus("Missing"))
         );
         issueStatusPieChart.setData(pieChartData);
 
@@ -69,9 +69,9 @@ public class NormalUserDashboardView {
     }
 
     private void initAvgRatingBookCountBarChart() throws SQLException {
-        XYChart.Series<String, Integer> datas = DashboardUtils.NormalUser.AverageRatingBooksCountBarChart.getChartData();
+        XYChart.Series<String, Number> datas = NormalUser.AverageRatingBooksCountBarChart.getChartData();
         avgRatingBookCountBarChart.getData().add(datas);
-        for (XYChart.Data<String, Integer> data : datas.getData()) {
+        for (XYChart.Data<String, Number> data : datas.getData()) {
             StringBuilder tooltipString = new StringBuilder();
             if (Objects.equals(data.getXValue(), "0")) {
                 tooltipString.append("No rating: ");
@@ -81,7 +81,7 @@ public class NormalUserDashboardView {
                 tooltipString.append("From %s Stars: ".formatted(data.getXValue()));
             }
             tooltipString.append(data.getYValue());
-            if (data.getYValue() < 2) {
+            if ((int) data.getYValue() < 2) {
                 tooltipString.append(" book.");
             } else {
                 tooltipString.append(" books.");
