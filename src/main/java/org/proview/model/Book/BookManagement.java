@@ -58,20 +58,6 @@ public class BookManagement {
         preparedStatement.executeUpdate();
     }
 
-    @Deprecated
-    public static BookLib getBook(int id) throws SQLException {
-        Statement statement = AppMain.connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM book WHERE id = " + id);
-
-        if (resultSet.next()) {
-            String name = resultSet.getString("name");
-            String author = resultSet.getString("author");
-            return new BookLib(id, name, author);
-        }
-
-        return null;
-    }
-
     public static int getBookCount() throws SQLException {
         Statement statement = AppMain.connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM book");
@@ -79,39 +65,6 @@ public class BookManagement {
             return resultSet.getInt("COUNT(*)");
         }
         return 0;
-    }
-    
-    @Deprecated
-    public static ObservableList<BookLib> getOldBookList() throws SQLException {
-        ObservableList<BookLib> books = FXCollections.observableArrayList();
-        Connection connection = AppMain.connection;
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM book");
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String name = resultSet.getString("name");
-            String author = resultSet.getString("author");
-            BookLib curBook = new BookLib(id, name, author);
-            books.add(curBook);
-        }
-        return books;
-    }
-
-    @Deprecated
-    public static ObservableList<String> getBookListView() throws SQLException {
-        ObservableList<BookLib> currentBookList = null;
-        ObservableList<String> bookStringList = FXCollections.observableArrayList();
-        try {
-            currentBookList = BookManagement.getOldBookList();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        for (var d : currentBookList) {
-            String newbookItem = d.getId() + ". " + d.getTitle() + " - " + d.getAuthor();
-            bookStringList.add(newbookItem);
-        }
-
-        return bookStringList;
     }
 
     public static ObservableList<BookLib> getBookList() throws SQLException {

@@ -26,9 +26,7 @@ import java.util.Comparator;
 public class ActivityManagement {
     public static void initActivityList(VBox activityListVBox, ObservableList<Activity> activityList) {
         activityListVBox.getChildren().clear();
-        int index = 0;
         for (var item: activityList) {
-            index++;
             try {
                 FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("ActivityCellView.fxml"));
                 Button button = loader.load();
@@ -51,9 +49,7 @@ public class ActivityManagement {
 
     public static void initPersonalActivityList(VBox activityListVBox, ObservableList<Activity> activityList) {
         activityListVBox.getChildren().clear();
-        int index = 0;
         for (var item: activityList) {
-            index++;
             try {
                 FXMLLoader loader = new FXMLLoader(AppMain.class.getResource("PersonalActivityCellView.fxml"));
                 Button button = loader.load();

@@ -21,7 +21,7 @@
         <fx:include source="AdminManagementNavBarView.fxml" />
     </left>
     <center>
-      <VBox prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="100.0" stylesheets="@styles/styles.css" BorderPane.alignment="CENTER">
          <children>
             <HBox prefHeight="619.0">
                <VBox.margin>

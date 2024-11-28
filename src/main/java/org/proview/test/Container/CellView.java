@@ -28,8 +28,9 @@ import org.proview.utils.SQLUtils;
 public abstract class CellView {
     protected String previewLink;
     protected int id = -1;
-    public abstract void setData(String title, String authors, String imageUrl, String tags, String previewLink) throws IOException, SQLException;
-    public abstract void setData(int id, String title, String author, double rating, int issueCount, int copiesAvailable) throws IOException, SQLException;
+
+    public void setData(String title, String authors, String imageUrl, String tags, String previewLink) throws SQLException, IOException {}
+    public void setData(int id, String title, String author, double rating, int issueCount, int copiesAvailable) throws SQLException, IOException {}
 
     // Lib book
     public void setData(

@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-public class PersonalActivityCellView {
+public class PersonalActivityCellView extends CellView {
     public Label descriptionLabel;
     public Label timeLabel;
     public ImageView coverImageView;

@@ -31,8 +31,6 @@ public class BookCellCompactView extends CellView {
     public FontIcon issuesIcon;
     public FontIcon starRatingIcon;
     public HBox infoHBox;
-    private int id = -1;
-    private String previewLink;
 
     @Override
     public void setData(String title, String authors, String imageUrl, String tags, String previewLink) throws IOException, SQLException {
@@ -48,6 +46,7 @@ public class BookCellCompactView extends CellView {
         );
     }
 
+    @Override
     public void setData(int id, String title, String author, double rating, int issueCount, int copiesAvailable) throws IOException, SQLException {
         super.id = id;
         super.setData(

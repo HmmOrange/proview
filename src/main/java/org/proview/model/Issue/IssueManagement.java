@@ -45,28 +45,4 @@ public class IssueManagement {
         }
         return issues;
     }
-
-    public static ObservableList<String> getIssueListViewFrom(int userId) throws SQLException {
-        ObservableList<Issue> currentIssueList = null;
-        ObservableList<String> issueStringList = FXCollections.observableArrayList();
-        try {
-            currentIssueList = IssueManagement.getIssueListFrom(userId);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        int index = 0;
-        for (Issue i : currentIssueList) {
-            index++;
-            BookLib curBook = BookManagement.getBook(i.getBookId());
-            if (curBook == null) {
-                continue;
-            }
-            String newIssueItem = index + ". " + curBook.getTitle() + " - " + curBook.getAuthor()
-                                + " for " + i.getDuration() + (i.getDuration() == 1 ? " day" : " days")
-                                + " (book #" + curBook.getId() + ", issue #" + i.getId() + ")";
-            issueStringList.add(newIssueItem);
-        }
-
-        return issueStringList;
-    }
 }
