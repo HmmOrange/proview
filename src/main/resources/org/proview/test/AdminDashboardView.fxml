@@ -19,21 +19,21 @@
     <center>
       <ScrollPane BorderPane.alignment="CENTER">
          <content>
-            <VBox alignment="TOP_CENTER" prefHeight="743.0" prefWidth="1298.0" spacing="10.0">
+            <VBox alignment="TOP_CENTER" prefHeight="743.0" prefWidth="1282.0" spacing="10.0">
                <children>
                   <Label text="Issues">
                      <font>
                         <Font size="26.0" />
                      </font>
                   </Label>
-                  <HBox alignment="CENTER">
+                  <HBox alignment="CENTER" prefHeight="150.0" prefWidth="1341.0">
                      <children>
                         <LineChart fx:id="issuesCreatedNumberLineChart" legendVisible="false" title="Number of Issues Created">
                           <xAxis>
                             <CategoryAxis label="Date" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis forceZeroInRange="false" label="Issues" pickOnBounds="false" side="LEFT" tickLabelGap="1.0" upperBound="10.0" />
+                            <NumberAxis autoRanging="false" forceZeroInRange="false" label="Issues" pickOnBounds="false" side="LEFT" tickLabelGap="1.0" upperBound="10.0" />
                           </yAxis>
                         </LineChart>
                         <PieChart fx:id="issueStatusPieChart" title="Percentage of Each Issue Current Status" />
@@ -51,7 +51,7 @@
                             <CategoryAxis label="Rating" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis label="Books" side="LEFT" />
+                            <NumberAxis autoRanging="false" label="Books" side="LEFT" />
                           </yAxis>
                         </BarChart>
                         <PieChart fx:id="copiesBorrowedPieChart" title="Percentage of copies being borrowed" />
@@ -64,12 +64,12 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                      <children>
-                        <LineChart fx:id="newRegistrationLineChart" title="Number of New Registration Per Day So Far">
+                        <LineChart fx:id="newRegistrationLineChart" prefHeight="150.0" prefWidth="985.0" title="Number of New Registration Per Day So Far">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis side="LEFT" />
+                            <NumberAxis autoRanging="false" side="LEFT" />
                           </yAxis>
                         </LineChart>
                      </children>
