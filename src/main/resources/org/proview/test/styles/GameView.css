@@ -4,6 +4,7 @@
 .assistance-button:active .ikonli-font-icon,
 .assistance-button:hover .ikonli-font-icon {
     -fx-icon-color: #FFFFFF;
+    -fx-cursor: hand;
 }
 
 .game-form {
@@ -75,4 +76,10 @@
     -fx-background-color: -blue;
     -fx-background-radius: 10px;
     -fx-padding: 5px 10px;
+}
+
+.next-button:hover {
+    -fx-background-color: -dark-blue;
+    -fx-text-fill: #ffffff;
+    -fx-cursor: hand;
 }

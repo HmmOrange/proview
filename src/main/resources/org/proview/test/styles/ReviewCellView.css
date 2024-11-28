@@ -8,7 +8,7 @@
 #star-rating-review .ikonli-font-icon-rated {
     -fx-icon-size: 14;
     -fx-icon-code: "fas-star";
-    -fx-icon-color: gold;
+    -fx-icon-color: goldenrod;
 }
 
 .box {

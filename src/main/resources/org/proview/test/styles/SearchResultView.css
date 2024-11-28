@@ -51,6 +51,7 @@
 .apply-button:hover {
     -fx-background-color: -dark-blue;
     -fx-text-fill: #ffffff;
+    -fx-cursor: hand;
 }
 
 .range-slider {
