@@ -2,10 +2,10 @@ package org.proview.test.Scene;
 
 import javafx.collections.ObservableList;
 import javafx.scene.layout.VBox;
-import org.proview.modal.Activity.Activity;
-import org.proview.modal.Activity.ActivityManagement;
-import org.proview.modal.Book.BookLib;
-import org.proview.modal.Book.BookManagement;
+import org.proview.model.Activity.Activity;
+import org.proview.model.Activity.ActivityManagement;
+import org.proview.model.Book.BookLib;
+import org.proview.model.Book.BookManagement;
 import java.sql.SQLException;
 
 public class HomeView {

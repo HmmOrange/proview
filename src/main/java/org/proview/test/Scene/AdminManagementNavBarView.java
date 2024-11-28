@@ -1,29 +1,13 @@
 package org.proview.test.Scene;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.layout.VBox;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import org.proview.modal.User.UserManagement;
+import org.proview.model.User.UserManagement;
 import org.proview.test.AppMain;
-import org.proview.utils.SQLUtils;
 import org.proview.utils.Utils;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
 
 public class AdminManagementNavBarView {
     public Button addBookButton;

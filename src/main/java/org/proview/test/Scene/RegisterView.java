@@ -6,14 +6,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
-import org.proview.modal.User.NormalUser;
-import org.proview.modal.User.User;
+import org.proview.model.User.NormalUser;
+import org.proview.model.User.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import org.proview.modal.User.UserManagement;
+import org.proview.model.User.UserManagement;
 import org.proview.test.AppMain;
 import org.proview.utils.SQLUtils;
 
@@ -21,8 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 public class RegisterView {

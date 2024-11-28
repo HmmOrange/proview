@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.*;
 import javafx.scene.control.Tooltip;
-import org.proview.modal.User.Admin;
+import org.proview.model.User.Admin;
 
 import java.sql.SQLException;
 import java.util.Objects;

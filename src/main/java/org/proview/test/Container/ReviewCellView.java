@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import org.kordamp.ikonli.javafx.FontIcon;
-import org.proview.modal.User.UserManagement;
 import org.proview.utils.SQLUtils;
 
 import java.io.FileInputStream;

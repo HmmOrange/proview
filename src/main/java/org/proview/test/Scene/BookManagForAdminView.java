@@ -2,18 +2,13 @@ package org.proview.test.Scene;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.TextAlignment;
-import org.proview.modal.User.NormalUser;
-import org.proview.modal.User.UserManagement;
+import org.proview.model.User.NormalUser;
+import org.proview.model.User.UserManagement;
 import org.proview.utils.SQLUtils;
 import org.proview.utils.TableViewUtils;
 
-import java.io.File;
 import java.sql.SQLException;
 import java.util.Comparator;
 

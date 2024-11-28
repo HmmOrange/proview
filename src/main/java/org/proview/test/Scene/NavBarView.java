@@ -1,36 +1,22 @@
 package org.proview.test.Scene;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import org.proview.modal.Game.GameActivity;
-import org.proview.modal.User.Admin;
-import org.proview.modal.User.NormalUser;
-import org.proview.modal.User.User;
+import org.proview.model.User.Admin;
+import org.proview.model.User.NormalUser;
 import org.proview.utils.SearchUtils;
-import org.proview.modal.User.UserManagement;
-import org.proview.test.AppMain;
+import org.proview.model.User.UserManagement;
 import org.proview.utils.Utils;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Objects;
 
 public class NavBarView {
     public TextField bookSearchBar;

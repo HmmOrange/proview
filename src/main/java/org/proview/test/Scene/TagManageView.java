@@ -1,6 +1,5 @@
 package org.proview.test.Scene;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -9,7 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
-import org.proview.modal.Tag.Tag;
+import org.proview.model.Tag.Tag;
 import org.proview.utils.SQLUtils;
 
 import java.sql.SQLException;

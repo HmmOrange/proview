@@ -2,8 +2,8 @@ package org.proview.test.Container;
 
 import javafx.collections.ObservableList;
 import javafx.scene.layout.VBox;
-import org.proview.modal.Book.BookLib;
-import org.proview.modal.Book.BookManagement;
+import org.proview.model.Book.BookLib;
+import org.proview.model.Book.BookManagement;
 import org.proview.test.Scene.ProfileView;
 
 import java.io.FileNotFoundException;

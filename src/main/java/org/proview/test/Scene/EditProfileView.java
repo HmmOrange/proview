@@ -12,8 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
-import org.proview.modal.Book.BookManagement;
-import org.proview.modal.User.UserManagement;
+import org.proview.model.User.UserManagement;
 import org.proview.test.AppMain;
 import org.proview.utils.PopUpWindowUtils;
 
