@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.net.URI;
 
 public class Utils {
-    public static void insertBookImage(ImageView imageView, Image image, double targetWidth, double targetHeight) {
+    public static void insertImage(ImageView imageView, Image image, double targetWidth, double targetHeight) {
         imageView.setImage(image);
         double scaleX = targetWidth / image.getWidth();
         double scaleY = targetHeight / image.getHeight();
@@ -39,17 +39,29 @@ public class Utils {
         InputStream stream = URI.create(imageUrl).toURL().openStream();
         Image image = new Image(stream);
 
-        insertBookImage(imageView, image, targetWidth, targetHeight);
+        insertImage(imageView, image, targetWidth, targetHeight);
 
         stream.close();
     }
 
-    public static void insertBookImage(ImageView imageView, int id, double targetWidth, double targetHeight) throws FileNotFoundException {
+    public static void insertBookImage(ImageView imageView, int id, double targetWidth, double targetHeight) throws IOException {
         String imageUrl = "./assets/covers/cover" + id + ".png";
         InputStream stream = new FileInputStream(imageUrl);
         Image image = new Image(stream);
 
-        insertBookImage(imageView, image, targetWidth, targetHeight);
+        insertImage(imageView, image, targetWidth, targetHeight);
+
+        stream.close();
+    }
+
+    public static void insertAvatarImage(ImageView imageView, int id, double targetWidth, double targetHeight) throws IOException {
+        String imageUrl = "./assets/avatars/user" + id + ".png";
+        InputStream stream = new FileInputStream(imageUrl);
+        Image image = new Image(stream);
+
+        insertImage(imageView, image, targetWidth, targetHeight);
+
+        stream.close();
     }
 
     public static void switchScene(String fxmlPath) throws IOException {

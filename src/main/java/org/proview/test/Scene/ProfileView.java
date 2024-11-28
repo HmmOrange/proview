@@ -21,6 +21,7 @@ import org.proview.modal.User.User;
 import org.proview.modal.User.UserManagement;
 import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
+import org.proview.utils.Utils;
 
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -79,14 +80,7 @@ public class ProfileView {
         nameField.setText("Name: " + user.getFullName());
         emailField.setText("Mail: " + user.getEmail());
 
-        InputStream stream = new FileInputStream("./assets/avatars/user" + user.getId() + ".png");
-        Image image = new Image(stream);
-        avatarImageView.setImage(image);
-        avatarImageView.setFitHeight(150);
-        avatarImageView.setPreserveRatio(true);
-        avatarImageView.setSmooth(true);
-        avatarImageView.setCache(true);
-        stream.close();
+        Utils.insertAvatarImage(avatarImageView, user.getId(), 150, 150);
 
         if (user instanceof Admin || !user.equals(UserManagement.getCurrentUser())) {
             editProfileButton.setDisable(true);
