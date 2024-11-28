@@ -15,7 +15,7 @@
 <?import org.controlsfx.control.RangeSlider?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.SearchResultView">
+<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.SearchResultView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
@@ -26,7 +26,7 @@
       <AnchorPane prefHeight="0.0" prefWidth="1300.0" BorderPane.alignment="CENTER" />
    </bottom>
    <center>
-      <ScrollPane hbarPolicy="NEVER" prefHeight="645.0" prefWidth="635.0" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+      <ScrollPane hbarPolicy="NEVER" prefHeight="645.0" prefWidth="635.0" styleClass="no-border-scroll-pane" stylesheets="@styles/SearchResultView.css" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
          <content>
             <VBox prefHeight="641.0" prefWidth="950.0" spacing="15.0">
                <children>
@@ -44,7 +44,7 @@
                         <ImageView fx:id="loadingImageView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </HBox>
-                  <VBox fx:id="googleBookListVBox" prefHeight="281.0" prefWidth="800.0" spacing="10.0" style="-fx-padding: 0 20;">
+                  <VBox fx:id="googleBookListVBox" prefHeight="281.0" prefWidth="800.0" spacing="10.0">
                      <VBox.margin>
                         <Insets left="10.0" top="-10.0" />
                      </VBox.margin></VBox>
@@ -58,54 +58,61 @@
       </ScrollPane>
    </center>
    <left>
-      <VBox prefHeight="592.0" prefWidth="285.0" spacing="15.0" style="-fx-background-color: #f4f4f4; -fx-padding: 20; -fx-border-width: 1;" styleClass="filter-form">
-         <children>
-            <Label styleClass="header" text="Filters" />
-            <Label styleClass="sub-header" text="Include tags:" />
-            <FlowPane fx:id="tagIncludedSelectedFlowPane" hgap="5.0" minHeight="35.0" prefWidth="290.0" styleClass="flow-pane" vgap="5.0">
-            </FlowPane>
-            <MenuButton fx:id="tagIncludedSelectDropdown" mnemonicParsing="false" styleClass="menu" text="Select tag..." />
-            <Label style="-fx-font-size: 18px; -fx-padding: 10 0 0 0;" text="Exclude tags:" />
-            <FlowPane fx:id="tagExcludedSelectedFlowPane" hgap="5.0" minHeight="35.0" prefWidth="200.0" styleClass="flow-pane" vgap="5.0">
-            </FlowPane>
-            <MenuButton fx:id="tagExcludedSelectDropdown" mnemonicParsing="false" text="Select Tag..." />
-            <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-padding: 10 0;">
-               <children>
-                  <Label styleClass="sub-header" text="Rating range:" />
-                  <Label fx:id="lowRatingLabel" styleClass="sub-header" text="0.00" />
-                  <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14">
-                     <HBox.margin>
-                        <Insets left="-7.0" />
-                     </HBox.margin></FontIcon>
-                  <Label style="-fx-font-size: 18px;" text="-">
-                     <HBox.margin>
-                        <Insets left="-5.0" right="-5.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="highRatingLabel" styleClass="sub-header" text="5.00" />
-                  <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14">
-                     <HBox.margin>
-                        <Insets left="-7.0" />
-                     </HBox.margin></FontIcon>
-               </children>
-            </HBox>
-            <RangeSlider fx:id="ratingSlider" blockIncrement="0.01" highValue="1.0" lowValue="0.0" max="5.0" prefWidth="243.0" showTickLabels="true">
-               <VBox.margin>
-                  <Insets top="-10.0" />
-               </VBox.margin></RangeSlider>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button fx:id="applyFiltersButton" alignment="TOP_CENTER" onAction="#onApplyFiltersButtonClicked" prefWidth="68.0" styleClass="apply-button" text="Apply" />
-               </children>
-            </VBox>
-         </children>
-         <stylesheets>
-            <URL value="@styles/SearchResultView.css" />
-            <URL value="@styles/styles.css" />
-         </stylesheets>
+      <ScrollPane hbarPolicy="NEVER" styleClass="no-border-scroll-pane" stylesheets="@styles/SearchResultView.css" vbarPolicy="NEVER">
          <BorderPane.margin>
-            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+            <Insets bottom="25.0" left="25.0" right="15.0" top="25.0" />
          </BorderPane.margin>
-      </VBox>
+         <content>
+            <VBox prefHeight="592.0" prefWidth="285.0" spacing="15.0" styleClass="filter-form">
+               <children>
+                  <Label styleClass="header" text="Filters" />
+                  <Label styleClass="sub-header" text="Include tags:" />
+                  <FlowPane fx:id="tagIncludedSelectedFlowPane" hgap="5.0" styleClass="flow-pane" vgap="5.0">
+            </FlowPane>
+                  <MenuButton fx:id="tagIncludedSelectDropdown" mnemonicParsing="false" styleClass="menu" text="Select tag..." />
+                  <Label style="-fx-font-size: 18px; -fx-padding: 10 0 0 0;" text="Exclude tags:" />
+                  <FlowPane fx:id="tagExcludedSelectedFlowPane" hgap="5.0" styleClass="flow-pane" vgap="5.0">
+            </FlowPane>
+                  <MenuButton fx:id="tagExcludedSelectDropdown" mnemonicParsing="false" text="Select Tag..." />
+                  <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-padding: 10 0;">
+                     <children>
+                        <Label styleClass="sub-header" text="Rating range:" />
+                        <Label fx:id="lowRatingLabel" styleClass="sub-header" text="0.00" />
+                        <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14">
+                           <HBox.margin>
+                              <Insets left="-7.0" />
+                           </HBox.margin>
+                        </FontIcon>
+                        <Label style="-fx-font-size: 18px;" text="-">
+                           <HBox.margin>
+                              <Insets left="-5.0" right="-5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="highRatingLabel" styleClass="sub-header" text="5.00" />
+                        <FontIcon iconColor="GOLDENROD" iconLiteral="fas-star" iconSize="14">
+                           <HBox.margin>
+                              <Insets left="-7.0" />
+                           </HBox.margin>
+                        </FontIcon>
+                     </children>
+                  </HBox>
+                  <RangeSlider fx:id="ratingSlider" blockIncrement="0.01" highValue="1.0" lowValue="0.0" max="5.0" prefWidth="243.0" showTickLabels="true">
+                     <VBox.margin>
+                        <Insets top="-10.0" />
+                     </VBox.margin>
+                  </RangeSlider>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Button fx:id="applyFiltersButton" alignment="TOP_CENTER" onAction="#onApplyFiltersButtonClicked" prefWidth="68.0" styleClass="apply-button" text="Apply" />
+                     </children>
+                  </VBox>
+               </children>
+               <stylesheets>
+                  <URL value="@styles/SearchResultView.css" />
+                  <URL value="@styles/styles.css" />
+               </stylesheets>
+            </VBox>
+         </content>
+      </ScrollPane>
    </left>
 </BorderPane>
