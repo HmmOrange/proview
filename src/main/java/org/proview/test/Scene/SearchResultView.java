@@ -152,6 +152,8 @@ public class SearchResultView {
         // Rating slider
         ratingSlider.adjustLowValue(SearchUtils.getLowRating());
         ratingSlider.adjustHighValue(SearchUtils.getHighRating());
+        lowRatingLabel.setText(String.format("%.2f", SearchUtils.getLowRating()));
+        highRatingLabel.setText(String.format("%.2f", SearchUtils.getHighRating()));
 
         ratingSlider.lowValueProperty().addListener((obs, oldVal, newVal) -> {
             lowRatingLabel.setText(String.format("%.2f", newVal.doubleValue()));
