@@ -290,6 +290,8 @@ public class BookInfoView {
 
             if (PopUpWindowUtils.showConfirmation("Warning!", "Are you sure to borrow this book?")) {
                 IssueManagement.addIssue(UserManagement.getCurrentUser().getUsername(), bookId, duration);
+                PopUpWindowUtils.showNotification("Done!", "Please remember to pick up this book!",
+                        Alert.AlertType.INFORMATION);
                 this.onBackButtonClick(actionEvent);
             }
 
@@ -366,7 +368,8 @@ public class BookInfoView {
             PreparedStatement preparedStatement = AppMain.connection.prepareStatement(sql);
             preparedStatement.setInt(1, bookId);
             preparedStatement.execute();
-            PopUpWindowUtils.showNotification("Done!", "This book has been deleted.", Alert.AlertType.INFORMATION);
+            PopUpWindowUtils.showNotification("Done!", "This book has been deleted.",
+                    Alert.AlertType.INFORMATION);
             onBackButtonClick(actionEvent);
         }
     }
