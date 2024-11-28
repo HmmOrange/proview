@@ -17,18 +17,18 @@
         <fx:include source="NavBarView.fxml" />
     </top>
     <center>
-        <ScrollPane BorderPane.alignment="CENTER">
+        <ScrollPane stylesheets="@styles/DashboardView.css" BorderPane.alignment="CENTER">
             <content>
                 <VBox alignment="TOP_CENTER" prefHeight="637.0" prefWidth="1291.0" spacing="10.0">
                     <children>
-                        <Label text="Issues">
+                        <Label styleClass="header" text="Issues">
                             <font>
                                 <Font size="26.0" />
                             </font>
                         </Label>
-                        <HBox alignment="CENTER" prefHeight="401.0">
+                        <HBox alignment="CENTER" prefHeight="401.0" spacing="50.0">
                             <children>
-                                <LineChart fx:id="issuesCreatedNumberLineChart" legendVisible="false" title="Number of Issues You Have Created So Far">
+                                <LineChart fx:id="issuesCreatedNumberLineChart" legendVisible="false" styleClass="form" title="Number of Issues You Have Created So Far">
                                     <xAxis>
                                         <CategoryAxis label="Date" side="BOTTOM" />
                                     </xAxis>
@@ -36,17 +36,17 @@
                                         <NumberAxis forceZeroInRange="false" label="Issues" pickOnBounds="false" side="LEFT" tickLabelGap="1.0" upperBound="10.0" />
                                     </yAxis>
                                 </LineChart>
-                        <PieChart fx:id="issueStatusPieChart" title="Percentage of each Issue Current Status" />
+                        <PieChart fx:id="issueStatusPieChart" styleClass="form" title="Percentage of each Issue Current Status" />
                             </children>
                         </HBox>
-                        <Label text="Book">
+                        <Label styleClass="header" text="Book">
                             <font>
                                 <Font size="26.0" />
                             </font>
                         </Label>
-                        <HBox alignment="CENTER" prefHeight="401.0">
+                        <HBox alignment="CENTER" prefHeight="401.0" spacing="50.0">
                             <children>
-                        <BarChart fx:id="avgRatingBookCountBarChart" legendVisible="false" title="Number of Books in Each Range Of Average Rating">
+                        <BarChart fx:id="avgRatingBookCountBarChart" legendVisible="false" styleClass="form" title="Number of Books in Each Range Of Average Rating">
                           <xAxis>
                             <CategoryAxis label="Rating" side="BOTTOM" />
                           </xAxis>
@@ -54,7 +54,7 @@
                             <NumberAxis label="Books" minorTickLength="1.0" side="LEFT" tickUnit="1.0" upperBound="1.0" />
                           </yAxis>
                         </BarChart>
-                                <PieChart fx:id="booksBorrowedPieChart" title="Percentage of Books That You Have Borrowed So Far" />
+                                <PieChart fx:id="booksBorrowedPieChart" styleClass="form" title="Percentage of Books That You Have Borrowed So Far" />
                             </children>
                         </HBox>
                     </children>
