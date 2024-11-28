@@ -38,4 +38,5 @@
 
 .button:hover {
     -fx-background-color: -dark-blue;
+    -fx-cursor: hand;
 }

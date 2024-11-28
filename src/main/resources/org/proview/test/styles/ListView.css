@@ -15,6 +15,7 @@
 
 .cell-form:hover {
     -fx-background-color: rgba(168, 218, 220, 0.3);
+    -fx-cursor: hand;
 }
 
 .ikonli-font-icon {
@@ -23,4 +24,5 @@
 
 .ikonli-font-icon:hover {
     -fx-icon-size: 14;
+    -fx-cursor: hand;
 }

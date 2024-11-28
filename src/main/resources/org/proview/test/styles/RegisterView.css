@@ -42,6 +42,7 @@
 
 .button:hover {
     -fx-background-color: -dark-blue;
+    -fx-cursor: hand;
 }
 
 .back-button {
@@ -55,7 +56,9 @@
 
 .back-button:hover {
     -fx-background-color: -dark-blue;
+    -fx-cursor: hand;
 }
+
 /* Styling for the small link */
 .small-link {
     -fx-font-size: 12px;
