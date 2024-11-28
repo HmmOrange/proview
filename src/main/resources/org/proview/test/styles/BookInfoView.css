@@ -25,7 +25,8 @@
 #star-rating .ikonli-font-icon-hover {
     -fx-icon-size: 24;
     -fx-icon-code: "fas-star";
-    -fx-icon-color: cyan;
+    -fx-icon-color: darkorange;
+    -fx-cursor: hand;
 }
 
 #star-rating .hbox {
@@ -56,6 +57,7 @@
 
 .book-button:hover {
     -fx-background-color: -dark-blue;
+    -fx-cursor: hand;
 }
 
 .book-label {
