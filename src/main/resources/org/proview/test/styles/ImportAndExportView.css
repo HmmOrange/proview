@@ -1,0 +1,102 @@
+.form {
+    -fx-padding: 20px;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+}
+
+.tab-pane .tab:selected .ikonli-font-icon {
+    -fx-icon-color: #FFFFFF;
+}
+
+.tab-pane .tab .ikonli-font-icon {
+    -fx-icon-color: #000000;
+}
+
+.tab-pane:selected .ikonli-font-icon {
+    -fx-icon-color: #FFFFFF;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab-pane
+{
+    -fx-tab-min-width:90px;
+}
+
+.tab{
+    -fx-background-insets: 0 1 0 1,0,0;
+}
+.tab-pane .tab
+{
+    -fx-background-color: #f0f0f0;
+    -fx-border-radius: 6px;
+    -fx-border-color: transparent;
+    -fx-background-radius: 6px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+
+}
+
+.tab-pane .tab:selected
+{
+    -fx-background-color: -blue;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #000000;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #ffffff;
+}
+
+.table-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.choose-file-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.choose-file-button:hover {
+    -fx-background-color: -dark-blue;
+    -fx-text-fill: #ffffff;
+}
+
+.confirm-button {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: -red;
+    -fx-background-radius: 10px;
+    -fx-padding: 5px 10px;
+}
+
+.confirm-button:hover {
+    -fx-background-color: -dark-blue;
+    -fx-text-fill: #ffffff;
+}
+
+.confirm-button:disabled {
+    -fx-cursor: not-allowed;
+}

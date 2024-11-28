@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
@@ -7,21 +8,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ProfileBookListView">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="950.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ProfileBookListView">
    <children>
-      <HBox prefWidth="200.0" spacing="5.0">
+      <HBox prefWidth="980.0" spacing="5.0">
          <children>
             <VBox>
                <children>
                   <Label prefHeight="30.0" prefWidth="191.0" text="Borrowing">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox fx:id="borrowingListVBox" prefHeight="200.0" prefWidth="475.0">
+                  <VBox fx:id="borrowingListVBox" prefHeight="200.0" prefWidth="450.0" spacing="10.0">
                      <VBox.margin>
                         <Insets left="10.0" />
                      </VBox.margin></VBox>
@@ -31,13 +32,13 @@
                <children>
                   <Label prefHeight="30.0" prefWidth="191.0" text="Favourite">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox fx:id="favouriteListVBox" prefHeight="200.0" prefWidth="475.0">
+                  <VBox fx:id="favouriteListVBox" prefHeight="200.0" prefWidth="450.0" spacing="10.0">
                      <VBox.margin>
                         <Insets left="10.0" />
                      </VBox.margin></VBox>
@@ -51,13 +52,13 @@
                <children>
                   <Label prefHeight="30.0" prefWidth="191.0" text="Overdue">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                      <VBox.margin>
                         <Insets bottom="10.0" left="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox fx:id="overdueListVBox" prefHeight="200.0" prefWidth="475.0">
+                  <VBox fx:id="overdueListVBox" prefHeight="200.0" prefWidth="450.0" spacing="10.0">
                      <VBox.margin>
                         <Insets left="10.0" />
                      </VBox.margin></VBox>
@@ -67,13 +68,13 @@
                <children>
                   <Label prefHeight="30.0" prefWidth="191.0" text="Past Issues">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox fx:id="pastIssuesListVBox" prefHeight="200.0" prefWidth="475.0">
+                  <VBox fx:id="pastIssuesListVBox" prefHeight="200.0" prefWidth="450.0" spacing="10.0">
                      <VBox.margin>
                         <Insets left="10.0" />
                      </VBox.margin></VBox>

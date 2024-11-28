@@ -3,6 +3,7 @@
     -fx-padding: 20px;
     -fx-background-color: #ffffff;
     -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
 }
 
@@ -53,9 +54,19 @@
 }
 
 .range-slider {
+
 }
 
 .menu {
     -fx-max-height: 200px;
     -fx-overflow-y: auto;
+}
+
+.no-border-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+
 }
