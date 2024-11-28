@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -7,8 +9,10 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.ImportAndExportView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.ImportAndExportView">
     <top>
         <fx:include source="NavBarView.fxml" />
     </top>
@@ -20,30 +24,76 @@
         <tabs>
           <Tab text="Import">
                <content>
-                  <VBox fx:id="importTabVbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                  <VBox fx:id="importTabVbox" alignment="CENTER" prefHeight="200.0" prefWidth="1152.0" spacing="20.0">
                      <children>
-                        <Label fx:id="importResultLabel" />
-                        <ComboBox fx:id="importTableComboBox" prefWidth="150.0" promptText="Table" />
-                        <Button mnemonicParsing="false" onAction="#onDownloadTemplateFileClicked" text="Download Template File" />
-                        <Button mnemonicParsing="false" onAction="#onChooseCSVFileButtonClicked" text="Choose CSV File" />
-                        <Button fx:id="importConfirmButton" mnemonicParsing="false" onAction="#onImportConfirmButtonClicked" text="Confirm" />
+                        <VBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0" spacing="10.0" styleClass="form">
+                           <children>
+                              <Label fx:id="importResultLabel" contentDisplay="CENTER" text="Please choose a table!">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="importTableComboBox" prefWidth="200.0" promptText="Table" styleClass="table-button">
+                                 <VBox.margin>
+                                    <Insets bottom="30.0" />
+                                 </VBox.margin>
+                              </ComboBox>
+                              <Button mnemonicParsing="false" onAction="#onDownloadTemplateFileClicked" prefWidth="200.0" styleClass="choose-file-button" text="Download Template File" />
+                              <Button mnemonicParsing="false" onAction="#onChooseCSVFileButtonClicked" prefWidth="200.0" styleClass="choose-file-button" text="Choose CSV File" />
+                              <Button fx:id="importConfirmButton" mnemonicParsing="false" onAction="#onImportConfirmButtonClicked" prefWidth="200.0" styleClass="confirm-button" text="Confirm" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="50.0" left="200.0" right="200.0" top="50.0" />
+                           </VBox.margin>
+                        </VBox>
                      </children>
+                     <padding>
+                        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                     </padding>
                   </VBox>
                </content>
+               <graphic>
+                  <FontIcon iconLiteral="fas-file-import" />
+               </graphic>
           </Tab>
           <Tab text="Export">
                <content>
                   <VBox fx:id="exportTabVbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                      <children>
-                        <Label fx:id="exportResultLabel" />
-                        <ComboBox fx:id="exportTableComboBox" prefWidth="150.0" promptText="Table" />
-                        <Button mnemonicParsing="false" onAction="#onChooseDirectoryButtonClicked" text="Choose Directory" />
-                        <Button fx:id="exportConfirmButton" mnemonicParsing="false" onAction="#onExportConfirmButtonClicked" text="Confirm" />
+                        <VBox alignment="CENTER" prefHeight="412.0" prefWidth="752.0" spacing="10.0" styleClass="form">
+                           <children>
+                              <Label fx:id="exportResultLabel" text="Please choose a table!">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="exportTableComboBox" prefWidth="200.0" promptText="Table" styleClass="table-button">
+                                 <VBox.margin>
+                                    <Insets bottom="30.0" />
+                                 </VBox.margin>
+                              </ComboBox>
+                              <Button mnemonicParsing="false" onAction="#onChooseDirectoryButtonClicked" prefWidth="200.0" styleClass="choose-file-button" text="Choose Directory" />
+                              <Button fx:id="exportConfirmButton" mnemonicParsing="false" onAction="#onExportConfirmButtonClicked" prefWidth="200.0" styleClass="confirm-button" text="Confirm" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="50.0" left="250.0" right="250.0" top="50.0" />
+                           </VBox.margin>
+                        </VBox>
                      </children>
                   </VBox>
                </content>
+               <graphic>
+                  <FontIcon iconLiteral="fas-file-export" />
+               </graphic>
           </Tab>
         </tabs>
+         <stylesheets>
+            <URL value="@styles/ImportAndExportView.css" />
+            <URL value="@styles/styles.css" />
+         </stylesheets>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </TabPane>
    </center>
 </BorderPane>

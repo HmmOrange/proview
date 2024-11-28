@@ -17,7 +17,7 @@
       <fx:include source="NavBarView.fxml" />
    </top>
    <left>
-      <ScrollPane hbarPolicy="NEVER" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+      <ScrollPane hbarPolicy="NEVER" prefWidth="320.0" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
          <content>
             <VBox spacing="10.0">
                <children>
@@ -76,6 +76,9 @@
                </children>
             </VBox>
          </content>
+         <BorderPane.margin>
+            <Insets right="10.0" />
+         </BorderPane.margin>
       </ScrollPane>
    </left>
    <center>
@@ -95,6 +98,9 @@
                </children>
             </VBox>
          </content>
+         <BorderPane.margin>
+            <Insets left="-10.0" />
+         </BorderPane.margin>
       </ScrollPane>
    </center>
    <stylesheets>

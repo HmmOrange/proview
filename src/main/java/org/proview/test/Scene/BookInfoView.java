@@ -1,6 +1,5 @@
 package org.proview.test.Scene;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -21,13 +21,13 @@ import org.proview.modal.Issue.IssueManagement;
 import org.proview.modal.Review.Review;
 import org.proview.modal.Review.ReviewManagement;
 import org.proview.modal.Tag.Tag;
-import org.proview.modal.Tag.TagManagement;
 import org.proview.modal.User.NormalUser;
 import org.proview.modal.User.User;
 import org.proview.modal.User.UserManagement;
 import org.proview.utils.PopUpWindowUtils;
 import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
+import org.proview.utils.Utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -55,7 +55,7 @@ public class BookInfoView {
     public Label issueLabel;
     public TextArea reviewTextArea;
     public ListView<Review> reviewListView;
-    public Button starButton;
+    public Button heartButton;
     public BorderPane borderPane;
     public Label borrowingProblemLabel;
     public HBox starRatingBar;
@@ -66,10 +66,15 @@ public class BookInfoView {
     public Button submitReviewButton;
     public Button loadPrevReviewButton;
     public Button removePrevReviewButton;
-    public HBox tagListHBox;
     public Button deleteButton;
     public Label errorLabel;
     public Label daysLabel;
+    public FlowPane tagListFlowPane;
+    public Label authorValueLabel;
+    public Label copiesValueLabel;
+    public Label ratingValueLabel;
+    public Label issuesValueLabel;
+    public Label descriptionValueLabel;
 
     private int starMouseEntered = 0;
     private int bookId;
@@ -88,16 +93,15 @@ public class BookInfoView {
     private void reloadTagList() throws SQLException, IOException {
         ObservableList<Tag> tagList = SQLUtils.getBookTags(bookId);
         for (Tag tag : tagList) {
-            tagListHBox.getChildren().add(tag.getLabel());
+            tagListFlowPane.getChildren().add(tag.getLabel());
         }
     }
 
     private void reloadRatingLabel() throws SQLException {
         BookLib book = SQLUtils.getBook(bookId);
         assert book != null;
-        ratingLabel.setText(
-                ratingLabel.getText().split(" ", 2)[0] // If the label is already filled, only get the first default word (which in fxml is "Ratings:")
-                        + " " + String.format("%.2f", book.getRating())
+        ratingValueLabel.setText(
+                String.format("%.2f", book.getRating())
                         + " / 5.0 from "
                         + book.getRatingCount() + " rating" + (book.getRatingCount() != 1 ? "s" : "")
         );
@@ -121,15 +125,15 @@ public class BookInfoView {
 
         errorLabel.setText("");
 
-        // Set star button
-        FontIcon fontIcon = new FontIcon();
+        // Set heart button
+        FontIcon fontIcon = new FontIcon("far-heart");
         fontIcon.getStyleClass().add("ikonli-font-icon");
-        starButton.setGraphic(fontIcon);
         if (SQLUtils.isFavouriteBook(UserManagement.getCurrentUser().getId(), bookId))
-            starButton.setId("star-icon-clicked");
+            heartButton.setId("heart-icon-clicked");
         else
-            starButton.setId("star-icon-default");
-        starButton.applyCss();
+            heartButton.setId("heart-icon-default");
+        heartButton.setGraphic(fontIcon);
+        heartButton.applyCss();
     }
 
     public void setData(int id) throws IOException, SQLException {
@@ -137,26 +141,19 @@ public class BookInfoView {
         BookLib book = Objects.requireNonNull(SQLUtils.getBook(id));
 
         titleLabel.setText(book.getTitle());
-        authorLabel.setText(authorLabel.getText() + " " + book.getAuthor());
-        descriptionLabel.setText(descriptionLabel.getText() + " " + book.getDescription());
-        copiesLabel.setText(copiesLabel.getText() + " " + book.getCopiesAvailable());
+        authorValueLabel.setText(book.getAuthor());
+        descriptionValueLabel.setText(book.getDescription());
+        copiesValueLabel.setText(String.valueOf(book.getCopiesAvailable()));
         reloadTagList();
         reloadRatingLabel();
-        issueLabel.setText(issueLabel.getText() + " " + book.getIssueCount());
+        issuesValueLabel.setText(String.valueOf(book.getIssueCount()));
 
-        InputStream stream = new FileInputStream(book.getImagePath());
-        Image image = new Image(stream);
-        coverImage.setImage(image);
-        coverImage.setFitWidth(250);
-        coverImage.setPreserveRatio(true);
-        coverImage.setSmooth(true);
-        coverImage.setCache(true);
-        stream.close();
+        Utils.insertBookImage(coverImage, bookId, 250, 375);
 
         reloadReviewList();
 
         if (SQLUtils.isFavouriteBook(UserManagement.getCurrentUser().getId(), id)) {
-            starButton.setId("star-icon-clicked");
+            heartButton.setId("heart-icon-clicked");
         }
         if (UserManagement.getCurrentUser() instanceof NormalUser
                 && SQLUtils.ifUserBorrowingBook(UserManagement.getCurrentUser().getId(), id)) {
@@ -312,12 +309,12 @@ public class BookInfoView {
         AppMain.window.centerOnScreen();
     }
 
-    public void onStarButtonClicked(ActionEvent mouseEvent) throws SQLException {
-        if (starButton.getId().equals("star-icon-default")) {
-            starButton.setId("star-icon-clicked");
+    public void onHeartButtonClicked(ActionEvent mouseEvent) throws SQLException {
+        if (heartButton.getId().equals("heart-icon-default")) {
+            heartButton.setId("heart-icon-clicked");
             SQLUtils.addFavourite(UserManagement.getCurrentUser().getId(), this.bookId);
         } else {
-            starButton.setId("star-icon-default");
+            heartButton.setId("heart-icon-default");
             SQLUtils.removeFavourite(UserManagement.getCurrentUser().getId(), this.bookId);
         }
     }
@@ -373,6 +370,4 @@ public class BookInfoView {
             onBackButtonClick(actionEvent);
         }
     }
-
-
 }

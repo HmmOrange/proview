@@ -24,6 +24,9 @@
             <font>
                <Font size="14.0" />
             </font>
+            <VBox.margin>
+               <Insets bottom="-20.0" top="-15.0" />
+            </VBox.margin>
          </Label>
          <HBox prefHeight="100.0" prefWidth="200.0">
             <children>

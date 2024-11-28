@@ -12,3 +12,8 @@
     -fx-background-color: -dark-blue;
     -fx-text-fill: #ffffff;
 }
+
+.nav-button-active {
+    -fx-background-color: -dark-blue;
+    -fx-text-fill: #ffffff;
+}

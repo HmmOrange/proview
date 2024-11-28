@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
@@ -9,84 +10,144 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
+<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
    <center>
       <ScrollPane hbarPolicy="NEVER" prefHeight="1969.0" prefWidth="954.0">
          <content>
-            <VBox spacing="10.0">
+            <VBox spacing="5.0">
                <children>
-                  <HBox alignment="CENTER_LEFT">
+                  <HBox alignment="BOTTOM_LEFT">
                      <children>
-                        <Label fx:id="titleLabel" prefHeight="88.0" prefWidth="804.0" text="Title">
+                        <Label fx:id="titleLabel" prefHeight="68.0" prefWidth="845.0" styleClass="book-title" text="Title">
                            <font>
                               <Font size="48.0" />
                            </font>
                         </Label>
-                        <Button fx:id="starButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onStarButtonClicked" prefHeight="40.0" prefWidth="84.0" text="Button" />
+                        <Button fx:id="heartButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onHeartButtonClicked" prefHeight="40.0" prefWidth="55.0" styleClass="fav-button" text="Button">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin></Button>
                      </children>
                   </HBox>
                   <Line endX="800.0" startX="-100.0" />
-                  <Label fx:id="authorLabel" prefHeight="35.0" prefWidth="900.0" text="Authors:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
+                  <HBox styleClass="book-hbox">
+                     <children>
+                        <Label fx:id="authorLabel" prefHeight="35.0" text="Authors:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="book-label" />
+                              <String fx:value="book-label-name" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="authorValueLabel" styleClass="book-label" text="Author abc" wrapText="true" />
+                     </children>
+                  </HBox>
                   <HBox>
                      <children>
                         <Label fx:id="tagLabel" prefHeight="35.0" prefWidth="60.0" text="Tags:">
                            <font>
                               <Font size="24.0" />
                            </font>
+                           <styleClass>
+                              <String fx:value="book-label" />
+                              <String fx:value="book-label-name" />
+                           </styleClass>
                         </Label>
-                        <HBox fx:id="tagListHBox" alignment="CENTER_LEFT" prefWidth="800.0" spacing="10.0" />
+                        <FlowPane fx:id="tagListFlowPane" alignment="CENTER_LEFT" hgap="5.0" prefHeight="35.0" prefWidth="600.0" vgap="5.0">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </FlowPane>
                      </children>
                   </HBox>
-                  <Label fx:id="copiesLabel" prefHeight="35.0" prefWidth="900.0" text="Copies available:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="ratingLabel" prefHeight="35.0" prefWidth="900.0" text="Rating:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="issueLabel" prefHeight="35.0" prefWidth="900.0" text="Borrow count:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="descriptionLabel" alignment="TOP_LEFT" prefWidth="900.0" text="Description:" wrapText="true">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="reviewLabel" prefHeight="88.0" prefWidth="850.0" text="Review">
-                     <font>
-                        <Font size="48.0" />
-                     </font>
-                  </Label>
+                  <HBox>
+                     <children>
+                        <Label fx:id="copiesLabel" prefHeight="35.0" text="Copies available:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="book-label" />
+                              <String fx:value="book-label-name" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="copiesValueLabel" styleClass="book-label" text="123" wrapText="true" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label fx:id="ratingLabel" prefHeight="35.0" text="Rating:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="book-label" />
+                              <String fx:value="book-label-name" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="ratingValueLabel" styleClass="book-label" text="4.5 / 5.0 from 2 ratings" wrapText="true" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label fx:id="issueLabel" prefHeight="35.0" text="Borrow count:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="book-label" />
+                              <String fx:value="book-label-name" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="issuesValueLabel" styleClass="book-label" text="3" wrapText="true" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label fx:id="descriptionLabel" alignment="TOP_LEFT" text="Description:" wrapText="true">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="book-label" />
+                              <String fx:value="book-label-name" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="descriptionValueLabel" prefWidth="600.0" styleClass="book-label" text="abc&#10;&#10;&#10;" wrapText="true" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label fx:id="reviewLabel" prefWidth="850.0" styleClass="book-subtitle" text="Reviews">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                   <Line endX="800.0" startX="-100.0" />
                   <VBox>
                      <children>
-                        <HBox fx:id="ratingHBox" prefHeight="45.0" prefWidth="800.0" styleClass="hbox">
+                        <HBox fx:id="ratingHBox" prefWidth="800.0" styleClass="hbox">
                            <children>
-                              <Label text="Rate: ">
+                              <Label minWidth="54.0" prefHeight="35.0" prefWidth="60.0" text="Rate: ">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" />
                                  </HBox.margin>
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font size="20.0" />
                                  </font>
                               </Label>
                               <HBox fx:id="starRatingBar" prefHeight="35.0" prefWidth="120.0">
@@ -104,6 +165,18 @@
                         </HBox>
                         <VBox fx:id="reviewHBox" alignment="TOP_RIGHT" styleClass="hbox">
                            <children>
+                              <HBox>
+                                 <children>
+                                    <Label text="Submit a review:">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                              </HBox>
                               <TextArea fx:id="reviewTextArea" prefHeight="213.0" prefWidth="800.0" wrapText="true">
                                  <VBox.margin>
                                     <Insets left="10.0" right="10.0" top="10.0" />
@@ -111,9 +184,9 @@
                               </TextArea>
                               <HBox alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="820.0" spacing="10.0">
                                  <children>
-                                    <Button fx:id="removePrevReviewButton" mnemonicParsing="false" onAction="#onRemovePrevReviewButtonClicked" text="Remove Previous Review" />
-                                    <Button fx:id="loadPrevReviewButton" mnemonicParsing="false" onAction="#onLoadPrevReviewButtonClicked" text="Load Previous Review" />
-                                    <Button fx:id="submitReviewButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSubmitReviewButtonClick" text="Submit/Repost Review">
+                                    <Button fx:id="removePrevReviewButton" mnemonicParsing="false" onAction="#onRemovePrevReviewButtonClicked" styleClass="book-button" text="Remove Previous Review" />
+                                    <Button fx:id="loadPrevReviewButton" mnemonicParsing="false" onAction="#onLoadPrevReviewButtonClicked" styleClass="book-button" text="Load Previous Review" />
+                                    <Button fx:id="submitReviewButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSubmitReviewButtonClick" styleClass="book-button" text="Submit/Repost Review">
                                        <HBox.margin>
                                           <Insets right="10.0" />
                                        </HBox.margin>
@@ -137,30 +210,33 @@
       </ScrollPane>
    </center>
    <left>
-      <AnchorPane prefHeight="635.0" prefWidth="346.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefWidth="300.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="coverImage" fitHeight="480.0" fitWidth="300.0" layoutX="24.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="coverImage" fitHeight="259.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                <viewport>
                   <Rectangle2D />
                </viewport>
+               <VBox.margin>
+                  <Insets bottom="50.0" />
+               </VBox.margin>
             </ImageView>
-            <Button fx:id="editButton" layoutX="98.0" layoutY="510.0" mnemonicParsing="false" onAction="#onEditButtonClick" prefHeight="25.0" prefWidth="152.0" text="Edit" />
-            <HBox alignment="CENTER" layoutX="99.0" layoutY="548.0" prefHeight="25.0" prefWidth="153.0" spacing="10.0">
-               <children>
-                  <TextField fx:id="durationField" alignment="CENTER" prefHeight="25.0" prefWidth="107.0" promptText="Duration" />
-                  <Label fx:id="daysLabel" text="days" />
-               </children>
-            </HBox>
-            <Label fx:id="borrowingProblemLabel" alignment="CENTER" layoutX="70.0" layoutY="535.0" prefHeight="17.0" prefWidth="209.0" wrapText="true" />
-            <Button fx:id="backButton" layoutX="99.0" layoutY="585.0" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="25.0" prefWidth="149.0" text="Back" textAlignment="CENTER" />
-            <Button fx:id="deleteButton" layoutX="100.0" layoutY="548.0" mnemonicParsing="false" onAction="#onDeleteButtonClicked" prefHeight="25.0" prefWidth="147.0" text="Delete" />
-            <HBox alignment="CENTER" layoutX="4.0" layoutY="477.0" prefHeight="17.0" prefWidth="341.0">
+            <HBox alignment="CENTER" prefHeight="17.0" prefWidth="341.0">
                <children>
                   <Label fx:id="errorLabel" text="Error" textFill="RED" />
                </children>
             </HBox>
+            <Label fx:id="borrowingProblemLabel" alignment="CENTER" prefHeight="17.0" prefWidth="209.0" wrapText="true" />
+            <Button fx:id="editButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditButtonClick" prefHeight="25.0" prefWidth="152.0" styleClass="book-button" text="Edit" />
+            <HBox alignment="CENTER" prefHeight="25.0" prefWidth="153.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="durationField" alignment="CENTER" prefHeight="25.0" prefWidth="68.0" promptText="Duration" styleClass="input" />
+                  <Label fx:id="daysLabel" text="days" />
+               </children>
+            </HBox>
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onDeleteButtonClicked" prefHeight="25.0" prefWidth="147.0" styleClass="book-button" text="Delete" />
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="25.0" prefWidth="149.0" styleClass="book-button" text="Back" textAlignment="CENTER" />
          </children>
-      </AnchorPane>
+      </VBox>
    </left>
    <stylesheets>
       <URL value="@styles/styles.css" />
