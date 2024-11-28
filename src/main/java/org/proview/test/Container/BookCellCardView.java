@@ -23,7 +23,7 @@ public class BookCellCardView extends CellView {
 
     // For Google books
     @Override
-    public void setData(String title, String authors, String imageUrl, String tags, String previewLink) throws IOException, SQLException {
+    public void setData(String title, String authors, String imageUrl, String tags, String previewLink) throws SQLException, IOException {
         super.previewLink = previewLink;
         super.setData(
             titleLabel, title,
@@ -38,7 +38,7 @@ public class BookCellCardView extends CellView {
 
     // For library books
     @Override
-    public void setData(int id, String title, String author, double rating, int issueCount, int copiesAvailable) throws IOException, SQLException {
+    public void setData(int id, String title, String author, double rating, int issueCount, int copiesAvailable) throws SQLException, IOException {
         super.id = id;
         super.setData(
             titleLabel, title,
