@@ -96,11 +96,13 @@ public class NavBarView {
         ProfileView.resetBookList();
 
         UserManagement.setCurrentViewButton(null);
+        UserManagement.setCurrentAdminViewButton(null);
         Utils.switchScene("LoginView.fxml");
     }
 
     public void onSearchButtonClick(ActionEvent actionEvent) throws IOException {
         UserManagement.setCurrentViewButton(emptyButton);
+        UserManagement.setCurrentAdminViewButton(null);
         String curQuery = bookSearchBar.getText();
         if (curQuery != null) {
             SearchUtils.setCurQuery(curQuery);
@@ -110,32 +112,38 @@ public class NavBarView {
 
     public void onLibraryButtonClick(ActionEvent actionEvent) throws IOException {
         UserManagement.setCurrentViewButton(libraryButton);
+        UserManagement.setCurrentAdminViewButton(null);
         Utils.switchScene("BookManagForAdminView.fxml");
     }
 
     public void onIssueButtonClick(ActionEvent actionEvent) throws IOException {
         UserManagement.setCurrentViewButton(issueButton);
+        UserManagement.setCurrentAdminViewButton(null);
         Utils.switchScene("IssueListView.fxml");
     }
 
     public void onHomeButtonClick(ActionEvent actionEvent) throws IOException {
         UserManagement.setCurrentViewButton(homeButton);
+        UserManagement.setCurrentAdminViewButton(null);
         Utils.switchScene("HomeView.fxml");
     }
 
     public void onProfileButtonClick(MouseEvent mouseClick) throws IOException {
         UserManagement.setCurrentViewButton(emptyButton);
+        UserManagement.setCurrentAdminViewButton(null);
         ProfileView.setUser(UserManagement.getCurrentUser());
         Utils.switchScene("ProfileView.fxml");
     }
 
     public void onGameButtonClicked(ActionEvent actionEvent) throws IOException {
         UserManagement.setCurrentViewButton(gameButton);
+        UserManagement.setCurrentAdminViewButton(null);
         Utils.switchScene("StartGameView.fxml");
     }
 
     public void onDashboardButtonClicked(ActionEvent actionEvent) throws IOException {
         UserManagement.setCurrentViewButton(dashboardButton);
+        UserManagement.setCurrentAdminViewButton(null);
         if (UserManagement.getCurrentUser() instanceof NormalUser) {
             Utils.switchScene("NormalUserDashboardView.fxml");
         }
