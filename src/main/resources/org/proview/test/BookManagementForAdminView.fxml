@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
@@ -9,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookManagementForAdminView">
+<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookManagementForAdminView">
     <top>
         <fx:include source="NavBarView.fxml" />
     </top>
@@ -17,29 +19,32 @@
         <fx:include source="AdminManagementNavBarView.fxml" />
     </left>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" stylesheets="@styles/styles.css" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="126.0" prefWidth="1193.0" spacing="20.0">
+            <HBox alignment="CENTER" prefHeight="126.0" spacing="100.0">
                <children>
-                  <VBox alignment="CENTER" prefWidth="239.0">
+                  <VBox alignment="CENTER" prefWidth="170.0" styleClass="form">
                      <children>
                         <Label fx:id="totalBooksLabel" text="10">
                            <font>
-                              <Font size="62.0" />
+                              <Font size="40.0" />
                            </font>
                         </Label>
-                        <Label text="Total">
+                        <Label text="Total books">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
                      </children>
+                     <HBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </HBox.margin>
                   </VBox>
-                  <VBox alignment="CENTER" prefWidth="239.0">
+                  <VBox alignment="CENTER" prefHeight="0.0" prefWidth="170.0" styleClass="form">
                      <children>
                         <Label fx:id="reviewsLabel" text="10">
                            <font>
-                              <Font size="62.0" />
+                              <Font size="40.0" />
                            </font>
                         </Label>
                         <Label text="Reviews">
@@ -48,12 +53,15 @@
                            </font>
                         </Label>
                      </children>
+                     <HBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </HBox.margin>
                   </VBox>
-                  <VBox alignment="CENTER" prefWidth="239.0">
+                  <VBox alignment="CENTER" prefHeight="0.0" prefWidth="170.0" styleClass="form">
                      <children>
                         <Label fx:id="tagsLabel" text="10">
                            <font>
-                              <Font size="62.0" />
+                              <Font size="40.0" />
                            </font>
                         </Label>
                         <Label text="Tags">
@@ -62,13 +70,16 @@
                            </font>
                         </Label>
                      </children>
+                     <HBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </HBox.margin>
                   </VBox>
                </children>
             </HBox>
             <HBox prefHeight="25.0" prefWidth="1193.0" spacing="20.0">
                <children>
-                  <ComboBox fx:id="columnComboBox" prefHeight="25.0" prefWidth="150.0" promptText="Column" />
-                  <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="1000.0" promptText="Search" />
+                  <ComboBox fx:id="columnComboBox" prefHeight="25.0" prefWidth="166.0" promptText="Column" styleClass="table-button" />
+                  <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="998.0" promptText="Search" styleClass="text-input-field" />
                </children>
             </HBox>
             <TableView fx:id="booksTableView" prefHeight="487.0" prefWidth="1193.0">
@@ -77,6 +88,10 @@
                </columnResizePolicy>
             </TableView>
          </children>
+         <stylesheets>
+            <URL value="@styles/styles.css" />
+            <URL value="@styles/TableStyle.css" />
+         </stylesheets>
       </VBox>
    </center>
 </BorderPane>
