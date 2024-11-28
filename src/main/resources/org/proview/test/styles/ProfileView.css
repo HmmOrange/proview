@@ -32,4 +32,5 @@
 
 .view-button:hover .ikonli-font-icon {
     -fx-icon-size: 24;
+    -fx-cursor: hand;
 }

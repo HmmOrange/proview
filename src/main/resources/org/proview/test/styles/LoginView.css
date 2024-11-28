@@ -38,6 +38,7 @@
 
 .button:hover {
     -fx-background-color: -dark-blue;
+    -fx-cursor: hand;
 }
 
 .sign-up-button {
@@ -51,6 +52,7 @@
 
 .sign-up-button:hover {
     -fx-background-color: -dark-blue;
+    -fx-cursor: hand;
 }
 
 .small-link {

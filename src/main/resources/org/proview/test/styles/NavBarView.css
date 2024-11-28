@@ -45,6 +45,7 @@
 .avatar-circle:hover {
     -fx-stroke-width: 1;
     -fx-stroke: -white;
+    -fx-cursor: hand;
 }
 
 .search-input {
@@ -85,4 +86,5 @@
 .logout-button:hover {
     -fx-background-color: -dark-blue;
     -fx-text-fill: #ffffff;
+    -fx-cursor: hand;
 }

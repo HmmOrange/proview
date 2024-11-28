@@ -1,5 +1,6 @@
 package org.proview.modal.Activity;
 
+import com.github.marlonlom.utilities.timeago.TimeAgo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -78,6 +79,7 @@ public class ActivityManagement {
     }
 
     public static ObservableList<Activity> getReviewActivityList() throws SQLException {
+        // Activity.Type.REVIEW
         ObservableList<Review> reviewObservableList = SQLUtils.getReviewList();
         ObservableList<Activity> activityObservableList = FXCollections.observableArrayList();
         for (var i : reviewObservableList) {
@@ -88,12 +90,14 @@ public class ActivityManagement {
             activityObservableList.add(new Activity(book_id, user_id, description, timestamp, Activity.Type.REVIEW));
         }
 
+
+        // Activity.Type.RATING
         ObservableList<Rating> ratingObservableList = RatingManagement.getRatingListFromUser
                 (-1);
         for (var r : ratingObservableList) {
             int userId = r.getUserId();
             int bookId = r.getBookId();
-            String description = "Rated this book %d star%s".formatted(r.getStar(), (r.getStar()>1) ? "s." : ".");
+            String description = String.valueOf(r.getStar());
             Timestamp timestamp = r.getTimeAdded();
             activityObservableList.add(new Activity(bookId, userId, description, timestamp, Activity.Type.RATING));
         }
@@ -128,20 +132,10 @@ public class ActivityManagement {
                 Timestamp current = new Timestamp(System.currentTimeMillis());
                 Timestamp dueTime = new Timestamp(start_time.getTime() + duration * 1000 * 3600 * 24);
                 if (dueTime.getTime() < current.getTime()) {
-                    activityObservableList.add(new Activity(bookId, userId, description, dueTime, Activity.Type.OVERDUE));
+                    activityObservableList.add(new Activity(bookId, userId, description, current, Activity.Type.OVERDUE));
                 } else if (dueTime.getTime() - current.getTime() < 24 * 3600 * 1000) {
-                    String dueTimeStr = dueTime.toString();
-                    if (dueTimeStr.contains(" ")) {
-                        dueTimeStr = dueTimeStr.replace(" ", "T");
-                    }
-                    LocalDateTime dueDateTime = LocalDateTime.parse(dueTimeStr);
-                    dueDateTime = dueDateTime.minusDays(1);
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss.S");
-                    String tempFormattedDueDateTime = dueDateTime.format(formatter);
-                    StringBuilder formattedDueDateTime = new StringBuilder(tempFormattedDueDateTime);
-                    formattedDueDateTime.delete(17, 19);
-                    description = String.format("Post at: %s", formattedDueDateTime.toString());
-                    activityObservableList.add(new Activity(bookId, userId, description, dueTime, Activity.Type.WARNING));
+                    description = "Due " + TimeAgo.using(dueTime.getTime()).replace("about ", "");
+                    activityObservableList.add(new Activity(bookId, userId, description, current, Activity.Type.WARNING));
                 }
             }
         }
@@ -159,7 +153,7 @@ public class ActivityManagement {
         ObservableList<Rating> ratingObservableList = RatingManagement.getRatingListFromUser(userId);
         for (var r : ratingObservableList) {
             int bookId = r.getBookId();
-            String description = "You rated this book %d star%s".formatted(r.getStar(), (r.getStar()>1) ? "s." : ".");
+            String description = String.valueOf(r.getStar());
             Timestamp timestamp = r.getTimeAdded();
             activityObservableList.add(new Activity(bookId, userId, description, timestamp, Activity.Type.RATING));
         }

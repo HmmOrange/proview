@@ -9,24 +9,6 @@ import org.proview.modal.Book.BookManagement;
 import java.sql.SQLException;
 
 public class HomeView {
-    private enum Size {
-        BOOK_CELL_HEIGHT(125),
-        ACTIVITY_CELL_HEIGHT(75),
-        BOOK_LISTVIEW_WIDTH(400),
-        RECENT_ACTIVITY_LISTVIEW_WIDTH(350),
-        PADDING(10);
-
-        private final int value;
-
-        Size(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-    }
-
     public VBox trendingBookListVBox;
     public VBox topRatedBookListVBox;
     public VBox recentReviewListVBox;
