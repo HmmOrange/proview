@@ -1,13 +1,13 @@
-#star-icon-default .ikonli-font-icon {
-    -fx-icon-size: 32;
-    -fx-icon-code: "far-star";
-    -fx-icon-color: white;
+#heart-icon-default .ikonli-font-icon {
+    -fx-icon-code: "far-heart";
+    -fx-icon-size: 40;
+    -fx-icon-color: -dark-blue;
 }
 
-#star-icon-clicked .ikonli-font-icon {
-    -fx-icon-size: 32;
-    -fx-icon-code: "fas-star";
-    -fx-icon-color: #ffcc00;
+#heart-icon-clicked .ikonli-font-icon {
+    -fx-icon-code: "fas-heart"!important;
+    -fx-icon-size: 40!important;
+    -fx-icon-color: -red!important;
 }
 
 #star-rating .ikonli-font-icon-default {
@@ -38,13 +38,56 @@
     -fx-border-radius: 5;
 }
 
-.button {
+.book-button {
     -fx-font-size: 12px;
     -fx-text-fill: white;
     -fx-background-color: -blue;
     -fx-background-radius: 10px;
+    -fx-cursor: hand;
 }
 
-.button:hover {
+.fav-button {
+    -fx-font-size: 0;
+    -fx-text-fill: transparent!important;
+    -fx-background-color: transparent!important;
+    -fx-background-radius: 0;
+    -fx-cursor: hand;
+}
+
+.book-button:hover {
     -fx-background-color: -dark-blue;
+}
+
+.book-label {
+    -fx-font-size: 20px;
+    -fx-min-width: 200px;
+}
+
+.book-label-name {
+    -fx-font-weight: bold;
+}
+
+.book-hbox {
+    -fx-alignment: center-left;
+}
+
+.book-title {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 0 0 0;
+}
+
+.book-subtitle {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-padding: 20px 0 0 0;
+}
+
+.input {
+    -fx-font-size: 12px;
+    -fx-padding: 3 5 3 5;
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #ced4da;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
 }

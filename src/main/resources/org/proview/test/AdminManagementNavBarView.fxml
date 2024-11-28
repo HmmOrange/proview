@@ -7,28 +7,28 @@
 
 <VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="148.0" spacing="10.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.AdminManagementNavBarView">
    <children>
-      <Button mnemonicParsing="false" onAction="#onAddDeleteButtonClick" prefWidth="105.0" text="Add Book">
+      <Button fx:id="addBookButton" mnemonicParsing="false" onAction="#onAddDeleteButtonClick" prefWidth="105.0" text="Add Book">
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </Button>
-      <Button mnemonicParsing="false" onAction="#onImportExportButtonClicked" prefWidth="105.0" text="Import/Export" />
-      <Button mnemonicParsing="false" onAction="#onIssuesButtonClick" prefWidth="105.0" text="Issues">
+      <Button fx:id="importExportButton" mnemonicParsing="false" onAction="#onImportExportButtonClicked" prefWidth="105.0" text="Import/Export" />
+      <Button fx:id="issuesButtons" mnemonicParsing="false" onAction="#onIssuesButtonClick" prefWidth="105.0" text="Issues">
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </Button>
-      <Button mnemonicParsing="false" onAction="#onUsersButtonClick" prefWidth="105.0" text="Users">
+      <Button fx:id="usersButton" mnemonicParsing="false" onAction="#onUsersButtonClick" prefWidth="105.0" text="Users">
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </Button>
-      <Button mnemonicParsing="false" onAction="#onBooksButtonClick" prefWidth="105.0" text="Books">
+      <Button fx:id="booksButton" mnemonicParsing="false" onAction="#onBooksButtonClick" prefWidth="105.0" text="Books">
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </Button>
-      <Button mnemonicParsing="false" onAction="#onTagsButtonClick" prefWidth="105.0" text="Tags" />
+      <Button fx:id="tagsButton" mnemonicParsing="false" onAction="#onTagsButtonClick" prefWidth="105.0" text="Tags" />
    </children>
    <stylesheets>
       <URL value="@styles/AdminManagementNavBarView.css" />

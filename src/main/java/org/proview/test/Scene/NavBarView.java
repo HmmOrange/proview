@@ -45,7 +45,6 @@ public class NavBarView {
     public Circle avatarImageCircle;
 
     public void loadProfileButton() throws IOException {
-        // Load CSS
         InputStream stream = new FileInputStream(UserManagement.getCurrentUser().getAvatarUrl());
         Image image = new Image(stream);
         stream.close();
