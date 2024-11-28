@@ -64,7 +64,7 @@
             <Label styleClass="sub-header" text="Include tags:" />
             <FlowPane fx:id="tagIncludedSelectedFlowPane" hgap="5.0" minHeight="35.0" prefWidth="290.0" styleClass="flow-pane" vgap="5.0">
             </FlowPane>
-            <MenuButton fx:id="tagIncludedSelectDropdown" mnemonicParsing="false" text="Select tag..." />
+            <MenuButton fx:id="tagIncludedSelectDropdown" mnemonicParsing="false" styleClass="menu" text="Select tag..." />
             <Label style="-fx-font-size: 18px; -fx-padding: 10 0 0 0;" text="Exclude tags:" />
             <FlowPane fx:id="tagExcludedSelectedFlowPane" hgap="5.0" minHeight="35.0" prefWidth="200.0" styleClass="flow-pane" vgap="5.0">
             </FlowPane>
