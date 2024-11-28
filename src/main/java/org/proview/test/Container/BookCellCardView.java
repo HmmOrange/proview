@@ -1,28 +1,13 @@
 package org.proview.test.Container;
 
-import com.google.gson.*;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.kordamp.ikonli.javafx.FontIcon;
-import org.proview.api.GoogleBooksAPI;
-import org.proview.modal.Tag.TagManagement;
-import org.proview.modal.Tag.TagStyle;
-import org.proview.test.AppMain;
-import org.proview.test.Scene.BookInfoView;
 
-import java.awt.*;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.*;
 import java.sql.SQLException;
-import java.util.Map;
 
 public class BookCellCardView extends CellView {
     public ImageView coverImageView;
@@ -35,11 +20,11 @@ public class BookCellCardView extends CellView {
     public FontIcon starRatingIcon;
     public FontIcon issuesIcon;
     public HBox infoHBox;
-    private int id = -1;
 
     // For Google books
     @Override
-    public void setData(String title, String authors, String imageUrl, String tags) throws IOException, SQLException {
+    public void setData(String title, String authors, String imageUrl, String tags, String previewLink) throws IOException, SQLException {
+        super.previewLink = previewLink;
         super.setData(
             titleLabel, title,
             authorLabel, authors,
@@ -54,7 +39,7 @@ public class BookCellCardView extends CellView {
     // For library books
     @Override
     public void setData(int id, String title, String author, double rating, int issueCount, int copiesAvailable) throws IOException, SQLException {
-        this.id = id;
+        super.id = id;
         super.setData(
             titleLabel, title,
             authorLabel, author,
@@ -68,47 +53,6 @@ public class BookCellCardView extends CellView {
     }
 
     public void onMouseClick(ActionEvent actionEvent) throws IOException, SQLException {
-        if (id >= 0) { // this seems tricky, maybe there is a better way to handle this
-            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("BookInfoView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-            AppMain.window.setTitle("Hello!");
-            AppMain.window.setScene(scene);
-            AppMain.window.centerOnScreen();
-
-            BookInfoView tempBookInfoView = fxmlLoader.getController();
-            tempBookInfoView.setData(this.id);
-        } else {
-            String previewLink = "";
-            String response = GoogleBooksAPI.getBooksFromAPI(titleLabel.getText());
-            JsonParser parser = new JsonParser();
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-            JsonElement el = parser.parse(response);
-            response = gson.toJson(el); // done
-
-            response = StringEscapeUtils.unescapeJava(response);
-
-            JsonObject jsonObject = el.getAsJsonObject();
-            JsonArray items = jsonObject.getAsJsonArray("items");
-
-            if (items != null && items.size() > 0) {
-                JsonObject volumeInfo = items.get(0).getAsJsonObject().getAsJsonObject("volumeInfo");
-                previewLink = volumeInfo.get("previewLink").getAsString();
-                System.out.println("Preview Link: " + previewLink);
-            } else {
-                System.out.println("Không tìm thấy previewLink trong phản hồi JSON.");
-            }
-
-            URL url = URI.create(previewLink).toURL();
-            if (Desktop.isDesktopSupported()) {
-                try {
-                    Desktop.getDesktop().browse(new URI(url.toString()));
-                } catch (IOException | URISyntaxException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                System.out.println("Desktop không được hỗ trợ.");
-            }
-        }
+        super.onMouseClicked();
     }
 }

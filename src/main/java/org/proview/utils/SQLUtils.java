@@ -2,14 +2,14 @@ package org.proview.utils;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.proview.modal.Book.BookLib;
-import org.proview.modal.Review.Review;
-import org.proview.modal.Tag.Tag;
-import org.proview.modal.Tag.TagStyle;
-import org.proview.modal.User.Admin;
-import org.proview.modal.User.NormalUser;
-import org.proview.modal.User.User;
-import org.proview.modal.User.UserManagement;
+import org.proview.model.Book.BookLib;
+import org.proview.model.Review.Review;
+import org.proview.model.Tag.Tag;
+import org.proview.model.Tag.TagStyle;
+import org.proview.model.User.Admin;
+import org.proview.model.User.NormalUser;
+import org.proview.model.User.User;
+import org.proview.model.User.UserManagement;
 import org.proview.test.AppMain;
 import org.proview.test.Scene.ProfileView;
 

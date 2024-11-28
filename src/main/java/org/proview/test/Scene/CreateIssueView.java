@@ -7,9 +7,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import org.proview.modal.Book.BookManagement;
-import org.proview.modal.Issue.IssueManagement;
-import org.proview.modal.User.UserManagement;
+import org.proview.model.Book.BookManagement;
+import org.proview.model.Issue.IssueManagement;
+import org.proview.model.User.UserManagement;
 import org.proview.test.AppMain;
 
 import java.io.IOException;

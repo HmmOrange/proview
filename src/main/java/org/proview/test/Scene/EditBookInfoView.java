@@ -12,7 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
-import org.proview.modal.Tag.Tag;
+import org.proview.model.Tag.Tag;
 import org.proview.test.AppMain;
 import org.proview.utils.MaxSizedContextMenu;
 import org.proview.utils.PopUpWindowUtils;

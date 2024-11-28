@@ -1,22 +1,34 @@
 package org.proview.test.Container;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.Map;
 
+import com.google.gson.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import org.proview.modal.Tag.Tag;
-import org.proview.modal.Tag.TagManagement;
-import org.proview.modal.Tag.TagStyle;
+import org.proview.api.GoogleBooksAPI;
+import org.proview.model.Tag.Tag;
+import org.proview.model.Tag.TagManagement;
+import org.proview.model.Tag.TagStyle;
+import org.proview.test.AppMain;
+import org.proview.test.Scene.BookInfoView;
 import org.proview.utils.Utils;
 import org.proview.utils.SQLUtils;
 
 public abstract class CellView {
-    public abstract void setData(String title, String authors, String imageUrl, String tags) throws IOException, SQLException;
+    protected String previewLink;
+    protected int id = -1;
+    public abstract void setData(String title, String authors, String imageUrl, String tags, String previewLink) throws IOException, SQLException;
     public abstract void setData(int id, String title, String author, double rating, int issueCount, int copiesAvailable) throws IOException, SQLException;
 
     // Lib book
@@ -101,6 +113,21 @@ public abstract class CellView {
             for (Tag tag : tagObservableList) {
                 tagHBox.getChildren().add(tag.getLabel());
             }
+        }
+    }
+
+    public void onMouseClicked() throws IOException, SQLException {
+        if (id >= 0) {
+            FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("BookInfoView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
+            AppMain.window.setTitle("Hello!");
+            AppMain.window.setScene(scene);
+            AppMain.window.centerOnScreen();
+
+            BookInfoView tempBookInfoView = fxmlLoader.getController();
+            tempBookInfoView.setData(id);
+        } else {
+            GoogleBooksAPI.openLink(previewLink);
         }
     }
 }

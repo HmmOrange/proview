@@ -7,7 +7,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Tooltip;
-import org.proview.modal.User.NormalUser;
+import org.proview.model.User.NormalUser;
 
 import java.sql.SQLException;
 import java.util.Objects;

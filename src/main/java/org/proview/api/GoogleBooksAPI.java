@@ -3,11 +3,12 @@ package org.proview.api;
 import com.google.gson.*;
 import javafx.collections.ObservableList;
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.proview.modal.Book.BookGoogle;
-import org.proview.modal.Book.BookLib;
-import org.proview.modal.Book.BookManagement;
+import org.proview.model.Book.BookGoogle;
+import org.proview.model.Book.BookLib;
+import org.proview.model.Book.BookManagement;
 import org.proview.utils.SQLUtils;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +16,6 @@ import java.io.InputStreamReader;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 
@@ -39,6 +39,19 @@ public class GoogleBooksAPI {
             return response.toString();
         }
         return null;
+    }
+
+    public static void openLink(String previewLink) throws MalformedURLException {
+        URL url = URI.create(previewLink).toURL();
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().browse(new URI(url.toString()));
+            } catch (IOException | URISyntaxException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Desktop is not supported.");
+        }
     }
 
     public static void loadMissingImages() throws SQLException, IOException, InterruptedException {

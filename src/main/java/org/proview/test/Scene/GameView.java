@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import org.proview.modal.Game.GameActivity;
+import org.proview.model.Game.GameActivity;
 import org.proview.test.AppMain;
 
 import java.io.File;
