@@ -10,6 +10,7 @@ public class UserManagement {
 
     public static User currentUser = null;
     public static Button currentViewButton = null;
+    public static Button currentAdminViewButton = null;
 
     public static User getCurrentUser() {
         return currentUser;
@@ -29,5 +30,13 @@ public class UserManagement {
 
     public static void addNormalUser(User user) throws SQLException {
         SQLUtils.addUser(user);
+    }
+
+    public static Button getCurrentAdminViewButton() {
+        return currentAdminViewButton;
+    }
+
+    public static void setCurrentAdminViewButton(Button currentAdminViewButton) {
+        UserManagement.currentAdminViewButton = currentAdminViewButton;
     }
 }
