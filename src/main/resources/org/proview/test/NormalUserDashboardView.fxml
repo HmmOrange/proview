@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -26,7 +27,7 @@
                                 <Font size="26.0" />
                             </font>
                         </Label>
-                        <HBox alignment="CENTER" prefHeight="401.0" spacing="50.0">
+                        <HBox alignment="CENTER" prefHeight="401.0" spacing="100.0">
                             <children>
                                 <LineChart fx:id="issuesCreatedNumberLineChart" legendVisible="false" styleClass="form" title="Number of Issues You Have Created So Far">
                                     <xAxis>
@@ -38,13 +39,16 @@
                                 </LineChart>
                         <PieChart fx:id="issueStatusPieChart" styleClass="form" title="Percentage of each Issue Current Status" />
                             </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                         </HBox>
                         <Label styleClass="header" text="Book">
                             <font>
                                 <Font size="26.0" />
                             </font>
                         </Label>
-                        <HBox alignment="CENTER" prefHeight="401.0" spacing="50.0">
+                        <HBox alignment="CENTER" prefHeight="401.0" spacing="100.0">
                             <children>
                         <BarChart fx:id="avgRatingBookCountBarChart" legendVisible="false" styleClass="form" title="Number of Books in Each Range Of Average Rating">
                           <xAxis>
@@ -56,6 +60,9 @@
                         </BarChart>
                                 <PieChart fx:id="booksBorrowedPieChart" styleClass="form" title="Percentage of Books That You Have Borrowed So Far" />
                             </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
                         </HBox>
                     </children>
                 </VBox>
