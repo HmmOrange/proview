@@ -17,6 +17,7 @@ import javafx.scene.shape.Circle;
 import org.proview.modal.Game.GameActivity;
 import org.proview.modal.User.Admin;
 import org.proview.modal.User.NormalUser;
+import org.proview.modal.User.User;
 import org.proview.utils.SearchUtils;
 import org.proview.modal.User.UserManagement;
 import org.proview.test.AppMain;
@@ -123,10 +124,8 @@ public class NavBarView {
     }
 
     public void onLibraryButtonClick(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("BookManagForAdminView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1300, 700);
-        AppMain.window.setScene(scene);
-        AppMain.window.centerOnScreen();
+        UserManagement.setCurrentViewButton(libraryButton);
+        Utils.switchScene("BookManagForAdminView.fxml");
     }
 
     public void onIssueButtonClick(ActionEvent actionEvent) throws IOException {

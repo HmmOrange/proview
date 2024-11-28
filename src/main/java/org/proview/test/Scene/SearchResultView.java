@@ -3,11 +3,15 @@ package org.proview.test.Scene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.RangeSlider;
 import org.proview.modal.Book.BookGoogle;
@@ -16,6 +20,7 @@ import org.proview.modal.Book.BookManagement;
 import org.proview.modal.Tag.Tag;
 import org.proview.modal.User.UserManagement;
 import org.proview.test.AppMain;
+import org.proview.utils.MaxSizedContextMenu;
 import org.proview.utils.SQLUtils;
 import org.proview.utils.SearchUtils;
 
@@ -65,6 +70,8 @@ public class SearchResultView {
         ObservableList<Tag> tagExcludedList = SQLUtils.getTagList();
 
         // Tag included dropdown
+        MaxSizedContextMenu maxSizedIncludedContextMenu = new MaxSizedContextMenu();
+        maxSizedIncludedContextMenu.setMaxHeight(200);
         ObservableList<Tag> oldIncludedList = SearchUtils.getTagIncludedList();
         for (Tag tag : tagIncludedList) {
             CheckBox checkBox = new CheckBox();
@@ -87,6 +94,7 @@ public class SearchResultView {
 
             HBox hBox = new HBox();
             hBox.setSpacing(10);
+            hBox.setPrefWidth(150);
             hBox.getChildren().add(checkBox);
             hBox.getChildren().add(tag.getLabel());
 
@@ -103,16 +111,28 @@ public class SearchResultView {
 
             CustomMenuItem customMenuItem = new CustomMenuItem(hBox);
             customMenuItem.setHideOnClick(false);
-            tagIncludedSelectDropdown.getItems().add(customMenuItem);
+            maxSizedIncludedContextMenu.getItems().add(customMenuItem);
         }
+        tagIncludedSelectDropdown.setOnMousePressed(event -> {
+            if (!maxSizedIncludedContextMenu.isShowing()) {
+                Bounds bounds = tagIncludedSelectDropdown.localToScreen(tagIncludedSelectDropdown.getBoundsInLocal());
+                double x = bounds.getMinX();
+                double y = bounds.getMaxY() + 5;
+                maxSizedIncludedContextMenu.show(tagIncludedSelectDropdown, x, y);
+            } else {
+                maxSizedIncludedContextMenu.hide();
+            }
+        });
 
         // Tag excluded dropdown
+        MaxSizedContextMenu maxSizedExcludedContextMenu = new MaxSizedContextMenu();
+        maxSizedExcludedContextMenu.setMaxHeight(200);
         ObservableList<Tag> oldExcludedList = SearchUtils.getTagExcludedList();
 
         for (Tag tag : tagExcludedList) {
             CheckBox checkBox = new CheckBox();
 
-            boolean ifOldTag = oldIncludedList.contains(tag);
+            boolean ifOldTag = oldExcludedList.contains(tag);
 
             checkBox.setSelected(ifOldTag);
             if (ifOldTag) {
@@ -130,6 +150,7 @@ public class SearchResultView {
 
             HBox hBox = new HBox();
             hBox.setSpacing(10);
+            hBox.setPrefWidth(150);
             hBox.getChildren().add(checkBox);
             hBox.getChildren().add(tag.getLabel());
 
@@ -146,12 +167,24 @@ public class SearchResultView {
 
             CustomMenuItem customMenuItem = new CustomMenuItem(hBox);
             customMenuItem.setHideOnClick(false);
-            tagExcludedSelectDropdown.getItems().add(customMenuItem);
+            maxSizedExcludedContextMenu.getItems().add(customMenuItem);
         }
+        tagExcludedSelectDropdown.setOnMousePressed(event -> {
+            if (!maxSizedExcludedContextMenu.isShowing()) {
+                Bounds bounds = tagExcludedSelectDropdown.localToScreen(tagExcludedSelectDropdown.getBoundsInLocal());
+                double x = bounds.getMinX();
+                double y = bounds.getMaxY() + 5;
+                maxSizedExcludedContextMenu.show(tagExcludedSelectDropdown, x, y);
+            } else {
+                maxSizedExcludedContextMenu.hide();
+            }
+        });
 
         // Rating slider
         ratingSlider.adjustLowValue(SearchUtils.getLowRating());
         ratingSlider.adjustHighValue(SearchUtils.getHighRating());
+        lowRatingLabel.setText(String.format("%.2f", SearchUtils.getLowRating()));
+        highRatingLabel.setText(String.format("%.2f", SearchUtils.getHighRating()));
 
         ratingSlider.lowValueProperty().addListener((obs, oldVal, newVal) -> {
             lowRatingLabel.setText(String.format("%.2f", newVal.doubleValue()));

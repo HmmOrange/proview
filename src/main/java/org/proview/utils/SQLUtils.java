@@ -229,6 +229,17 @@ public class SQLUtils {
         return res;
     }
 
+    public static void addUser(User user) throws SQLException {
+        String sql = "INSERT INTO user(username, password, type, firstName, lastName, email, registration_date, card_view) VALUES (?, ?, 1, ?, ?, ?, NOW(), 0)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, user.getUsername());
+        preparedStatement.setString(2, user.getPassword());
+        preparedStatement.setString(3, user.getFirstName());
+        preparedStatement.setString(4, user.getLastName());
+        preparedStatement.setString(5, user.getEmail());
+        preparedStatement.executeUpdate();
+    }
+
     public static ObservableList<BookLib> getOverdueBookList(int userId) throws SQLException {
         Connection connection = AppMain.connection;
         String sql = """

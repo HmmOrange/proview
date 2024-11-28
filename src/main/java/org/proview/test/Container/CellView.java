@@ -46,14 +46,19 @@ public abstract class CellView {
 
         // Tags
         ObservableList<Tag> tagList = SQLUtils.getBookTags(id);
-        for (int i = 0; i < 3; i++) {
-            tagHBox.getChildren().add(tagList.get(i).getLabel());
-        }
         if (tagList.size() > 3) {
+            for (int i = 0; i < 3; i++) {
+                tagHBox.getChildren().add(tagList.get(i).getLabel());
+            }
             tagHBox.getChildren().add(new Tag("+" + (tagList.size() - 3)).getLabel());
+        } else {
+            for (Tag tag : tagList) {
+                tagHBox.getChildren().add(tag.getLabel());
+            }
         }
     }
 
+    // Google book
     public void setData(
             Label titleLabel, String title,
             Label authorLabel, String authors,
@@ -81,12 +86,21 @@ public abstract class CellView {
             if (tagMap.containsKey(tag)) {
                 tagObservableList.add(new Tag(tag, tagMap.get(tag)));
             }
+            else {
+                tagObservableList.add(new Tag(tag));
+            }
         }
-        for (int i = 0; i < 3; i++) {
-            tagHBox.getChildren().add(tagObservableList.get(i).getLabel());
-        }
+
+        // System.out.println(tagObservableList.size());
         if (tagObservableList.size() > 3) {
+            for (int i = 0; i < 3; i++) {
+                tagHBox.getChildren().add(tagObservableList.get(i).getLabel());
+            }
             tagHBox.getChildren().add(new Tag("+" + (tagObservableList.size() - 3)).getLabel());
+        } else {
+            for (Tag tag : tagObservableList) {
+                tagHBox.getChildren().add(tag.getLabel());
+            }
         }
     }
 }
