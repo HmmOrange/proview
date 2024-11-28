@@ -66,7 +66,7 @@ public class AdminManagementNavBarView {
 
     public void onBooksButtonClick(ActionEvent actionEvent) throws IOException {
         UserManagement.setCurrentAdminViewButton(booksButton);
-        AppMain.window.centerOnScreen();Utils.switchScene("BookManagForAdminView.fxml");
+        AppMain.window.centerOnScreen();Utils.switchScene("BookManageForAdminView.fxml");
     }
 
     public void onTagsButtonClick(ActionEvent actionEvent) throws IOException {

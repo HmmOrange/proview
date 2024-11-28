@@ -113,7 +113,7 @@ public class NavBarView {
     public void onLibraryButtonClick(ActionEvent actionEvent) throws IOException {
         UserManagement.setCurrentViewButton(libraryButton);
         UserManagement.setCurrentAdminViewButton(null);
-        Utils.switchScene("BookManagForAdminView.fxml");
+        Utils.switchScene("BookManageForAdminView.fxml");
     }
 
     public void onIssueButtonClick(ActionEvent actionEvent) throws IOException {
