@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
 
 public class Utils {
@@ -36,7 +37,13 @@ public class Utils {
     }
 
     public static void insertBookImage(ImageView imageView, String imageUrl, double targetWidth, double targetHeight) throws IOException {
-        InputStream stream = URI.create(imageUrl).toURL().openStream();
+        InputStream stream;
+        try {
+            stream = URI.create(imageUrl).toURL().openStream();
+        } catch (IOException e) {
+            stream = new FileInputStream("./assets/samples/defaultCover.png");
+            e.printStackTrace();
+        }
         Image image = new Image(stream);
 
         insertImage(imageView, image, targetWidth, targetHeight);
@@ -45,8 +52,14 @@ public class Utils {
     }
 
     public static void insertBookImage(ImageView imageView, int id, double targetWidth, double targetHeight) throws IOException {
-        String imageUrl = "./assets/covers/cover" + id + ".png";
-        InputStream stream = new FileInputStream(imageUrl);
+        InputStream stream;
+        try {
+            String imageUrl = "./assets/covers/cover" + id + ".png";
+            stream = new FileInputStream(imageUrl);
+        } catch (IOException e) {
+            stream = new FileInputStream("./assets/samples/defaultCover.png");
+            e.printStackTrace();
+        }
         Image image = new Image(stream);
 
         insertImage(imageView, image, targetWidth, targetHeight);

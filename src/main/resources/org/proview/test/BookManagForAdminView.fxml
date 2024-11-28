@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookManagementForAdminView">
+<BorderPane fx:id="homeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookManagementForAdminView">
     <top>
         <fx:include source="NavBarView.fxml" />
     </top>
@@ -17,7 +17,7 @@
         <fx:include source="AdminManagementNavBarView.fxml" />
     </left>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="100.0" stylesheets="@styles/styles.css" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER" prefHeight="126.0" prefWidth="1193.0" spacing="20.0">
                <children>
@@ -71,7 +71,7 @@
                   <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="1000.0" promptText="Search" />
                </children>
             </HBox>
-            <TableView fx:id="booksTableView" prefHeight="487.0" prefWidth="1193.0" style="-fx-background-color: grey;">
+            <TableView fx:id="booksTableView" prefHeight="487.0" prefWidth="1193.0">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
