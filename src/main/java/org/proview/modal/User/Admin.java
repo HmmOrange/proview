@@ -32,41 +32,25 @@ public class Admin extends User {
     public static class IssuesNumberLineChart {
         public static XYChart.Series<String, Number> getChartData() throws SQLException {
             XYChart.Series<String, Number> respond = new XYChart.Series<>();
-            /// remain days
-            String remainDaysSql = """
-                        SELECT DATE(start_date) AS date, COUNT(*) AS total
-                        FROM issue
-                        WHERE DATE(start_date) < (SELECT MAX(DATE(start_date)) - INTERVAL 7 DAY FROM issue)
-                        GROUP BY DATE(start_date)
-                        ORDER BY date ASC;
-                        """;
-            ResultSet remainDaysResultSet = AppMain.connection.prepareStatement(remainDaysSql).executeQuery();
-            while (remainDaysResultSet.next()) {
-                String date = remainDaysResultSet.getDate("date").toString();
-                int count = remainDaysResultSet.getInt("total");
-                respond.getData().add(new XYChart.Data<>(date, count));
-            }
 
-            /// get statistics 7 days before today
-            String sevenDaysSql = """
-                            WITH RECURSIVE date_series AS (
-                                SELECT MAX(DATE(start_date)) AS date
-                                FROM issue
-                                UNION
-                                SELECT DATE_SUB(date, INTERVAL 1 DAY)
-                                FROM date_series
-                                WHERE date > (SELECT MAX(DATE(start_date)) - INTERVAL 7 DAY FROM issue)
-                            )
-                            SELECT ds.date, COALESCE(COUNT(i.start_date), 0) AS total
-                            FROM date_series ds
-                            LEFT JOIN issue i ON DATE(i.start_date) = ds.date
-                            GROUP BY ds.date
-                            ORDER BY ds.date
-                            """;
-            ResultSet sevenDaysResultSet = AppMain.connection.prepareStatement(sevenDaysSql).executeQuery();
-            while (sevenDaysResultSet.next()) {
-                String date = sevenDaysResultSet.getDate("date").toString();
-                int count = sevenDaysResultSet.getInt("total");
+            String sql = """
+                    SELECT
+                        DATE(DATE_SUB(CURRENT_DATE, INTERVAL a.DAY DAY)) AS issue_date,
+                        COUNT(i.id) AS issue_count
+                    FROM
+                        (SELECT 0 AS DAY UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4
+                         UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) AS a
+                    LEFT JOIN
+                        issue i ON DATE(i.start_date) = DATE(DATE_SUB(CURRENT_DATE, INTERVAL a.DAY DAY))
+                    GROUP BY
+                        issue_date
+                    ORDER BY
+                        issue_date ASC;
+                    """;
+            ResultSet resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
+            while (resultSet.next()) {
+                String date = resultSet.getDate("issue_date").toString();
+                int count = resultSet.getInt("issue_count");
                 respond.getData().add(new XYChart.Data<>(date, count));
             }
 
@@ -94,48 +78,33 @@ public class Admin extends User {
     public static class NewRegistrationLineChart {
         public static XYChart.Series<String, Number> getChartData() throws SQLException {
             XYChart.Series<String, Number> respond = new XYChart.Series<>();
-            List<String> xAxisData = new ArrayList<>();
-            List<Integer> yAxisData = new ArrayList<>();
-            String sevenDaysSql = """
-                        WITH RECURSIVE date_series AS (
-                            SELECT MAX(DATE(registration_date)) AS date
-                            FROM user
-                            UNION
-                            SELECT DATE_SUB(date, INTERVAL 1 DAY)
-                            FROM date_series
-                            WHERE date > (SELECT MAX(DATE(registration_date)) - INTERVAL 7 DAY FROM user)
-                            )
-                        SELECT ds.date, COALESCE(COUNT(u.registration_date), 0) AS total
-                        FROM date_series ds
-                        LEFT JOIN user u ON DATE(u.registration_date) = ds.date
-                        GROUP BY ds.date
-                        ORDER BY ds.date DESC;
-                       """;
-            ResultSet sevenDaysRS = AppMain.connection.prepareStatement(sevenDaysSql).executeQuery();
-            while (sevenDaysRS.next()) {
-                xAxisData.add(sevenDaysRS.getDate("date").toString());
-                yAxisData.add(sevenDaysRS.getInt("total"));
+            String sql = """
+                        SELECT
+                         DATE(DATE_SUB(CURRENT_DATE, INTERVAL a.DAY DAY)) AS registration_date,
+                         COUNT(u.id) AS registration_count
+                     FROM
+                         (SELECT 0 AS DAY
+                          UNION SELECT 1
+                          UNION SELECT 2
+                          UNION SELECT 3
+                          UNION SELECT 4
+                          UNION SELECT 5
+                          UNION SELECT 6) AS a
+                     LEFT JOIN
+                         user u
+                         ON DATE(u.registration_date) = DATE(DATE_SUB(CURRENT_DATE, INTERVAL a.DAY DAY))
+                     GROUP BY
+                         DATE(DATE_SUB(CURRENT_DATE, INTERVAL a.DAY DAY))
+                     ORDER BY
+                         registration_date ASC;
+                     """;
+            ResultSet resultSet = AppMain.connection.prepareStatement(sql).executeQuery();
+            while (resultSet.next()) {
+                String s = resultSet.getDate("registration_date").toString();
+                int total = resultSet.getInt("registration_count");
+                respond.getData().add(new XYChart.Data<>(s, total));
             }
 
-            String remainDaysSql = """
-                        SELECT DATE(registration_date) AS date, COUNT(*) AS total
-                        FROM user
-                        WHERE DATE(registration_date) < (SELECT MAX(DATE(registration_date)) - INTERVAL 7 DAY FROM user)
-                        GROUP BY DATE(registration_date)
-                        ORDER BY date DESC;
-                        """;
-            ResultSet remainDaysRS = AppMain.connection.prepareStatement(remainDaysSql).executeQuery();
-            while (remainDaysRS.next()) {
-                xAxisData.add(remainDaysRS.getDate("date").toString());
-                yAxisData.add(remainDaysRS.getInt("total"));
-            }
-
-            Collections.reverse(xAxisData);
-            Collections.reverse(yAxisData);
-
-            for (int i = 0; i < xAxisData.size(); i++) {
-                respond.getData().add(new XYChart.Data<>(xAxisData.get(i), yAxisData.get(i)));
-            }
             return respond;
         }
     }
