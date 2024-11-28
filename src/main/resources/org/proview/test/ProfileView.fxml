@@ -17,7 +17,7 @@
       <fx:include source="NavBarView.fxml" />
    </top>
    <left>
-      <ScrollPane hbarPolicy="NEVER" prefWidth="320.0" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+      <ScrollPane hbarPolicy="NEVER" prefWidth="300.0" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
          <content>
             <VBox spacing="10.0">
                <children>
