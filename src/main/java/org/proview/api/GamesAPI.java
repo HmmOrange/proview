@@ -38,6 +38,23 @@ public class GamesAPI {
 
     public static void insertQandAToDb() throws IOException, SQLException, InterruptedException {
         Connection connection = AppMain.connection;
+
+        String dropTableSql = "DROP TABLE IF EXISTS questions;";
+        String createTableSql = """
+                CREATE TABLE questions (
+                    id INT PRIMARY KEY AUTO_INCREMENT,
+                    type VARCHAR(20),
+                    difficulty VARCHAR(20),
+                    question VARCHAR(100),
+                    correct_answer VARCHAR(100),
+                    incr_ans1 VARCHAR(100),
+                    incr_ans2 VARCHAR(100),
+                    incr_ans3 VARCHAR(100)
+                );
+                """;
+        connection.prepareStatement(dropTableSql).execute();
+        connection.prepareStatement(createTableSql).execute();
+
         for (int times = 0; times < 10; times++) {
             System.out.println("Requesting data, attempt: " + (times + 1));
             String response = getQandAFromAPI();
@@ -68,6 +85,11 @@ public class GamesAPI {
                     String[] questionDetails = new String[7];
                     JsonObject questionNo = items.get(i).getAsJsonObject();
                     String question = questionNo.get("question").getAsString();
+
+                    // If question is too long then skip it
+                    if (question.length() > 83) {
+                        continue;
+                    }
                     question = StringEscapeUtils.unescapeJava(question);
                     question = StringEscapeUtils.unescapeHtml4(question);
                     String checkDupSql = """
