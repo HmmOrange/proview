@@ -2,3 +2,36 @@
     -fx-border-color: -dark-blue;
     -fx-border-radius: 5;
 }
+
+.form {
+    -fx-padding: 20px;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+}
+
+.flow-pane {
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+    -fx-padding: 5 5 5 5;
+}
+
+.menu-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+    /*-fx-padding: 3px;*/
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.text-input-field {
+    -fx-padding: 3 5 3 5;
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #ced4da;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+}

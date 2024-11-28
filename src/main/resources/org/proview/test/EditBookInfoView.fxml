@@ -8,31 +8,38 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="473.0" prefWidth="1154.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.EditBookInfoView">
+<BorderPane prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.EditBookInfoView">
     <top>
         <fx:include source="NavBarView.fxml" />
     </top>
    <center>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1187.0">
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="form" BorderPane.alignment="CENTER">
          <children>
+            <ImageView fx:id="coverImage" fitHeight="352.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </ImageView>
             <VBox spacing="10.0">
                <children>
-                  <TextField fx:id="titleField" prefHeight="74.0" prefWidth="437.0" promptText="Title">
+                  <TextField fx:id="titleField" prefHeight="74.0" prefWidth="437.0" promptText="Title" styleClass="text-input-field">
                      <font>
-                        <Font size="35.0" />
+                        <Font name="System Bold" size="30.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="authorField" promptText="Author" />
-                  <TextField fx:id="copiesField" prefHeight="25.0" prefWidth="168.0" promptText="Number of copies available" />
-                  <TextArea fx:id="descriptionField" prefHeight="128.0" prefWidth="435.0" promptText="Description" wrapText="true" />
-                  <FlowPane fx:id="tagSelectedFlowPane" hgap="5.0" prefHeight="40.0" prefWidth="437.0" styleClass="border" vgap="5.0">
+                  <TextField fx:id="authorField" promptText="Author" styleClass="text-input-field" />
+                  <TextField fx:id="copiesField" prefHeight="25.0" prefWidth="168.0" promptText="Number of copies available" styleClass="text-input-field" />
+                  <TextArea fx:id="descriptionField" prefHeight="128.0" prefWidth="435.0" promptText="Description" styleClass="text-input-field" wrapText="true" />
+                  <FlowPane fx:id="tagSelectedFlowPane" hgap="5.0" prefHeight="40.0" prefWidth="437.0" styleClass="flow-pane" vgap="5.0">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -40,39 +47,28 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </FlowPane>
-                  <MenuButton fx:id="tagSelectDropdown" mnemonicParsing="false" text="Select Tag..." />
+                  <MenuButton fx:id="tagSelectDropdown" mnemonicParsing="false" prefWidth="100.0" text="Select Tag..." />
+                  <HBox alignment="CENTER_LEFT" spacing="30.0">
+                     <children>
+                        <Button fx:id="changeCoverButton" mnemonicParsing="false" onAction="#onChangeCoverButtonClick" prefWidth="100.0" styleClass="book-button" text="Change Cover" />
+                        <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefWidth="100.0" styleClass="delete-button" text="Confirm" />
+                        <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackButtonClick" prefWidth="100.0" styleClass="back-button" text="Back" />
+                     </children>
+                  </HBox>
                </children>
                <HBox.margin>
-                  <Insets />
+                  <Insets top="30.0" />
                </HBox.margin>
-               <padding>
-                  <Insets left="20.0" />
-               </padding>
             </VBox>
          </children>
+         <stylesheets>
+            <URL value="@styles/BookInfoView.css" />
+            <URL value="@styles/styles.css" />
+            <URL value="@styles/EditBookInfoView.css" />
+         </stylesheets>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </HBox>
    </center>
-   <left>
-      <AnchorPane prefHeight="400.0" prefWidth="225.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="coverImage" fitHeight="352.0" fitWidth="200.0" layoutX="13.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <viewport>
-                  <Rectangle2D />
-               </viewport></ImageView>
-         </children>
-      </AnchorPane>
-   </left>
-   <bottom>
-      <AnchorPane prefHeight="75.0" prefWidth="1412.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="backButton" layoutX="716.0" layoutY="18.0" mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" />
-            <Button fx:id="confirmButton" alignment="TOP_LEFT" layoutX="639.0" layoutY="18.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" text="Confirm" />
-            <Button fx:id="changeCoverButton" layoutX="73.0" layoutY="16.0" mnemonicParsing="false" onAction="#onChangeCoverButtonClick" text="Change Cover" />
-         </children>
-      </AnchorPane>
-   </bottom>
-   <stylesheets>
-      <URL value="@styles/styles.css" />
-      <URL value="@styles/EditBookInfoView.css" />
-   </stylesheets>
 </BorderPane>

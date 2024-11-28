@@ -233,8 +233,8 @@
                   <Label fx:id="daysLabel" text="days" />
                </children>
             </HBox>
-            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onDeleteButtonClicked" prefHeight="25.0" prefWidth="147.0" styleClass="book-button" text="Delete" />
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="25.0" prefWidth="149.0" styleClass="book-button" text="Back" textAlignment="CENTER" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onDeleteButtonClicked" prefHeight="25.0" prefWidth="147.0" styleClass="delete-button" text="Delete" />
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="25.0" prefWidth="149.0" styleClass="back-button" text="Back" textAlignment="CENTER" />
          </children>
       </VBox>
    </left>
