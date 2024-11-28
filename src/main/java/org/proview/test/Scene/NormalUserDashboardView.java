@@ -8,7 +8,6 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Tooltip;
 import org.proview.modal.User.NormalUser;
-import org.proview.utils.TableViewUtils;
 
 import java.sql.SQLException;
 import java.util.Objects;
@@ -22,7 +21,6 @@ public class NormalUserDashboardView {
     private void initIssueCreatedNumberLineChart() throws SQLException {
         XYChart.Series<String, Number> datas = NormalUser.IssuesCreatedLineChart.getChartData();
         issuesCreatedNumberLineChart.getData().add(datas);
-        //TableViewUtils.autoAdjustRangingOfYAxis(issuesCreatedNumberLineChart, datas);
         for (XYChart.Data<String, Number> data : datas.getData()) {
             String tooltipString = data.getXValue() + ": ";
             int yValue = (int) data.getYValue();
@@ -73,7 +71,6 @@ public class NormalUserDashboardView {
     private void initAvgRatingBookCountBarChart() throws SQLException {
         XYChart.Series<String, Number> datas = NormalUser.AverageRatingBooksCountBarChart.getChartData();
         avgRatingBookCountBarChart.getData().add(datas);
-        //TableViewUtils.autoAdjustRangingOfYAxis(avgRatingBookCountBarChart, datas);
         for (XYChart.Data<String, Number> data : datas.getData()) {
             StringBuilder tooltipString = new StringBuilder();
             if (Objects.equals(data.getXValue(), "0")) {

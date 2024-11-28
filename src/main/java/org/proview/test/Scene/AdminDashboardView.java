@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.chart.*;
 import javafx.scene.control.Tooltip;
 import org.proview.modal.User.Admin;
-import org.proview.utils.TableViewUtils;
 
 import java.sql.SQLException;
 import java.util.Objects;
@@ -30,7 +29,6 @@ public class AdminDashboardView {
     private void initIssueCreatedNumberLineChart() throws SQLException {
         XYChart.Series<String, Number> datas = Admin.IssuesNumberLineChart.getChartData();
         issuesCreatedNumberLineChart.getData().add(datas);
-        //TableViewUtils.autoAdjustRangingOfYAxis(issuesCreatedNumberLineChart, datas);
         for (XYChart.Data<String, Number> data : datas.getData()) {
             String tooltipString = data.getXValue() + ": ";
             int yValue = (int) data.getYValue();
@@ -66,7 +64,6 @@ public class AdminDashboardView {
     private void initAvgRatingBookCountBarChart() throws SQLException {
         XYChart.Series<String, Number> datas = Admin.AverageRatingBooksCountBarChart.getChartData();
         avgRatingBookCountBarChart.getData().add(datas);
-        //TableViewUtils.autoAdjustRangingOfYAxis(issuesCreatedNumberLineChart, datas);
         for (XYChart.Data<String, Number> data : datas.getData()) {
             StringBuilder tooltipString = new StringBuilder();
             if (Objects.equals(data.getXValue(), "0")) {
@@ -90,7 +87,6 @@ public class AdminDashboardView {
     private void initNewRegistrationLineChart() throws SQLException {
         XYChart.Series<String, Number> datas = Admin.NewRegistrationLineChart.getChartData();
         newRegistrationLineChart.getData().add(datas);
-        //TableViewUtils.autoAdjustRangingOfYAxis(issuesCreatedNumberLineChart, datas);
         for (XYChart.Data<String, Number> data : datas.getData()) {
             int number = (int) data.getYValue();
             StringBuilder sb = new StringBuilder(data.getXValue()).append(": ").append(number);
