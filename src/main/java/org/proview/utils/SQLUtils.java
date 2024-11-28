@@ -753,7 +753,7 @@ public class SQLUtils {
                 String title = borrowedRS.getString("bookname");
                 String author = borrowedRS.getString("author");
                 String end_date = borrowedRS.getTimestamp("end_date").toString();
-                String start_date = borrowedRS.getTime("start_date").toString();
+                String start_date = borrowedRS.getTimestamp("start_date").toString();
                 String status = borrowedRS.getString("status");
                 datas2.add(FXCollections.observableArrayList(id, username, title, author, bookId, start_date, end_date, status));
             }
