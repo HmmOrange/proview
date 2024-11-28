@@ -41,4 +41,4 @@ build/
 
 ### env
 .env
-./assets/avatars/
+assets/avatars/
