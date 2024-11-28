@@ -75,7 +75,7 @@
                            <children>
                               <HBox prefHeight="51.0" prefWidth="1305.0" spacing="20.0">
                                  <children>
-                                    <ComboBox fx:id="currentColumnComboBox" prefWidth="150.0" promptText="Column" />
+                                    <ComboBox fx:id="currentColumnComboBox" minWidth="100.0" prefWidth="150.0" promptText="Column" />
                                     <TextField fx:id="currentSearchTextField" prefHeight="25.0" prefWidth="1138.0" promptText="Search" />
                                  </children>
                               </HBox>

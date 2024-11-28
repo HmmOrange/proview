@@ -34,6 +34,8 @@ public class ActivityCellView {
         titleLabel.setText(Objects.requireNonNull(SQLUtils.getUser(userId)).getFullName());
         if (type == Activity.Type.REVIEW) {
             activityTypeLabel.setText("Reviewed: " + Objects.requireNonNull(SQLUtils.getBook(bookId)).getTitle());
+        } else if (type == Activity.Type.RATING) {
+            activityTypeLabel.setText("Rating: " + Objects.requireNonNull(SQLUtils.getBook(bookId).getTitle()));
         }
         descriptionLabel.setText(description);
         timeLabel.setText(TimeAgo.using(timestamp.getTime()).replace("about ", ""));

@@ -12,6 +12,7 @@ import org.proview.modal.Issue.IssueManagement;
 import org.proview.modal.Rating.Rating;
 import org.proview.modal.Rating.RatingManagement;
 import org.proview.modal.Review.Review;
+import org.proview.modal.User.UserManagement;
 import org.proview.utils.SQLUtils;
 import org.proview.test.AppMain;
 import org.proview.test.Container.ActivityCellView;
@@ -21,6 +22,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Comparator;
 
 public class ActivityManagement {
@@ -83,6 +87,19 @@ public class ActivityManagement {
             Timestamp timestamp = i.getTimestampAdded();
             activityObservableList.add(new Activity(book_id, user_id, description, timestamp, Activity.Type.REVIEW));
         }
+
+        ObservableList<Rating> ratingObservableList = RatingManagement.getRatingListFromUser
+                (-1);
+        for (var r : ratingObservableList) {
+            int userId = r.getUserId();
+            int bookId = r.getBookId();
+            String description = "Rated this book %d star%s".formatted(r.getStar(), (r.getStar()>1) ? "s." : ".");
+            Timestamp timestamp = r.getTimeAdded();
+            activityObservableList.add(new Activity(bookId, userId, description, timestamp, Activity.Type.RATING));
+        }
+
+        FXCollections.sort(activityObservableList, Comparator.comparing(Activity::getTimestampAdded));
+        FXCollections.reverse(activityObservableList);
         return activityObservableList;
     }
 
@@ -113,12 +130,17 @@ public class ActivityManagement {
                 if (dueTime.getTime() < current.getTime()) {
                     activityObservableList.add(new Activity(bookId, userId, description, dueTime, Activity.Type.OVERDUE));
                 } else if (dueTime.getTime() - current.getTime() < 24 * 3600 * 1000) {
-                    long seconds = (dueTime.getTime() - current.getTime()) / 1000;
-                    long hours = seconds / 3600;
-                    seconds %= 3600;
-                    long minutes = seconds / 60;
-                    seconds %= 60;
-                    description = String.format("Due in: %02d:%02d:%02d", hours, minutes, seconds);
+                    String dueTimeStr = dueTime.toString();
+                    if (dueTimeStr.contains(" ")) {
+                        dueTimeStr = dueTimeStr.replace(" ", "T");
+                    }
+                    LocalDateTime dueDateTime = LocalDateTime.parse(dueTimeStr);
+                    dueDateTime = dueDateTime.minusDays(1);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss.S");
+                    String tempFormattedDueDateTime = dueDateTime.format(formatter);
+                    StringBuilder formattedDueDateTime = new StringBuilder(tempFormattedDueDateTime);
+                    formattedDueDateTime.delete(17, 19);
+                    description = String.format("Post at: %s", formattedDueDateTime.toString());
                     activityObservableList.add(new Activity(bookId, userId, description, dueTime, Activity.Type.WARNING));
                 }
             }
