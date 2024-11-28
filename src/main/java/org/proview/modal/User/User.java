@@ -113,8 +113,8 @@ public abstract class User {
     }
 
     public static class AverageRatingBooksCountBarChart {
-        public static XYChart.Series<String, Integer> getChartData() throws SQLException {
-            XYChart.Series<String, Integer> respond = new XYChart.Series<>();
+        public static XYChart.Series<String, Number> getChartData() throws SQLException {
+            XYChart.Series<String, Number> respond = new XYChart.Series<>();
             String noRatingSql = """
                         SELECT COUNT(*) AS count FROM book
                         WHERE id NOT IN (SELECT book_id FROM rating)

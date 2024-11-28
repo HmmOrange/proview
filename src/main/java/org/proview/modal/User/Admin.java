@@ -30,8 +30,8 @@ public class Admin extends User {
     }
 
     public static class IssuesNumberLineChart {
-        public static XYChart.Series<String, Integer> getChartData() throws SQLException {
-            XYChart.Series<String, Integer> respond = new XYChart.Series<>();
+        public static XYChart.Series<String, Number> getChartData() throws SQLException {
+            XYChart.Series<String, Number> respond = new XYChart.Series<>();
             /// remain days
             String remainDaysSql = """
                         SELECT DATE(start_date) AS date, COUNT(*) AS total
@@ -92,8 +92,8 @@ public class Admin extends User {
     }
 
     public static class NewRegistrationLineChart {
-        public static XYChart.Series<String, Integer> getChartData() throws SQLException {
-            XYChart.Series<String, Integer> respond = new XYChart.Series<>();
+        public static XYChart.Series<String, Number> getChartData() throws SQLException {
+            XYChart.Series<String, Number> respond = new XYChart.Series<>();
             List<String> xAxisData = new ArrayList<>();
             List<Integer> yAxisData = new ArrayList<>();
             String sevenDaysSql = """

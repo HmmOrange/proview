@@ -48,8 +48,8 @@ public class NormalUser extends User {
     }
 
     public static class IssuesCreatedLineChart {
-        public static XYChart.Series<String, Integer> getChartData() throws SQLException {
-            XYChart.Series<String, Integer> respond = new XYChart.Series<>();
+        public static XYChart.Series<String, Number> getChartData() throws SQLException {
+            XYChart.Series<String, Number> respond = new XYChart.Series<>();
             String sql = """
                             WITH RECURSIVE date_series AS (
                                 SELECT MIN(DATE(start_date)) AS date

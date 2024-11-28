@@ -7,6 +7,8 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -163,5 +165,33 @@ public class TableViewUtils {
         });
 
         tableView.getColumns().add(cover);
+    }
+
+    public static void autoAdjustRangingOfYAxis(XYChart<String, Number> chart, XYChart.Series<String, Number> datas) {
+        boolean hasData = false;
+
+        NumberAxis yAxis = (NumberAxis) chart.getYAxis();
+
+        double minY = Double.MAX_VALUE;
+        double maxY = Double.MIN_VALUE;
+
+        for(XYChart.Data<String, Number> d : datas.getData()) {
+            double yData = d.getYValue().doubleValue();
+            minY = Math.min(yData, minY);
+            maxY = Math.max(yData, maxY);
+            hasData = true;
+        }
+
+        if (!hasData) {
+            minY = 0;
+            maxY = 5;
+        }
+
+        yAxis.setAutoRanging(false);
+        double padding = (maxY - minY) * 0.1;
+        yAxis.setLowerBound(minY - padding);
+        yAxis.setUpperBound(maxY + padding);
+//        System.out.println((minY) + " " + (maxY));
+        System.out.println(yAxis.getLowerBound() + " " + yAxis.getUpperBound());
     }
 }

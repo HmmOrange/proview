@@ -19,14 +19,14 @@
     <center>
         <ScrollPane BorderPane.alignment="CENTER">
             <content>
-                <VBox alignment="TOP_CENTER" prefHeight="645.0" prefWidth="1298.0" spacing="10.0">
+                <VBox alignment="TOP_CENTER" prefHeight="637.0" prefWidth="1291.0" spacing="10.0">
                     <children>
                         <Label text="Issues">
                             <font>
                                 <Font size="26.0" />
                             </font>
                         </Label>
-                        <HBox alignment="CENTER">
+                        <HBox alignment="CENTER" prefHeight="401.0">
                             <children>
                                 <LineChart fx:id="issuesCreatedNumberLineChart" legendVisible="false" title="Number of Issues You Have Created So Far">
                                     <xAxis>
@@ -44,11 +44,11 @@
                                 <Font size="26.0" />
                             </font>
                         </Label>
-                        <HBox alignment="CENTER">
+                        <HBox alignment="CENTER" prefHeight="401.0">
                             <children>
                         <BarChart fx:id="avgRatingBookCountBarChart" legendVisible="false" title="Number of Books in Each Range Of Average Rating">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <CategoryAxis label="Rating" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
                             <NumberAxis label="Books" minorTickLength="1.0" side="LEFT" tickUnit="1.0" upperBound="1.0" />
