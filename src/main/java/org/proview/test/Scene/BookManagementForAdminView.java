@@ -12,7 +12,7 @@ import org.proview.utils.TableViewUtils;
 import java.sql.SQLException;
 import java.util.Comparator;
 
-public class BookManagForAdminView {
+public class BookManagementForAdminView {
     public TableView<ObservableList<String>> booksTableView = new TableView<>();
     public Label totalBooksLabel;
     public Label reviewsLabel;

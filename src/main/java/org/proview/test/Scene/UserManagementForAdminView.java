@@ -2,8 +2,6 @@ package org.proview.test.Scene;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
 import org.proview.utils.SQLUtils;
 import org.proview.utils.TableViewUtils;
@@ -11,7 +9,7 @@ import org.proview.utils.TableViewUtils;
 import java.sql.SQLException;
 import java.util.Comparator;
 
-public class UserManagForAdminView {
+public class UserManagementForAdminView {
     public TableView<ObservableList<String>> usersTableView = new TableView<>();
     public Label totalUsersLabel;
     public Label todayRegisLabel;

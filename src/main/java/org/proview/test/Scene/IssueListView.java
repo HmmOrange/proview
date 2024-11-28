@@ -124,6 +124,7 @@ public class IssueListView {
             TableColumn<ObservableList<String>, String> statusColumn = new TableColumn<>(columns1[columns1.length - 1]);
             statusColumn.setPrefWidth(prefWidthForBorrowingTable[columns1.length - 1]);
             statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(columns1.length - 1)));
+            TableViewUtils.setWrapTextToColumn(statusColumn);
             borrowingTableView.getColumns().add(statusColumn);
         }
     }
