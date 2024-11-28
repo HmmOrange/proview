@@ -64,7 +64,7 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="201.0" prefWidth="1297.0" spacing="20.0">
                      <children>
-                        <LineChart fx:id="newRegistrationLineChart" prefHeight="150.0" prefWidth="985.0" title="Number of New Registration Per Day So Far">
+                        <LineChart fx:id="newRegistrationLineChart" prefHeight="150.0" prefWidth="985.0" title="Number of New Registration Per Day">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>

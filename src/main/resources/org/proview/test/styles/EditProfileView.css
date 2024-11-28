@@ -45,3 +45,12 @@
 .back-button:hover {
     -fx-background-color: -dark-blue;
 }
+
+.confirm-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: -red;
+    -fx-background-radius: 10px;
+    -fx-padding: 7px 20px;
+}

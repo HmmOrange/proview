@@ -20,18 +20,24 @@
             <font>
                <Font size="14.0" />
             </font>
+            <VBox.margin>
+               <Insets top="-10.0" />
+            </VBox.margin>
          </Label>
          <Label fx:id="errorLabel" alignment="CENTER" prefHeight="17.0" prefWidth="408.0" text="Error" textFill="RED">
             <font>
                <Font size="14.0" />
-            </font></Label>
+            </font>
+            <VBox.margin>
+               <Insets top="-15.0" />
+            </VBox.margin></Label>
          <TextField fx:id="firstNameField" alignment="CENTER" promptText="First Name" styleClass="input" />
          <TextField fx:id="lastNameField" alignment="CENTER" promptText="Last Name" styleClass="input" />
          <TextField fx:id="emailField" alignment="CENTER" promptText="Email" styleClass="input" />
          <TextField fx:id="registerUsernameField" alignment="CENTER" promptText="Username" styleClass="input" />
          <PasswordField fx:id="registerPasswordField" alignment="CENTER" promptText="Password" styleClass="input" />
          <PasswordField fx:id="registerConfirmPasswordField" alignment="CENTER" promptText="Confirm Password" styleClass="input" />
-         <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="45.0" prefWidth="398.0" text="Confirm" />
+         <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="45.0" prefWidth="398.0" styleClass="confirm-button" text="Confirm" />
          <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="35.0" prefWidth="403.0" styleClass="back-button" text="Back" />
       </children>
       <VBox.margin>

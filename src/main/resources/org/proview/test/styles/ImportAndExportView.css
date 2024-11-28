@@ -19,7 +19,7 @@
 }
 
 .tab-pane .tab-header-area .tab-header-background {
-    -fx-opacity: 0;
+    /*-fx-opacity: 0;*/
 }
 
 .tab-pane
