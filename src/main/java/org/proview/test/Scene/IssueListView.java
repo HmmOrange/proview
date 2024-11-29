@@ -39,7 +39,7 @@ public class IssueListView {
     private void initBorrowingTableView() {
         borrowingTableView.getColumns().clear();
         String[] columns1 = {"ID", "Username", "Title", "Author", "Book ID", "Due Date", "Remaining time", "Status"};
-        int[] prefWidthForBorrowingTable = {20, 100, 150, 150, 50, 100, 70, 150};
+        int[] prefWidthForBorrowingTable = {20, 70, 150, 150, 50, 100, 70, 150};
         for (int i = 0; i < columns1.length - 1; i++) {
             TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns1[i]);
             int finalI = i;
@@ -49,7 +49,7 @@ public class IssueListView {
             }
             column.setPrefWidth(prefWidthForBorrowingTable[finalI]);
             TableViewUtils.setWrapTextToColumn(column);
-            if (i == 4) {
+            if (i == 2) {
                 TableViewUtils.addCoverColumn(borrowingTableView, 4);
             }
             borrowingTableView.getColumns().add(column);
@@ -132,7 +132,7 @@ public class IssueListView {
     private void initBorrowedTableView() {
         borrowedTableView.getColumns().clear();
         String[] columns2 = {"ID", "Username", "Title", "Author", "Book ID", "Start Date", "End Date", "Status"};
-        int[] prefWidthForBorrowedTable = {20, 50, 100, 100, 50, 100, 100, 100};
+        int[] prefWidthForBorrowedTable = {20, 70, 150, 100, 50, 100, 100, 100};
         for (int i = 0; i < columns2.length; i++) {
             TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns2[i]);
             int finalI = i;
