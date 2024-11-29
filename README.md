@@ -95,3 +95,4 @@ Proview is designed with user experience at its core, offering a comprehensive a
 [ikonli_repo_url]: https://github.com/kordamp/ikonli
 [uet_url]: https://uet.vnu.edu.vn/
 [fa_url]: https://fontawesome.com/
+[repo_license_url]: https://github.com/gowebly/gowebly/blob/main/LICENSE
