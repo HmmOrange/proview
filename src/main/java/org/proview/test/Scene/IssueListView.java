@@ -38,13 +38,13 @@ public class IssueListView {
 
     private void initBorrowingTableView() {
         borrowingTableView.getColumns().clear();
-        String[] columns1 = {"ID", "Username", "Title", "Author", "Book ID", "Due Date", "Remaining time", "Status"};
+        String[] columns1 = {"ID", "Username", "Title", "Author", "Book ID", "Due Date", "Days Left", "Status"};
         int[] prefWidthForBorrowingTable = {20, 70, 150, 150, 50, 100, 70, 150};
         for (int i = 0; i < columns1.length - 1; i++) {
             TableColumn<ObservableList<String>, String> column = new TableColumn<>(columns1[i]);
             int finalI = i;
             column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(finalI)));
-            if (columns1[finalI].equals("ID") || columns1[finalI].equals("Book ID") || columns1[finalI].equals("Remaining time")) {
+            if (finalI == 0 || finalI == 4 || finalI == 6) {
                 column.setComparator(Comparator.comparingInt(Integer::parseInt));
             }
             column.setPrefWidth(prefWidthForBorrowingTable[finalI]);
