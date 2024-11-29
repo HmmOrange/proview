@@ -184,7 +184,7 @@
                               </TextArea>
                               <HBox alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="820.0" spacing="10.0">
                                  <children>
-                                    <Label fx:id="errorLabel" text="Error" textFill="RED" />
+                                    <Label fx:id="errorReviewLabel" text="Error" textFill="RED" />
                                     <Button fx:id="removePrevReviewButton" mnemonicParsing="false" onAction="#onRemovePrevReviewButtonClicked" styleClass="book-button" text="Remove Previous Review" />
                                     <Button fx:id="loadPrevReviewButton" mnemonicParsing="false" onAction="#onLoadPrevReviewButtonClicked" styleClass="book-button" text="Load Previous Review" />
                                     <Button fx:id="submitReviewButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSubmitReviewButtonClick" styleClass="book-button" text="Submit/Repost Review">
