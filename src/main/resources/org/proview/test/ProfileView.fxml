@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="profileBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.ProfileView">
+<BorderPane fx:id="profileBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.ProfileView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
@@ -54,7 +54,7 @@
                         </VBox>
                         <Button fx:id="editProfileButton" mnemonicParsing="false" onAction="#onEditProfileButtonClick" styleClass="icon-button">
                            <graphic>
-                              <FontIcon iconLiteral="far-edit" iconSize="14">
+                              <FontIcon iconLiteral="far-edit" iconSize="12">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -73,6 +73,9 @@
                      <VBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </VBox.margin>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
                   </VBox>
                </children>
             </VBox>

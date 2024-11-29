@@ -12,11 +12,13 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.*;
+import java.util.Objects;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.proview.api.GamesAPI;
 import org.proview.api.GoogleBooksAPI;
 import org.proview.utils.SearchUtils;
+import org.proview.utils.Utils;
 
 
 public class AppMain extends Application {
@@ -50,7 +52,7 @@ public class AppMain extends Application {
         // Establishing a connection to db
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/proview_data",
+                    dotenv.get("SQL_DB_URL"),
                     dotenv.get("SQL_USER"),
                     dotenv.get("SQL_PASSWORD")
             );
@@ -112,8 +114,10 @@ public class AppMain extends Application {
         }
 
         // Uncomment this if in need of creating new fresh tables in DB
-         runSQLScript(connection);
-//         GamesAPI.insertQandAToDb();
+        if (Objects.equals(dotenv.get("RUN_DB_DATA_INIT"), "True"))
+            runSQLScript(connection);
+        if (Objects.equals(dotenv.get("RUN_DB_QUESTIONS_INIT"), "True"))
+            GamesAPI.insertQandAToDb();
         launch();
     }
 }

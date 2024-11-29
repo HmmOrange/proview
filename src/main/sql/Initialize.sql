@@ -78,7 +78,7 @@ CREATE TABLE review
 (
     book_id    INT,
     user_id    INT,
-    review     VARCHAR(1000),
+    review     VARCHAR(5000),
     time_added TIMESTAMP,
 
     FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,

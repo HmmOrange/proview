@@ -13,13 +13,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import org.proview.api.GoogleBooksAPI;
+import org.proview.model.Tag.Tag;
 import org.proview.test.AppMain;
 import org.proview.test.Container.CellView;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import org.proview.utils.SQLUtils;
 
 public class BookManagement {
-    public static void addBook(String name, String author, String description, int copies, String tag) throws SQLException {
+    public static void addBook(String name, String author, String description, int copies, ObservableList<Tag> tagList) throws SQLException {
         Connection connection = AppMain.connection;
 
         String sql = """
@@ -38,11 +40,7 @@ public class BookManagement {
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 int id = generatedKeys.getInt(1);  // Get the first column from the ResultSet
-                sql = "INSERT INTO tag(book_id, tag) VALUES (?, ?);";
-                preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setInt(1, id);
-                preparedStatement.setString(2, tag);
-                preparedStatement.executeUpdate();
+                SQLUtils.upsertBookTags(id, tagList);
             }
         }
         else {

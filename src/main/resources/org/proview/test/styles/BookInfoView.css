@@ -119,3 +119,13 @@
     -fx-background-color: -dark-blue;
     -fx-cursor: hand;
 }
+
+.text-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.text-area .scroll-pane .content {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
