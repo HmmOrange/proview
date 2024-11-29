@@ -14,6 +14,7 @@ import org.proview.model.Book.BookGoogle;
 import org.proview.model.Book.BookLib;
 import org.proview.model.Book.BookManagement;
 import org.proview.model.Tag.Tag;
+import org.proview.model.Tag.TagManagement;
 import org.proview.utils.MaxSizedContextMenu;
 import org.proview.utils.SQLUtils;
 import org.proview.utils.SearchUtils;
@@ -60,117 +61,10 @@ public class SearchResultView {
     private void loadFilters() throws SQLException {
         ObservableList<Tag> tagIncludedList = SQLUtils.getTagList();
         ObservableList<Tag> tagExcludedList = SQLUtils.getTagList();
-
-        // Tag included dropdown
-        MaxSizedContextMenu maxSizedIncludedContextMenu = new MaxSizedContextMenu();
-        maxSizedIncludedContextMenu.setMaxHeight(200);
         ObservableList<Tag> oldIncludedList = SearchUtils.getTagIncludedList();
-        for (Tag tag : tagIncludedList) {
-            CheckBox checkBox = new CheckBox();
-
-            boolean ifOldTag = oldIncludedList.contains(tag);
-
-            checkBox.setSelected(ifOldTag);
-            if (ifOldTag) {
-                addSelectedTag(tag, tagIncludedSelectedList, tagIncludedSelectedFlowPane);
-            }
-
-            checkBox.setOnAction(event -> {
-                if (checkBox.isSelected()) {
-                    addSelectedTag(tag, tagIncludedSelectedList, tagIncludedSelectedFlowPane);
-                }
-                else {
-                    removeSelectedTag(tag, tagIncludedSelectedList, tagIncludedSelectedFlowPane);
-                }
-            });
-
-            HBox hBox = new HBox();
-            hBox.setSpacing(10);
-            hBox.setPrefWidth(150);
-            hBox.getChildren().add(checkBox);
-            hBox.getChildren().add(tag.getLabel());
-
-            hBox.setOnMouseClicked(event -> {
-                if (!checkBox.isSelected()) {
-                    addSelectedTag(tag, tagIncludedSelectedList, tagIncludedSelectedFlowPane);
-                    checkBox.setSelected(true);
-                }
-                else {
-                    removeSelectedTag(tag, tagIncludedSelectedList, tagIncludedSelectedFlowPane);
-                    checkBox.setSelected(false);
-                }
-            });
-
-            CustomMenuItem customMenuItem = new CustomMenuItem(hBox);
-            customMenuItem.setHideOnClick(false);
-            maxSizedIncludedContextMenu.getItems().add(customMenuItem);
-        }
-        tagIncludedSelectDropdown.setOnMousePressed(event -> {
-            if (!maxSizedIncludedContextMenu.isShowing()) {
-                Bounds bounds = tagIncludedSelectDropdown.localToScreen(tagIncludedSelectDropdown.getBoundsInLocal());
-                double x = bounds.getMinX();
-                double y = bounds.getMaxY() + 5;
-                maxSizedIncludedContextMenu.show(tagIncludedSelectDropdown, x, y);
-            } else {
-                maxSizedIncludedContextMenu.hide();
-            }
-        });
-
-        // Tag excluded dropdown
-        MaxSizedContextMenu maxSizedExcludedContextMenu = new MaxSizedContextMenu();
-        maxSizedExcludedContextMenu.setMaxHeight(200);
         ObservableList<Tag> oldExcludedList = SearchUtils.getTagExcludedList();
-
-        for (Tag tag : tagExcludedList) {
-            CheckBox checkBox = new CheckBox();
-
-            boolean ifOldTag = oldExcludedList.contains(tag);
-
-            checkBox.setSelected(ifOldTag);
-            if (ifOldTag) {
-                addSelectedTag(tag, tagExcludedSelectedList, tagExcludedSelectedFlowPane);
-            }
-
-            checkBox.setOnAction(event -> {
-                if (checkBox.isSelected()) {
-                    addSelectedTag(tag, tagExcludedSelectedList, tagExcludedSelectedFlowPane);
-                }
-                else {
-                    removeSelectedTag(tag, tagExcludedSelectedList, tagExcludedSelectedFlowPane);
-                }
-            });
-
-            HBox hBox = new HBox();
-            hBox.setSpacing(10);
-            hBox.setPrefWidth(150);
-            hBox.getChildren().add(checkBox);
-            hBox.getChildren().add(tag.getLabel());
-
-            hBox.setOnMouseClicked(event -> {
-                if (!checkBox.isSelected()) {
-                    addSelectedTag(tag, tagExcludedSelectedList, tagExcludedSelectedFlowPane);
-                    checkBox.setSelected(true);
-                }
-                else {
-                    removeSelectedTag(tag, tagExcludedSelectedList, tagExcludedSelectedFlowPane);
-                    checkBox.setSelected(false);
-                }
-            });
-
-            CustomMenuItem customMenuItem = new CustomMenuItem(hBox);
-            customMenuItem.setHideOnClick(false);
-            maxSizedExcludedContextMenu.getItems().add(customMenuItem);
-        }
-        tagExcludedSelectDropdown.setOnMousePressed(event -> {
-            if (!maxSizedExcludedContextMenu.isShowing()) {
-                Bounds bounds = tagExcludedSelectDropdown.localToScreen(tagExcludedSelectDropdown.getBoundsInLocal());
-                double x = bounds.getMinX();
-                double y = bounds.getMaxY() + 5;
-                maxSizedExcludedContextMenu.show(tagExcludedSelectDropdown, x, y);
-            } else {
-                maxSizedExcludedContextMenu.hide();
-            }
-        });
+        TagManagement.loadTagDropdown(tagIncludedList, oldIncludedList, tagIncludedSelectDropdown, tagIncludedSelectedFlowPane, tagIncludedSelectedList);
+        TagManagement.loadTagDropdown(tagExcludedList, oldExcludedList, tagExcludedSelectDropdown, tagExcludedSelectedFlowPane, tagExcludedSelectedList);
 
         // Rating slider
         ratingSlider.adjustLowValue(SearchUtils.getLowRating());

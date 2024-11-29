@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.AddBookView">
+   <top>
+      <fx:include source="NavBarView.fxml" />
+   </top>
+   <left>
+      <fx:include source="AdminManagementNavBarView.fxml" />
+   </left>
+   <center>
+      <HBox prefHeight="550.0" styleClass="register-form" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="50.0" left="150.0" right="225.0" top="50.0" />
+         </BorderPane.margin>
+         <children>
+            <VBox alignment="CENTER" prefHeight="520.0" prefWidth="181.0" spacing="10.0">
+               <children>
+                  <ImageView fx:id="coverImageView" fitHeight="300.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="fileAddedLabel" text="..." />
+                  <Button fx:id="addCoverButton" mnemonicParsing="false" onAction="#onAddCoverButtonClick" text="Add cover" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" spacing="20.0">
+               <children>
+                  <TextField fx:id="bookAddName" prefHeight="32.0" prefWidth="600.0" promptText="Book name" styleClass="input" />
+                  <TextField fx:id="bookAddAuthor" prefHeight="32.0" prefWidth="600.0" promptText="Author" styleClass="input" />
+                  <TextArea fx:id="bookAddDescription" prefHeight="64.0" prefWidth="600.0" promptText="Description" styleClass="input" wrapText="true" />
+                  <TextField fx:id="bookAddCopies" promptText="Amount of copies available" styleClass="input" />
+                  <FlowPane fx:id="bookTagsSelectedFlowPane" hgap="5.0" prefHeight="32.0" prefWidth="200.0" styleClass="flow-pane" vgap="5.0" />
+                  <MenuButton fx:id="bookTagsDropdown" mnemonicParsing="false" text="Add Tags">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                    </items>
+                  </MenuButton>
+                   <Button fx:id="addBookButton" onAction="#onAddBookButtonClick" text="Add book" />
+               </children>
+               <HBox.margin>
+                  <Insets left="25.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+         <stylesheets>
+            <URL value="@styles/RegisterView.css" />
+            <URL value="@styles/styles.css" />
+         </stylesheets>
+      </HBox>
+   </center>
+</BorderPane>

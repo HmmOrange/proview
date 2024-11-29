@@ -1,13 +1,20 @@
 package org.proview.test.Scene;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
+import org.proview.model.Book.Book;
 import org.proview.model.Book.BookManagement;
+import org.proview.model.Tag.Tag;
+import org.proview.model.Tag.TagManagement;
 import org.proview.test.AppMain;
 import org.proview.utils.PopUpWindowUtils;
+import org.proview.utils.SQLUtils;
 
 import java.nio.file.StandardCopyOption;
 
@@ -17,19 +24,27 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
 
-public class EditBookView {
+public class AddBookView {
     public TextField bookAddName;
     public TextField bookAddAuthor;
-    public TextField bookAddDescription;
+    public TextArea bookAddDescription;
     public TextField bookAddCopies;
     public TextField bookAddTag;
     public Button addBookButton;
     public Button addCoverButton;
     public Label fileAddedLabel;
     public ImageView coverImageView;
+    public FlowPane bookTagsSelectedFlowPane;
+    public MenuButton bookTagsDropdown;
+    private final ObservableList<Tag> tagSelectedList = FXCollections.observableArrayList();
 
     private File coverFile;
 
+    public void initialize() throws SQLException {
+        ObservableList<Tag> allTagsList = SQLUtils.getTagList();
+        ObservableList<Tag> oldTagsList = FXCollections.observableArrayList();
+        TagManagement.loadTagDropdown(allTagsList, oldTagsList, bookTagsDropdown, bookTagsSelectedFlowPane, tagSelectedList);
+    }
 
     public void onAddBookButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
         if (PopUpWindowUtils.showConfirmation("Warning", "Are you sure to add this book?")) {
@@ -60,9 +75,8 @@ public class EditBookView {
                     bookAddAuthor.getText(),
                     bookAddDescription.getText(),
                     Integer.parseInt(bookAddCopies.getText()),
-                    bookAddTag.getText()
+                    tagSelectedList
             );
-
             // Store cover images in a folder (in practice this is stored in a CDN)
             Files.copy(coverFile.toPath(), (new File(dstFilePath)).toPath(), StandardCopyOption.REPLACE_EXISTING);
             PopUpWindowUtils.showNotification("Done!", "Book has been added!", Alert.AlertType.INFORMATION);
@@ -84,7 +98,7 @@ public class EditBookView {
                 System.out.println("Error loading image: " + image.getException().getMessage());
             }
             coverImageView.setImage(image);
-            coverImageView.setFitWidth(100);
+            coverImageView.setFitWidth(200);
             coverImageView.setPreserveRatio(true);
             coverImageView.setSmooth(true);
             coverImageView.setCache(true);
