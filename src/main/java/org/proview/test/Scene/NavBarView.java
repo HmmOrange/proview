@@ -1,6 +1,7 @@
 package org.proview.test.Scene;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -112,7 +113,7 @@ public class NavBarView {
 
     public void onLibraryButtonClick(ActionEvent actionEvent) throws IOException {
         UserManagement.setCurrentViewButton(libraryButton);
-        UserManagement.setCurrentAdminViewButton(null);
+        UserManagement.setCurrentAdminViewButton(libraryButton);
         Utils.switchScene("BookManagementForAdminView.fxml");
     }
 

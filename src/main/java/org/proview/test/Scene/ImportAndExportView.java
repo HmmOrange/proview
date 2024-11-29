@@ -147,7 +147,10 @@ public class ImportAndExportView {
                     for (int i = 0; i < datas.length - 1; i++) {
                         preparedStatement.setString(i + 1, datas[i].trim());
                     }
-                    downloadImageToPng(datas[datas.length - 1].trim(), "./assets/covers", "cover%d.png".formatted(SQLUtils.getBookList().getLast().getId() + 1));
+                    if (!downloadImageToPng(datas[datas.length - 1].trim(),
+                            "./assets/covers", "cover%d.png".formatted(SQLUtils.getBookList().getLast().getId() + 1))) {
+                        return false;
+                    }
                 }
                 preparedStatement.addBatch();
             }
@@ -159,7 +162,7 @@ public class ImportAndExportView {
         return true;
     }
 
-    public void downloadImageToPng(String imageUrl, String outputFolderPath, String outputFileName) {
+    public boolean downloadImageToPng(String imageUrl, String outputFolderPath, String outputFileName) {
         try {
             // Tải ảnh từ URL
             URL url = new URL(imageUrl);
@@ -181,11 +184,14 @@ public class ImportAndExportView {
                 System.out.println("Image stored at: " + outputFile.getAbsolutePath());
             } else {
                 this.importResultLabel.setText("Cannot download from URL.");
-                System.out.println("Cannot download from URL.");
+                return false;
             }
         } catch (IOException e) {
             e.printStackTrace();
+            this.importResultLabel.setText("Can't get Image from URL!");
+            return false;
         }
+        return true;
     }
 
     public ComboBox<String> importTableComboBox;
