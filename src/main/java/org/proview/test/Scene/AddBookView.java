@@ -29,7 +29,6 @@ public class AddBookView {
     public TextField bookAddAuthor;
     public TextArea bookAddDescription;
     public TextField bookAddCopies;
-    public TextField bookAddTag;
     public Button addBookButton;
     public Button addCoverButton;
     public Label fileAddedLabel;
@@ -37,6 +36,7 @@ public class AddBookView {
     public FlowPane bookTagsSelectedFlowPane;
     public MenuButton bookTagsDropdown;
     private final ObservableList<Tag> tagSelectedList = FXCollections.observableArrayList();
+    public Label errorLabel;
 
     private File coverFile;
 
@@ -44,10 +44,44 @@ public class AddBookView {
         ObservableList<Tag> allTagsList = SQLUtils.getTagList();
         ObservableList<Tag> oldTagsList = FXCollections.observableArrayList();
         TagManagement.loadTagDropdown(allTagsList, oldTagsList, bookTagsDropdown, bookTagsSelectedFlowPane, tagSelectedList);
+
+        errorLabel.setText("");
     }
 
     public void onAddBookButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
         if (PopUpWindowUtils.showConfirmation("Warning", "Are you sure to add this book?")) {
+
+            try {
+                String name = bookAddName.getText();
+                String author = bookAddAuthor.getText();
+                String description = bookAddDescription.getText();
+                int copies;
+                try {
+                    copies = Integer.parseInt(bookAddCopies.getText());
+                    if (copies <= 0) throw new IllegalArgumentException("Number of copies must not be negative.");
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Number of copies must be an integer.");
+                }
+
+                if (name.isEmpty())
+                    throw new IllegalArgumentException("Book title cannot be empty.");
+                if (author.isEmpty())
+                    throw new IllegalArgumentException("Author name cannot be empty.");
+
+                BookManagement.addBook(
+                        name,
+                        author,
+                        description,
+                        copies,
+                        tagSelectedList
+                );
+            } catch (IllegalArgumentException e) {
+                errorLabel.setText(e.getMessage());
+                return;
+            } catch (Exception e) {
+                errorLabel.setText("An unexpected error occurred: " + e.getMessage());
+                return;
+            }
             String coverFilePath;
             if (coverFile == null) {
                 coverFile = new File("./assets/samples/defaultCover.png");
@@ -70,16 +104,10 @@ public class AddBookView {
 
             String dstFilePath = "./assets/covers/cover" + (BookManagement.getBookCount() + 1) + extension;
 
-            // Add book to DB
-            BookManagement.addBook(
-                    bookAddName.getText(),
-                    bookAddAuthor.getText(),
-                    bookAddDescription.getText(),
-                    Integer.parseInt(bookAddCopies.getText()),
-                    tagSelectedList
-            );
             // Store cover images in a folder (in practice this is stored in a CDN)
             Files.copy(coverFile.toPath(), (new File(dstFilePath)).toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            errorLabel.setText("");
             PopUpWindowUtils.showNotification("Done!", "Book has been added!", Alert.AlertType.INFORMATION);
         }
     }

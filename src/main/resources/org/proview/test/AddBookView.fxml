@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.AddBookView">
    <top>
@@ -34,8 +35,13 @@
                   <Button fx:id="addCoverButton" mnemonicParsing="false" onAction="#onAddCoverButtonClick" text="Add cover" />
                </children>
             </VBox>
-            <VBox alignment="CENTER" spacing="20.0">
+            <VBox alignment="CENTER" spacing="15.0">
                <children>
+                  <Label fx:id="errorLabel" text="Label" textFill="RED">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                   <TextField fx:id="bookAddName" prefHeight="32.0" prefWidth="600.0" promptText="Book name" styleClass="input" />
                   <TextField fx:id="bookAddAuthor" prefHeight="32.0" prefWidth="600.0" promptText="Author" styleClass="input" />
                   <TextArea fx:id="bookAddDescription" prefHeight="64.0" prefWidth="600.0" promptText="Description" styleClass="input" wrapText="true" />
