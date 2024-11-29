@@ -38,7 +38,7 @@ public class AdminManagementNavBarView {
                 case "usersButton":
                     usersButton.getStyleClass().add("nav-button-active");
                     break;
-                case "booksButton":
+                case "booksButton", "libraryButton":
                     booksButton.getStyleClass().add("nav-button-active");
                     break;
                 case "tagsButton":
