@@ -18,6 +18,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import org.proview.api.GamesAPI;
 import org.proview.api.GoogleBooksAPI;
 import org.proview.utils.SearchUtils;
+import org.proview.utils.Utils;
 
 
 public class AppMain extends Application {
@@ -51,7 +52,7 @@ public class AppMain extends Application {
         // Establishing a connection to db
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/proview_data",
+                    dotenv.get("SQL_DB_URL"),
                     dotenv.get("SQL_USER"),
                     dotenv.get("SQL_PASSWORD")
             );
