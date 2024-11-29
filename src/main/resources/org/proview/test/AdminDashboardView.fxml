@@ -31,7 +31,7 @@
                      <children>
                         <LineChart fx:id="issuesCreatedNumberLineChart" legendVisible="false" styleClass="form" title="Number of Issues Created">
                           <xAxis>
-                            <CategoryAxis label="Date" side="BOTTOM" />
+                            <CategoryAxis label="Date" side="BOTTOM" tickLabelRotation="45.0" tickLabelsVisible="false" />
                           </xAxis>
                           <yAxis>
                             <NumberAxis forceZeroInRange="false" label="Issues" pickOnBounds="false" side="LEFT" tickLabelGap="1.0" upperBound="10.0" />

@@ -3,9 +3,11 @@ package org.proview.test;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -28,6 +30,9 @@ public class AppMain extends Application {
     
     @Override
     public void start(Stage stage) throws IOException {
+        File file = new File("./assets/icon.png");
+        Image icon = new Image(file.toURI().toString());
+        stage.getIcons().add(icon);
         window = stage;
 
         FXMLLoader fxmlLoader = new FXMLLoader(AppMain.class.getResource("LoginView.fxml"));
