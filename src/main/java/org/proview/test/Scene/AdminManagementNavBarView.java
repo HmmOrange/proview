@@ -56,7 +56,7 @@ public class AdminManagementNavBarView {
 
     public void onAddDeleteButtonClick(ActionEvent actionEvent) throws IOException {
         UserManagement.setCurrentAdminViewButton(addBookButton);
-        Utils.switchScene("EditBookView.fxml");
+        Utils.switchScene("AddBookView.fxml");
     }
 
     public void onUsersButtonClick(ActionEvent actionEvent) throws IOException {

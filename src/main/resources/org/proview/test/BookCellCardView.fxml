@@ -10,9 +10,9 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="cell-form" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCardView">
+<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="cell-form" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCardView">
    <graphic>
-      <HBox maxHeight="125.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="475.0">
+      <HBox maxHeight="125.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="450.0">
          <children>
             <ImageView fx:id="coverImageView" fitHeight="125.0" fitWidth="83.333333" pickOnBounds="true" preserveRatio="true" />
             <VBox prefHeight="125.0" prefWidth="386.667">
@@ -63,7 +63,7 @@
                               <FontIcon fx:id="issuesIcon" iconColor="#457b9d" iconLiteral="fas-book-reader" iconSize="14" styleClass="ikonli-font-icon" />
                            </children>
                         </HBox>
-                        <Label fx:id="copiesLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="20.0" prefWidth="289.0" text="3 copies available" wrapText="true">
+                        <Label fx:id="copiesLabel" alignment="TOP_RIGHT" contentDisplay="TOP" prefHeight="20.0" prefWidth="261.0" text="3 copies available" wrapText="true">
                            <font>
                               <Font name="System Italic" size="14.0" />
                            </font>

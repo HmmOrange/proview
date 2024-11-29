@@ -72,6 +72,7 @@ public class BookInfoView {
     public Label ratingValueLabel;
     public Label issuesValueLabel;
     public Label descriptionValueLabel;
+    public Label errorReviewLabel;
 
     private int starMouseEntered = 0;
     private int bookId;
@@ -131,6 +132,9 @@ public class BookInfoView {
             heartButton.setId("heart-icon-default");
         heartButton.setGraphic(fontIcon);
         heartButton.applyCss();
+
+        // Review error
+        errorReviewLabel.setText("");
     }
 
     public void setData(int id) throws IOException, SQLException {
@@ -317,20 +321,37 @@ public class BookInfoView {
     }
 
     public void onSubmitReviewButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
-        User currentUser = UserManagement.getCurrentUser();
-        currentUser.addComment(bookId, reviewTextArea.getText());
+        String review = reviewTextArea.getText();
+        try {
+            if (review.isEmpty()) {
+                throw new IllegalArgumentException("Review cannot be empty.");
+            }
 
-        submitReviewButton.setText("Repost Review");
+            if (review.length() > 5000) {
+                throw new IllegalArgumentException("Review cannot exceed 5000 characters.");
+            }
 
-        loadPrevReviewButton.setVisible(true);
-        loadPrevReviewButton.setDisable(false);
+            User currentUser = UserManagement.getCurrentUser();
 
-        removePrevReviewButton.setVisible(true);
-        removePrevReviewButton.setDisable(false);
+            currentUser.addComment(bookId, reviewTextArea.getText());
 
-        reviewTextArea.clear();
+            submitReviewButton.setText("Repost Review");
 
-        reloadReviewList();
+            loadPrevReviewButton.setVisible(true);
+            loadPrevReviewButton.setDisable(false);
+
+            removePrevReviewButton.setVisible(true);
+            removePrevReviewButton.setDisable(false);
+
+            reviewTextArea.clear();
+
+            reloadReviewList();
+            errorReviewLabel.setText("");
+        } catch (IllegalArgumentException e) {
+            errorReviewLabel.setText(e.getMessage());
+        } catch (Exception e) {
+            errorReviewLabel.setText("An unexpected error occurred: " + e.getMessage());
+        }
     }
     public void onLoadPrevReviewButtonClicked(ActionEvent actionEvent) throws SQLException {
         String review = SQLUtils.getReview(UserManagement.getCurrentUser().getId(), bookId);

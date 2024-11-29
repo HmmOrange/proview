@@ -13,6 +13,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import org.proview.model.Tag.Tag;
+import org.proview.model.Tag.TagManagement;
 import org.proview.test.AppMain;
 import org.proview.utils.MaxSizedContextMenu;
 import org.proview.utils.PopUpWindowUtils;
@@ -84,58 +85,7 @@ public class EditBookInfoView {
         // Tag manu dropdown
         ObservableList<Tag> oldBookTags = SQLUtils.getBookTags(id);
         ObservableList<Tag> tagList = SQLUtils.getTagList();
-        MaxSizedContextMenu maxSizedContextMenu = new MaxSizedContextMenu();
-        maxSizedContextMenu.setMaxHeight(200);
-        for (Tag tag : tagList) {
-            CheckBox checkBox = new CheckBox();
-
-            boolean ifOldTag = oldBookTags.contains(tag);
-
-            checkBox.setSelected(ifOldTag);
-            if (ifOldTag) {
-                addSelectedTag(tag);
-            }
-
-            checkBox.setOnAction(event -> {
-                if (checkBox.isSelected()) {
-                    addSelectedTag(tag);
-                }
-                else {
-                    removeSelectedTag(tag);
-                }
-            });
-
-            HBox hBox = new HBox();
-            hBox.setSpacing(10);
-            hBox.setPrefWidth(150);
-            hBox.getChildren().add(checkBox);
-            hBox.getChildren().add(tag.getLabel());
-
-            hBox.setOnMouseClicked(event -> {
-                if (!checkBox.isSelected()) {
-                    addSelectedTag(tag);
-                    checkBox.setSelected(true);
-                }
-                else {
-                    removeSelectedTag(tag);
-                    checkBox.setSelected(false);
-                }
-            });
-
-            CustomMenuItem customMenuItem = new CustomMenuItem(hBox);
-            customMenuItem.setHideOnClick(false);
-            maxSizedContextMenu.getItems().add(customMenuItem);
-        }
-        tagSelectDropdown.setOnMousePressed(event -> {
-            if (!maxSizedContextMenu.isShowing()) {
-                Bounds bounds = tagSelectDropdown.localToScreen(tagSelectDropdown.getBoundsInLocal());
-                double x = bounds.getMinX();
-                double y = bounds.getMaxY() + 5;
-                maxSizedContextMenu.show(tagSelectDropdown, x, y);
-            } else {
-                maxSizedContextMenu.hide();
-            }
-        });
+        TagManagement.loadTagDropdown(tagList, oldBookTags, tagSelectDropdown, tagSelectedFlowPane, tagSelectedList);
     }
 
     public void onChangeCoverButtonClick(ActionEvent actionEvent) {
