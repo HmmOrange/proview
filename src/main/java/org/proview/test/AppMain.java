@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.*;
+import java.util.Objects;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.proview.api.GamesAPI;
@@ -112,8 +113,10 @@ public class AppMain extends Application {
         }
 
         // Uncomment this if in need of creating new fresh tables in DB
-         runSQLScript(connection);
-//         GamesAPI.insertQandAToDb();
+        if (Objects.equals(dotenv.get("RUN_DB_DATA_INIT"), "True"))
+            runSQLScript(connection);
+        if (Objects.equals(dotenv.get("RUN_DB_QUESTIONS_INIT"), "True"))
+            GamesAPI.insertQandAToDb();
         launch();
     }
 }

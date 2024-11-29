@@ -42,7 +42,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="bookAddName" prefHeight="32.0" prefWidth="600.0" promptText="Book name" styleClass="input" />
+                  <TextField fx:id="bookAddName" prefHeight="32.0" prefWidth="600.0" promptText="Book title" styleClass="input" />
                   <TextField fx:id="bookAddAuthor" prefHeight="32.0" prefWidth="600.0" promptText="Author" styleClass="input" />
                   <TextArea fx:id="bookAddDescription" prefHeight="64.0" prefWidth="600.0" promptText="Description" styleClass="input" wrapText="true" />
                   <TextField fx:id="bookAddCopies" promptText="Amount of copies available" styleClass="input" />
