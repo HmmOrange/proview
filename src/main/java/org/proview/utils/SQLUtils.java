@@ -569,7 +569,7 @@ public class SQLUtils {
             String present = Integer.toString(resultSet.getInt("presentissuesnum"));
             String allissuesnum = Integer.toString(resultSet.getInt("allissuesnum"));
             String reviewsnum = Integer.toString(resultSet.getInt("reviewsnum"));
-            String regisDate = resultSet.getTimestamp("registration_date").toString();
+            String regisDate = resultSet.getDate("registration_date").toString();
             respond.add(FXCollections.observableArrayList(id, username, fullname, email, regisDate, present, allissuesnum, reviewsnum));
         }
         return respond;
@@ -689,7 +689,7 @@ public class SQLUtils {
                 String bookId = String.format("%03d", borrowingRS.getInt("bookid"));
                 String title = borrowingRS.getString("bookname");
                 String author = borrowingRS.getString("author");
-                String end_date = borrowingRS.getTimestamp("end_date").toString();
+                String end_date = borrowingRS.getDate("end_date").toString();
                 String remaining_time = Integer.toString(borrowingRS.getInt("remaining_time"));
                 String status = borrowingRS.getString("status");
                 respond.add(FXCollections.observableArrayList(id, username, title, author, bookId, end_date, remaining_time, status));
@@ -709,7 +709,7 @@ public class SQLUtils {
                 String bookId = String.format("%03d", borrowingRS.getInt("bookid"));
                 String title = borrowingRS.getString("bookname");
                 String author = borrowingRS.getString("author");
-                String end_date = borrowingRS.getTimestamp("end_date").toString();
+                String end_date = borrowingRS.getDate("end_date").toString();
                 String remaining_time = Integer.toString(borrowingRS.getInt("remaining_time"));
                 String status = borrowingRS.getString("status");
                 respond.add(FXCollections.observableArrayList(id, username, title, author, bookId, end_date, remaining_time, status));
@@ -733,8 +733,8 @@ public class SQLUtils {
                 String username = borrowedRS.getString("username");
                 String title = borrowedRS.getString("bookname");
                 String author = borrowedRS.getString("author");
-                String end_date = borrowedRS.getTimestamp("end_date").toString();
-                String start_date = borrowedRS.getTimestamp("start_date").toString();
+                String end_date = borrowedRS.getDate("end_date").toString();
+                String start_date = borrowedRS.getDate("start_date").toString();
                 String status = borrowedRS.getString("status");
                 datas2.add(FXCollections.observableArrayList(id, username, title, author, bookId, start_date, end_date, status));
             }
@@ -752,8 +752,8 @@ public class SQLUtils {
                 String username = borrowedRS.getString("username");
                 String title = borrowedRS.getString("bookname");
                 String author = borrowedRS.getString("author");
-                String end_date = borrowedRS.getTimestamp("end_date").toString();
-                String start_date = borrowedRS.getTimestamp("start_date").toString();
+                String end_date = borrowedRS.getDate("end_date").toString();
+                String start_date = borrowedRS.getDate("start_date").toString();
                 String status = borrowedRS.getString("status");
                 datas2.add(FXCollections.observableArrayList(id, username, title, author, bookId, start_date, end_date, status));
             }
@@ -955,6 +955,18 @@ public class SQLUtils {
             bookLib.add(new BookLib(id, title, author, description, copiesAvailable));
         }
         return bookLib;
+    }
+
+    public static String getDueDateOfCurrentIssue(String username, int bookId) throws SQLException {
+        ObservableList<ObservableList<String>> list = getCurrentIssuesList();
+        for (ObservableList<String> row : list) {
+            String name = row.get(1);
+            int id = Integer.parseInt(row.get(4));
+            if (username.equals(name) && id == bookId) {
+                return row.get(5);
+            }
+        }
+        return "unknown";
     }
 }
 

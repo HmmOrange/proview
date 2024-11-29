@@ -160,7 +160,8 @@ public class BookInfoView {
                 && SQLUtils.ifUserBorrowingBook(UserManagement.getCurrentUser().getId(), id)) {
             borrowingProblemLabel.setDisable(false);
             borrowingProblemLabel.setVisible(true);
-            borrowingProblemLabel.setText("You are borrowing this book");
+            borrowingProblemLabel.setText("Due in " +
+                    SQLUtils.getDueDateOfCurrentIssue(UserManagement.getCurrentUser().getUsername(), bookId));
             editButton.setVisible(false);
             editButton.setDisable(true);
             durationField.setVisible(false);
@@ -170,7 +171,7 @@ public class BookInfoView {
                 && SQLUtils.ifBookUnavailable(id)) {
             borrowingProblemLabel.setDisable(false);
             borrowingProblemLabel.setVisible(true);
-            borrowingProblemLabel.setText("Book is currently unavailable");
+            borrowingProblemLabel.setText("Book is currently unavailable!");
             editButton.setVisible(false);
             editButton.setDisable(true);
             durationField.setVisible(false);
