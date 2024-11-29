@@ -12,7 +12,7 @@
    <children>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="61.0" prefWidth="900.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="61.0" prefWidth="83.0">
+            <VBox alignment="CENTER" prefHeight="61.0" prefWidth="65.0">
                <children>
                   <Circle fx:id="avatarCircle" fill="DODGERBLUE" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
@@ -33,7 +33,7 @@
                   <Insets />
                </HBox.margin>
             </VBox>
-            <VBox alignment="CENTER_RIGHT" prefHeight="61.0" prefWidth="610.0">
+            <VBox alignment="CENTER_RIGHT" prefHeight="61.0" prefWidth="634.0">
                <children>
                   <Label fx:id="reviewDateLabel" alignment="CENTER_RIGHT" prefHeight="27.0" text="Date">
                      <font>

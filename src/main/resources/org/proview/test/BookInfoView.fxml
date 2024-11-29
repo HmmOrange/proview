@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
+<BorderPane fx:id="borderPane" prefHeight="2000.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.BookInfoView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
@@ -184,6 +184,7 @@
                               </TextArea>
                               <HBox alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="820.0" spacing="10.0">
                                  <children>
+                                    <Label fx:id="errorLabel" text="Error" textFill="RED" />
                                     <Button fx:id="removePrevReviewButton" mnemonicParsing="false" onAction="#onRemovePrevReviewButtonClicked" styleClass="book-button" text="Remove Previous Review" />
                                     <Button fx:id="loadPrevReviewButton" mnemonicParsing="false" onAction="#onLoadPrevReviewButtonClicked" styleClass="book-button" text="Load Previous Review" />
                                     <Button fx:id="submitReviewButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSubmitReviewButtonClick" styleClass="book-button" text="Submit/Repost Review">
@@ -200,7 +201,13 @@
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="reviewListVBox" spacing="10.0" />
+                  <VBox fx:id="reviewListVBox" spacing="10.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding></VBox>
                </children>
                <padding>
                   <Insets left="20.0" />
