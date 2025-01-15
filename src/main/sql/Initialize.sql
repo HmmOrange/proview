@@ -156,7 +156,7 @@ INSERT INTO book(name, author, description, time_added, copies) VALUES
 ('The Da Vinci Code', 'Dan Brown', 'A mystery thriller involving symbology and secrets.', CURRENT_TIMESTAMP(), 13),
 ('Frankenstein', 'Mary Shelley', 'A gothic novel about ambition and consequences.', CURRENT_TIMESTAMP(), 6),
 ('Dracula', 'Bram Stoker', 'A tale of vampires and gothic horror.', CURRENT_TIMESTAMP(), 8),
-('Calculus 7th Edition', 'James Steward', 'An epic tale of integral and derivative.', CURRENT_TIMESTAMP(), 10),
+('Moby Dick', 'Herman Melville', 'An epic tale of obsession and revenge at sea.', CURRENT_TIMESTAMP(), 10),
 ('War and Peace', 'Leo Tolstoy', 'A monumental work on war and human nature.', CURRENT_TIMESTAMP(), 5),
 ('The Picture of Dorian Gray', 'Oscar Wilde', 'A philosophical exploration of vanity and morality.', CURRENT_TIMESTAMP(), 9),
 ('The Shining', 'Stephen King', 'A chilling tale of isolation and madness.', CURRENT_TIMESTAMP(), 7),
