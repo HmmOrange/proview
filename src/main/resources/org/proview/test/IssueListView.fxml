@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.IssueListView">
+<BorderPane styleClass="table-style-view" fx:id="root" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.IssueListView">
     <top>
         <fx:include source="NavBarView.fxml" />
     </top>
@@ -123,7 +123,6 @@
          </children>
          <stylesheets>
             <URL value="@styles/styles.css" />
-            <URL value="@styles/TableStyle.css" />
          </stylesheets>
       </VBox>
    </center>

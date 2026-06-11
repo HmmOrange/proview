@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.EditProfileView">
+<AnchorPane styleClass="edit-profile-view" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.EditProfileView">
    <VBox alignment="CENTER" layoutX="435.0" layoutY="1.0" onKeyReleased="#onKeyReleased" prefHeight="345.0" prefWidth="419.0" spacing="15.0" styleClass="register-form">
       <children>
          <ImageView fx:id="avatarImageView" fitHeight="150.0" fitWidth="274.0" pickOnBounds="true" preserveRatio="true" />
@@ -36,6 +36,5 @@
    </VBox>
    <stylesheets>
       <URL value="@styles/styles.css" />
-      <URL value="@styles/EditProfileView.css" />
    </stylesheets>
 </AnchorPane>

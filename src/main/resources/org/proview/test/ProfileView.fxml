@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="profileBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.ProfileView">
+<BorderPane styleClass="profile-view" fx:id="profileBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.ProfileView">
    <top>
       <fx:include source="NavBarView.fxml" />
    </top>
@@ -119,6 +119,5 @@
    </center>
    <stylesheets>
       <URL value="@styles/styles.css" />
-      <URL value="@styles/ProfileView.css" />
    </stylesheets>
 </BorderPane>

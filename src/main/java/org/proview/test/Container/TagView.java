@@ -36,7 +36,7 @@ public class TagView {
         if (!style.isEmpty()) {
             tagLabel.setStyle(style.toString());
         } else {
-            tagLabel.setStyle(""); // Clear any previous inline styles to fallback to default CSS in 'TagView.css'
+            tagLabel.setStyle(""); // Clear any previous inline styles to fallback to default CSS in styles.css.
         }
     }
 }
