@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Line?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<HBox fx:id="navBarHBox" prefHeight="50.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.NavBarView">
+<HBox styleClass="nav-bar-view" fx:id="navBarHBox" prefHeight="50.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.NavBarView">
    <children>
       <AnchorPane fx:id="topPane" prefHeight="0.0" prefWidth="1300.0" styleClass="nav-bar">
          <children>
@@ -70,6 +70,5 @@
    </children>
    <stylesheets>
       <URL value="@styles/styles.css" />
-      <URL value="@styles/NavBarView.css" />
    </stylesheets>
 </HBox>

@@ -36,7 +36,7 @@
                         <Insets right="100.0" />
                      </HBox.margin>
                   </TableView>
-                  <TabPane prefHeight="339.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane styleClass="tag-manage-view" prefHeight="339.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                       <Tab text="Add">
                         <content>
@@ -183,7 +183,6 @@
                         </Tab>
                     </tabs>
                      <stylesheets>
-                        <URL value="@styles/TagManageView.css" />
                         <URL value="@styles/styles.css" />
                      </stylesheets>
                   </TabPane>

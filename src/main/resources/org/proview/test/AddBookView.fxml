@@ -23,7 +23,7 @@
       <fx:include source="AdminManagementNavBarView.fxml" />
    </left>
    <center>
-      <HBox prefHeight="550.0" styleClass="register-form" BorderPane.alignment="CENTER">
+      <HBox prefHeight="550.0" styleClass="register-form, register-view" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="50.0" left="150.0" right="225.0" top="50.0" />
          </BorderPane.margin>
@@ -61,7 +61,6 @@
             </VBox>
          </children>
          <stylesheets>
-            <URL value="@styles/RegisterView.css" />
             <URL value="@styles/styles.css" />
          </stylesheets>
       </HBox>

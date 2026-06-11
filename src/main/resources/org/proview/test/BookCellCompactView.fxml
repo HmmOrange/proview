@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="cell-form" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCompactView">
+<Button mnemonicParsing="false" onAction="#onMouseClick" styleClass="cell-form, list-view" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.BookCellCompactView">
    <graphic>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="900.0">
          <children>
@@ -96,6 +96,5 @@
    </graphic>
    <stylesheets>
       <URL value="@styles/styles.css" />
-      <URL value="@styles/ListView.css" />
    </stylesheets>
 </Button>

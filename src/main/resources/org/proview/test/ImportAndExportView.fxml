@@ -20,7 +20,7 @@
         <fx:include source="AdminManagementNavBarView.fxml" />
     </left>
     <center>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane styleClass="import-export-view" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab text="Import">
                <content>
@@ -88,7 +88,6 @@
           </Tab>
         </tabs>
          <stylesheets>
-            <URL value="@styles/ImportAndExportView.css" />
             <URL value="@styles/styles.css" />
          </stylesheets>
          <BorderPane.margin>

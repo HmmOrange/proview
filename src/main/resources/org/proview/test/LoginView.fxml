@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.LoginView">
+<AnchorPane styleClass="login-view" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.LoginView">
    <VBox alignment="CENTER" layoutX="435.0" layoutY="223.0" onKeyReleased="#onKeyReleased" prefHeight="345.0" prefWidth="419.0" spacing="15.0" styleClass="login-form">
       <children>
          <!-- Label hiển thị thông báo -->
@@ -80,6 +80,5 @@
    </ImageView>
    <stylesheets>
       <URL value="@styles/styles.css" />
-      <URL value="@styles/LoginView.css" />
    </stylesheets>
 </AnchorPane>

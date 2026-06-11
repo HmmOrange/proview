@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.Line?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1300.0" spacing="6.0" styleClass="container" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.FooterView">
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1300.0" spacing="6.0" styleClass="container, footer-view" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Scene.FooterView">
    <children>
       <Label text="Made with" />
       <FontIcon fx:id="heartIcon" onMouseEntered="#onHeartIconHovered" onMouseExited="#onHeartIconExited" styleClass="heart" />
@@ -16,6 +16,5 @@
    </children>
    <stylesheets>
       <URL value="@styles/styles.css" />
-      <URL value="@styles/FooterView.css" />
    </stylesheets>
 </HBox>

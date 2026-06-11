@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ProfileBookListView">
+<VBox styleClass="list-view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proview.test.Container.ProfileBookListView">
    <children>
       <HBox prefWidth="980.0" spacing="5.0">
          <children>
@@ -84,6 +84,5 @@
    </children>
    <stylesheets>
       <URL value="@styles/styles.css" />
-      <URL value="@styles/ListView.css" />
    </stylesheets>
 </VBox>

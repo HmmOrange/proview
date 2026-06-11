@@ -15,7 +15,7 @@
       <fx:include source="NavBarView.fxml" />
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" styleClass="end-game-form" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" styleClass="end-game-form, end-game-view" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <VBox.margin>
@@ -42,7 +42,6 @@
             <Insets bottom="50.0" left="100.0" right="100.0" top="50.0" />
          </BorderPane.margin>
          <stylesheets>
-            <URL value="@styles/EndGameView.css" />
             <URL value="@styles/styles.css" />
          </stylesheets>
       </VBox>

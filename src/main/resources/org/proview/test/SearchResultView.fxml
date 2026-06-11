@@ -26,7 +26,7 @@
       <AnchorPane prefHeight="0.0" prefWidth="1300.0" BorderPane.alignment="CENTER" />
    </bottom>
    <center>
-      <ScrollPane hbarPolicy="NEVER" prefHeight="645.0" prefWidth="635.0" styleClass="no-border-scroll-pane" stylesheets="@styles/SearchResultView.css" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+      <ScrollPane hbarPolicy="NEVER" prefHeight="645.0" prefWidth="635.0" styleClass="no-border-scroll-pane, search-result-view" stylesheets="@styles/styles.css" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
          <content>
             <VBox prefHeight="641.0" prefWidth="950.0" spacing="15.0">
                <children>
@@ -50,7 +50,6 @@
                      </VBox.margin></VBox>
                </children>
                <stylesheets>
-                  <URL value="@styles/SearchResultView.css" />
                   <URL value="@styles/styles.css" />
                </stylesheets>
             </VBox>
@@ -58,7 +57,7 @@
       </ScrollPane>
    </center>
    <left>
-      <ScrollPane hbarPolicy="NEVER" styleClass="no-border-scroll-pane" stylesheets="@styles/SearchResultView.css" vbarPolicy="NEVER">
+      <ScrollPane hbarPolicy="NEVER" styleClass="no-border-scroll-pane, search-result-view" stylesheets="@styles/styles.css" vbarPolicy="NEVER">
          <BorderPane.margin>
             <Insets bottom="25.0" left="25.0" right="15.0" top="25.0" />
          </BorderPane.margin>
@@ -108,7 +107,6 @@
                   </VBox>
                </children>
                <stylesheets>
-                  <URL value="@styles/SearchResultView.css" />
                   <URL value="@styles/styles.css" />
                </stylesheets>
             </VBox>

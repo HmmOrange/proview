@@ -19,7 +19,7 @@
         <fx:include source="NavBarView.fxml" />
     </top>
    <center>
-      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="form" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="form, book-info-view, edit-book-info-view" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="coverImage" fitHeight="352.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <viewport>
@@ -62,9 +62,7 @@
             </VBox>
          </children>
          <stylesheets>
-            <URL value="@styles/BookInfoView.css" />
             <URL value="@styles/styles.css" />
-            <URL value="@styles/EditBookInfoView.css" />
          </stylesheets>
          <BorderPane.margin>
             <Insets />

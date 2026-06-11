@@ -18,7 +18,7 @@
         <fx:include source="NavBarView.fxml" />
     </top>
    <right>
-      <ScrollPane prefHeight="645.0" prefWidth="1305.0" stylesheets="@styles/DashboardView.css" BorderPane.alignment="CENTER">
+      <ScrollPane styleClass="dashboard-view" prefHeight="645.0" prefWidth="1305.0" stylesheets="@styles/styles.css" BorderPane.alignment="CENTER">
          <content>
             <VBox alignment="TOP_CENTER" prefHeight="743.0" prefWidth="1282.0" spacing="10.0">
                <children>
